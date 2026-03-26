@@ -85,7 +85,7 @@
     @keyframes shapeFloat { 0%, 100% { transform: rotate(var(--r, 15deg)) translate(0, 0); } 25% { transform: rotate(var(--r, 15deg)) translate(15px, -20px); } 50% { transform: rotate(var(--r, 15deg)) translate(-10px, 15px); } 75% { transform: rotate(var(--r, 15deg)) translate(20px, 10px); } }
 
     .hero .container { position: relative; z-index: 2; }
-    .hero-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .hero-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
     .hero-text { }
     .hero .overline { color: rgba(255,255,255,0.7); letter-spacing: 2px; text-transform: uppercase; font-size: 13px; }
     .hero h1 { font-size: 80px; font-weight: 400; color: #fff; line-height: 1.05; margin-bottom: 28px; }
@@ -121,31 +121,28 @@
     .hv-media { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
     .hv-img { height: 52px; background: linear-gradient(135deg, rgba(133,96,168,0.1), rgba(0,191,243,0.08)); border: 1px solid rgba(133,96,168,0.06); display: flex; align-items: center; justify-content: center; }
     .hv-img svg { width: 18px; height: 18px; opacity: 0.25; }
-    .hv-interactive { margin: 10px 0; padding: 10px 12px; border: 1px solid rgba(133,96,168,0.1); background: rgba(133,96,168,0.02); }
-    .hv-int-label { font-size: 7px; font-family: 'Poppins', sans-serif; font-weight: 600; color: #8560A8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px; }
-    .hv-slider { height: 3px; background: #e8e8ec; border-radius: 2px; position: relative; margin-bottom: 8px; }
-    .hv-slider-fill { position: absolute; left: 0; top: 0; height: 100%; width: 62%; background: linear-gradient(90deg, #8560A8, #00BFF3); border-radius: 2px; }
-    .hv-slider-thumb { position: absolute; right: -5px; top: -3px; width: 9px; height: 9px; background: #fff; border: 2px solid #8560A8; border-radius: 50%; }
-    .hv-bars { display: flex; gap: 3px; align-items: flex-end; height: 34px; }
-    .hv-b { flex: 1; border-radius: 1px 1px 0 0; }
-    .hv-b:nth-child(1) { height: 40%; background: rgba(133,96,168,0.3); }
-    .hv-b:nth-child(2) { height: 65%; background: rgba(133,96,168,0.4); }
-    .hv-b:nth-child(3) { height: 50%; background: rgba(86,116,185,0.35); }
-    .hv-b:nth-child(4) { height: 85%; background: rgba(0,191,243,0.45); }
-    .hv-b:nth-child(5) { height: 70%; background: rgba(86,116,185,0.4); }
-    .hv-b:nth-child(6) { height: 55%; background: rgba(133,96,168,0.3); }
-    .hv-b:nth-child(7) { height: 80%; background: rgba(0,191,243,0.4); }
+    .hv-interactive { margin: 10px 0; padding: 0; border: 1px solid rgba(133,96,168,0.12); background: #fff; overflow: hidden; }
+    .hv-app-toolbar { display: flex; align-items: center; gap: 0; background: linear-gradient(90deg, #8560A8, #5674B9); padding: 5px 10px; }
+    .hv-app-title { font-size: 6.5px; font-family: 'Poppins', sans-serif; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.6px; flex: 1; }
+    .hv-app-tabs { display: flex; gap: 0; }
+    .hv-app-tab { font-size: 5.5px; font-family: 'Poppins', sans-serif; font-weight: 500; color: rgba(255,255,255,0.6); padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .hv-app-tab.active { color: #fff; background: rgba(255,255,255,0.15); border-radius: 2px; }
+    .hv-app-body { padding: 8px 10px; display: flex; gap: 8px; }
+    .hv-app-panel { flex: 1; }
+    .hv-app-chart { height: 36px; margin-bottom: 6px; }
+    .hv-app-metrics { display: flex; gap: 4px; }
+    .hv-app-metric { flex: 1; background: #f7f7fb; padding: 4px; text-align: center; border-radius: 2px; }
+    .hv-app-metric-val { font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 700; color: #8560A8; line-height: 1; }
+    .hv-app-metric-lbl { font-size: 5px; color: #999; text-transform: uppercase; letter-spacing: 0.2px; margin-top: 1px; }
+    .hv-app-sidebar { width: 45%; display: flex; flex-direction: column; gap: 4px; }
+    .hv-app-input { height: 10px; background: #f4f4f8; border: 1px solid #e8e8ec; border-radius: 2px; }
+    .hv-app-btn { height: 12px; background: linear-gradient(90deg, #8560A8, #00BFF3); border-radius: 2px; }
     .hv-video { margin: 10px 0; height: 60px; background: linear-gradient(135deg, #252C3A, #323A51); display: flex; align-items: center; justify-content: center; }
     .hv-play { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; }
     .hv-play svg { width: 9px; height: 9px; }
 
-    /* Floating mobile device */
-    .hv-mobile {
-      position: absolute; bottom: -10px; left: -30px; z-index: 4;
-      background: #1a1a1b; border-radius: 16px; padding: 6px; width: 130px;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
-      animation: fadeUp 0.9s ease 0.9s both;
-    }
+    /* Floating mobile device — hidden */
+    .hv-mobile { display: none; }
     .hv-mob-screen { background: #fff; border-radius: 12px; overflow: hidden; }
     .hv-mob-notch { height: 12px; display: flex; justify-content: center; align-items: center; }
     .hv-mob-notch-bar { width: 36px; height: 3px; background: #1a1a1b; border-radius: 2px; }
@@ -1005,13 +1002,39 @@
                   </div>
                 </div>
                 <div class="hv-interactive">
-                  <div class="hv-int-label">Interactive Assessment</div>
-                  <div class="hv-slider">
-                    <div class="hv-slider-fill"><div class="hv-slider-thumb"></div></div>
+                  <div class="hv-app-toolbar">
+                    <div class="hv-app-title">Embedded Application</div>
+                    <div class="hv-app-tabs">
+                      <div class="hv-app-tab active">Dashboard</div>
+                      <div class="hv-app-tab">Configure</div>
+                      <div class="hv-app-tab">Export</div>
+                    </div>
                   </div>
-                  <div class="hv-bars">
-                    <div class="hv-b"></div><div class="hv-b"></div><div class="hv-b"></div><div class="hv-b"></div>
-                    <div class="hv-b"></div><div class="hv-b"></div><div class="hv-b"></div>
+                  <div class="hv-app-body">
+                    <div class="hv-app-panel">
+                      <div class="hv-app-chart">
+                        <svg viewBox="0 0 120 36" fill="none" width="100%" height="100%" preserveAspectRatio="none">
+                          <rect x="0" y="32" width="120" height="0.5" fill="#e8e8ec"/>
+                          <rect x="0" y="22" width="120" height="0.3" fill="#f0f0f2"/>
+                          <rect x="0" y="12" width="120" height="0.3" fill="#f0f0f2"/>
+                          <path d="M0 30 Q15 28 30 26 T60 22 Q75 18 90 10 L105 4 L120 1" stroke="#8560A8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                          <path d="M0 30 Q15 28 30 26 T60 22 Q75 18 90 10 L105 4 L120 1 L120 32 L0 32 Z" fill="url(#appChartFill)" opacity="0.1"/>
+                          <circle cx="120" cy="1" r="2" fill="#8560A8"/>
+                          <defs><linearGradient id="appChartFill" x1="0" y1="0" x2="0" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#8560A8"/><stop offset="100%" stop-color="#8560A8" stop-opacity="0"/></linearGradient></defs>
+                        </svg>
+                      </div>
+                      <div class="hv-app-metrics">
+                        <div class="hv-app-metric"><div class="hv-app-metric-val">94</div><div class="hv-app-metric-lbl">Score</div></div>
+                        <div class="hv-app-metric"><div class="hv-app-metric-val" style="color:#00BFF3;">A+</div><div class="hv-app-metric-lbl">Grade</div></div>
+                        <div class="hv-app-metric"><div class="hv-app-metric-val" style="color:#5674B9;">12</div><div class="hv-app-metric-lbl">Tasks</div></div>
+                      </div>
+                    </div>
+                    <div class="hv-app-sidebar">
+                      <div class="hv-app-input"></div>
+                      <div class="hv-app-input"></div>
+                      <div class="hv-app-input"></div>
+                      <div class="hv-app-btn"></div>
+                    </div>
                   </div>
                 </div>
                 <div class="hv-video">
@@ -1644,26 +1667,33 @@
         <div class="process-step reveal">
           <div class="step-marker"><div class="step-number">02</div></div>
           <div class="step-content">
-            <h3>App Concept &amp; Content Design</h3>
-            <span class="step-desc">We design a custom interactive application — not a blog post — mapping out the tools, calculators, visualizations, and editorial content that will make your page the definitive resource for that keyword.</span>
+            <h3>App Concept &amp; UX Design</h3>
+            <span class="step-desc">We architect a custom web application around your keyword — defining the data models, user flows, and interactive features that will make your page an indispensable resource, not just another article.</span>
           </div>
         </div>
         <div class="process-step reveal">
           <div class="step-marker"><div class="step-number">03</div></div>
           <div class="step-content">
-            <h3>Custom Development &amp; Editorial</h3>
-            <span class="step-desc">Our developers build the interactive application while our writers craft the supporting content — both engineered around your target keyword and optimized for engagement.</span>
+            <h3>Custom App Development</h3>
+            <span class="step-desc">Our developers build your bespoke application from scratch — fully custom code, not a template or off-the-shelf widget — purpose-built to engage users around your target keyword.</span>
           </div>
         </div>
         <div class="process-step reveal">
           <div class="step-marker"><div class="step-number">04</div></div>
+          <div class="step-content">
+            <h3>Editorial &amp; Content Production</h3>
+            <span class="step-desc">Our writers craft the supporting editorial content that wraps the application — expert-level copy that contextualizes the tool, builds authority, and drives organic visibility.</span>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-marker"><div class="step-number">05</div></div>
           <div class="step-content">
             <h3>SEO, AEO &amp; Technical Integration</h3>
             <span class="step-desc">Schema markup, semantic structure, and AI-engine optimization are coded directly into the app — so search engines and AI platforms understand exactly what your page does.</span>
           </div>
         </div>
         <div class="process-step reveal">
-          <div class="step-marker"><div class="step-number">05</div></div>
+          <div class="step-marker"><div class="step-number">06</div></div>
           <div class="step-content">
             <h3>Deploy &amp; Measure</h3>
             <span class="step-desc">We deliver the finished application ready to publish on your domain, with performance tracking to prove its impact on rankings, traffic, and engagement.</span>
