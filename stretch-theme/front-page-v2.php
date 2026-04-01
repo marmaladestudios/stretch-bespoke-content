@@ -1888,6 +1888,188 @@ html, body { overflow-x: hidden; }
 }
 
 /* ========================================
+   RESPONSIVE — ADDITIONAL FIXES
+   ======================================== */
+
+/* ---- 960px additions ---- */
+@media (max-width: 960px) {
+  /* Hero: reduce padding on tablets so content breathes */
+  .v2-hero { padding: 100px 0 60px; }
+
+  /* Case study heading on tablets */
+  .v2-cs-heading { font-size: 34px; }
+
+  /* Bespoke app: give it reasonable max-width when stacked */
+  .v2-bespoke-app { max-width: 600px; margin: 0 auto; }
+
+  /* Blog featured: reduce min-height to prevent excess whitespace */
+  .v2-blog-featured { min-height: 320px; }
+
+  /* Stats bar: reduce vertical padding */
+  .v2-stats-bar { padding: 50px 0; }
+
+  /* Process section: tighten heading margin */
+  .v2-process-heading { margin-bottom: 60px; }
+
+  /* CTA full: cap min-height so it doesn't force full-vh on tablets */
+  .v2-cta-full { min-height: 80vh; }
+}
+
+/* ---- 768px additions ---- */
+@media (max-width: 768px) {
+  /* Hero subtitle legibility */
+  .v2-hero-text .v2-subtitle { font-size: 17px; }
+  .v2-hero-text .v2-supporting { font-size: 14px; }
+
+  /* Tighten case study large card content padding */
+  .v2-cs-card-large .v2-cs-card-content { padding: 36px 28px; }
+
+  /* Case study regular card: less content padding */
+  .v2-cs-card-content { padding: 28px 24px; }
+
+  /* Stats bar: 1 col for very tight layouts near 768 */
+  .v2-stats-bar { padding: 40px 0; }
+
+  /* Impact section padding */
+  .v2-impact-heading { margin-bottom: 40px; }
+
+  /* Bespoke slider label: allow wrapping on narrow */
+  .v2-bespoke-slider-label { font-size: 10px; width: 80px; }
+
+  /* Blog featured overlay: less padding */
+  .v2-blog-featured-overlay { padding: 28px 24px; }
+  .v2-blog-featured-overlay h3 { font-size: 20px; }
+
+  /* Testimonials: tighten vertical padding */
+  .v2-testimonials { padding: 80px 0; }
+  .v2-testimonials-inner { min-height: auto; }
+
+  /* CTA full: reduce min-height */
+  .v2-cta-full { min-height: 70vh; padding: 80px 0; }
+
+  /* Pull quote: tighten decorative quotes so they don't overflow */
+  .v2-pull-quote blockquote::before { font-size: 80px; top: -20px; left: -10px; }
+  .v2-pull-quote blockquote::after  { font-size: 80px; bottom: -40px; right: -10px; }
+
+  /* Process: tighten */
+  .v2-process-heading { margin-bottom: 48px; }
+
+  /* General section padding reduction */
+  .v2-case-studies { padding: 80px 0; }
+  .v2-bespoke { padding: 80px 0; }
+  .v2-logos { padding: 60px 0; }
+}
+
+/* ---- 480px additions ---- */
+@media (max-width: 480px) {
+  /* --- Hero --- */
+  .v2-hero { padding: 80px 0 48px; min-height: auto; }
+  .v2-hero-text h1 { font-size: 28px; letter-spacing: -0.5px; }
+  .v2-hero-text .v2-subtitle { font-size: 15px; }
+  .v2-hero-text .v2-supporting { font-size: 13px; }
+  .v2-hero-text .v2-btn-primary { padding: 14px 28px; font-size: 14px; width: 100%; text-align: center; box-sizing: border-box; }
+  .v2-hero-inner { gap: 32px; }
+
+  /* Hide browser mockup on small mobile — too complex to render well */
+  .v2-hero-visual { display: none; }
+
+  /* --- Pull quote --- */
+  .v2-pull-quote { padding: 48px 0; }
+  .v2-pull-quote blockquote { font-size: 17px; }
+  .v2-pull-quote blockquote::before,
+  .v2-pull-quote blockquote::after { display: none; }
+
+  /* --- Stats bar --- */
+  .v2-stats-bar { padding: 40px 0; }
+  .v2-stat-number { font-size: 36px; }
+  .v2-stat-label { font-size: 12px; letter-spacing: 1px; }
+
+  /* --- Services --- */
+  .v2-service-image { height: 240px; }
+  .v2-service-content { padding: 32px 16px; }
+  .v2-service-content h3 { font-size: 24px; }
+  .v2-service-content p { font-size: 15px; }
+
+  /* --- Bespoke --- */
+  .v2-bespoke { padding: 56px 0; }
+  .v2-bespoke-text h2 { font-size: 28px; }
+  .v2-bespoke-text p { font-size: 15px; }
+  .v2-bespoke-app { max-width: 100%; }
+  .v2-bespoke-slider-label { width: 72px; font-size: 10px; }
+  .v2-bespoke-metric-value { font-size: 18px; }
+  .v2-bespoke-body { padding: 16px; }
+
+  /* --- Logo marquee --- */
+  .v2-logos { padding: 40px 0; }
+  .v2-logos h2 { font-size: 12px; margin-bottom: 32px; }
+  .v2-logo-item { min-width: 120px; padding: 0 16px; }
+  .v2-logo-item img { max-height: 28px; max-width: 90px; }
+
+  /* --- Case studies --- */
+  .v2-case-studies { padding: 56px 0; }
+  .v2-cs-header { margin-bottom: 40px; }
+  .v2-cs-heading { font-size: 26px; }
+  .v2-cs-card { min-height: 280px; }
+  .v2-cs-card-content { padding: 20px 16px; }
+  .v2-cs-card-title { font-size: 18px; }
+  .v2-cs-card-desc { font-size: 14px; }
+  .v2-cs-card-stats { gap: 16px; flex-wrap: wrap; }
+  .v2-cs-stat-num { font-size: 22px; }
+
+  /* Large card: force single-column image + content stack */
+  .v2-cs-card-large { grid-template-columns: 1fr; min-height: auto; }
+  .v2-cs-card-large .v2-cs-card-image { min-height: 200px; position: relative; }
+  .v2-cs-card-large .v2-cs-card-content { padding: 24px 16px; }
+
+  /* --- Impact numbers --- */
+  .v2-impact { padding: 56px 0; }
+  .v2-impact-heading h2 { font-size: 28px; }
+  .v2-impact-number { font-size: 40px; }
+  .v2-impact-desc { font-size: 13px; }
+  .v2-impact-item { padding: 20px 16px; }
+
+  /* --- Testimonials --- */
+  .v2-testimonials { padding: 56px 0; }
+  .v2-testimonial-text { font-size: 16px; }
+  .v2-testimonials-inner { min-height: auto; }
+
+  /* --- Process timeline --- */
+  .v2-process { padding: 56px 0; }
+  .v2-process-heading h2 { font-size: 26px; }
+  .v2-process-heading { margin-bottom: 36px; }
+  /* 2 columns already set above; collapse to 1 on very small screens */
+  .v2-timeline-steps { grid-template-columns: 1fr; gap: 12px; }
+  .v2-timeline-step { padding: 0 4px; }
+  .v2-timeline-step-title { font-size: 13px; }
+  .v2-timeline-detail-card { padding: 20px 16px; gap: 20px; }
+  .v2-timeline-detail-title { font-size: 18px; }
+  .v2-timeline-detail-desc { font-size: 15px; }
+  .v2-timeline-detail { margin-top: 24px; }
+
+  /* --- Blog --- */
+  .v2-blog { padding: 56px 0; }
+  .v2-blog-heading h2 { font-size: 26px; }
+  .v2-blog-featured { min-height: 260px; }
+  .v2-blog-featured-overlay { padding: 20px 16px; }
+  .v2-blog-featured-overlay h3 { font-size: 17px; }
+  .v2-blog-small-content h3 { font-size: 14px; }
+  .v2-blog-stack { gap: 20px; }
+
+  /* --- Full CTA --- */
+  .v2-cta-full { min-height: 100svh; padding: 60px 0; }
+  .v2-cta-content { padding: 0 20px; }
+  .v2-cta-content h2 { font-size: 26px; margin-bottom: 16px; }
+  .v2-cta-content p { font-size: 15px; margin-bottom: 32px; }
+  .v2-cta-btn-primary,
+  .v2-cta-btn-outline { padding: 15px 24px; font-size: 14px; }
+
+  /* --- General section headings --- */
+  .v2-impact-heading .v2-overline,
+  .v2-process-heading .v2-overline,
+  .v2-blog-heading .v2-overline { font-size: 11px; letter-spacing: 2px; }
+}
+
+/* ========================================
    PREMIUM MICRO-INTERACTIONS
    ======================================== */
 
