@@ -15,6 +15,39 @@ get_header();
    HOMEPAGE 2.0 — PREMIUM TEMPLATE
    ======================================== */
 
+/* ---------- OVERFLOW FIX ---------- */
+html, body { overflow-x: hidden; }
+
+/* ---------- ANGLED SECTION DIVIDERS ---------- */
+.v2-angle-divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 0;
+}
+.v2-angle-divider svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+.v2-angle-divider-top {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 0;
+}
+.v2-angle-divider-top svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
 /* ---------- ADMIN BAR FIX ---------- */
 .admin-bar .site-nav { top: 32px; }
 @media (max-width: 782px) { .admin-bar .site-nav { top: 46px; } }
@@ -617,7 +650,9 @@ get_header();
    ======================================== */
 .v2-services {
   padding: 0;
+  padding-bottom: 40px;
   background: #fff;
+  position: relative;
 }
 .v2-service-row {
   display: grid;
@@ -1957,20 +1992,15 @@ get_header();
   animation: v2-grainShift 0.8s steps(4) infinite;
 }
 
-/* ---------- 6. SCROLL TEXT WIPE ---------- */
+/* ---------- 6. SCROLL TEXT WIPE (disabled — kept visible) ---------- */
 .v2-pull-quote .v2-wipe-word {
-  display: inline-block;
-  transition: color 0.3s ease, opacity 0.3s ease;
-  opacity: 0.2;
-  color: rgba(255,255,255,0.3);
-}
-.v2-pull-quote .v2-wipe-word.revealed {
+  display: inline;
   opacity: 1;
-  color: #fff;
+  color: #252C3A;
 }
-.v2-pull-quote .v2-wipe-word .quote-accent {
-  color: inherit;
-  -webkit-text-fill-color: unset;
+.v2-pull-quote .v2-wipe-word .quote-accent,
+.v2-pull-quote .v2-wipe-word.revealed .quote-accent {
+  color: #00BFF3;
 }
 
 /* ---------- 7. IMPACT NUMBER PULSE GLOW ---------- */
@@ -1995,7 +2025,7 @@ get_header();
   .v2-hero-title .v2-letter { animation: none !important; opacity: 1; transform: none; }
   .v2-grain-overlay::before { animation: none !important; }
   .v2-impact-number.v2-pulse-active { animation: none !important; }
-  .v2-pull-quote .v2-wipe-word { opacity: 1 !important; color: #fff !important; }
+  .v2-pull-quote .v2-wipe-word { opacity: 1 !important; color: #252C3A !important; }
 }
 </style>
 
@@ -2156,7 +2186,7 @@ get_header();
 <!-- ========================================
      3. ANIMATED STATS COUNTER BAR
      ======================================== -->
-<section class="v2-section v2-stats-bar" aria-label="Statistics">
+<section class="v2-section v2-stats-bar" style="position:relative;" aria-label="Statistics">
   <div class="v2-container">
     <div class="v2-stats-bar-inner">
       <div class="v2-stat-item v2-reveal">
@@ -2177,6 +2207,9 @@ get_header();
       </div>
     </div>
   </div>
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/></svg>
+  </div>
 </section>
 
 
@@ -2188,6 +2221,9 @@ get_header();
     <blockquote class="v2-reveal">
       More than a vendor &mdash; a creative partner that produces <span class="quote-accent">publish-ready content at scale</span>, on brand and on time.
     </blockquote>
+  </div>
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#fff"/></svg>
   </div>
 </section>
 
@@ -2242,6 +2278,9 @@ get_header();
       <p>End-to-end video production &mdash; concept through post. Brand films, product videos, and social-first content that stops the scroll.</p>
       <a href="/services/" class="v2-service-cta">Explore Video <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
+  </div>
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 0,60 1440,60" fill="#252C3A"/></svg>
   </div>
 </section>
 
@@ -2388,11 +2427,120 @@ get_header();
       </div>
     </div>
   </div>
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="rgb(26,31,46)"/></svg>
+  </div>
 </section>
 
 
 <!-- ========================================
-     9. PROCESS TIMELINE
+     IMPACT / CASE STUDIES (moved above process)
+     ======================================== -->
+<section class="v2-section v2-impact" aria-label="Impact">
+  <div class="v2-container">
+    <div class="v2-impact-heading v2-reveal">
+      <span class="v2-overline">Measurable Results</span>
+      <h2>Case Studies</h2>
+    </div>
+    <div class="v2-impact-grid">
+      <div class="v2-impact-item v2-reveal v2-delay-1">
+        <div class="v2-impact-number"><span class="v2-count" data-target="4.2" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
+        <div class="v2-impact-desc">Average Dwell Time Increase</div>
+      </div>
+      <div class="v2-impact-item v2-reveal v2-delay-2">
+        <div class="v2-impact-number"><span class="v2-count" data-target="312">0</span><span class="v2-suffix">%</span></div>
+        <div class="v2-impact-desc">Organic Traffic Lift</div>
+      </div>
+      <div class="v2-impact-item v2-reveal v2-delay-3">
+        <div class="v2-impact-number"><span class="v2-count" data-target="89">0</span><span class="v2-suffix"></span></div>
+        <div class="v2-impact-desc">Average Backlinks Earned</div>
+      </div>
+      <div class="v2-impact-item v2-reveal v2-delay-4">
+        <div class="v2-impact-number"><span class="v2-count" data-target="2.8" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
+        <div class="v2-impact-desc">Conversion Rate Improvement</div>
+      </div>
+    </div>
+
+    <div class="v2-cs-grid" style="margin-top:80px;">
+      <!-- Large featured case study -->
+      <div class="v2-cs-card v2-cs-card-large v2-reveal">
+        <div class="v2-cs-card-image">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop" alt="Grove Collaborative case study">
+        </div>
+        <div class="v2-cs-card-content">
+          <div class="v2-cs-card-tag">Featured Case Study</div>
+          <h3 class="v2-cs-card-title">How Grove Collaborative Scaled SEO Content to 500+ Articles</h3>
+          <p class="v2-cs-card-desc">We built a dedicated content team of 12 writers calibrated to Grove's brand voice, producing expert-level SEO content across sustainability, home care, and wellness categories.</p>
+          <div class="v2-cs-card-stats">
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">312%</div>
+              <div class="v2-cs-stat-label">Organic Lift</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">500+</div>
+              <div class="v2-cs-stat-label">Articles</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">4.2x</div>
+              <div class="v2-cs-stat-label">Dwell Time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case study 2 -->
+      <div class="v2-cs-card v2-reveal">
+        <div class="v2-cs-card-image">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=500&fit=crop" alt="Ecommerce content at scale">
+        </div>
+        <div class="v2-cs-card-content">
+          <div class="v2-cs-card-tag">Ecommerce</div>
+          <h3 class="v2-cs-card-title">10,000 Product Descriptions in 90 Days for a Major Retailer</h3>
+          <p class="v2-cs-card-desc">Scaled product content across 15 categories while maintaining consistent brand voice and SEO optimization.</p>
+          <div class="v2-cs-card-stats">
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">10K</div>
+              <div class="v2-cs-stat-label">Products</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">+47%</div>
+              <div class="v2-cs-stat-label">Conversions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case study 3 -->
+      <div class="v2-cs-card v2-reveal">
+        <div class="v2-cs-card-image">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=500&fit=crop" alt="Content marketing strategy">
+        </div>
+        <div class="v2-cs-card-content">
+          <div class="v2-cs-card-tag">Content Strategy</div>
+          <h3 class="v2-cs-card-title">From Zero to Page One: Building a B2B Content Engine</h3>
+          <p class="v2-cs-card-desc">A comprehensive content strategy that took a B2B SaaS company from no organic presence to ranking for 200+ keywords.</p>
+          <div class="v2-cs-card-stats">
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">200+</div>
+              <div class="v2-cs-stat-label">Keywords</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">8x</div>
+              <div class="v2-cs-stat-label">Traffic</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 0,60 1440,60" fill="#f9f9fb"/></svg>
+  </div>
+</section>
+
+
+<!-- ========================================
+     PROCESS TIMELINE
      ======================================== -->
 <section class="v2-section v2-process" aria-label="How We Work" id="processTimeline">
   <div class="v2-container">
@@ -2502,108 +2650,8 @@ get_header();
       </div>
     </div>
   </div>
-</section>
-
-
-<!-- ========================================
-     10. IMPACT NUMBERS
-     ======================================== -->
-<section class="v2-section v2-impact" aria-label="Impact">
-  <div class="v2-container">
-    <div class="v2-impact-heading v2-reveal">
-      <span class="v2-overline">Measurable Results</span>
-      <h2>Case Studies</h2>
-    </div>
-    <div class="v2-impact-grid">
-      <div class="v2-impact-item v2-reveal v2-delay-1">
-        <div class="v2-impact-number"><span class="v2-count" data-target="4.2" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
-        <div class="v2-impact-desc">Average Dwell Time Increase</div>
-      </div>
-      <div class="v2-impact-item v2-reveal v2-delay-2">
-        <div class="v2-impact-number"><span class="v2-count" data-target="312">0</span><span class="v2-suffix">%</span></div>
-        <div class="v2-impact-desc">Organic Traffic Lift</div>
-      </div>
-      <div class="v2-impact-item v2-reveal v2-delay-3">
-        <div class="v2-impact-number"><span class="v2-count" data-target="89">0</span><span class="v2-suffix"></span></div>
-        <div class="v2-impact-desc">Average Backlinks Earned</div>
-      </div>
-      <div class="v2-impact-item v2-reveal v2-delay-4">
-        <div class="v2-impact-number"><span class="v2-count" data-target="2.8" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
-        <div class="v2-impact-desc">Conversion Rate Improvement</div>
-      </div>
-    </div>
-
-    <div class="v2-cs-grid" style="margin-top:80px;">
-      <!-- Large featured case study -->
-      <div class="v2-cs-card v2-cs-card-large v2-reveal">
-        <div class="v2-cs-card-image">
-          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop" alt="Grove Collaborative case study">
-        </div>
-        <div class="v2-cs-card-content">
-          <div class="v2-cs-card-tag">Featured Case Study</div>
-          <h3 class="v2-cs-card-title">How Grove Collaborative Scaled SEO Content to 500+ Articles</h3>
-          <p class="v2-cs-card-desc">We built a dedicated content team of 12 writers calibrated to Grove's brand voice, producing expert-level SEO content across sustainability, home care, and wellness categories.</p>
-          <div class="v2-cs-card-stats">
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">312%</div>
-              <div class="v2-cs-stat-label">Organic Lift</div>
-            </div>
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">500+</div>
-              <div class="v2-cs-stat-label">Articles</div>
-            </div>
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">4.2x</div>
-              <div class="v2-cs-stat-label">Dwell Time</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Case study 2 -->
-      <div class="v2-cs-card v2-reveal">
-        <div class="v2-cs-card-image">
-          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=500&fit=crop" alt="Ecommerce content at scale">
-        </div>
-        <div class="v2-cs-card-content">
-          <div class="v2-cs-card-tag">Ecommerce</div>
-          <h3 class="v2-cs-card-title">10,000 Product Descriptions in 90 Days for a Major Retailer</h3>
-          <p class="v2-cs-card-desc">Scaled product content across 15 categories while maintaining consistent brand voice and SEO optimization.</p>
-          <div class="v2-cs-card-stats">
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">10K</div>
-              <div class="v2-cs-stat-label">Products</div>
-            </div>
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">+47%</div>
-              <div class="v2-cs-stat-label">Conversions</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Case study 3 -->
-      <div class="v2-cs-card v2-reveal">
-        <div class="v2-cs-card-image">
-          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=500&fit=crop" alt="Content marketing strategy">
-        </div>
-        <div class="v2-cs-card-content">
-          <div class="v2-cs-card-tag">Content Strategy</div>
-          <h3 class="v2-cs-card-title">From Zero to Page One: Building a B2B Content Engine</h3>
-          <p class="v2-cs-card-desc">A comprehensive content strategy that took a B2B SaaS company from no organic presence to ranking for 200+ keywords.</p>
-          <div class="v2-cs-card-stats">
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">200+</div>
-              <div class="v2-cs-stat-label">Keywords</div>
-            </div>
-            <div class="v2-cs-stat">
-              <div class="v2-cs-stat-num">8x</div>
-              <div class="v2-cs-stat-label">Traffic</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#fff"/></svg>
   </div>
 </section>
 
@@ -2903,8 +2951,7 @@ get_header();
       el.addEventListener('mouseenter', function() {
         cursor.classList.add('active');
         var tag = el.tagName.toLowerCase();
-        var isCard = el.classList.contains('v2-cs-card') || el.classList.contains('v2-service-row');
-        cursor.textContent = isCard ? 'View' : 'Explore';
+        cursor.textContent = '';
       });
       el.addEventListener('mouseleave', function() {
         cursor.classList.remove('active');

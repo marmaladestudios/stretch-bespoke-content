@@ -1,0 +1,8 @@
+node_modules
+.git
+docs
+public
+setup-*.php
+docker-compose.yml
+*.md
+bespoke-content-experience.html

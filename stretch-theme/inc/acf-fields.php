@@ -4,9 +4,7 @@
  * Registers all section layouts for the page builder.
  */
 
-if (!function_exists('acf_add_local_field_group')) {
-    return;
-}
+// ACF check is inside the acf/init hook below — no early return needed.
 
 /**
  * Shared section settings fields (reused in every layout).
