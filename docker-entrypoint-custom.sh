@@ -44,16 +44,6 @@ export WORDPRESS_DB_USER="wordpress"
 export WORDPRESS_DB_PASSWORD="wordpress"
 export WORDPRESS_DB_NAME="wordpress"
 
-# Run WordPress docker-entrypoint to set up wp-config.php (if not exists)
-if [ ! -f /var/www/html/wp-config.php ]; then
-    echo "Running WordPress setup..."
-    # Source the WordPress entrypoint function
-    docker-entrypoint.sh apache2-foreground &
-    sleep 8
-    # Kill Apache — we'll restart it properly
-    pkill -f apache2 2>/dev/null || true
-    sleep 2
-fi
-
-echo "Starting Apache..."
-exec apache2-foreground
+# Let the WordPress entrypoint handle wp-config.php setup AND start Apache
+# docker-entrypoint.sh will generate wp-config.php if needed, then exec apache2-foreground
+exec docker-entrypoint.sh apache2-foreground
