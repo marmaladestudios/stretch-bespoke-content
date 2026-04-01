@@ -1,0 +1,71 @@
+/**
+ * Gutenberg editor styles — matches front-end typography.
+ */
+.editor-styles-wrapper {
+  font-family: 'Assistant', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #323A51;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.editor-styles-wrapper h2 {
+  font-size: 30px;
+  font-weight: 500;
+  color: #323A51;
+  line-height: 1.2;
+  margin-top: 48px;
+  margin-bottom: 20px;
+}
+
+.editor-styles-wrapper h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #8560A8;
+  line-height: 1.4;
+  margin-top: 36px;
+  margin-bottom: 16px;
+}
+
+.editor-styles-wrapper p {
+  margin-bottom: 24px;
+}
+
+.editor-styles-wrapper a {
+  color: #8560A8;
+  text-decoration: underline;
+}
+
+.editor-styles-wrapper blockquote {
+  border-left: 3px solid #00BFF3;
+  padding: 16px 0 16px 24px;
+  margin: 32px 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #252C3A;
+}
+
+.editor-styles-wrapper ul,
+.editor-styles-wrapper ol {
+  margin-bottom: 24px;
+  padding-left: 24px;
+}
+
+.editor-styles-wrapper li {
+  margin-bottom: 8px;
+}
+
+.editor-styles-wrapper img {
+  max-width: 100%;
+  height: auto;
+}
