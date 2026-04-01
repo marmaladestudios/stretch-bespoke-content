@@ -1,0 +1,2306 @@
+<?php
+/**
+ * Template Name: Homepage 2.0
+ */
+get_header();
+?>
+
+<!-- Scroll Progress Bar -->
+<div id="scrollProgress" style="position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,#8560A8,#5674B9,#448CCB,#00BFF3);z-index:99999;transition:width .1s linear;"></div>
+
+<style>
+/* ========================================
+   HOMEPAGE 2.0 — PREMIUM TEMPLATE
+   ======================================== */
+
+/* ---------- RESET / BASE ---------- */
+.v2-section { box-sizing: border-box; }
+.v2-section *, .v2-section *::before, .v2-section *::after { box-sizing: inherit; }
+.v2-section img { max-width: 100%; height: auto; display: block; }
+
+/* ---------- UTILITIES ---------- */
+.v2-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+}
+.gradient-text {
+  background: linear-gradient(135deg, #8560A8 0%, #5674B9 30%, #448CCB 60%, #00BFF3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---------- REVEAL ANIMATIONS ---------- */
+.v2-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.v2-reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2-reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.v2-reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2-reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.v2-delay-1 { transition-delay: 0.1s; }
+.v2-delay-2 { transition-delay: 0.2s; }
+.v2-delay-3 { transition-delay: 0.3s; }
+.v2-delay-4 { transition-delay: 0.4s; }
+.v2-delay-5 { transition-delay: 0.5s; }
+.v2-delay-6 { transition-delay: 0.6s; }
+
+/* ========================================
+   1. CINEMATIC HERO
+   ======================================== */
+.v2-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(170deg, #1a1f2e 0%, #252C3A 40%, #1e2333 100%);
+  overflow: hidden;
+  padding: 120px 0 80px;
+}
+.v2-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 80%;
+  height: 150%;
+  background: radial-gradient(ellipse at center, rgba(86,116,185,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.v2-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(133,96,168,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Floating shapes */
+.v2-hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.v2-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  will-change: transform;
+  transition: transform 0.3s ease-out;
+}
+.v2-shape-1 {
+  width: 300px; height: 300px;
+  top: 10%; left: 5%;
+  background: radial-gradient(circle, #8560A8, transparent);
+  transform: translate(calc(var(--mx, 0) * 20px), calc(var(--my, 0) * 20px));
+}
+.v2-shape-2 {
+  width: 200px; height: 200px;
+  top: 60%; left: 15%;
+  background: radial-gradient(circle, #5674B9, transparent);
+  transform: translate(calc(var(--mx, 0) * -15px), calc(var(--my, 0) * -15px));
+}
+.v2-shape-3 {
+  width: 150px; height: 150px;
+  top: 20%; right: 10%;
+  background: radial-gradient(circle, #00BFF3, transparent);
+  transform: translate(calc(var(--mx, 0) * 25px), calc(var(--my, 0) * 12px));
+}
+.v2-shape-4 {
+  width: 100px; height: 100px;
+  bottom: 20%; right: 25%;
+  background: radial-gradient(circle, #448CCB, transparent);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  transform: translate(calc(var(--mx, 0) * -10px), calc(var(--my, 0) * 18px));
+}
+.v2-shape-5 {
+  width: 80px; height: 80px;
+  top: 40%; left: 45%;
+  background: radial-gradient(circle, #8560A8, transparent);
+  opacity: 0.08;
+  transform: translate(calc(var(--mx, 0) * 30px), calc(var(--my, 0) * -20px));
+}
+.v2-shape-6 {
+  width: 250px; height: 250px;
+  bottom: 5%; right: 5%;
+  background: radial-gradient(circle, #5674B9, transparent);
+  opacity: 0.06;
+  transform: translate(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * 8px));
+}
+
+.v2-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* Hero text */
+.v2-hero-text .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  margin-bottom: 20px;
+  display: block;
+}
+.v2-hero-text h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(36px, 4.5vw, 58px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 24px;
+  letter-spacing: -1px;
+}
+.v2-hero-text .v2-subtitle {
+  font-family: 'Assistant', sans-serif;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 16px;
+  max-width: 480px;
+}
+.v2-hero-text .v2-supporting {
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 36px;
+}
+.v2-hero-text .v2-btn-primary {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, #8560A8, #5674B9);
+  padding: 16px 40px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(133,96,168,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.v2-hero-text .v2-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #5674B9, #00BFF3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 6px;
+}
+.v2-hero-text .v2-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(133,96,168,0.45);
+}
+.v2-hero-text .v2-btn-primary:hover::before { opacity: 1; }
+.v2-hero-text .v2-btn-primary span { position: relative; z-index: 1; }
+
+/* Hero visual — browser mockup */
+.v2-hero-visual {
+  position: relative;
+  perspective: 1000px;
+}
+.v2-browser-mockup {
+  background: #1a1f2e;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  transform: rotateY(-2deg) rotateX(1deg);
+  transition: transform 0.6s ease;
+}
+.v2-browser-mockup:hover {
+  transform: rotateY(0deg) rotateX(0deg);
+}
+.v2-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.v2-browser-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.v2-browser-dot:nth-child(1) { background: #ff5f57; }
+.v2-browser-dot:nth-child(2) { background: #febc2e; }
+.v2-browser-dot:nth-child(3) { background: #28c840; }
+.v2-browser-url {
+  flex: 1;
+  margin-left: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-family: 'Assistant', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+.v2-browser-content {
+  padding: 20px;
+}
+
+/* Mini page inside browser */
+.v2-mini-hero {
+  background: linear-gradient(135deg, #8560A8, #5674B9);
+  border-radius: 6px;
+  padding: 24px 20px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.v2-mini-hero::after {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+.v2-mini-hero-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.v2-mini-hero-sub {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+.v2-mini-hero-btn {
+  display: inline-block;
+  background: #fff;
+  color: #8560A8;
+  font-size: 9px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 3px;
+}
+
+/* Text lines */
+.v2-mini-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.v2-mini-line {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.06);
+}
+.v2-mini-line:nth-child(1) { width: 100%; }
+.v2-mini-line:nth-child(2) { width: 85%; }
+.v2-mini-line:nth-child(3) { width: 92%; }
+.v2-mini-line:nth-child(4) { width: 60%; }
+
+/* Media blocks */
+.v2-mini-media-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.v2-mini-media-block {
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.v2-mini-media-block svg { opacity: 0.2; }
+
+/* Embedded app UI */
+.v2-mini-app {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.v2-mini-app-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.v2-mini-app-toolbar-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+}
+.v2-mini-app-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 12px;
+  background: rgba(255,255,255,0.02);
+}
+.v2-mini-app-tab {
+  font-family: 'Assistant', sans-serif;
+  font-size: 8px;
+  color: rgba(255,255,255,0.3);
+  padding: 6px 10px;
+  border-bottom: 2px solid transparent;
+}
+.v2-mini-app-tab.active {
+  color: #00BFF3;
+  border-bottom-color: #00BFF3;
+}
+.v2-mini-app-body {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.v2-mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 50px;
+}
+.v2-mini-chart-bar {
+  flex: 1;
+  background: linear-gradient(180deg, #00BFF3, #5674B9);
+  border-radius: 2px 2px 0 0;
+  min-width: 6px;
+  animation: v2-barPulse 3s ease-in-out infinite alternate;
+}
+.v2-mini-chart-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+.v2-mini-chart-bar:nth-child(2) { height: 55%; animation-delay: 0.2s; }
+.v2-mini-chart-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+.v2-mini-chart-bar:nth-child(4) { height: 75%; animation-delay: 0.6s; }
+.v2-mini-chart-bar:nth-child(5) { height: 60%; animation-delay: 0.8s; }
+.v2-mini-chart-bar:nth-child(6) { height: 90%; animation-delay: 1s; }
+@keyframes v2-barPulse {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+.v2-mini-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+.v2-mini-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.v2-mini-metric-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 8px;
+  color: rgba(255,255,255,0.35);
+}
+.v2-mini-metric-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #00BFF3;
+}
+
+/* Floating stats card */
+.v2-stats-card {
+  position: absolute;
+  bottom: -20px;
+  left: -30px;
+  background: rgba(30, 35, 51, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 220px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  z-index: 3;
+}
+.v2-stats-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.v2-stats-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.v2-stats-card-item-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+.v2-stats-card-item-value.cyan { color: #00BFF3; }
+.v2-stats-card-item-value.purple { color: #8560A8; }
+.v2-stats-card-item-value.blue { color: #5674B9; }
+.v2-stats-card-item-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 9px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+.v2-stats-card-chart {
+  height: 36px;
+  display: flex;
+  align-items: flex-end;
+}
+.v2-stats-card-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   2. GRADIENT ACCENT BAR
+   ======================================== */
+.v2-accent-bar {
+  height: 4px;
+  background: linear-gradient(90deg, #8560A8, #5674B9, #448CCB, #00BFF3, #448CCB, #5674B9, #8560A8);
+  background-size: 200% 100%;
+  animation: v2-gradientSlide 4s ease infinite;
+}
+@keyframes v2-gradientSlide {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ========================================
+   3. ANIMATED STATS COUNTER BAR
+   ======================================== */
+.v2-stats-bar {
+  background: #1a1f2e;
+  padding: 60px 0;
+  position: relative;
+}
+.v2-stats-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(133,96,168,0.05), rgba(0,191,243,0.03));
+  pointer-events: none;
+}
+.v2-stats-bar-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  text-align: center;
+  position: relative;
+}
+.v2-stat-item {
+  padding: 10px;
+}
+.v2-stat-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.v2-stat-number .v2-count { display: inline; }
+.v2-stat-number .v2-suffix { color: #00BFF3; }
+.v2-stat-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ========================================
+   4. PULL QUOTE BANNER
+   ======================================== */
+.v2-pull-quote {
+  padding: 100px 0;
+  background: linear-gradient(135deg, #f9f9fb 0%, #f0f0f6 100%);
+  position: relative;
+  overflow: hidden;
+}
+.v2-pull-quote::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, rgba(133,96,168,0.03), rgba(0,191,243,0.03), rgba(133,96,168,0.03));
+  background-size: 200% 100%;
+  animation: v2-gradientSlide 8s ease infinite;
+}
+.v2-pull-quote blockquote {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 400;
+  color: #323A51;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+.v2-pull-quote .quote-accent {
+  color: #00BFF3;
+  font-weight: 500;
+}
+.v2-pull-quote blockquote::before,
+.v2-pull-quote blockquote::after {
+  font-family: Georgia, serif;
+  font-size: 120px;
+  line-height: 1;
+  position: absolute;
+  opacity: 0.07;
+  color: #8560A8;
+}
+.v2-pull-quote blockquote::before {
+  content: '\201C';
+  top: -40px;
+  left: -30px;
+}
+.v2-pull-quote blockquote::after {
+  content: '\201D';
+  bottom: -70px;
+  right: -20px;
+}
+
+/* ========================================
+   5. SERVICES SHOWCASE
+   ======================================== */
+.v2-services {
+  padding: 0;
+  background: #fff;
+}
+.v2-service-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+}
+.v2-service-row:nth-child(even) .v2-service-image { order: 2; }
+.v2-service-row:nth-child(even) .v2-service-content { order: 1; }
+.v2-service-image {
+  position: relative;
+  overflow: hidden;
+}
+.v2-service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+  transition: transform 8s ease;
+  will-change: transform;
+}
+.v2-service-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(133,96,168,0.15), rgba(0,191,243,0.1));
+  mix-blend-mode: multiply;
+}
+.v2-service-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 70px;
+}
+.v2-service-content .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  margin-bottom: 16px;
+}
+.v2-service-content h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 600;
+  color: #252C3A;
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+.v2-service-content p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 30px;
+  max-width: 440px;
+}
+.v2-service-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8560A8;
+  text-decoration: none;
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+.v2-service-cta:hover {
+  gap: 14px;
+  color: #5674B9;
+}
+.v2-service-cta svg { transition: transform 0.3s ease; }
+.v2-service-cta:hover svg { transform: translateX(4px); }
+
+/* ========================================
+   6. BESPOKE CONTENT EXPERIENCE
+   ======================================== */
+.v2-bespoke {
+  background: #252C3A;
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+}
+.v2-bespoke::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,191,243,0.06), transparent);
+  pointer-events: none;
+}
+.v2-bespoke-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+.v2-bespoke-text .v2-tag {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  background: rgba(0,191,243,0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+.v2-bespoke-text h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600;
+  color: #00BFF3;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+.v2-bespoke-text p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 16px;
+  max-width: 460px;
+}
+.v2-bespoke-text .v2-btn-outline {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #00BFF3;
+  border: 1px solid rgba(0,191,243,0.4);
+  padding: 14px 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.v2-bespoke-text .v2-btn-outline:hover {
+  background: rgba(0,191,243,0.1);
+  border-color: #00BFF3;
+}
+
+/* Bespoke app mockup */
+.v2-bespoke-app {
+  background: #1a1f2e;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.v2-bespoke-app-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.v2-bespoke-app-bar .v2-browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+.v2-bespoke-app-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  margin-left: 16px;
+}
+.v2-bespoke-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.v2-bespoke-tab {
+  font-family: 'Assistant', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  padding: 12px 20px;
+  border-bottom: 2px solid transparent;
+  cursor: default;
+}
+.v2-bespoke-tab.active {
+  color: #00BFF3;
+  border-bottom-color: #00BFF3;
+}
+.v2-bespoke-body {
+  padding: 24px;
+}
+
+/* Slider controls */
+.v2-bespoke-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.v2-bespoke-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.v2-bespoke-slider-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  width: 100px;
+  flex-shrink: 0;
+}
+.v2-bespoke-slider-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  position: relative;
+}
+.v2-bespoke-slider-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #5674B9, #00BFF3);
+}
+.v2-bespoke-slider-fill::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #00BFF3;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0,191,243,0.5);
+}
+
+/* Metric readouts */
+.v2-bespoke-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.v2-bespoke-metric {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+.v2-bespoke-metric-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #00BFF3;
+  line-height: 1;
+}
+.v2-bespoke-metric-label {
+  font-family: 'Assistant', sans-serif;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Bar chart */
+.v2-bespoke-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 80px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+.v2-bespoke-chart-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, #00BFF3, #5674B9);
+  transition: height 1s ease;
+}
+.v2-bespoke-chart-bar:nth-child(1) { height: 35%; }
+.v2-bespoke-chart-bar:nth-child(2) { height: 50%; }
+.v2-bespoke-chart-bar:nth-child(3) { height: 42%; }
+.v2-bespoke-chart-bar:nth-child(4) { height: 68%; }
+.v2-bespoke-chart-bar:nth-child(5) { height: 55%; }
+.v2-bespoke-chart-bar:nth-child(6) { height: 78%; }
+.v2-bespoke-chart-bar:nth-child(7) { height: 65%; }
+.v2-bespoke-chart-bar:nth-child(8) { height: 92%; }
+
+.v2-bespoke-download {
+  display: block;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, #5674B9, #00BFF3);
+  padding: 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  cursor: default;
+}
+.v2-bespoke-download:hover { opacity: 0.9; }
+
+/* ========================================
+   7. CLIENT LOGO MARQUEE
+   ======================================== */
+.v2-logos {
+  padding: 80px 0;
+  background: #f9f9fb;
+  overflow: hidden;
+}
+.v2-logos h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #999;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.v2-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: v2-marqueeScroll 40s linear infinite;
+}
+.v2-marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes v2-marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.v2-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 0 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #bbb;
+  letter-spacing: 1px;
+  filter: grayscale(100%);
+  opacity: 0.5;
+  transition: all 0.4s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+.v2-logo-item:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  color: #8560A8;
+}
+
+/* ========================================
+   8. TESTIMONIALS 2.0
+   ======================================== */
+.v2-testimonials {
+  padding: 120px 0;
+  background: #fff;
+  position: relative;
+}
+.v2-testimonials-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  min-height: 320px;
+}
+.v2-testimonial-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+.v2-testimonial-slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+.v2-testimonial-quote-mark {
+  display: block;
+  margin: 0 auto 30px;
+  opacity: 0.1;
+}
+.v2-testimonial-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 400;
+  color: #323A51;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-style: italic;
+}
+.v2-testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.v2-testimonial-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  flex-shrink: 0;
+}
+.v2-testimonial-info {
+  text-align: left;
+}
+.v2-testimonial-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #252C3A;
+}
+.v2-testimonial-title {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  color: #888;
+}
+.v2-testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 50px;
+}
+.v2-testimonial-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+.v2-testimonial-dot.active {
+  background: #8560A8;
+  transform: scale(1.3);
+}
+
+/* ========================================
+   9. PROCESS TIMELINE
+   ======================================== */
+.v2-process {
+  padding: 120px 0;
+  background: #f9f9fb;
+  overflow: hidden;
+}
+.v2-process-heading {
+  text-align: center;
+  margin-bottom: 80px;
+}
+.v2-process-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  display: block;
+  margin-bottom: 16px;
+}
+.v2-process-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 600;
+  color: #252C3A;
+  margin: 0;
+}
+.v2-timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.v2-timeline-line {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #e0e0e8;
+  z-index: 0;
+}
+.v2-timeline-progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #8560A8, #5674B9, #00BFF3);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+.v2-timeline-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  position: relative;
+  z-index: 1;
+}
+.v2-timeline-step {
+  text-align: center;
+  padding: 0 8px;
+}
+.v2-timeline-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #e0e0e8;
+  margin: 20px auto 20px;
+  position: relative;
+  transition: all 0.5s ease;
+}
+.v2-timeline-dot::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.5s ease;
+}
+.v2-timeline-step.active .v2-timeline-dot {
+  background: #00BFF3;
+  box-shadow: 0 0 20px rgba(0,191,243,0.4);
+}
+.v2-timeline-step.active .v2-timeline-dot::after {
+  border-color: rgba(0,191,243,0.2);
+}
+.v2-timeline-step-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #bbb;
+  margin-bottom: 4px;
+  transition: color 0.5s ease;
+}
+.v2-timeline-step.active .v2-timeline-step-number { color: #00BFF3; }
+.v2-timeline-step-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+  transition: color 0.5s ease;
+}
+.v2-timeline-step.active .v2-timeline-step-title { color: #252C3A; }
+
+/* ========================================
+   10. IMPACT NUMBERS
+   ======================================== */
+.v2-impact {
+  padding: 120px 0;
+  background: linear-gradient(170deg, #1a1f2e, #252C3A);
+  position: relative;
+  overflow: hidden;
+}
+.v2-impact::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,191,243,0.04), transparent);
+  pointer-events: none;
+}
+.v2-impact-heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.v2-impact-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  display: block;
+  margin-bottom: 16px;
+}
+.v2-impact-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+.v2-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+.v2-impact-item {
+  padding: 30px 20px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.4s ease;
+}
+.v2-impact-item:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(0,191,243,0.2);
+  transform: translateY(-4px);
+}
+.v2-impact-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.v2-impact-number .v2-count { color: #fff; }
+.v2-impact-number .v2-suffix { color: #00BFF3; }
+.v2-impact-desc {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+
+/* ========================================
+   11. MAGAZINE BLOG LAYOUT
+   ======================================== */
+.v2-blog {
+  padding: 120px 0;
+  background: #fff;
+}
+.v2-blog-heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.v2-blog-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  display: block;
+  margin-bottom: 16px;
+}
+.v2-blog-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 600;
+  color: #252C3A;
+  margin: 0;
+}
+.v2-blog-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.v2-blog-featured {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  min-height: 500px;
+  background: #252C3A;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.v2-blog-featured:hover { transform: translateY(-4px); }
+.v2-blog-featured img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  transition: transform 6s ease;
+}
+.v2-blog-featured:hover img { transform: scale(1.05); }
+.v2-blog-featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+}
+.v2-blog-tag {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  background: rgba(0,191,243,0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+.v2-blog-featured-overlay h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+.v2-blog-featured-overlay p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+.v2-blog-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.v2-blog-small {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f9f9fb;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.v2-blog-small:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.v2-blog-small-img {
+  height: 160px;
+  overflow: hidden;
+}
+.v2-blog-small-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 6s ease;
+}
+.v2-blog-small:hover .v2-blog-small-img img { transform: scale(1.05); }
+.v2-blog-small-content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.v2-blog-small-content h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #252C3A;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+.v2-blog-small-content p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ========================================
+   12. FULL-VIEWPORT CTA
+   ======================================== */
+.v2-cta-full {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(170deg, #8560A8, #3d2d66 30%, #252C3A 70%, #1a1f2e);
+}
+.v2-cta-full::before {
+  content: '';
+  position: absolute;
+  top: 30%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0,191,243,0.08), transparent 70%);
+  pointer-events: none;
+}
+.v2-cta-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.v2-cta-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  animation: v2-ctaFloat 12s ease-in-out infinite alternate;
+}
+.v2-cta-shape-1 {
+  width: 200px; height: 200px;
+  top: 15%; left: 10%;
+  background: radial-gradient(circle, #00BFF3, transparent);
+  animation-delay: 0s;
+}
+.v2-cta-shape-2 {
+  width: 300px; height: 300px;
+  bottom: 10%; right: 15%;
+  background: radial-gradient(circle, #8560A8, transparent);
+  animation-delay: -4s;
+}
+.v2-cta-shape-3 {
+  width: 120px; height: 120px;
+  top: 60%; left: 70%;
+  background: radial-gradient(circle, #5674B9, transparent);
+  animation-delay: -2s;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+.v2-cta-shape-4 {
+  width: 160px; height: 160px;
+  top: 30%; right: 20%;
+  background: radial-gradient(circle, #448CCB, transparent);
+  animation-delay: -6s;
+}
+@keyframes v2-ctaFloat {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(30px, -30px) rotate(15deg); }
+}
+.v2-cta-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 0 40px;
+}
+.v2-cta-content h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+.v2-cta-content p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 19px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 44px;
+  line-height: 1.7;
+}
+.v2-cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.v2-cta-btn-primary {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, #00BFF3, #5674B9);
+  padding: 18px 44px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,191,243,0.3);
+}
+.v2-cta-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,191,243,0.45);
+}
+.v2-cta-btn-outline {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 18px 44px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.v2-cta-btn-outline:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.6);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 960px) {
+  .v2-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .v2-hero-visual {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .v2-stats-card {
+    display: none;
+  }
+  .v2-stats-bar-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 20px;
+  }
+  .v2-service-row {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .v2-service-row:nth-child(even) .v2-service-image { order: 0; }
+  .v2-service-row:nth-child(even) .v2-service-content { order: 0; }
+  .v2-service-image { height: 350px; }
+  .v2-service-content { padding: 50px 40px; }
+  .v2-bespoke-inner {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .v2-impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .v2-blog-grid {
+    grid-template-columns: 1fr;
+  }
+  .v2-blog-featured { min-height: 380px; }
+  .v2-timeline-steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .v2-timeline-line { display: none; }
+}
+
+@media (max-width: 768px) {
+  .v2-container { padding: 0 24px; }
+  .v2-hero { padding: 100px 0 60px; }
+  .v2-hero-text h1 { font-size: 34px; }
+  .v2-pull-quote blockquote { font-size: 20px; }
+  .v2-pull-quote { padding: 70px 0; }
+  .v2-service-content { padding: 40px 24px; }
+  .v2-bespoke { padding: 80px 0; }
+  .v2-bespoke-metrics { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .v2-testimonial-text { font-size: 18px; }
+  .v2-process { padding: 80px 0; }
+  .v2-impact { padding: 80px 0; }
+  .v2-blog { padding: 80px 0; }
+  .v2-cta-content h2 { font-size: 32px; }
+}
+
+@media (max-width: 480px) {
+  .v2-container { padding: 0 16px; }
+  .v2-stats-bar-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 10px;
+  }
+  .v2-impact-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .v2-timeline-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .v2-cta-buttons { flex-direction: column; align-items: center; }
+  .v2-cta-btn-primary, .v2-cta-btn-outline { width: 100%; text-align: center; }
+  .v2-bespoke-metrics { grid-template-columns: 1fr; }
+  .v2-testimonial-author { flex-direction: column; gap: 10px; }
+  .v2-testimonial-info { text-align: center; }
+}
+</style>
+
+
+<!-- ========================================
+     1. CINEMATIC HERO
+     ======================================== -->
+<section class="v2-section v2-hero" aria-label="Hero">
+  <div class="v2-hero-shapes" id="heroShapes">
+    <div class="v2-shape v2-shape-1"></div>
+    <div class="v2-shape v2-shape-2"></div>
+    <div class="v2-shape v2-shape-3"></div>
+    <div class="v2-shape v2-shape-4"></div>
+    <div class="v2-shape v2-shape-5"></div>
+    <div class="v2-shape v2-shape-6"></div>
+  </div>
+
+  <div class="v2-container">
+    <div class="v2-hero-inner">
+      <div class="v2-hero-text">
+        <span class="v2-overline v2-reveal v2-delay-1">Stretch Creative</span>
+        <h1 class="v2-reveal v2-delay-2">Creative Solutions<br><span class="gradient-text">Fit For You</span></h1>
+        <p class="v2-subtitle v2-reveal v2-delay-3">The trusted partner for producing publish-ready content at scale&nbsp;&mdash; your story, your voice, on time.</p>
+        <p class="v2-supporting v2-reveal v2-delay-4">Content writing &middot; SEO strategy &middot; Design &middot; Videography</p>
+        <a href="/contact-stretch-creative/" class="v2-btn-primary v2-reveal v2-delay-5"><span>Let&rsquo;s Chat &rarr;</span></a>
+      </div>
+
+      <div class="v2-hero-visual v2-reveal v2-delay-3">
+        <div class="v2-browser-mockup">
+          <div class="v2-browser-bar">
+            <div class="v2-browser-dot"></div>
+            <div class="v2-browser-dot"></div>
+            <div class="v2-browser-dot"></div>
+            <div class="v2-browser-url">stretchcreative.com</div>
+          </div>
+          <div class="v2-browser-content">
+            <div class="v2-mini-hero">
+              <div class="v2-mini-hero-title">Bespoke Content Experience</div>
+              <div class="v2-mini-hero-sub">Interactive, data-driven content built for engagement</div>
+              <div class="v2-mini-hero-btn">Explore</div>
+            </div>
+            <div class="v2-mini-lines">
+              <div class="v2-mini-line"></div>
+              <div class="v2-mini-line"></div>
+              <div class="v2-mini-line"></div>
+              <div class="v2-mini-line"></div>
+            </div>
+            <div class="v2-mini-media-row">
+              <div class="v2-mini-media-block">
+                <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M4 16l4-4 3 3 3-4 6 5"/></svg>
+              </div>
+              <div class="v2-mini-media-block">
+                <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>
+              </div>
+            </div>
+            <div class="v2-mini-app">
+              <div class="v2-mini-app-toolbar">
+                <span class="v2-mini-app-toolbar-title">Migration Readiness Assessment</span>
+              </div>
+              <div class="v2-mini-app-tabs">
+                <span class="v2-mini-app-tab active">Assessment</span>
+                <span class="v2-mini-app-tab">Results</span>
+                <span class="v2-mini-app-tab">Benchmarks</span>
+              </div>
+              <div class="v2-mini-app-body">
+                <div class="v2-mini-chart">
+                  <div class="v2-mini-chart-bar"></div>
+                  <div class="v2-mini-chart-bar"></div>
+                  <div class="v2-mini-chart-bar"></div>
+                  <div class="v2-mini-chart-bar"></div>
+                  <div class="v2-mini-chart-bar"></div>
+                  <div class="v2-mini-chart-bar"></div>
+                </div>
+                <div class="v2-mini-metrics">
+                  <div class="v2-mini-metric"><span class="v2-mini-metric-label">Readiness</span><span class="v2-mini-metric-value">7.2</span></div>
+                  <div class="v2-mini-metric"><span class="v2-mini-metric-label">Timeline</span><span class="v2-mini-metric-value">4.8mo</span></div>
+                  <div class="v2-mini-metric"><span class="v2-mini-metric-label">Risk Level</span><span class="v2-mini-metric-value">Med</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating stats card -->
+        <div class="v2-stats-card v2-reveal v2-delay-5">
+          <div class="v2-stats-card-title">Performance</div>
+          <div class="v2-stats-card-grid">
+            <div>
+              <div class="v2-stats-card-item-value cyan">4.2x</div>
+              <div class="v2-stats-card-item-label">Dwell</div>
+            </div>
+            <div>
+              <div class="v2-stats-card-item-value purple">312%</div>
+              <div class="v2-stats-card-item-label">Organics</div>
+            </div>
+            <div>
+              <div class="v2-stats-card-item-value blue">+89%</div>
+              <div class="v2-stats-card-item-label">Social</div>
+            </div>
+            <div>
+              <div class="v2-stats-card-item-value cyan">2.8x</div>
+              <div class="v2-stats-card-item-label">Conversions</div>
+            </div>
+          </div>
+          <div class="v2-stats-card-chart">
+            <svg viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#8560A8"/>
+                  <stop offset="50%" stop-color="#5674B9"/>
+                  <stop offset="100%" stop-color="#00BFF3"/>
+                </linearGradient>
+                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="36" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#00BFF3" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#00BFF3" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 32 Q20 30 36 28 T72 22 T108 14 T144 8 T180 2" stroke="url(#chartGrad)" stroke-width="2" fill="none"/>
+              <path d="M0 32 Q20 30 36 28 T72 22 T108 14 T144 8 T180 2 V36 H0 Z" fill="url(#chartFill)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     2. GRADIENT ACCENT BAR
+     ======================================== -->
+<div class="v2-section v2-accent-bar"></div>
+
+
+<!-- ========================================
+     3. ANIMATED STATS COUNTER BAR
+     ======================================== -->
+<section class="v2-section v2-stats-bar" aria-label="Statistics">
+  <div class="v2-container">
+    <div class="v2-stats-bar-inner">
+      <div class="v2-stat-item v2-reveal">
+        <div class="v2-stat-number"><span class="v2-count" data-target="200">0</span><span class="v2-suffix">+</span></div>
+        <div class="v2-stat-label">Creatives</div>
+      </div>
+      <div class="v2-stat-item v2-reveal v2-delay-1">
+        <div class="v2-stat-number"><span class="v2-count" data-target="27">0</span><span class="v2-suffix">+</span></div>
+        <div class="v2-stat-label">Enterprise Brands</div>
+      </div>
+      <div class="v2-stat-item v2-reveal v2-delay-2">
+        <div class="v2-stat-number"><span class="v2-count" data-target="500" data-suffix="K">0</span><span class="v2-suffix">K+</span></div>
+        <div class="v2-stat-label">Content Pieces Delivered</div>
+      </div>
+      <div class="v2-stat-item v2-reveal v2-delay-3">
+        <div class="v2-stat-number"><span class="v2-count" data-target="98">0</span><span class="v2-suffix">%</span></div>
+        <div class="v2-stat-label">Client Retention</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     4. PULL QUOTE BANNER
+     ======================================== -->
+<section class="v2-section v2-pull-quote" aria-label="Quote">
+  <div class="v2-container">
+    <blockquote class="v2-reveal">
+      More than a vendor &mdash; a creative partner that produces <span class="quote-accent">publish-ready content at scale</span>, on brand and on time.
+    </blockquote>
+  </div>
+</section>
+
+
+<!-- ========================================
+     5. SERVICES SHOWCASE
+     ======================================== -->
+<section class="v2-section v2-services" aria-label="Services">
+  <div class="v2-service-row">
+    <div class="v2-service-image v2-reveal-left">
+      <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&h=600&fit=crop" alt="Content writing" loading="lazy">
+    </div>
+    <div class="v2-service-content v2-reveal-right">
+      <span class="v2-overline">01</span>
+      <h3>Content Writing</h3>
+      <p>From long-form editorial to product descriptions, our subject-matter experts craft compelling copy that sounds like your brand and ranks where it matters.</p>
+      <a href="/services/" class="v2-service-cta">Explore Content <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <div class="v2-service-row">
+    <div class="v2-service-image v2-reveal-right">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop" alt="SEO strategy" loading="lazy">
+    </div>
+    <div class="v2-service-content v2-reveal-left">
+      <span class="v2-overline">02</span>
+      <h3>SEO &amp; Content Strategy</h3>
+      <p>Data-driven content strategies that identify high-intent topics, capture organic share, and turn search visibility into measurable business outcomes.</p>
+      <a href="/services/" class="v2-service-cta">Explore Strategy <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <div class="v2-service-row">
+    <div class="v2-service-image v2-reveal-left">
+      <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop" alt="Graphic design" loading="lazy">
+    </div>
+    <div class="v2-service-content v2-reveal-right">
+      <span class="v2-overline">03</span>
+      <h3>Graphic Design</h3>
+      <p>Visual storytelling that elevates every touchpoint &mdash; from infographics and social assets to full brand systems that make an impression.</p>
+      <a href="/services/" class="v2-service-cta">Explore Design <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <div class="v2-service-row">
+    <div class="v2-service-image v2-reveal-right">
+      <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=600&fit=crop" alt="Videography" loading="lazy">
+    </div>
+    <div class="v2-service-content v2-reveal-left">
+      <span class="v2-overline">04</span>
+      <h3>Videography</h3>
+      <p>End-to-end video production &mdash; concept through post. Brand films, product videos, and social-first content that stops the scroll.</p>
+      <a href="/services/" class="v2-service-cta">Explore Video <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     6. BESPOKE CONTENT EXPERIENCE
+     ======================================== -->
+<section class="v2-section v2-bespoke" aria-label="Bespoke Content Experience">
+  <div class="v2-container">
+    <div class="v2-bespoke-inner">
+      <div class="v2-bespoke-text v2-reveal-left">
+        <span class="v2-tag">The Centerpiece</span>
+        <h2>Bespoke Content<br>Experience</h2>
+        <p>Custom-built interactive content experiences that transform passive readers into engaged participants. Think calculators, assessments, and data-driven tools &mdash; all wrapped in your brand and designed to generate qualified leads.</p>
+        <p>Each experience is hand-coded, fully responsive, and engineered for performance. No templates. No iframes. Pure, on-brand engagement.</p>
+        <a href="/bespoke-content-experience/" class="v2-btn-outline">See It In Action &rarr;</a>
+      </div>
+
+      <div class="v2-bespoke-app v2-reveal-right">
+        <div class="v2-bespoke-app-bar">
+          <div class="v2-browser-dot" style="background:#ff5f57;"></div>
+          <div class="v2-browser-dot" style="background:#febc2e;"></div>
+          <div class="v2-browser-dot" style="background:#28c840;"></div>
+          <span class="v2-bespoke-app-title">Migration Readiness Assessment</span>
+        </div>
+        <div class="v2-bespoke-tabs">
+          <span class="v2-bespoke-tab active">Assessment</span>
+          <span class="v2-bespoke-tab">Results</span>
+          <span class="v2-bespoke-tab">Benchmarks</span>
+        </div>
+        <div class="v2-bespoke-body">
+          <div class="v2-bespoke-sliders">
+            <div class="v2-bespoke-slider">
+              <span class="v2-bespoke-slider-label">Data Volume</span>
+              <div class="v2-bespoke-slider-track"><div class="v2-bespoke-slider-fill" style="width:72%;"></div></div>
+            </div>
+            <div class="v2-bespoke-slider">
+              <span class="v2-bespoke-slider-label">Complexity</span>
+              <div class="v2-bespoke-slider-track"><div class="v2-bespoke-slider-fill" style="width:58%;"></div></div>
+            </div>
+            <div class="v2-bespoke-slider">
+              <span class="v2-bespoke-slider-label">Team Size</span>
+              <div class="v2-bespoke-slider-track"><div class="v2-bespoke-slider-fill" style="width:85%;"></div></div>
+            </div>
+          </div>
+
+          <div class="v2-bespoke-metrics">
+            <div class="v2-bespoke-metric">
+              <div class="v2-bespoke-metric-value">7.2</div>
+              <div class="v2-bespoke-metric-label">Readiness</div>
+            </div>
+            <div class="v2-bespoke-metric">
+              <div class="v2-bespoke-metric-value">4.8mo</div>
+              <div class="v2-bespoke-metric-label">Timeline</div>
+            </div>
+            <div class="v2-bespoke-metric">
+              <div class="v2-bespoke-metric-value">Med</div>
+              <div class="v2-bespoke-metric-label">Risk</div>
+            </div>
+          </div>
+
+          <div class="v2-bespoke-chart">
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+            <div class="v2-bespoke-chart-bar"></div>
+          </div>
+
+          <div class="v2-bespoke-download">Download Full Report</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     7. CLIENT LOGO MARQUEE
+     ======================================== -->
+<section class="v2-section v2-logos" aria-label="Trusted Brands">
+  <h2>Trusted by Leading Brands</h2>
+  <div class="v2-marquee-track">
+    <div class="v2-logo-item">Blue Nile</div>
+    <div class="v2-logo-item">Vuori</div>
+    <div class="v2-logo-item">RVCA</div>
+    <div class="v2-logo-item">Zulily</div>
+    <div class="v2-logo-item">Walmart</div>
+    <div class="v2-logo-item">Grainger</div>
+    <div class="v2-logo-item">Etsy</div>
+    <div class="v2-logo-item">Home Depot</div>
+    <div class="v2-logo-item">Grove</div>
+    <div class="v2-logo-item">1stDibs</div>
+    <!-- duplicate for seamless loop -->
+    <div class="v2-logo-item">Blue Nile</div>
+    <div class="v2-logo-item">Vuori</div>
+    <div class="v2-logo-item">RVCA</div>
+    <div class="v2-logo-item">Zulily</div>
+    <div class="v2-logo-item">Walmart</div>
+    <div class="v2-logo-item">Grainger</div>
+    <div class="v2-logo-item">Etsy</div>
+    <div class="v2-logo-item">Home Depot</div>
+    <div class="v2-logo-item">Grove</div>
+    <div class="v2-logo-item">1stDibs</div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     8. TESTIMONIALS 2.0
+     ======================================== -->
+<section class="v2-section v2-testimonials" aria-label="Testimonials">
+  <div class="v2-container">
+    <div class="v2-testimonials-inner" id="testimonialCarousel">
+      <!-- Slide 1 -->
+      <div class="v2-testimonial-slide active">
+        <svg class="v2-testimonial-quote-mark" width="60" height="48" viewBox="0 0 60 48" fill="#8560A8"><path d="M0 48V28.8C0 12.48 9.36 3.36 28.08 0l2.16 5.76C19.44 8.64 13.68 15.84 13.2 24H24v24H0zm33.84 0V28.8c0-16.32 9.36-25.44 28.08-28.8L64.08 5.76C53.28 8.64 47.52 15.84 47.04 24H57.84v24H33.84z"/></svg>
+        <p class="v2-testimonial-text">&ldquo;Working with Stretch Creative has been the biggest difference-maker in scaling our SEO content operations.&rdquo;</p>
+        <div class="v2-testimonial-author">
+          <div class="v2-testimonial-avatar" style="background:linear-gradient(135deg,#8560A8,#5674B9);">KH</div>
+          <div class="v2-testimonial-info">
+            <div class="v2-testimonial-name">Kristen Haney</div>
+            <div class="v2-testimonial-title">Sr. Growth Manager SEO, Grove Collaborative</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="v2-testimonial-slide">
+        <svg class="v2-testimonial-quote-mark" width="60" height="48" viewBox="0 0 60 48" fill="#8560A8"><path d="M0 48V28.8C0 12.48 9.36 3.36 28.08 0l2.16 5.76C19.44 8.64 13.68 15.84 13.2 24H24v24H0zm33.84 0V28.8c0-16.32 9.36-25.44 28.08-28.8L64.08 5.76C53.28 8.64 47.52 15.84 47.04 24H57.84v24H33.84z"/></svg>
+        <p class="v2-testimonial-text">&ldquo;Stretch feels like an extension of our own marketing department. Responsive, reliable, and genuinely great writers.&rdquo;</p>
+        <div class="v2-testimonial-author">
+          <div class="v2-testimonial-avatar" style="background:linear-gradient(135deg,#5674B9,#448CCB);">KH</div>
+          <div class="v2-testimonial-info">
+            <div class="v2-testimonial-name">Karen Hewitt</div>
+            <div class="v2-testimonial-title">Sr. Marketing Manager, WeWork</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="v2-testimonial-slide">
+        <svg class="v2-testimonial-quote-mark" width="60" height="48" viewBox="0 0 60 48" fill="#8560A8"><path d="M0 48V28.8C0 12.48 9.36 3.36 28.08 0l2.16 5.76C19.44 8.64 13.68 15.84 13.2 24H24v24H0zm33.84 0V28.8c0-16.32 9.36-25.44 28.08-28.8L64.08 5.76C53.28 8.64 47.52 15.84 47.04 24H57.84v24H33.84z"/></svg>
+        <p class="v2-testimonial-text">&ldquo;No matter the task or turnaround time, they do a great job of bringing our brand identity to life.&rdquo;</p>
+        <div class="v2-testimonial-author">
+          <div class="v2-testimonial-avatar" style="background:linear-gradient(135deg,#448CCB,#00BFF3);">KW</div>
+          <div class="v2-testimonial-info">
+            <div class="v2-testimonial-name">Keenan Wilson</div>
+            <div class="v2-testimonial-title">Marketing Manager, Stance</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="v2-testimonial-slide">
+        <svg class="v2-testimonial-quote-mark" width="60" height="48" viewBox="0 0 60 48" fill="#8560A8"><path d="M0 48V28.8C0 12.48 9.36 3.36 28.08 0l2.16 5.76C19.44 8.64 13.68 15.84 13.2 24H24v24H0zm33.84 0V28.8c0-16.32 9.36-25.44 28.08-28.8L64.08 5.76C53.28 8.64 47.52 15.84 47.04 24H57.84v24H33.84z"/></svg>
+        <p class="v2-testimonial-text">&ldquo;Communicating at the right time, in the right dialect, and in a consistent voice across multiple platforms is imperative. Stretch delivers.&rdquo;</p>
+        <div class="v2-testimonial-author">
+          <div class="v2-testimonial-avatar" style="background:linear-gradient(135deg,#8560A8,#00BFF3);">BR</div>
+          <div class="v2-testimonial-info">
+            <div class="v2-testimonial-name">Brian Reichel</div>
+            <div class="v2-testimonial-title">Sr. VP Marketing, Brixton</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="v2-testimonial-dots" id="testimonialDots">
+        <button class="v2-testimonial-dot active" data-index="0" aria-label="Testimonial 1"></button>
+        <button class="v2-testimonial-dot" data-index="1" aria-label="Testimonial 2"></button>
+        <button class="v2-testimonial-dot" data-index="2" aria-label="Testimonial 3"></button>
+        <button class="v2-testimonial-dot" data-index="3" aria-label="Testimonial 4"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     9. PROCESS TIMELINE
+     ======================================== -->
+<section class="v2-section v2-process" aria-label="How We Work" id="processTimeline">
+  <div class="v2-container">
+    <div class="v2-process-heading v2-reveal">
+      <span class="v2-overline">Our Process</span>
+      <h2>How We Work</h2>
+    </div>
+    <div class="v2-timeline">
+      <div class="v2-timeline-line">
+        <div class="v2-timeline-progress" id="timelineProgress"></div>
+      </div>
+      <div class="v2-timeline-steps">
+        <div class="v2-timeline-step" data-step="1">
+          <div class="v2-timeline-step-number">01</div>
+          <div class="v2-timeline-dot"></div>
+          <div class="v2-timeline-step-title">Consultation</div>
+        </div>
+        <div class="v2-timeline-step" data-step="2">
+          <div class="v2-timeline-step-number">02</div>
+          <div class="v2-timeline-dot"></div>
+          <div class="v2-timeline-step-title">Brief &amp; Style Guide</div>
+        </div>
+        <div class="v2-timeline-step" data-step="3">
+          <div class="v2-timeline-step-number">03</div>
+          <div class="v2-timeline-dot"></div>
+          <div class="v2-timeline-step-title">Curate Team</div>
+        </div>
+        <div class="v2-timeline-step" data-step="4">
+          <div class="v2-timeline-step-number">04</div>
+          <div class="v2-timeline-dot"></div>
+          <div class="v2-timeline-step-title">Calibrate</div>
+        </div>
+        <div class="v2-timeline-step" data-step="5">
+          <div class="v2-timeline-step-number">05</div>
+          <div class="v2-timeline-dot"></div>
+          <div class="v2-timeline-step-title">Create</div>
+        </div>
+        <div class="v2-timeline-step" data-step="6">
+          <div class="v2-timeline-step-number">06</div>
+          <div class="v2-timeline-dot"></div>
+          <div class="v2-timeline-step-title">Deliver &amp; Report</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     10. IMPACT NUMBERS
+     ======================================== -->
+<section class="v2-section v2-impact" aria-label="Impact">
+  <div class="v2-container">
+    <div class="v2-impact-heading v2-reveal">
+      <span class="v2-overline">Measurable Results</span>
+      <h2>The Impact We Drive</h2>
+    </div>
+    <div class="v2-impact-grid">
+      <div class="v2-impact-item v2-reveal v2-delay-1">
+        <div class="v2-impact-number"><span class="v2-count" data-target="4.2" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
+        <div class="v2-impact-desc">Average Dwell Time Increase</div>
+      </div>
+      <div class="v2-impact-item v2-reveal v2-delay-2">
+        <div class="v2-impact-number"><span class="v2-count" data-target="312">0</span><span class="v2-suffix">%</span></div>
+        <div class="v2-impact-desc">Organic Traffic Lift</div>
+      </div>
+      <div class="v2-impact-item v2-reveal v2-delay-3">
+        <div class="v2-impact-number"><span class="v2-count" data-target="89">0</span><span class="v2-suffix"></span></div>
+        <div class="v2-impact-desc">Average Backlinks Earned</div>
+      </div>
+      <div class="v2-impact-item v2-reveal v2-delay-4">
+        <div class="v2-impact-number"><span class="v2-count" data-target="2.8" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
+        <div class="v2-impact-desc">Conversion Rate Improvement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     11. MAGAZINE BLOG LAYOUT
+     ======================================== -->
+<section class="v2-section v2-blog" aria-label="From the Blog">
+  <div class="v2-container">
+    <div class="v2-blog-heading v2-reveal">
+      <span class="v2-overline">Insights</span>
+      <h2>From the Blog</h2>
+    </div>
+    <div class="v2-blog-grid">
+      <a href="#" class="v2-blog-featured v2-reveal-left">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop" alt="Content strategy" loading="lazy">
+        <div class="v2-blog-featured-overlay">
+          <span class="v2-blog-tag">Strategy</span>
+          <h3>The Future of Content: Why Interactive Experiences Outperform Static Pages 3-to-1</h3>
+          <p>How leading brands are using bespoke content to drive engagement, generate leads, and own their category.</p>
+        </div>
+      </a>
+      <div class="v2-blog-stack">
+        <a href="#" class="v2-blog-small v2-reveal-right v2-delay-1">
+          <div class="v2-blog-small-img">
+            <img src="https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&h=300&fit=crop" alt="SEO trends" loading="lazy">
+          </div>
+          <div class="v2-blog-small-content">
+            <span class="v2-blog-tag">SEO</span>
+            <h3>5 Content Frameworks That Consistently Win Featured Snippets</h3>
+            <p>Proven structures for dominating position zero across competitive verticals.</p>
+          </div>
+        </a>
+        <a href="#" class="v2-blog-small v2-reveal-right v2-delay-2">
+          <div class="v2-blog-small-img">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=300&fit=crop" alt="Brand content" loading="lazy">
+          </div>
+          <div class="v2-blog-small-content">
+            <span class="v2-blog-tag">Branding</span>
+            <h3>Scaling Content Without Losing Your Brand Voice</h3>
+            <p>How enterprise teams maintain quality and consistency at 500+ pieces per month.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========================================
+     12. FULL-VIEWPORT CTA
+     ======================================== -->
+<section class="v2-section v2-cta-full" aria-label="Call to Action">
+  <div class="v2-cta-shapes">
+    <div class="v2-cta-shape v2-cta-shape-1"></div>
+    <div class="v2-cta-shape v2-cta-shape-2"></div>
+    <div class="v2-cta-shape v2-cta-shape-3"></div>
+    <div class="v2-cta-shape v2-cta-shape-4"></div>
+  </div>
+  <div class="v2-cta-content v2-reveal">
+    <h2>Ready to create something extraordinary?</h2>
+    <p>Let&rsquo;s build content that doesn&rsquo;t just fill a page &mdash; it moves the needle. Your audience is waiting.</p>
+    <div class="v2-cta-buttons">
+      <a href="/contact-stretch-creative/" class="v2-cta-btn-primary">Start a Project &rarr;</a>
+      <a href="/work/" class="v2-cta-btn-outline">View Our Work &rarr;</a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+(function() {
+  'use strict';
+
+  /* ---------- SCROLL PROGRESS BAR ---------- */
+  var progressBar = document.getElementById('scrollProgress');
+  function updateProgress() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+
+  /* ---------- MOUSE PARALLAX ON HERO ---------- */
+  var heroSection = document.querySelector('.v2-hero');
+  var heroShapes = document.getElementById('heroShapes');
+  if (heroSection && heroShapes) {
+    heroSection.addEventListener('mousemove', function(e) {
+      var rect = heroSection.getBoundingClientRect();
+      var mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      var my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      heroShapes.style.setProperty('--mx', mx);
+      heroShapes.style.setProperty('--my', my);
+    });
+  }
+
+  /* ---------- INTERSECTION OBSERVER — REVEALS ---------- */
+  var revealEls = document.querySelectorAll('.v2-reveal, .v2-reveal-left, .v2-reveal-right');
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { revealObserver.observe(el); });
+
+  /* ---------- COUNTING ANIMATION ---------- */
+  var countEls = document.querySelectorAll('.v2-count');
+  var counted = new Set();
+  function animateCount(el) {
+    if (counted.has(el)) return;
+    counted.add(el);
+    var target = parseFloat(el.dataset.target);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    var duration = 2000;
+    var start = performance.now();
+    function tick(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      // ease out cubic
+      var ease = 1 - Math.pow(1 - progress, 3);
+      var current = target * ease;
+      el.textContent = decimals > 0 ? current.toFixed(decimals) : Math.floor(current);
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = decimals > 0 ? target.toFixed(decimals) : target;
+    }
+    requestAnimationFrame(tick);
+  }
+  var countObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var counts = entry.target.querySelectorAll('.v2-count');
+        counts.forEach(animateCount);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.v2-stats-bar, .v2-impact').forEach(function(el) {
+    countObserver.observe(el);
+  });
+
+  /* ---------- TESTIMONIAL CAROUSEL ---------- */
+  var slides = document.querySelectorAll('.v2-testimonial-slide');
+  var dots = document.querySelectorAll('.v2-testimonial-dot');
+  var currentSlide = 0;
+  var autoInterval;
+
+  function showSlide(index) {
+    slides.forEach(function(s) { s.classList.remove('active'); });
+    dots.forEach(function(d) { d.classList.remove('active'); });
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    showSlide((currentSlide + 1) % slides.length);
+  }
+
+  function startAuto() {
+    autoInterval = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      clearInterval(autoInterval);
+      showSlide(parseInt(this.dataset.index, 10));
+      startAuto();
+    });
+  });
+
+  startAuto();
+
+  /* ---------- PROCESS TIMELINE ---------- */
+  var timelineSection = document.getElementById('processTimeline');
+  var timelineProgress = document.getElementById('timelineProgress');
+  var timelineSteps = document.querySelectorAll('.v2-timeline-step');
+
+  function updateTimeline() {
+    if (!timelineSection) return;
+    var rect = timelineSection.getBoundingClientRect();
+    var sectionHeight = rect.height;
+    var viewH = window.innerHeight;
+    // progress from 0 to 1 as section scrolls through viewport
+    var rawProgress = (viewH - rect.top) / (sectionHeight + viewH * 0.5);
+    var progress = Math.max(0, Math.min(1, rawProgress));
+
+    if (timelineProgress) {
+      timelineProgress.style.width = (progress * 100) + '%';
+    }
+
+    var activeCount = Math.ceil(progress * timelineSteps.length);
+    timelineSteps.forEach(function(step, i) {
+      if (i < activeCount) {
+        step.classList.add('active');
+      } else {
+        step.classList.remove('active');
+      }
+    });
+  }
+
+  /* ---------- SERVICE IMAGE PARALLAX ---------- */
+  var serviceImages = document.querySelectorAll('.v2-service-image img');
+  function updateParallax() {
+    serviceImages.forEach(function(img) {
+      var rect = img.parentElement.getBoundingClientRect();
+      var viewH = window.innerHeight;
+      if (rect.top < viewH && rect.bottom > 0) {
+        var progress = (viewH - rect.top) / (viewH + rect.height);
+        var offset = (progress - 0.5) * 40;
+        img.style.transform = 'scale(1.1) translateY(' + offset + 'px)';
+      }
+    });
+  }
+
+  /* ---------- SCROLL HANDLER (throttled via rAF) ---------- */
+  var ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateProgress();
+        updateTimeline();
+        updateParallax();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  // initial run
+  updateProgress();
+  updateTimeline();
+  updateParallax();
+
+})();
+</script>
+
+<?php get_footer(); ?>
