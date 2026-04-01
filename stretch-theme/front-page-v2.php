@@ -268,270 +268,41 @@ html, body { overflow-x: hidden; }
 .v2-hero-text .v2-btn-primary:hover::before { opacity: 1; }
 .v2-hero-text .v2-btn-primary span { position: relative; z-index: 1; }
 
-/* Hero visual — browser mockup */
+/* Hero visual — illustrated composition */
 .v2-hero-visual {
   position: relative;
-  perspective: 1000px;
 }
-.v2-browser-mockup {
-  background: #1a1f2e;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
-  transform: rotateY(-2deg) rotateX(1deg);
-  transition: transform 0.6s ease;
-}
-.v2-browser-mockup:hover {
-  transform: rotateY(0deg) rotateX(0deg);
-}
-.v2-browser-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.v2-browser-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-}
-.v2-browser-dot:nth-child(1) { background: #ff5f57; }
-.v2-browser-dot:nth-child(2) { background: #febc2e; }
-.v2-browser-dot:nth-child(3) { background: #28c840; }
-.v2-browser-url {
-  flex: 1;
-  margin-left: 12px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-family: 'Assistant', sans-serif;
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
-}
-.v2-browser-content {
-  padding: 20px;
-}
-
-/* Mini page inside browser */
-.v2-mini-hero {
-  background: linear-gradient(135deg, #8560A8, #5674B9);
-  border-radius: 6px;
-  padding: 24px 20px;
-  margin-bottom: 16px;
-  position: relative;
-  overflow: hidden;
-}
-.v2-mini-hero::after {
-  content: '';
-  position: absolute;
-  top: -20px; right: -20px;
-  width: 80px; height: 80px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-}
-.v2-mini-hero-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 6px;
-}
-.v2-mini-hero-sub {
-  font-family: 'Assistant', sans-serif;
-  font-size: 10px;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 12px;
-}
-.v2-mini-hero-btn {
-  display: inline-block;
-  background: #fff;
-  color: #8560A8;
-  font-size: 9px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  padding: 5px 14px;
-  border-radius: 3px;
-}
-
-/* Text lines */
-.v2-mini-lines {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-.v2-mini-line {
-  height: 6px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.06);
-}
-.v2-mini-line:nth-child(1) { width: 100%; }
-.v2-mini-line:nth-child(2) { width: 85%; }
-.v2-mini-line:nth-child(3) { width: 92%; }
-.v2-mini-line:nth-child(4) { width: 60%; }
-
-/* Media blocks */
-.v2-mini-media-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.v2-mini-media-block {
-  background: rgba(255,255,255,0.04);
-  border-radius: 6px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.v2-mini-media-block svg { opacity: 0.2; }
-
-/* Embedded app UI */
-.v2-mini-app {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.v2-mini-app-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.v2-mini-app-toolbar-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.5);
-}
-.v2-mini-app-tabs {
-  display: flex;
-  gap: 2px;
-  padding: 0 12px;
-  background: rgba(255,255,255,0.02);
-}
-.v2-mini-app-tab {
-  font-family: 'Assistant', sans-serif;
-  font-size: 8px;
-  color: rgba(255,255,255,0.3);
-  padding: 6px 10px;
-  border-bottom: 2px solid transparent;
-}
-.v2-mini-app-tab.active {
-  color: #00BFF3;
-  border-bottom-color: #00BFF3;
-}
-.v2-mini-app-body {
-  padding: 12px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.v2-mini-chart {
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  height: 50px;
-}
-.v2-mini-chart-bar {
-  flex: 1;
-  background: linear-gradient(180deg, #00BFF3, #5674B9);
-  border-radius: 2px 2px 0 0;
-  min-width: 6px;
-  animation: v2-barPulse 3s ease-in-out infinite alternate;
-}
-.v2-mini-chart-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
-.v2-mini-chart-bar:nth-child(2) { height: 55%; animation-delay: 0.2s; }
-.v2-mini-chart-bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
-.v2-mini-chart-bar:nth-child(4) { height: 75%; animation-delay: 0.6s; }
-.v2-mini-chart-bar:nth-child(5) { height: 60%; animation-delay: 0.8s; }
-.v2-mini-chart-bar:nth-child(6) { height: 90%; animation-delay: 1s; }
-@keyframes v2-barPulse {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; }
-}
-.v2-mini-metrics {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  justify-content: center;
-}
-.v2-mini-metric {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.v2-mini-metric-label {
-  font-family: 'Assistant', sans-serif;
-  font-size: 8px;
-  color: rgba(255,255,255,0.35);
-}
-.v2-mini-metric-value {
-  font-family: 'Poppins', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  color: #00BFF3;
-}
-
-/* Floating stats card */
-.v2-stats-card {
-  position: absolute;
-  bottom: -20px;
-  left: -30px;
-  background: rgba(30, 35, 51, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  padding: 20px;
-  min-width: 220px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  z-index: 3;
-}
-.v2-stats-card-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.v2-stats-card-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.v2-stats-card-item-value {
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-}
-.v2-stats-card-item-value.cyan { color: #00BFF3; }
-.v2-stats-card-item-value.purple { color: #8560A8; }
-.v2-stats-card-item-value.blue { color: #5674B9; }
-.v2-stats-card-item-label {
-  font-family: 'Assistant', sans-serif;
-  font-size: 9px;
-  color: rgba(255,255,255,0.4);
-  margin-top: 2px;
-}
-.v2-stats-card-chart {
-  height: 36px;
-  display: flex;
-  align-items: flex-end;
-}
-.v2-stats-card-chart svg {
+.v2-hero-visual svg {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
 }
+
+/* Hero illustration float animations */
+@keyframes v2-illoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes v2-illoFloatAlt {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+@keyframes v2-illoBlobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6px, -4px) scale(1.02); }
+  66% { transform: translate(-4px, 5px) scale(0.98); }
+}
+.v2-illo-phone {
+  animation: v2-illoFloat 3s ease-in-out infinite;
+}
+.v2-illo-browser {
+  animation: v2-illoFloatAlt 4s ease-in-out infinite;
+}
+.v2-illo-blob {
+  animation: v2-illoBlobDrift 8s ease-in-out infinite;
+}
+.v2-illo-blob:nth-of-type(2) { animation-delay: -2.5s; }
+.v2-illo-blob:nth-of-type(3) { animation-delay: -5s; }
 
 /* ========================================
    2. GRADIENT ACCENT BAR
@@ -1817,9 +1588,6 @@ html, body { overflow-x: hidden; }
     max-width: 500px;
     margin: 0 auto;
   }
-  .v2-stats-card {
-    display: none;
-  }
   .v2-stats-bar-inner {
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 20px;
@@ -2236,100 +2004,208 @@ html, body { overflow-x: hidden; }
       </div>
 
       <div class="v2-hero-visual v2-reveal v2-delay-3">
-        <div class="v2-browser-mockup">
-          <div class="v2-browser-bar">
-            <div class="v2-browser-dot"></div>
-            <div class="v2-browser-dot"></div>
-            <div class="v2-browser-dot"></div>
-            <div class="v2-browser-url">stretchcreative.com</div>
-          </div>
-          <div class="v2-browser-content">
-            <div class="v2-mini-hero">
-              <div class="v2-mini-hero-title">Bespoke Content Experience</div>
-              <div class="v2-mini-hero-sub">Interactive, data-driven content built for engagement</div>
-              <div class="v2-mini-hero-btn">Explore</div>
-            </div>
-            <div class="v2-mini-lines">
-              <div class="v2-mini-line"></div>
-              <div class="v2-mini-line"></div>
-              <div class="v2-mini-line"></div>
-              <div class="v2-mini-line"></div>
-            </div>
-            <div class="v2-mini-media-row">
-              <div class="v2-mini-media-block">
-                <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M4 16l4-4 3 3 3-4 6 5"/></svg>
-              </div>
-              <div class="v2-mini-media-block">
-                <svg width="24" height="24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>
-              </div>
-            </div>
-            <div class="v2-mini-app">
-              <div class="v2-mini-app-toolbar">
-                <span class="v2-mini-app-toolbar-title">Migration Readiness Assessment</span>
-              </div>
-              <div class="v2-mini-app-tabs">
-                <span class="v2-mini-app-tab active">Assessment</span>
-                <span class="v2-mini-app-tab">Results</span>
-                <span class="v2-mini-app-tab">Benchmarks</span>
-              </div>
-              <div class="v2-mini-app-body">
-                <div class="v2-mini-chart">
-                  <div class="v2-mini-chart-bar"></div>
-                  <div class="v2-mini-chart-bar"></div>
-                  <div class="v2-mini-chart-bar"></div>
-                  <div class="v2-mini-chart-bar"></div>
-                  <div class="v2-mini-chart-bar"></div>
-                  <div class="v2-mini-chart-bar"></div>
-                </div>
-                <div class="v2-mini-metrics">
-                  <div class="v2-mini-metric"><span class="v2-mini-metric-label">Readiness</span><span class="v2-mini-metric-value">7.2</span></div>
-                  <div class="v2-mini-metric"><span class="v2-mini-metric-label">Timeline</span><span class="v2-mini-metric-value">4.8mo</span></div>
-                  <div class="v2-mini-metric"><span class="v2-mini-metric-label">Risk Level</span><span class="v2-mini-metric-value">Med</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of creative digital services including mobile, web, video, and design">
+          <defs>
+            <linearGradient id="illoPhoneScreen" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a1a2e"/>
+              <stop offset="100%" stop-color="#12121f"/>
+            </linearGradient>
+            <linearGradient id="illoBarGrad1" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#5674B9"/>
+              <stop offset="100%" stop-color="#8560A8"/>
+            </linearGradient>
+            <linearGradient id="illoBarGrad2" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#448CCB"/>
+              <stop offset="100%" stop-color="#5674B9"/>
+            </linearGradient>
+            <linearGradient id="illoBarGrad3" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#00BFF3"/>
+              <stop offset="100%" stop-color="#448CCB"/>
+            </linearGradient>
+            <filter id="illoShadow" x="-10%" y="-10%" width="130%" height="140%">
+              <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.25"/>
+            </filter>
+            <filter id="illoShadowSm" x="-10%" y="-10%" width="130%" height="140%">
+              <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.2"/>
+            </filter>
+          </defs>
 
-        <!-- Floating stats card -->
-        <div class="v2-stats-card v2-reveal v2-delay-5">
-          <div class="v2-stats-card-title">Performance</div>
-          <div class="v2-stats-card-grid">
-            <div>
-              <div class="v2-stats-card-item-value cyan">4.2x</div>
-              <div class="v2-stats-card-item-label">Dwell</div>
-            </div>
-            <div>
-              <div class="v2-stats-card-item-value purple">312%</div>
-              <div class="v2-stats-card-item-label">Organics</div>
-            </div>
-            <div>
-              <div class="v2-stats-card-item-value blue">+89%</div>
-              <div class="v2-stats-card-item-label">Social</div>
-            </div>
-            <div>
-              <div class="v2-stats-card-item-value cyan">2.8x</div>
-              <div class="v2-stats-card-item-label">Conversions</div>
-            </div>
-          </div>
-          <div class="v2-stats-card-chart">
-            <svg viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="chartGrad" x1="0" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#8560A8"/>
-                  <stop offset="50%" stop-color="#5674B9"/>
-                  <stop offset="100%" stop-color="#00BFF3"/>
-                </linearGradient>
-                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="36" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#00BFF3" stop-opacity="0.3"/>
-                  <stop offset="100%" stop-color="#00BFF3" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path d="M0 32 Q20 30 36 28 T72 22 T108 14 T144 8 T180 2" stroke="url(#chartGrad)" stroke-width="2" fill="none"/>
-              <path d="M0 32 Q20 30 36 28 T72 22 T108 14 T144 8 T180 2 V36 H0 Z" fill="url(#chartFill)"/>
-            </svg>
-          </div>
-        </div>
+          <!-- === Background Blobs === -->
+          <g class="v2-illo-blob">
+            <path d="M80 180 C40 120, 130 60, 200 90 C270 120, 250 200, 190 240 C130 280, 120 240, 80 180Z" fill="#8560A8" opacity="0.18"/>
+          </g>
+          <g class="v2-illo-blob">
+            <path d="M400 60 C450 20, 540 50, 530 120 C520 190, 460 200, 420 170 C380 140, 350 100, 400 60Z" fill="#F5A623" opacity="0.2"/>
+          </g>
+          <g class="v2-illo-blob">
+            <path d="M350 340 C400 300, 520 310, 540 370 C560 430, 500 480, 430 470 C360 460, 300 380, 350 340Z" fill="#00BFF3" opacity="0.13"/>
+          </g>
+
+          <!-- === Decorative Floating Elements === -->
+          <!-- Small dots -->
+          <circle cx="95" cy="90" r="3" fill="#fff" opacity="0.18"/>
+          <circle cx="520" cy="100" r="4" fill="#00BFF3" opacity="0.25"/>
+          <circle cx="560" cy="260" r="3" fill="#8560A8" opacity="0.3"/>
+          <circle cx="50" cy="320" r="5" fill="#fff" opacity="0.1"/>
+          <circle cx="140" cy="60" r="3.5" fill="#00BFF3" opacity="0.2"/>
+          <circle cx="480" cy="440" r="4" fill="#fff" opacity="0.15"/>
+          <circle cx="30" cy="230" r="2.5" fill="#5674B9" opacity="0.25"/>
+
+          <!-- Sparkle / 4-pointed stars -->
+          <g opacity="0.2" fill="#fff">
+            <path d="M540 180 L543 186 L540 192 L537 186Z"/>
+            <path d="M540 180 L546 186 L540 192 L534 186Z"/>
+          </g>
+          <g opacity="0.15" fill="#00BFF3">
+            <path d="M70 400 L72.5 405 L70 410 L67.5 405Z"/>
+            <path d="M70 400 L75 405 L70 410 L65 405Z"/>
+          </g>
+          <g opacity="0.18" fill="#8560A8">
+            <path d="M460 50 L462 54 L460 58 L458 54Z"/>
+            <path d="M460 50 L464 54 L460 58 L456 54Z"/>
+          </g>
+
+          <!-- Mini network graph -->
+          <g opacity="0.15" stroke="#fff" stroke-width="1">
+            <circle cx="555" cy="340" r="3" fill="#5674B9" stroke="none" opacity="0.4"/>
+            <circle cx="580" cy="360" r="2.5" fill="#8560A8" stroke="none" opacity="0.4"/>
+            <circle cx="565" cy="380" r="2" fill="#00BFF3" stroke="none" opacity="0.4"/>
+            <line x1="555" y1="340" x2="580" y2="360"/>
+            <line x1="580" y1="360" x2="565" y2="380"/>
+            <line x1="555" y1="340" x2="565" y2="380"/>
+          </g>
+
+          <!-- Small geometric shapes -->
+          <rect x="42" cy="140" y="140" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1" fill="none" opacity="0.12" transform="rotate(15 46 144)"/>
+          <circle cx="510" cy="460" r="5" stroke="#5674B9" stroke-width="1" fill="none" opacity="0.15"/>
+
+          <!-- === Browser Window (center-right, behind phone) === -->
+          <g class="v2-illo-browser" filter="url(#illoShadow)" transform="rotate(2.5 420 230)">
+            <!-- Window frame -->
+            <rect x="280" y="80" width="260" height="320" rx="10" fill="#fff"/>
+            <!-- Browser chrome -->
+            <rect x="280" y="80" width="260" height="32" rx="10" fill="#f0f0f4"/>
+            <!-- Bottom corners of chrome are square -->
+            <rect x="280" y="102" width="260" height="10" fill="#f0f0f4"/>
+            <!-- Three dots -->
+            <circle cx="298" cy="96" r="4" fill="#ff5f57"/>
+            <circle cx="312" cy="96" r="4" fill="#febc2e"/>
+            <circle cx="326" cy="96" r="4" fill="#28c840"/>
+            <!-- URL bar -->
+            <rect x="344" y="89" width="180" height="14" rx="4" fill="#e4e4ea"/>
+            <!-- Content area -->
+            <!-- Heading lines -->
+            <rect x="300" y="128" width="140" height="8" rx="3" fill="#252C3A" opacity="0.7"/>
+            <rect x="300" y="144" width="100" height="8" rx="3" fill="#252C3A" opacity="0.4"/>
+            <!-- Paragraph text lines -->
+            <rect x="300" y="168" width="220" height="5" rx="2" fill="#c0c0c8"/>
+            <rect x="300" y="180" width="200" height="5" rx="2" fill="#c0c0c8"/>
+            <rect x="300" y="192" width="210" height="5" rx="2" fill="#c0c0c8"/>
+            <rect x="300" y="204" width="150" height="5" rx="2" fill="#c0c0c8"/>
+            <!-- Image placeholder -->
+            <rect x="300" y="224" width="220" height="90" rx="6" fill="#e8e8f0"/>
+            <g opacity="0.3">
+              <circle cx="410" cy="258" r="12" stroke="#aaa" stroke-width="1.5" fill="none"/>
+              <path d="M385 298 L400 278 L415 290 L430 270 L445 298Z" fill="#ccc" opacity="0.5"/>
+            </g>
+            <!-- CTA button -->
+            <rect x="300" y="330" width="100" height="28" rx="6" fill="#8560A8"/>
+            <rect x="316" y="340" width="68" height="8" rx="3" fill="#fff" opacity="0.9"/>
+            <!-- Small text after button -->
+            <rect x="300" y="372" width="180" height="5" rx="2" fill="#c0c0c8" opacity="0.6"/>
+            <rect x="300" y="384" width="140" height="5" rx="2" fill="#c0c0c8" opacity="0.6"/>
+          </g>
+
+          <!-- === Smartphone / Mobile Device (center-left, prominent) === -->
+          <g class="v2-illo-phone" filter="url(#illoShadow)">
+            <!-- Phone frame -->
+            <rect x="100" y="100" width="170" height="310" rx="18" fill="#1a1a2e"/>
+            <!-- Screen bezel inset -->
+            <rect x="110" y="115" width="150" height="280" rx="8" fill="url(#illoPhoneScreen)"/>
+            <!-- Notch -->
+            <rect x="155" y="100" width="60" height="12" rx="6" fill="#1a1a2e"/>
+            <!-- Search bar -->
+            <rect x="120" y="130" width="130" height="22" rx="6" fill="rgba(255,255,255,0.07)"/>
+            <circle cx="133" cy="141" r="5" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
+            <rect x="144" y="138" width="60" height="5" rx="2" fill="rgba(255,255,255,0.15)"/>
+            <!-- Content text lines -->
+            <rect x="120" y="165" width="130" height="5" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <rect x="120" y="176" width="110" height="5" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="120" y="187" width="120" height="5" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <!-- Bar chart -->
+            <g transform="translate(120, 280)">
+              <!-- Chart baseline -->
+              <line x1="0" y1="90" x2="130" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <!-- Grid lines -->
+              <line x1="0" y1="30" x2="130" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+              <line x1="0" y1="60" x2="130" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+              <!-- Bars -->
+              <rect x="8" y="55" width="16" height="35" rx="3" fill="url(#illoBarGrad1)"/>
+              <rect x="32" y="30" width="16" height="60" rx="3" fill="url(#illoBarGrad2)"/>
+              <rect x="56" y="42" width="16" height="48" rx="3" fill="url(#illoBarGrad1)"/>
+              <rect x="80" y="15" width="16" height="75" rx="3" fill="url(#illoBarGrad3)"/>
+              <rect x="104" y="5" width="16" height="85" rx="3" fill="url(#illoBarGrad3)"/>
+              <!-- Chart labels -->
+              <text x="16" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q1</text>
+              <text x="40" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q2</text>
+              <text x="64" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q3</text>
+              <text x="88" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q4</text>
+              <text x="112" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q5</text>
+            </g>
+            <!-- Small heading above chart -->
+            <rect x="120" y="210" width="90" height="6" rx="2" fill="rgba(255,255,255,0.18)"/>
+            <rect x="120" y="222" width="70" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <!-- Growth arrow -->
+            <g transform="translate(215, 215)">
+              <path d="M0 18 L15 0" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M10 0 L15 0 L15 5" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </g>
+
+          <!-- === Video Player (bottom-right, overlapping) === -->
+          <g filter="url(#illoShadowSm)">
+            <rect x="370" y="360" width="180" height="110" rx="10" fill="#252C3A"/>
+            <!-- Play button -->
+            <circle cx="460" cy="400" r="20" stroke="#fff" stroke-width="2" fill="none" opacity="0.8"/>
+            <path d="M453 390 L453 410 L470 400Z" fill="#fff" opacity="0.8"/>
+            <!-- Progress bar background -->
+            <rect x="385" y="448" width="150" height="4" rx="2" fill="rgba(255,255,255,0.1)"/>
+            <!-- Progress bar fill -->
+            <rect x="385" y="448" width="55" height="4" rx="2" fill="#00BFF3"/>
+            <!-- Progress dot -->
+            <circle cx="440" cy="450" r="5" fill="#00BFF3"/>
+            <!-- HD badge -->
+            <rect x="520" y="366" width="22" height="12" rx="3" fill="rgba(255,255,255,0.12)"/>
+            <text x="531" y="375" fill="rgba(255,255,255,0.6)" font-size="7" text-anchor="middle" font-family="sans-serif" font-weight="600">HD</text>
+            <!-- Timestamp -->
+            <text x="395" y="442" fill="rgba(255,255,255,0.4)" font-size="7" font-family="sans-serif">1:24 / 3:05</text>
+          </g>
+
+          <!-- === Pencil + Color Palette (bottom-left area) === -->
+          <g transform="translate(80, 420) rotate(-30)">
+            <!-- Pencil body -->
+            <rect x="0" y="0" width="100" height="14" rx="2" fill="#F5A623"/>
+            <rect x="0" y="0" width="100" height="7" rx="2" fill="#F7BC5E"/>
+            <!-- Pencil tip -->
+            <polygon points="100,0 100,14 118,7" fill="#252C3A"/>
+            <polygon points="112,4 112,10 118,7" fill="#e8c9a0"/>
+            <!-- Eraser end -->
+            <rect x="-12" y="1" width="14" height="12" rx="3" fill="#E88B9C"/>
+            <rect x="-2" y="0" width="4" height="14" rx="0" fill="#c0c0c0"/>
+          </g>
+          <!-- Color swatches -->
+          <circle cx="100" cy="468" r="9" fill="#8560A8"/>
+          <circle cx="123" cy="468" r="9" fill="#5674B9"/>
+          <circle cx="146" cy="468" r="9" fill="#00BFF3"/>
+          <circle cx="100" cy="468" r="9" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <circle cx="123" cy="468" r="9" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.3"/>
+          <circle cx="146" cy="468" r="9" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+          <!-- === More scattered decorative elements === -->
+          <circle cx="310" cy="50" r="2" fill="#fff" opacity="0.12"/>
+          <circle cx="240" cy="470" r="3" fill="#5674B9" opacity="0.2"/>
+          <rect x="570" cy="430" y="430" width="6" height="6" rx="1" stroke="#00BFF3" stroke-width="0.8" fill="none" opacity="0.2" transform="rotate(20 573 433)"/>
+        </svg>
       </div>
     </div>
   </div>
