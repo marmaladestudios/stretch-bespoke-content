@@ -1,9 +1,8 @@
 FROM wordpress:latest
 
-# Install MySQL server and supervisor to run both services
+# Install MySQL server
 RUN apt-get update && apt-get install -y \
     default-mysql-server \
-    supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 # Install WP-CLI
@@ -26,11 +25,10 @@ COPY setup-content.php /var/www/html/setup-content.php
 COPY setup-images.php /var/www/html/setup-images.php
 COPY setup-logos.php /var/www/html/setup-logos.php
 
-# Supervisor config to run MySQL + Apache together
+# Ensure MySQL directories exist
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
-COPY supervisor.conf /etc/supervisor/conf.d/wordpress.conf
 
-# Init script to set up MySQL database and configure WordPress
+# Init script
 COPY docker-entrypoint-custom.sh /usr/local/bin/docker-entrypoint-custom.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint-custom.sh
 

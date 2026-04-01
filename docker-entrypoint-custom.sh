@@ -1,47 +1,59 @@
 #!/bin/bash
 set -e
 
-# Start MySQL temporarily to set up database
-echo "Starting MySQL for initial setup..."
-mysqld_safe &
-sleep 5
+# Initialize MySQL data directory if empty (first run on fresh disk)
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    echo "Initializing MySQL data directory..."
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+fi
 
-# Wait for MySQL to be ready
-for i in $(seq 1 30); do
-    if mysqladmin ping -h localhost --silent 2>/dev/null; then
+# Ensure socket directory exists
+mkdir -p /run/mysqld
+chown mysql:mysql /run/mysqld
+
+# Start MySQL in background
+echo "Starting MySQL..."
+mysqld --user=mysql --datadir=/var/lib/mysql --socket=/run/mysqld/mysqld.sock --port=3306 &
+
+# Wait for MySQL to be ready (up to 60 seconds)
+echo "Waiting for MySQL to be ready..."
+for i in $(seq 1 60); do
+    if mysqladmin ping --socket=/run/mysqld/mysqld.sock --silent 2>/dev/null; then
+        echo "MySQL is ready."
         break
+    fi
+    if [ $i -eq 60 ]; then
+        echo "MySQL failed to start within 60 seconds."
+        exit 1
     fi
     sleep 1
 done
 
-# Create WordPress database and user
-mysql -u root <<-EOSQL
+# Create WordPress database and user (idempotent)
+mysql --socket=/run/mysqld/mysqld.sock -u root <<-EOSQL
     CREATE DATABASE IF NOT EXISTS wordpress;
     CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY 'wordpress';
     GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
     FLUSH PRIVILEGES;
 EOSQL
+echo "Database ready."
 
-echo "MySQL database ready."
-
-# Set WordPress DB config via environment
-export WORDPRESS_DB_HOST="localhost"
+# Set WordPress environment
+export WORDPRESS_DB_HOST="localhost:/run/mysqld/mysqld.sock"
 export WORDPRESS_DB_USER="wordpress"
 export WORDPRESS_DB_PASSWORD="wordpress"
 export WORDPRESS_DB_NAME="wordpress"
 
-# Run the original WordPress entrypoint to generate wp-config.php
-docker-entrypoint.sh apache2 &
-sleep 5
+# Run WordPress docker-entrypoint to set up wp-config.php (if not exists)
+if [ ! -f /var/www/html/wp-config.php ]; then
+    echo "Running WordPress setup..."
+    # Source the WordPress entrypoint function
+    docker-entrypoint.sh apache2-foreground &
+    sleep 8
+    # Kill Apache — we'll restart it properly
+    pkill -f apache2 2>/dev/null || true
+    sleep 2
+fi
 
-# Kill the temporary Apache — supervisor will manage both
-pkill apache2 2>/dev/null || true
-sleep 2
-
-# Kill temporary MySQL — supervisor will manage it
-mysqladmin -u root shutdown 2>/dev/null || true
-sleep 2
-
-# Start everything via supervisor
-echo "Starting services via supervisor..."
-exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+echo "Starting Apache..."
+exec apache2-foreground
