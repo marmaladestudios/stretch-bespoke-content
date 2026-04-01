@@ -5,6 +5,8 @@
 get_header();
 ?>
 
+<div class="v2-cursor" id="v2Cursor"></div><div class="v2-cursor-dot" id="v2CursorDot"></div>
+
 <!-- Scroll Progress Bar -->
 <div id="scrollProgress" style="position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,#8560A8,#5674B9,#448CCB,#00BFF3);z-index:99999;transition:width .1s linear;"></div>
 
@@ -12,6 +14,10 @@ get_header();
 /* ========================================
    HOMEPAGE 2.0 — PREMIUM TEMPLATE
    ======================================== */
+
+/* ---------- ADMIN BAR FIX ---------- */
+.admin-bar .site-nav { top: 32px; }
+@media (max-width: 782px) { .admin-bar .site-nav { top: 46px; } }
 
 /* ---------- RESET / BASE ---------- */
 .v2-section { box-sizing: border-box; }
@@ -951,23 +957,189 @@ get_header();
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 180px;
-  padding: 0 30px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: #bbb;
-  letter-spacing: 1px;
+  min-width: 160px;
+  height: 60px;
+  padding: 0 28px;
   filter: grayscale(100%);
-  opacity: 0.5;
+  opacity: 0.45;
   transition: all 0.4s ease;
   white-space: nowrap;
   user-select: none;
 }
+.v2-logo-item img {
+  max-height: 40px;
+  max-width: 120px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
 .v2-logo-item:hover {
   filter: grayscale(0%);
   opacity: 1;
+}
+
+/* ========================================
+   7b. CASE STUDIES
+   ======================================== */
+.v2-case-studies {
+  padding: 120px 0;
+  background: #252C3A;
+}
+.v2-cs-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.v2-cs-overline {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: #8560A8;
+  margin-bottom: 16px;
+}
+.v2-cs-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  color: #252C3A;
+  line-height: 1.15;
+}
+.v2-cs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.v2-cs-card {
+  position: relative;
+  overflow: hidden;
+  background: #252C3A;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+}
+.v2-cs-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 64px rgba(37, 44, 58, 0.25);
+}
+.v2-cs-card-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.v2-cs-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.v2-cs-card:hover .v2-cs-card-image img {
+  transform: scale(1.05);
+}
+.v2-cs-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(37,44,58,0.95) 0%, rgba(37,44,58,0.6) 40%, rgba(37,44,58,0.1) 100%);
+  z-index: 1;
+}
+.v2-cs-card-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+}
+.v2-cs-card-tag {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  border: 1px solid rgba(0,191,243,0.3);
+  padding: 4px 12px;
+  margin-bottom: 16px;
+}
+.v2-cs-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.v2-cs-card-desc {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.v2-cs-card-stats {
+  display: flex;
+  gap: 24px;
+}
+.v2-cs-stat {
+  text-align: left;
+}
+.v2-cs-stat-num {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #00BFF3;
+  line-height: 1;
+}
+.v2-cs-stat-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+}
+.v2-cs-card-large {
+  grid-column: 1 / -1;
+  min-height: 480px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.v2-cs-card-large .v2-cs-card-image {
+  position: relative;
+}
+.v2-cs-card-large::after {
+  display: none;
+}
+.v2-cs-card-large .v2-cs-card-content {
+  background: linear-gradient(160deg, #252C3A, #323A51);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 48px;
+}
+.v2-cs-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #00BFF3;
+  text-decoration: none;
+  transition: gap 0.3s ease;
+}
+.v2-cs-card-link:hover {
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .v2-cs-grid { grid-template-columns: 1fr; }
+  .v2-cs-card-large { grid-template-columns: 1fr; }
+  .v2-cs-card-large .v2-cs-card-image { min-height: 240px; }
+  .v2-cs-heading { font-size: 30px; }
+  .v2-cs-card { min-height: 340px; }
 }
 
 /* ========================================
@@ -1124,6 +1296,8 @@ get_header();
 .v2-timeline-step {
   text-align: center;
   padding: 0 8px;
+  cursor: pointer;
+  user-select: none;
 }
 .v2-timeline-dot {
   width: 18px; height: 18px;
@@ -1144,6 +1318,17 @@ get_header();
 .v2-timeline-step.active .v2-timeline-dot {
   background: #00BFF3;
   box-shadow: 0 0 20px rgba(0,191,243,0.4);
+  transform: scale(1.3);
+}
+.v2-timeline-step:hover .v2-timeline-dot {
+  background: #8560A8;
+  box-shadow: 0 0 16px rgba(133,96,168,0.3);
+  transform: scale(1.2);
+}
+.v2-timeline-step.active:hover .v2-timeline-dot {
+  background: #00BFF3;
+  box-shadow: 0 0 20px rgba(0,191,243,0.4);
+  transform: scale(1.3);
 }
 .v2-timeline-step.active .v2-timeline-dot::after {
   border-color: rgba(0,191,243,0.2);
@@ -1157,6 +1342,8 @@ get_header();
   transition: color 0.5s ease;
 }
 .v2-timeline-step.active .v2-timeline-step-number { color: #00BFF3; }
+.v2-timeline-step:hover .v2-timeline-step-number { color: #8560A8; }
+.v2-timeline-step.active:hover .v2-timeline-step-number { color: #00BFF3; }
 .v2-timeline-step-title {
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
@@ -1164,7 +1351,85 @@ get_header();
   color: #888;
   transition: color 0.5s ease;
 }
-.v2-timeline-step.active .v2-timeline-step-title { color: #252C3A; }
+.v2-timeline-step.active .v2-timeline-step-title { color: #252C3A; font-weight: 600; }
+.v2-timeline-step:hover .v2-timeline-step-title { color: #252C3A; }
+
+/* Detail panel */
+.v2-timeline-detail {
+  margin-top: 48px;
+  position: relative;
+  min-height: 180px;
+}
+.v2-timeline-detail-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-left: 4px solid;
+  border-image: linear-gradient(180deg, #8560A8, #00BFF3) 1;
+  padding: 40px 44px;
+  box-shadow: 0 12px 48px rgba(37, 44, 58, 0.08);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+.v2-timeline-detail-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.v2-timeline-detail-step {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  margin-bottom: 8px;
+}
+.v2-timeline-detail-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #252C3A;
+  margin-bottom: 12px;
+}
+.v2-timeline-detail-desc {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  color: #323A51;
+  line-height: 1.65;
+  max-width: 600px;
+}
+.v2-timeline-detail-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(133,96,168,0.08), rgba(0,191,243,0.08));
+  border-radius: 50%;
+}
+.v2-timeline-detail-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+@media (max-width: 768px) {
+  .v2-timeline-detail-card {
+    grid-template-columns: 1fr;
+    padding: 28px 24px;
+  }
+  .v2-timeline-detail-icon { display: none; }
+  .v2-timeline-detail-title { font-size: 20px; }
+}
 
 /* ========================================
    10. IMPACT NUMBERS
@@ -1586,6 +1851,152 @@ get_header();
   .v2-testimonial-author { flex-direction: column; gap: 10px; }
   .v2-testimonial-info { text-align: center; }
 }
+
+/* ========================================
+   PREMIUM MICRO-INTERACTIONS
+   ======================================== */
+
+/* ---------- 1. CUSTOM CURSOR ---------- */
+.v2-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid rgba(133,96,168,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100000;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: transparent;
+  backdrop-filter: blur(2px);
+  mix-blend-mode: difference;
+}
+.v2-cursor.active {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(133,96,168,0.3);
+  background: rgba(133,96,168,0.08);
+  color: rgba(255,255,255,0.9);
+  mix-blend-mode: normal;
+}
+.v2-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #8560A8;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100001;
+  transform: translate(-50%, -50%);
+}
+@media (hover: none), (pointer: coarse) {
+  .v2-cursor, .v2-cursor-dot { display: none !important; }
+}
+@media (max-width: 768px) {
+  .v2-cursor, .v2-cursor-dot { display: none !important; }
+}
+
+/* ---------- 4. LETTER-BY-LETTER HERO REVEAL ---------- */
+@keyframes v2-letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.v2-hero-title .v2-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: v2-letterReveal 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.v2-hero-title .v2-letter-space {
+  display: inline-block;
+  width: 0.3em;
+}
+
+/* ---------- 5. GRAIN TEXTURE OVERLAY ---------- */
+@keyframes v2-grainShift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -3%); }
+  50% { transform: translate(3%, 1%); }
+  75% { transform: translate(-1%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+.v2-grain-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.v2-grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  animation: v2-grainShift 0.8s steps(4) infinite;
+}
+
+/* ---------- 6. SCROLL TEXT WIPE ---------- */
+.v2-pull-quote .v2-wipe-word {
+  display: inline-block;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.2;
+  color: rgba(255,255,255,0.3);
+}
+.v2-pull-quote .v2-wipe-word.revealed {
+  opacity: 1;
+  color: #fff;
+}
+.v2-pull-quote .v2-wipe-word .quote-accent {
+  color: inherit;
+  -webkit-text-fill-color: unset;
+}
+
+/* ---------- 7. IMPACT NUMBER PULSE GLOW ---------- */
+@keyframes v2-pulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 0 transparent;
+    filter: brightness(1);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0,191,243,0.25), 0 0 40px rgba(86,116,185,0.15);
+    filter: brightness(1.08);
+  }
+}
+.v2-impact-number.v2-pulse-active {
+  animation: v2-pulseGlow 3s ease-in-out infinite;
+  animation-delay: 2.5s;
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .v2-cursor, .v2-cursor-dot { display: none !important; }
+  .v2-hero-title .v2-letter { animation: none !important; opacity: 1; transform: none; }
+  .v2-grain-overlay::before { animation: none !important; }
+  .v2-impact-number.v2-pulse-active { animation: none !important; }
+  .v2-pull-quote .v2-wipe-word { opacity: 1 !important; color: #fff !important; }
+}
 </style>
 
 
@@ -1606,7 +2017,7 @@ get_header();
     <div class="v2-hero-inner">
       <div class="v2-hero-text">
         <span class="v2-overline v2-reveal v2-delay-1">Stretch Creative</span>
-        <h1 class="v2-reveal v2-delay-2">Creative Solutions<br><span class="gradient-text">Fit For You</span></h1>
+        <h1 class="v2-hero-title v2-reveal v2-delay-2">Creative Solutions<br><span class="gradient-text">Fit For You</span></h1>
         <p class="v2-subtitle v2-reveal v2-delay-3">The trusted partner for producing publish-ready content at scale&nbsp;&mdash; your story, your voice, on time.</p>
         <p class="v2-supporting v2-reveal v2-delay-4">Content writing &middot; SEO strategy &middot; Design &middot; Videography</p>
         <a href="/contact-stretch-creative/" class="v2-btn-primary v2-reveal v2-delay-5"><span>Let&rsquo;s Chat &rarr;</span></a>
@@ -1717,6 +2128,29 @@ get_header();
      2. GRADIENT ACCENT BAR
      ======================================== -->
 <div class="v2-section v2-accent-bar"></div>
+
+
+<!-- ========================================
+     CLIENT LOGO MARQUEE
+     ======================================== -->
+<section class="v2-section v2-logos" aria-label="Trusted Brands">
+  <h2>Trusted by Leading Brands</h2>
+  <div class="v2-marquee-track">
+    <?php
+    $logo_ids = get_option('stretch_client_logos', []);
+    if ($logo_ids) {
+        foreach ($logo_ids as $name => $id) {
+            $url = wp_get_attachment_url($id);
+            if ($url) echo '<div class="v2-logo-item"><img src="' . esc_url($url) . '" alt="' . esc_attr($name) . '" loading="lazy"></div>' . "\n    ";
+        }
+        foreach ($logo_ids as $name => $id) {
+            $url = wp_get_attachment_url($id);
+            if ($url) echo '<div class="v2-logo-item"><img src="' . esc_url($url) . '" alt="' . esc_attr($name) . '" loading="lazy"></div>' . "\n    ";
+        }
+    }
+    ?>
+  </div>
+</section>
 
 
 <!-- ========================================
@@ -1889,37 +2323,6 @@ get_header();
 
 
 <!-- ========================================
-     7. CLIENT LOGO MARQUEE
-     ======================================== -->
-<section class="v2-section v2-logos" aria-label="Trusted Brands">
-  <h2>Trusted by Leading Brands</h2>
-  <div class="v2-marquee-track">
-    <div class="v2-logo-item">Blue Nile</div>
-    <div class="v2-logo-item">Vuori</div>
-    <div class="v2-logo-item">RVCA</div>
-    <div class="v2-logo-item">Zulily</div>
-    <div class="v2-logo-item">Walmart</div>
-    <div class="v2-logo-item">Grainger</div>
-    <div class="v2-logo-item">Etsy</div>
-    <div class="v2-logo-item">Home Depot</div>
-    <div class="v2-logo-item">Grove</div>
-    <div class="v2-logo-item">1stDibs</div>
-    <!-- duplicate for seamless loop -->
-    <div class="v2-logo-item">Blue Nile</div>
-    <div class="v2-logo-item">Vuori</div>
-    <div class="v2-logo-item">RVCA</div>
-    <div class="v2-logo-item">Zulily</div>
-    <div class="v2-logo-item">Walmart</div>
-    <div class="v2-logo-item">Grainger</div>
-    <div class="v2-logo-item">Etsy</div>
-    <div class="v2-logo-item">Home Depot</div>
-    <div class="v2-logo-item">Grove</div>
-    <div class="v2-logo-item">1stDibs</div>
-  </div>
-</section>
-
-
-<!-- ========================================
      8. TESTIMONIALS 2.0
      ======================================== -->
 <section class="v2-section v2-testimonials" aria-label="Testimonials">
@@ -2002,7 +2405,7 @@ get_header();
         <div class="v2-timeline-progress" id="timelineProgress"></div>
       </div>
       <div class="v2-timeline-steps">
-        <div class="v2-timeline-step" data-step="1">
+        <div class="v2-timeline-step active" data-step="1">
           <div class="v2-timeline-step-number">01</div>
           <div class="v2-timeline-dot"></div>
           <div class="v2-timeline-step-title">Consultation</div>
@@ -2033,6 +2436,70 @@ get_header();
           <div class="v2-timeline-step-title">Deliver &amp; Report</div>
         </div>
       </div>
+
+      <!-- Detail cards -->
+      <div class="v2-timeline-detail">
+        <div class="v2-timeline-detail-card active" data-detail="1">
+          <div>
+            <div class="v2-timeline-detail-step">Step 01</div>
+            <div class="v2-timeline-detail-title">Consultation</div>
+            <div class="v2-timeline-detail-desc">We meet to define your content needs, budget, and timeline. This is where we learn about your brand, audience, goals, and what success looks like — so we can build the right team and strategy from day one.</div>
+          </div>
+          <div class="v2-timeline-detail-icon">
+            <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="14" r="6" stroke="#8560A8" stroke-width="1.5"/><path d="M6 32c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#8560A8" stroke-width="1.5" fill="none"/></svg>
+          </div>
+        </div>
+        <div class="v2-timeline-detail-card" data-detail="2">
+          <div>
+            <div class="v2-timeline-detail-step">Step 02</div>
+            <div class="v2-timeline-detail-title">Brief &amp; Style Guide</div>
+            <div class="v2-timeline-detail-desc">We develop detailed project briefs and training materials that capture your brand voice, editorial standards, and content requirements. This becomes the playbook your dedicated team follows.</div>
+          </div>
+          <div class="v2-timeline-detail-icon">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="6" y="4" width="24" height="28" rx="2" stroke="#5674B9" stroke-width="1.5" fill="none"/><line x1="12" y1="12" x2="24" y2="12" stroke="#5674B9" stroke-width="1.5"/><line x1="12" y1="18" x2="24" y2="18" stroke="#5674B9" stroke-width="1.5"/><line x1="12" y1="24" x2="18" y2="24" stroke="#5674B9" stroke-width="1.5"/></svg>
+          </div>
+        </div>
+        <div class="v2-timeline-detail-card" data-detail="3">
+          <div>
+            <div class="v2-timeline-detail-step">Step 03</div>
+            <div class="v2-timeline-detail-title">Curate Your Team</div>
+            <div class="v2-timeline-detail-desc">We hand-pick writers and creatives based on their expertise, industry experience, and fit with your brand. Your dedicated cohort becomes a true extension of your marketing team.</div>
+          </div>
+          <div class="v2-timeline-detail-icon">
+            <svg viewBox="0 0 36 36" fill="none"><circle cx="12" cy="14" r="5" stroke="#448CCB" stroke-width="1.5" fill="none"/><circle cx="24" cy="14" r="5" stroke="#448CCB" stroke-width="1.5" fill="none"/><circle cx="18" cy="26" r="5" stroke="#448CCB" stroke-width="1.5" fill="none"/></svg>
+          </div>
+        </div>
+        <div class="v2-timeline-detail-card" data-detail="4">
+          <div>
+            <div class="v2-timeline-detail-step">Step 04</div>
+            <div class="v2-timeline-detail-title">Calibrate</div>
+            <div class="v2-timeline-detail-desc">We produce sample pieces and refine through your feedback until the voice, quality, and style match your standards perfectly. No content goes live until you're confident in the output.</div>
+          </div>
+          <div class="v2-timeline-detail-icon">
+            <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="12" stroke="#00BFF3" stroke-width="1.5" fill="none"/><circle cx="18" cy="18" r="6" stroke="#00BFF3" stroke-width="1.5" fill="none"/><circle cx="18" cy="18" r="1.5" fill="#00BFF3"/></svg>
+          </div>
+        </div>
+        <div class="v2-timeline-detail-card" data-detail="5">
+          <div>
+            <div class="v2-timeline-detail-step">Step 05</div>
+            <div class="v2-timeline-detail-title">Create</div>
+            <div class="v2-timeline-detail-desc">Your dedicated team produces content on schedule, at your scale, with built-in editorial quality checks at every stage. Direct collaboration and real-time feedback keep everything on track.</div>
+          </div>
+          <div class="v2-timeline-detail-icon">
+            <svg viewBox="0 0 36 36" fill="none"><path d="M6 28l8-10 6 6 8-12 4 5" stroke="#8560A8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="6" y1="32" x2="32" y2="32" stroke="#8560A8" stroke-width="1" opacity="0.3"/></svg>
+          </div>
+        </div>
+        <div class="v2-timeline-detail-card" data-detail="6">
+          <div>
+            <div class="v2-timeline-detail-step">Step 06</div>
+            <div class="v2-timeline-detail-title">Deliver &amp; Report</div>
+            <div class="v2-timeline-detail-desc">Publish-ready content delivered on time with performance tracking and ongoing optimization. We continuously monitor, maintain, and refine content quality through regular feedback loops.</div>
+          </div>
+          <div class="v2-timeline-detail-icon">
+            <svg viewBox="0 0 36 36" fill="none"><rect x="6" y="8" width="24" height="20" rx="2" stroke="#00BFF3" stroke-width="1.5" fill="none"/><polyline points="12,18 16,22 24,14" stroke="#00BFF3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2045,7 +2512,7 @@ get_header();
   <div class="v2-container">
     <div class="v2-impact-heading v2-reveal">
       <span class="v2-overline">Measurable Results</span>
-      <h2>The Impact We Drive</h2>
+      <h2>Case Studies</h2>
     </div>
     <div class="v2-impact-grid">
       <div class="v2-impact-item v2-reveal v2-delay-1">
@@ -2063,6 +2530,78 @@ get_header();
       <div class="v2-impact-item v2-reveal v2-delay-4">
         <div class="v2-impact-number"><span class="v2-count" data-target="2.8" data-decimals="1">0</span><span class="v2-suffix">x</span></div>
         <div class="v2-impact-desc">Conversion Rate Improvement</div>
+      </div>
+    </div>
+
+    <div class="v2-cs-grid" style="margin-top:80px;">
+      <!-- Large featured case study -->
+      <div class="v2-cs-card v2-cs-card-large v2-reveal">
+        <div class="v2-cs-card-image">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop" alt="Grove Collaborative case study">
+        </div>
+        <div class="v2-cs-card-content">
+          <div class="v2-cs-card-tag">Featured Case Study</div>
+          <h3 class="v2-cs-card-title">How Grove Collaborative Scaled SEO Content to 500+ Articles</h3>
+          <p class="v2-cs-card-desc">We built a dedicated content team of 12 writers calibrated to Grove's brand voice, producing expert-level SEO content across sustainability, home care, and wellness categories.</p>
+          <div class="v2-cs-card-stats">
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">312%</div>
+              <div class="v2-cs-stat-label">Organic Lift</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">500+</div>
+              <div class="v2-cs-stat-label">Articles</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">4.2x</div>
+              <div class="v2-cs-stat-label">Dwell Time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case study 2 -->
+      <div class="v2-cs-card v2-reveal">
+        <div class="v2-cs-card-image">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=500&fit=crop" alt="Ecommerce content at scale">
+        </div>
+        <div class="v2-cs-card-content">
+          <div class="v2-cs-card-tag">Ecommerce</div>
+          <h3 class="v2-cs-card-title">10,000 Product Descriptions in 90 Days for a Major Retailer</h3>
+          <p class="v2-cs-card-desc">Scaled product content across 15 categories while maintaining consistent brand voice and SEO optimization.</p>
+          <div class="v2-cs-card-stats">
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">10K</div>
+              <div class="v2-cs-stat-label">Products</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">+47%</div>
+              <div class="v2-cs-stat-label">Conversions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case study 3 -->
+      <div class="v2-cs-card v2-reveal">
+        <div class="v2-cs-card-image">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=500&fit=crop" alt="Content marketing strategy">
+        </div>
+        <div class="v2-cs-card-content">
+          <div class="v2-cs-card-tag">Content Strategy</div>
+          <h3 class="v2-cs-card-title">From Zero to Page One: Building a B2B Content Engine</h3>
+          <p class="v2-cs-card-desc">A comprehensive content strategy that took a B2B SaaS company from no organic presence to ranking for 200+ keywords.</p>
+          <div class="v2-cs-card-stats">
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">200+</div>
+              <div class="v2-cs-stat-label">Keywords</div>
+            </div>
+            <div class="v2-cs-stat">
+              <div class="v2-cs-stat-num">8x</div>
+              <div class="v2-cs-stat-label">Traffic</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2239,32 +2778,49 @@ get_header();
 
   startAuto();
 
-  /* ---------- PROCESS TIMELINE ---------- */
+  /* ---------- PROCESS TIMELINE (interactive) ---------- */
   var timelineSection = document.getElementById('processTimeline');
   var timelineProgress = document.getElementById('timelineProgress');
   var timelineSteps = document.querySelectorAll('.v2-timeline-step');
+  var timelineDetails = document.querySelectorAll('.v2-timeline-detail-card');
+  var activeTimelineStep = 0;
+
+  function setActiveStep(index) {
+    activeTimelineStep = index;
+    // Update steps
+    timelineSteps.forEach(function(step, i) {
+      step.classList.toggle('active', i <= index);
+    });
+    // Update progress bar
+    if (timelineProgress) {
+      var pct = ((index + 1) / timelineSteps.length) * 100;
+      timelineProgress.style.width = pct + '%';
+    }
+    // Update detail cards
+    timelineDetails.forEach(function(card) {
+      card.classList.remove('active');
+    });
+    var targetCard = document.querySelector('.v2-timeline-detail-card[data-detail="' + (index + 1) + '"]');
+    if (targetCard) targetCard.classList.add('active');
+  }
+
+  // Click on steps
+  timelineSteps.forEach(function(step, i) {
+    step.addEventListener('click', function() {
+      setActiveStep(i);
+    });
+  });
+
+  // Initialize first step
+  setActiveStep(0);
 
   function updateTimeline() {
+    // Scroll-based activation only if user hasn't clicked recently
+    // (kept for initial reveal animation)
     if (!timelineSection) return;
     var rect = timelineSection.getBoundingClientRect();
-    var sectionHeight = rect.height;
     var viewH = window.innerHeight;
-    // progress from 0 to 1 as section scrolls through viewport
-    var rawProgress = (viewH - rect.top) / (sectionHeight + viewH * 0.5);
-    var progress = Math.max(0, Math.min(1, rawProgress));
-
-    if (timelineProgress) {
-      timelineProgress.style.width = (progress * 100) + '%';
-    }
-
-    var activeCount = Math.ceil(progress * timelineSteps.length);
-    timelineSteps.forEach(function(step, i) {
-      if (i < activeCount) {
-        step.classList.add('active');
-      } else {
-        step.classList.remove('active');
-      }
-    });
+    if (rect.top > viewH || rect.bottom < 0) return;
   }
 
   /* ---------- SERVICE IMAGE PARALLAX ---------- */
@@ -2299,6 +2855,255 @@ get_header();
   updateProgress();
   updateTimeline();
   updateParallax();
+
+  /* ========================================
+     PREMIUM MICRO-INTERACTIONS
+     ======================================== */
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  /* ---------- 1. CUSTOM CURSOR ---------- */
+  if (!isTouchDevice && !reducedMotion && window.innerWidth > 768) {
+    var cursor = document.getElementById('v2Cursor');
+    var cursorDot = document.getElementById('v2CursorDot');
+    var cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
+    var cursorVisible = false;
+
+    document.addEventListener('mousemove', function(e) {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      if (!cursorVisible) {
+        cursor.style.opacity = '1';
+        cursorDot.style.opacity = '1';
+        cursorVisible = true;
+      }
+    });
+
+    // Smooth follow for outer ring
+    (function animateCursor() {
+      dotX += (cursorX - dotX) * 0.9;
+      dotY += (cursorY - dotY) * 0.9;
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top = dotY + 'px';
+
+      var cX = parseFloat(cursor.style.left) || 0;
+      var cY = parseFloat(cursor.style.top) || 0;
+      cursor.style.left = cX + (cursorX - cX) * 0.15 + 'px';
+      cursor.style.top = cY + (cursorY - cY) * 0.15 + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+
+    cursor.style.opacity = '0';
+    cursorDot.style.opacity = '0';
+
+    // Interactive element hover
+    var interactiveSelectors = 'a, button, .v2-btn-primary, .btn-primary, .btn-white, .v2-cta-btn-primary, .v2-cta-btn-outline, .v2-cs-card, .v2-service-row, .v2-testimonial-dot';
+    document.querySelectorAll(interactiveSelectors).forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        cursor.classList.add('active');
+        var tag = el.tagName.toLowerCase();
+        var isCard = el.classList.contains('v2-cs-card') || el.classList.contains('v2-service-row');
+        cursor.textContent = isCard ? 'View' : 'Explore';
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.classList.remove('active');
+        cursor.textContent = '';
+      });
+    });
+  }
+
+  /* ---------- 2. MAGNETIC BUTTONS ---------- */
+  if (!isTouchDevice && !reducedMotion) {
+    var magneticBtns = document.querySelectorAll('.v2-btn-primary, .btn-primary, .btn-white, .v2-cta-btn-primary');
+    magneticBtns.forEach(function(btn) {
+      btn.addEventListener('mousemove', function(e) {
+        var rect = btn.getBoundingClientRect();
+        var bx = rect.left + rect.width / 2;
+        var by = rect.top + rect.height / 2;
+        var dx = e.clientX - bx;
+        var dy = e.clientY - by;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var maxDist = 40;
+        if (dist < maxDist + rect.width / 2) {
+          var pull = Math.max(0, 1 - dist / (maxDist + rect.width / 2));
+          btn.style.transform = 'translate(' + (dx * pull * 0.3) + 'px, ' + (dy * pull * 0.3) + 'px)';
+        }
+      });
+      btn.addEventListener('mouseleave', function() {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.16,1,0.3,1)';
+        setTimeout(function() { btn.style.transition = ''; }, 400);
+      });
+    });
+  }
+
+  /* ---------- 3. 3D TILT ON CARDS ---------- */
+  if (!isTouchDevice && !reducedMotion) {
+    var tiltCards = document.querySelectorAll('.v2-cs-card, .v2-service-row');
+    tiltCards.forEach(function(card) {
+      card.style.transition = card.style.transition ? card.style.transition + ', transform 0.3s ease-out' : 'transform 0.3s ease-out';
+      card.style.transformStyle = 'preserve-3d';
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = (e.clientX - cx) / (rect.width / 2);
+        var dy = (e.clientY - cy) / (rect.height / 2);
+        card.style.transform = 'perspective(800px) rotateY(' + (dx * 4) + 'deg) rotateX(' + (-dy * 4) + 'deg)';
+        card.style.transition = 'none';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+      });
+    });
+  }
+
+  /* ---------- 4. LETTER-BY-LETTER HERO REVEAL ---------- */
+  if (!reducedMotion) {
+    var heroTitle = document.querySelector('.v2-hero-title');
+    if (heroTitle) {
+      var html = heroTitle.innerHTML;
+      // Preserve the gradient-text span
+      var parts = html.split(/(<span class="gradient-text">.*?<\/span>|<br\s*\/?>)/i);
+      var newHTML = '';
+      var charIndex = 0;
+
+      parts.forEach(function(part) {
+        if (part.match(/^<br/i)) {
+          newHTML += part;
+        } else if (part.match(/^<span class="gradient-text">/i)) {
+          // Extract inner text of gradient span and wrap letters
+          var inner = part.replace(/<span class="gradient-text">/, '').replace(/<\/span>/, '');
+          var wrappedInner = '';
+          for (var i = 0; i < inner.length; i++) {
+            if (inner[i] === ' ') {
+              wrappedInner += '<span class="v2-letter-space"> </span>';
+            } else {
+              wrappedInner += '<span class="v2-letter" style="animation-delay:' + (charIndex * 0.03) + 's">' + inner[i] + '</span>';
+            }
+            charIndex++;
+          }
+          newHTML += '<span class="gradient-text">' + wrappedInner + '</span>';
+        } else {
+          // Regular text
+          for (var j = 0; j < part.length; j++) {
+            if (part[j] === ' ') {
+              newHTML += '<span class="v2-letter-space"> </span>';
+            } else if (part[j] === '&' || part.substr(j).match(/^&[a-z]+;/i)) {
+              // Handle HTML entities
+              var entityMatch = part.substr(j).match(/^&[a-z]+;/i);
+              if (entityMatch) {
+                newHTML += '<span class="v2-letter" style="animation-delay:' + (charIndex * 0.03) + 's">' + entityMatch[0] + '</span>';
+                j += entityMatch[0].length - 1;
+              } else {
+                newHTML += '<span class="v2-letter" style="animation-delay:' + (charIndex * 0.03) + 's">' + part[j] + '</span>';
+              }
+            } else {
+              newHTML += '<span class="v2-letter" style="animation-delay:' + (charIndex * 0.03) + 's">' + part[j] + '</span>';
+            }
+            charIndex++;
+          }
+        }
+      });
+
+      heroTitle.innerHTML = newHTML;
+    }
+  }
+
+  /* ---------- 5. GRAIN TEXTURE OVERLAY ---------- */
+  if (!reducedMotion) {
+    var grainSections = document.querySelectorAll('.v2-hero, .v2-impact, .v2-bespoke, .v2-stats-bar');
+    grainSections.forEach(function(section) {
+      // Ensure position relative for absolute child
+      var pos = window.getComputedStyle(section).position;
+      if (pos === 'static') section.style.position = 'relative';
+      var grain = document.createElement('div');
+      grain.className = 'v2-grain-overlay';
+      section.insertBefore(grain, section.firstChild);
+    });
+  }
+
+  /* ---------- 6. SCROLL-TRIGGERED TEXT WIPE ON PULL QUOTE ---------- */
+  var pullQuote = document.querySelector('.v2-pull-quote blockquote');
+  if (pullQuote && !reducedMotion) {
+    // Wrap each word in a span (preserving HTML like <span class="quote-accent">)
+    var quoteHTML = pullQuote.innerHTML;
+    // Split by tags and text
+    var tokens = quoteHTML.split(/(<[^>]+>)/);
+    var wordHTML = '';
+    tokens.forEach(function(token) {
+      if (token.match(/^</)) {
+        wordHTML += token; // keep tags as-is
+      } else {
+        // Split text into words
+        var words = token.split(/(\s+)/);
+        words.forEach(function(w) {
+          if (w.match(/^\s+$/)) {
+            wordHTML += w;
+          } else if (w.length > 0) {
+            wordHTML += '<span class="v2-wipe-word">' + w + '</span>';
+          }
+        });
+      }
+    });
+    pullQuote.innerHTML = wordHTML;
+
+    var wipeWords = pullQuote.querySelectorAll('.v2-wipe-word');
+    var pullQuoteSection = document.querySelector('.v2-pull-quote');
+
+    function updateTextWipe() {
+      if (!pullQuoteSection) return;
+      var rect = pullQuoteSection.getBoundingClientRect();
+      var viewH = window.innerHeight;
+      // Progress: 0 when top enters viewport, 1 when bottom leaves
+      var progress = 1 - (rect.bottom / (viewH + rect.height));
+      progress = Math.max(0, Math.min(1, progress));
+
+      wipeWords.forEach(function(word, i) {
+        var wordProgress = (progress * (wipeWords.length + 5) - i) / 5;
+        wordProgress = Math.max(0, Math.min(1, wordProgress));
+        if (wordProgress > 0.5) {
+          word.classList.add('revealed');
+        } else {
+          word.classList.remove('revealed');
+        }
+      });
+    }
+
+    // Piggyback on the scroll via a separate passive listener
+    var wipeTicking = false;
+    window.addEventListener('scroll', function() {
+      if (!wipeTicking) {
+        requestAnimationFrame(function() {
+          updateTextWipe();
+          wipeTicking = false;
+        });
+        wipeTicking = true;
+      }
+    }, { passive: true });
+    updateTextWipe();
+  }
+
+  /* ---------- 7. LIVE PULSE ON IMPACT NUMBERS ---------- */
+  if (!reducedMotion) {
+    var impactNumbers = document.querySelectorAll('.v2-impact-number');
+    var pulseObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          // Delay the pulse to start after counting finishes (~2.5s)
+          setTimeout(function() {
+            entry.target.classList.add('v2-pulse-active');
+          }, 2500);
+          pulseObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    impactNumbers.forEach(function(el) {
+      pulseObserver.observe(el);
+    });
+  }
 
 })();
 </script>
