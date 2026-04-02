@@ -1515,6 +1515,11 @@
     }
   }
 
+  /* ── Shared state ── */
+  var fetchedHtml = null;
+  var fetchedUrl = null;
+  var parsedDoc = null;
+
   /* ── Event Listeners ── */
   document.getElementById('scanBtn').addEventListener('click', async function() {
     var url = document.getElementById('scanUrl').value.trim();
@@ -1523,13 +1528,13 @@
       return;
     }
     if (!url.match(/^https?:\/\//)) url = 'https://' + url;
+    fetchedUrl = url;
 
-    // Show loading
+    // Show loading while fetching
     document.getElementById('scannerInput').style.display = 'none';
     document.getElementById('scannerLoading').style.display = 'block';
 
-    // Typewriter loading messages
-    var messages = ['Fetching page...', 'Analyzing heading structure...', 'Checking schema markup...', 'Evaluating E-E-A-T signals...', 'Scoring content depth...', 'Calculating AEO score...'];
+    var messages = ['Fetching page...', 'Reading content structure...', 'Preparing analysis...'];
     var msgIdx = 0;
     var statusEl = document.getElementById('loadingStatus');
     var currentTypewriter = null;
@@ -1545,10 +1550,10 @@
     }
     showNextMessage();
 
-    // Try multiple CORS proxies
+    // Try CORS proxies
     var proxies = [
       'https://api.allorigins.win/raw?url=',
-      'https://corsproxy.io/?' ,
+      'https://corsproxy.io/?',
       'https://api.codetabs.com/v1/proxy?quest='
     ];
     var html = null;
@@ -1562,20 +1567,106 @@
             break;
           }
         }
-      } catch(e) { /* try next proxy */ }
+      } catch(e) {}
     }
 
     if (currentTypewriter) clearInterval(currentTypewriter);
+
+    // Store fetched data
+    fetchedHtml = html;
     if (html) {
-      var results = analyzeAEO(html, url);
-      showResults(results, url);
+      var parser = new DOMParser();
+      parsedDoc = parser.parseFromString(html, 'text/html');
     } else {
-      var fallback = fallbackAnalysis(url);
-      showResults(fallback, url);
+      parsedDoc = null;
     }
+
+    // Suggest a query
+    var suggestedQuery = '';
+    if (parsedDoc) {
+      suggestedQuery = suggestQuery(parsedDoc, url);
+    } else {
+      // Fallback: extract from URL
+      try {
+        var pathname = new URL(url).pathname;
+        var slug = pathname.split('/').filter(function(s) { return s.length > 0; }).pop() || '';
+        var words = slug.replace(/[-_]/g, ' ').trim();
+        suggestedQuery = words.length > 3 ? 'What is ' + words + '?' : 'What is this page about?';
+      } catch(e) {
+        suggestedQuery = 'What is this page about?';
+      }
+    }
+
+    // Show query step
+    document.getElementById('scannerLoading').style.display = 'none';
+    document.getElementById('scannerQuery').style.display = 'block';
+    document.getElementById('targetQuery').value = suggestedQuery;
+    document.getElementById('targetQuery').focus();
   });
 
-  // Enter key
+  document.getElementById('analyzeBtn').addEventListener('click', function() {
+    var query = document.getElementById('targetQuery').value.trim();
+    if (!query) {
+      document.getElementById('targetQuery').focus();
+      return;
+    }
+
+    // Show loading with query-specific messages
+    document.getElementById('scannerQuery').style.display = 'none';
+    document.getElementById('scannerLoading').style.display = 'block';
+
+    var messages = [
+      'Testing AI visibility for: ' + query,
+      'Analyzing heading structure...',
+      'Checking schema markup...',
+      'Evaluating E-E-A-T signals...',
+      'Extracting citable passages...',
+      'Predicting AI Overview likelihood...',
+      'Calculating AEO score...'
+    ];
+    var msgIdx = 0;
+    var statusEl = document.getElementById('loadingStatus');
+    var currentTypewriter = null;
+
+    function showNextMessage() {
+      if (currentTypewriter) clearInterval(currentTypewriter);
+      currentTypewriter = typewriterText(statusEl, messages[msgIdx], 25, function() {
+        setTimeout(function() {
+          msgIdx = (msgIdx + 1) % messages.length;
+          showNextMessage();
+        }, 400);
+      });
+    }
+    showNextMessage();
+
+    // Run analysis after brief delay for dramatic effect
+    setTimeout(function() {
+      if (currentTypewriter) clearInterval(currentTypewriter);
+      var dims, passage, predictions;
+
+      if (fetchedHtml && parsedDoc) {
+        dims = analyzeAEO(fetchedHtml, fetchedUrl);
+        passage = extractCitablePassage(parsedDoc, query);
+        predictions = predictVisibility(dims, parsedDoc, query, passage);
+      } else {
+        dims = fallbackAnalysis(fetchedUrl);
+        passage = { found: false, text: '', feedback: 'Could not fetch page content. Predictions are based on URL heuristics.', wordCount: 0 };
+        predictions = {
+          google: { score: 35, level: 'Medium', reasons: ['Unable to analyze page content directly'], fixes: ['Ensure your page is publicly accessible for best results'] },
+          chat: { score: 35, level: 'Medium', reasons: ['Unable to analyze page content directly'], fixes: ['Ensure your page is publicly accessible for best results'] }
+        };
+      }
+
+      showResults(dims, fetchedUrl, query, predictions, passage);
+    }, 1800);
+  });
+
+  // Enter key on query input
+  document.getElementById('targetQuery').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('analyzeBtn').click();
+  });
+
+  // Enter key on URL input
   document.getElementById('scanUrl').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') document.getElementById('scanBtn').click();
   });
@@ -1583,6 +1674,7 @@
   // Scan again
   document.getElementById('scanAgainBtn').addEventListener('click', function() {
     document.getElementById('scannerResults').style.display = 'none';
+    document.getElementById('scannerQuery').style.display = 'none';
     document.getElementById('scannerInput').style.display = 'block';
     document.getElementById('scanUrl').value = '';
     document.getElementById('scanUrl').focus();
@@ -1597,6 +1689,15 @@
     // Clear confetti
     var confettiEl = document.getElementById('aeoConfetti');
     if (confettiEl) confettiEl.innerHTML = '';
+    // Clear new sections
+    var predEl = document.getElementById('predictionsPanel');
+    if (predEl) predEl.innerHTML = '';
+    var passEl = document.getElementById('passagePanel');
+    if (passEl) passEl.innerHTML = '';
+    // Reset shared state
+    fetchedHtml = null;
+    fetchedUrl = null;
+    parsedDoc = null;
   });
 })();
 </script>
