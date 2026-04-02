@@ -1674,11 +1674,8 @@
       var card = document.createElement('div');
       card.className = 'aeo-dim-card';
       card.style.borderLeftColor = c;
-      card.style.borderImage = 'linear-gradient(to bottom, ' + c + ', ' + c + '66) 1';
       card.style.borderLeftWidth = '4px';
       card.style.borderLeftStyle = 'solid';
-      card.style.borderImage = 'none';
-      card.style.borderLeftColor = c;
       card.style.animationDelay = (i * 0.08) + 's';
 
       var statusBg = d.score >= 60 ? c + '22' : c + '22';
@@ -1778,7 +1775,7 @@
 
     if (passage.found) {
       // Highlight query keywords in the passage text
-      var highlightedText = passage.text;
+      var highlightedText = passage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       var kwWords = query.toLowerCase().replace(/[?.,!]/g, '').split(/\s+/).filter(function(w) {
         return w.length > 3 && ['what','how','why','when','where','this','that','with','from','your','have'].indexOf(w) === -1;
       });
@@ -2242,6 +2239,10 @@
 
   // PDF download
   document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+    if (!window.jspdf) {
+      alert('PDF library failed to load. Please refresh and try again.');
+      return;
+    }
     if (lastDims) {
       generatePDF(lastDims, fetchedUrl, lastQuery, lastPredictions, lastPassage, lastOverallScore, lastGrade);
     }
