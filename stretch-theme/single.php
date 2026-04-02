@@ -258,10 +258,14 @@ html, body { overflow-x: hidden; }
 .sp-article .wp-block-pullquote,
 .sp-article .pullquote {
   text-align: center;
-  margin: 48px 0;
-  padding: 32px 0;
+  margin: 48px -40px;
+  padding: 40px 40px;
   border-top: 2px solid rgba(133,96,168,0.15);
   border-bottom: 2px solid rgba(133,96,168,0.15);
+  border-left: none;
+  background: transparent;
+  border-radius: 0;
+  font-style: normal;
 }
 .sp-article .wp-block-pullquote p,
 .sp-article .pullquote p {
@@ -276,6 +280,140 @@ html, body { overflow-x: hidden; }
 .sp-article .pullquote p::before { content: '\201C'; color: #8560A8; }
 .sp-article .wp-block-pullquote p::after,
 .sp-article .pullquote p::after { content: '\201D'; color: #8560A8; }
+
+/* Figure & figcaption */
+.sp-article figure {
+  margin: 36px 0;
+  padding: 0;
+}
+.sp-article figure img {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin: 0;
+  width: 100%;
+}
+.sp-article figcaption {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Tables */
+.sp-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 32px 0;
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+.sp-article table thead {
+  background: linear-gradient(135deg, #252C3A, #323A51);
+  color: #fff;
+}
+.sp-article table thead th {
+  padding: 14px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+.sp-article table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+.sp-article table tbody tr:last-child { border-bottom: none; }
+.sp-article table tbody tr:hover { background: #f9f9fb; }
+.sp-article table tbody td {
+  padding: 14px 20px;
+  color: #323A51;
+}
+.sp-article table tbody td:first-child {
+  font-weight: 600;
+  color: #252C3A;
+}
+
+/* Styled HR */
+.sp-article hr {
+  border: none;
+  height: 3px;
+  background: linear-gradient(90deg, #8560A8, #5674B9, #448CCB, #00BFF3);
+  margin: 48px 0;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* Image gallery (consecutive images) */
+.sp-article .wp-block-gallery,
+.sp-article .gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+.sp-article .wp-block-gallery figure,
+.sp-article .gallery figure {
+  margin: 0;
+}
+
+/* ========================================
+   READING PROGRESS BAR
+   ======================================== */
+.sp-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #8560A8, #5674B9, #448CCB, #00BFF3);
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+.admin-bar .sp-progress-bar { top: 32px; }
+@media (max-width: 782px) { .admin-bar .sp-progress-bar { top: 46px; } }
+
+/* ========================================
+   TABLE OF CONTENTS SIDEBAR
+   ======================================== */
+.sp-toc-sidebar {
+  position: fixed;
+  left: max(20px, calc((100vw - 780px) / 2 - 260px));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 200px;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.sp-toc-sidebar.visible { opacity: 1; }
+.sp-toc-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #bbb;
+  margin-bottom: 16px;
+}
+.sp-toc-list { list-style: none; padding: 0; margin: 0; border-left: 2px solid #e8e8ec; }
+.sp-toc-item { padding: 8px 0 8px 16px; border-left: 2px solid transparent; margin-left: -2px; }
+.sp-toc-item a { font-size: 13px; color: #999; text-decoration: none; transition: color 0.2s; font-family: 'Poppins', sans-serif; display: block; line-height: 1.4; }
+.sp-toc-item.active { border-left-color: #8560A8; }
+.sp-toc-item.active a { color: #8560A8; font-weight: 500; }
+.sp-toc-item a:hover { color: #252C3A; }
+
+@media (max-width: 1280px) {
+  .sp-toc-sidebar { display: none; }
+}
 
 /* ========================================
    3. SHARE BAR
@@ -587,6 +725,10 @@ html, body { overflow-x: hidden; }
   .sp-article h2 { font-size: 24px; }
   .sp-article h3 { font-size: 20px; }
   .sp-article blockquote { padding: 20px 24px; font-size: 16px; }
+  .sp-article .pullquote, .sp-article .wp-block-pullquote { margin-left: 0; margin-right: 0; padding: 28px 16px; }
+  .sp-article .pullquote p, .sp-article .wp-block-pullquote p { font-size: 20px; }
+  .sp-article table { font-size: 14px; }
+  .sp-article table thead th, .sp-article table tbody td { padding: 10px 12px; }
   .sp-author-bio { padding: 36px 24px 0; }
   .sp-author-card { flex-direction: column; text-align: center; align-items: center; }
   .sp-related, .sp-newsletter { padding: 60px 0; }
@@ -600,6 +742,15 @@ html, body { overflow-x: hidden; }
   .sp-header h1 { font-size: 26px; }
 }
 </style>
+
+<!-- Reading Progress Bar -->
+<div class="sp-progress-bar" id="readingProgress"></div>
+
+<!-- Table of Contents Sidebar (populated via JS) -->
+<nav class="sp-toc-sidebar" id="tocSidebar" aria-label="Table of contents">
+  <div class="sp-toc-label">Contents</div>
+  <ul class="sp-toc-list" id="tocList"></ul>
+</nav>
 
 <!-- ============================
      1. ARTICLE HEADER
@@ -793,19 +944,96 @@ if ($related->have_posts()) :
 
   // Share bar visibility (desktop)
   var shareBar = document.getElementById('shareBar');
-  if (shareBar) {
-    var article = document.querySelector('.sp-article');
-    if (article) {
-      var shareObs = new IntersectionObserver(function(entries) {
+  var article = document.querySelector('.sp-article');
+  if (shareBar && article) {
+    var shareObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          shareBar.classList.add('visible');
+        } else {
+          shareBar.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0 });
+    shareObs.observe(article);
+  }
+
+  // ========================================
+  // READING PROGRESS BAR
+  // ========================================
+  var progressBar = document.getElementById('readingProgress');
+  var contentSection = document.querySelector('.sp-content-section');
+  if (progressBar && contentSection) {
+    window.addEventListener('scroll', function() {
+      var rect = contentSection.getBoundingClientRect();
+      var sectionTop = rect.top + window.scrollY;
+      var sectionHeight = contentSection.offsetHeight;
+      var scrolled = window.scrollY - sectionTop;
+      var progress = Math.max(0, Math.min(100, (scrolled / (sectionHeight - window.innerHeight)) * 100));
+      progressBar.style.width = progress + '%';
+    }, { passive: true });
+  }
+
+  // ========================================
+  // TABLE OF CONTENTS — Auto-generated
+  // ========================================
+  var tocSidebar = document.getElementById('tocSidebar');
+  var tocList = document.getElementById('tocList');
+  if (article && tocSidebar && tocList) {
+    var headings = article.querySelectorAll('h2');
+    if (headings.length > 1) {
+      // Build TOC items
+      headings.forEach(function(h2, index) {
+        if (!h2.id) {
+          h2.id = 'section-' + (index + 1);
+        }
+        var li = document.createElement('li');
+        li.className = 'sp-toc-item';
+        li.setAttribute('data-target', h2.id);
+        var a = document.createElement('a');
+        a.href = '#' + h2.id;
+        a.textContent = h2.textContent;
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById(h2.id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+
+      // Show/hide TOC when article is in view
+      var tocObs = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            shareBar.classList.add('visible');
+            tocSidebar.classList.add('visible');
           } else {
-            shareBar.classList.remove('visible');
+            tocSidebar.classList.remove('visible');
           }
         });
       }, { threshold: 0 });
-      shareObs.observe(article);
+      tocObs.observe(article);
+
+      // Highlight active section with IntersectionObserver
+      var tocItems = tocList.querySelectorAll('.sp-toc-item');
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            tocItems.forEach(function(item) { item.classList.remove('active'); });
+            var activeItem = tocList.querySelector('[data-target="' + entry.target.id + '"]');
+            if (activeItem) activeItem.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+
+      headings.forEach(function(h2) {
+        sectionObserver.observe(h2);
+      });
+
+      // Activate first item by default
+      if (tocItems.length > 0) tocItems[0].classList.add('active');
+    } else {
+      // Not enough headings, hide TOC
+      tocSidebar.style.display = 'none';
     }
   }
 })();
