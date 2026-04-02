@@ -532,15 +532,7 @@ html, body { overflow-x: hidden; }
 .admin-bar .sp-progress-bar { top: 32px; }
 @media (max-width: 782px) { .admin-bar .sp-progress-bar { top: 46px; } }
 
-/* Nav logo alignment — match article content left edge on post pages */
-.site-nav .container {
-  max-width: 1200px;
-  padding-left: calc((100vw - 780px) / 2);
-  padding-right: 40px;
-}
-@media (max-width: 960px) {
-  .site-nav .container { padding-left: 24px; padding-right: 24px; }
-}
+/* Nav on post pages — use default container styling */
 
 /* ========================================
    TABLE OF CONTENTS SIDEBAR

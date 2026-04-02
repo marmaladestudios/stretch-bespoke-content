@@ -25,7 +25,7 @@
       </a>
     <?php else : ?>
       <a href="<?php echo esc_url(home_url('/')); ?>" class="logo" aria-label="<?php esc_attr_e('Home', 'stretch'); ?>">
-        <span style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-1px;"><?php bloginfo('name'); ?></span>
+        <span style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-1px;white-space:nowrap;"><?php bloginfo('name'); ?></span>
       </a>
     <?php endif; ?>
 
