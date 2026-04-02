@@ -200,13 +200,143 @@ if ($step === 1) {
     set_theme_mod('nav_menu_locations', $menu_locations);
     echo "✓ Footer menus<br>";
 
+    echo '<br><strong style="color:#28c840;">Step 4 complete!</strong>';
+    echo '<br><br><a href="?step=5" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 5: Team Photos →</a>';
+
+} elseif ($step === 5) {
+    // ── STEP 5: Team Photos ──
+    echo '<strong>Step 5: Importing team photos...</strong><br>';
+
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+
+    $team = [
+        ['Chris Reid', 'CEO', 'https://stretchcreative.co/wp-content/uploads/2023/09/Chris.jpeg'],
+        ['Kelsi Carrell', 'Head of Operations', 'https://stretchcreative.co/wp-content/uploads/2020/11/Kelsi-e1641439041685.jpeg'],
+        ['Jesse Galvon Reid', 'CPO', 'https://stretchcreative.co/wp-content/uploads/2020/09/Untitled-design-18-e1641438108530.png'],
+        ['Kristen Bailey', 'Editor-In-Chief', 'https://stretchcreative.co/wp-content/uploads/2020/09/kristen0.png'],
+        ['Josh Wong', 'Director of Video Content', 'https://stretchcreative.co/wp-content/uploads/2023/10/Josh-Wong-scaled.jpg'],
+        ['Jeanine Gordon', 'Managing Editor', 'https://stretchcreative.co/wp-content/uploads/2023/09/Jeanine.jpeg'],
+        ['Fiona Ferguson', 'Community & Recruitment', 'https://stretchcreative.co/wp-content/uploads/2023/01/Fiona.jpeg'],
+        ['Kristyn Pacione', 'Client Services', 'https://stretchcreative.co/wp-content/uploads/2023/09/KP.jpeg'],
+        ['MacKenzie Sanford', 'Editor + Resource Coordinator', 'https://stretchcreative.co/wp-content/uploads/2023/01/Mack.jpeg'],
+        ['Jessica DeWolf', 'Lead Editor', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-22-e1641438472628.png'],
+        ['Leslie Jeffries', 'Senior Copywriter', 'https://stretchcreative.co/wp-content/uploads/2020/09/Leslie-Jeffries.jpeg'],
+        ['Jodi Noblett', 'Copywriter', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-33-e1641438356563.png'],
+    ];
+
+    $photo_map = [];
+    foreach ($team as $member) {
+        try {
+            $slug = 'team-photo-' . sanitize_title($member[0]);
+            $existing = get_posts(['post_type' => 'attachment', 'title' => $slug, 'numberposts' => 1]);
+            if ($existing) { $photo_map[] = ['name' => $member[0], 'title' => $member[1], 'photo_id' => $existing[0]->ID, 'url' => wp_get_attachment_url($existing[0]->ID)]; echo "- Exists: {$member[0]}<br>"; continue; }
+            $tmp = download_url($member[2], 30);
+            if (is_wp_error($tmp)) { echo "✗ Failed: {$member[0]}<br>"; continue; }
+            $ext = pathinfo(parse_url($member[2], PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
+            $id = media_handle_sideload(['name' => $slug . '.' . $ext, 'tmp_name' => $tmp], 0, $slug);
+            if (is_wp_error($id)) { @unlink($tmp); echo "✗ Error: {$member[0]}<br>"; continue; }
+            $photo_map[] = ['name' => $member[0], 'title' => $member[1], 'photo_id' => $id, 'url' => wp_get_attachment_url($id)];
+            echo "✓ {$member[0]}<br>";
+        } catch (Exception $e) { echo "✗ Error: {$member[0]}<br>"; }
+    }
+    update_option('stretch_team_members', $photo_map);
+    echo "✓ Saved " . count($photo_map) . " team members<br>";
+
+    echo '<br><strong style="color:#28c840;">Step 5 complete!</strong>';
+    echo '<br><br><a href="?step=6" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 6: Services & Author →</a>';
+
+} elseif ($step === 6) {
+    // ── STEP 6: Services, Author, Permalinks, Featured Images ──
+    echo '<strong>Step 6: Setting up services, author, and permalinks...</strong><br>';
+
+    // Permalinks
+    update_option('permalink_structure', '/blog/%category%/%postname%/');
+    delete_option('category_base');
+    flush_rewrite_rules(true);
+    echo "✓ Permalinks set to /blog/category/post<br>";
+
+    // Merge AEO categories if duplicated
+    $aeo = get_category_by_slug('aeo');
+    $aeo_full = get_category_by_slug('answer-engine-optimization');
+    if ($aeo && $aeo_full && $aeo->term_id !== $aeo_full->term_id) {
+        $posts_in_old = get_posts(['cat' => $aeo_full->term_id, 'posts_per_page' => -1, 'fields' => 'ids']);
+        foreach ($posts_in_old as $pid) {
+            wp_remove_object_terms($pid, $aeo_full->term_id, 'category');
+            wp_set_post_categories($pid, [$aeo->term_id], true);
+        }
+        wp_delete_term($aeo_full->term_id, 'category');
+        echo "✓ Merged AEO categories<br>";
+    }
+
+    // Author setup
+    $admin = get_user_by('login', 'admin');
+    if ($admin) {
+        wp_update_user([
+            'ID' => $admin->ID,
+            'first_name' => 'Cole',
+            'last_name' => 'Vineyard',
+            'display_name' => 'Cole Vineyard',
+            'nickname' => 'Cole Vineyard',
+            'description' => 'Cole Vineyard is the founder of Marmalade Studios and a digital strategist specializing in content-driven growth, SEO, and Answer Engine Optimization. With a background spanning creative direction, web development, and performance marketing, Cole helps brands build content ecosystems that rank, convert, and establish lasting authority.',
+            'user_url' => 'https://www.linkedin.com/in/colevineyard/',
+        ]);
+        update_user_meta($admin->ID, 'linkedin', 'https://www.linkedin.com/in/colevineyard/');
+        echo "✓ Author: Cole Vineyard<br>";
+
+        // Assign author to all posts
+        $posts = get_posts(['numberposts' => -1, 'post_type' => 'post', 'post_status' => 'publish']);
+        foreach ($posts as $p) { wp_update_post(['ID' => $p->ID, 'post_author' => $admin->ID]); }
+        echo "✓ All posts assigned to Cole Vineyard<br>";
+    }
+
+    // Service page content
+    $service_file = ABSPATH . 'setup-services.php';
+    if (file_exists($service_file)) {
+        include $service_file;
+        echo "✓ Service content populated<br>";
+    } else {
+        echo "- Service setup script not found (run manually)<br>";
+    }
+
+    // Blog post featured images
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+
+    $blog_images = [
+        'aeo-vs-seo' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop',
+        'structure-content-for-ai' => 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=450&fit=crop',
+        'brand-visibility-crisis-aeo' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop',
+        '5-quick-wins-aeo' => 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=450&fit=crop',
+    ];
+    foreach ($blog_images as $slug => $url) {
+        $post = null;
+        $found = get_posts(['name' => $slug, 'post_type' => 'post', 'numberposts' => 1]);
+        if ($found) $post = $found[0];
+        if ($post && !has_post_thumbnail($post->ID)) {
+            try {
+                $tmp = download_url($url, 30);
+                if (!is_wp_error($tmp)) {
+                    $id = media_handle_sideload(['name' => 'blog-' . $slug . '.jpg', 'tmp_name' => $tmp], $post->ID, $slug);
+                    if (!is_wp_error($id)) { set_post_thumbnail($post->ID, $id); echo "✓ Image: {$post->post_title}<br>"; }
+                }
+            } catch (Exception $e) { echo "✗ Image failed: {$slug}<br>"; }
+        }
+    }
+
+    // Site title
+    update_option('blogname', 'Stretch Creative');
+    echo "✓ Site title set<br>";
+
     echo '<br><strong style="color:#28c840;font-size:18px;">✓ All setup complete!</strong>';
     echo '<br><br><a href="' . home_url('/') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;font-weight:600;">View Your Site →</a>';
     echo '<br><br><em style="color:#999;">Remember to delete this Setup page and remove setup-wizard.php from the theme.</em>';
 
 } else {
-    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 4 steps.</p>';
-    echo '<p style="font-size:14px;color:#999;">Pages already created in Step 1 will be skipped.</p>';
+    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 6 steps.</p>';
+    echo '<p style="font-size:14px;color:#999;">Pages already created will be skipped.</p>';
     echo '<br><a href="?step=1" style="display:inline-block;background:#8560A8;color:#fff;padding:16px 36px;font-size:17px;text-decoration:none;">Start Setup: Step 1 →</a>';
 }
 

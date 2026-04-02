@@ -2,7 +2,6 @@
 set -e
 
 # ── Persistent storage setup ──
-# /data is the Render persistent disk. We store both MySQL and uploads there.
 mkdir -p /data/mysql
 mkdir -p /data/uploads
 
@@ -65,7 +64,6 @@ export WORDPRESS_DB_PASSWORD="wordpress"
 export WORDPRESS_DB_NAME="wordpress"
 
 # Run WordPress entrypoint to set up wp-config.php and copy core files
-# (This overwrites /var/www/html, so we copy our theme AFTER)
 docker-entrypoint.sh apache2-foreground &
 WP_PID=$!
 
@@ -78,18 +76,25 @@ for i in $(seq 1 30); do
     fi
     sleep 1
 done
+sleep 2
 
-# Copy theme from staging into the live WordPress install
+# Copy theme from /opt/ staging into the live WordPress install
 echo "Installing Stretch Creative theme..."
-cp -rf /tmp/stretch-theme/ /var/www/html/wp-content/themes/stretch-theme/
-chown -R www-data:www-data /var/www/html/wp-content/themes/stretch-theme/
+if [ -d /opt/stretch-theme ]; then
+    cp -rf /opt/stretch-theme/ /var/www/html/wp-content/themes/stretch-theme/
+    chown -R www-data:www-data /var/www/html/wp-content/themes/stretch-theme/
+    echo "Theme installed successfully."
+else
+    echo "ERROR: Theme not found at /opt/stretch-theme/"
+fi
 
 # Copy setup scripts
-cp -f /tmp/setup-content.php /var/www/html/setup-content.php 2>/dev/null || true
-cp -f /tmp/setup-images.php /var/www/html/setup-images.php 2>/dev/null || true
-cp -f /tmp/setup-logos.php /var/www/html/setup-logos.php 2>/dev/null || true
+cp -f /opt/setup-content.php /var/www/html/setup-content.php 2>/dev/null || true
+cp -f /opt/setup-images.php /var/www/html/setup-images.php 2>/dev/null || true
+cp -f /opt/setup-logos.php /var/www/html/setup-logos.php 2>/dev/null || true
+cp -f /opt/setup-team-photos.php /var/www/html/setup-team-photos.php 2>/dev/null || true
 
-echo "Theme installed."
+echo "Setup complete. Waiting for Apache..."
 
 # Wait for Apache process
 wait $WP_PID

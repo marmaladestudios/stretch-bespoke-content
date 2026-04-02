@@ -17,10 +17,12 @@ RUN echo 'upload_max_filesize = 64M' > /usr/local/etc/php/conf.d/uploads.ini \
     && echo 'max_execution_time = 120' >> /usr/local/etc/php/conf.d/uploads.ini
 
 # Copy theme to a staging location (WordPress entrypoint overwrites /var/www/html at runtime)
-COPY stretch-theme/ /tmp/stretch-theme/
-COPY setup-content.php /tmp/setup-content.php
-COPY setup-images.php /tmp/setup-images.php
-COPY setup-logos.php /tmp/setup-logos.php
+COPY stretch-theme/ /opt/stretch-theme/
+COPY setup-content.php /opt/setup-content.php
+COPY setup-images.php /opt/setup-images.php
+COPY setup-logos.php /opt/setup-logos.php
+COPY setup-team-photos.php /opt/setup-team-photos.php
+COPY setup-services.php /opt/setup-services.php
 
 # Ensure MySQL directories exist
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
