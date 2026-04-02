@@ -206,7 +206,9 @@ html, body { overflow-x: hidden; }
   box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 24px rgba(133,96,168,0.2), 0 0 48px rgba(0,191,243,0.1);
 }
 .sp-featured-img img {
-  width: 100%;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none;
   display: block;
   border-radius: 14px;
 }
