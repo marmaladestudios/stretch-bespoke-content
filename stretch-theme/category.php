@@ -822,11 +822,9 @@ html, body { overflow-x: hidden; }
           </div>
         <?php endif; ?>
 
-        <?php // Spoke card (varied style)
-        if ($spoke && $card_style !== 'none') :
-          if ($card_style === 'inline') : ?>
-            <p class="hub-inline-link hub-reveal"><?php echo html_entity_decode('&#x1F4D6;'); ?> <a href="<?php echo esc_url($spoke['permalink']); ?>">Read the full guide: <?php echo esc_html($spoke['title']); ?> &rarr;</a></p>
-          <?php else : ?>
+        <?php // Spoke card (always full card style)
+        if ($spoke) : ?>
+          <?php if (true) : ?>
             <a href="<?php echo esc_url($spoke['permalink']); ?>" class="hub-spoke-card hub-reveal">
               <div class="hub-spoke-card-img">
                 <?php if (!empty($spoke['thumbnail'])) : ?>
@@ -854,6 +852,8 @@ html, body { overflow-x: hidden; }
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/></svg>
   </div>
 </section>
+
+<?php get_template_part('aeo-scanner'); ?>
 
 <!-- ============================
      4. ARTICLE LIBRARY
@@ -989,16 +989,16 @@ if (!empty($other_cats)) :
   var sectionEls = document.querySelectorAll('.hub-content-section');
 
   if (toc && contentSection) {
-    var tocObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          toc.classList.add('visible');
-        } else {
-          toc.classList.remove('visible');
-        }
-      });
-    }, { threshold: 0, rootMargin: '-100px 0px -100px 0px' });
-    tocObs.observe(contentSection);
+    function updateTocVis() {
+      var rect = contentSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.3 && rect.bottom > 200) {
+        toc.classList.add('visible');
+      } else {
+        toc.classList.remove('visible');
+      }
+    }
+    window.addEventListener('scroll', function() { requestAnimationFrame(updateTocVis); }, { passive: true });
+    updateTocVis();
 
     /* Active section tracking */
     var sectionObs = new IntersectionObserver(function(entries) {
