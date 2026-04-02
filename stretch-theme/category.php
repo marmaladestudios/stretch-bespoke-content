@@ -345,64 +345,123 @@ html, body { overflow-x: hidden; }
    ARTICLE CAROUSEL
    ======================================== */
 .hub-carousel-section {
+  background: transparent;
+  position: relative;
+  z-index: 5;
+  margin-top: -50px;
+  padding: 0 0 20px;
+  overflow: visible;
+}
+.hub-carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 14px;
+}
+.hub-carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hub-carousel-count {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #999;
+  margin-right: 4px;
+}
+.hub-carousel-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e8;
   background: #fff;
-  padding: 0 0 40px;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #252C3A;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.hub-carousel-arrow:hover {
+  background: #8560A8;
+  border-color: #8560A8;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(133,96,168,0.2);
 }
 .hub-carousel-wrapper {
   overflow: hidden;
   position: relative;
-  margin: 0 -40px;
-  padding: 0 40px;
+  padding: 0;
 }
 .hub-carousel-track {
   display: flex;
-  gap: 20px;
+  gap: 14px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  padding: 10px 0 20px;
+  padding: 8px 0 16px;
   -webkit-overflow-scrolling: touch;
 }
 .hub-carousel-track::-webkit-scrollbar { display: none; }
 .hub-carousel-card {
-  min-width: 220px;
-  max-width: 220px;
+  min-width: 180px;
+  max-width: 180px;
   flex-shrink: 0;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.3s ease;
-}
-.hub-carousel-card:hover { transform: translateY(-4px); }
-.hub-carousel-img {
-  width: 220px;
-  height: 140px;
-  border-radius: 10px;
+  background: linear-gradient(135deg, var(--card-bg-1, #8560A8), var(--card-bg-2, #5674B9));
+  border-radius: 12px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 16px rgba(37,44,58,0.12);
+  position: relative;
   overflow: hidden;
-  margin-bottom: 10px;
-  background: #f0f0f4;
 }
-.hub-carousel-img img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.3s ease;
+.hub-carousel-card::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+  pointer-events: none;
 }
-.hub-carousel-card:hover .hub-carousel-img img { transform: scale(1.05); }
-.hub-carousel-fallback {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, #8560A8, #5674B9);
+.hub-carousel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(133,96,168,0.2);
 }
+.hub-carousel-card:nth-child(4n+1) { --card-bg-1: #8560A8; --card-bg-2: #5674B9; }
+.hub-carousel-card:nth-child(4n+2) { --card-bg-1: #5674B9; --card-bg-2: #448CCB; }
+.hub-carousel-card:nth-child(4n+3) { --card-bg-1: #448CCB; --card-bg-2: #00BFF3; }
+.hub-carousel-card:nth-child(4n+4) { --card-bg-1: #252C3A; --card-bg-2: #323A51; }
+.hub-carousel-icon {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hub-carousel-icon svg { width: 16px; height: 16px; }
 .hub-carousel-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
-  color: #252C3A;
-  line-height: 1.35;
+  color: #fff;
+  line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.hub-carousel-card:hover .hub-carousel-title { color: #8560A8; }
+@media (max-width: 768px) {
+  .hub-carousel-section { margin-top: -30px; }
+  .hub-carousel-wrapper { padding: 0 20px; }
+  .hub-carousel-card { min-width: 160px; max-width: 160px; padding: 16px 14px; }
+}
 
 /* ========================================
    3. PILLAR CONTENT
@@ -688,31 +747,62 @@ html, body { overflow-x: hidden; }
    5. RELATED HUBS
    ======================================== */
 .hub-related {
-  background: #fff; padding: 80px 0; position: relative;
+  background: linear-gradient(170deg, #252C3A 0%, #1a1f2e 100%);
+  padding: 80px 0 100px; position: relative; color: #fff;
 }
 .hub-related-heading {
   font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 600;
-  color: #252C3A; text-align: center; margin: 0 0 48px;
+  color: #fff; text-align: center; margin: 0 0 48px;
 }
 .hub-related-grid {
-  display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
 }
 .hub-related-card {
-  flex: 0 0 200px; background: #f9f9fb; border-radius: 12px;
-  padding: 24px 20px; text-align: center; text-decoration: none;
-  border-top: 3px solid;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255,255,255,0.06); border-radius: 14px;
+  padding: 32px 28px; text-decoration: none; position: relative;
+  overflow: hidden; display: flex; flex-direction: column; gap: 14px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.hub-related-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--card-accent);
 }
 .hub-related-card:hover {
-  transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-4px); background: rgba(255,255,255,0.12);
 }
+.hub-related-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card-accent); opacity: 0.9;
+}
+.hub-related-card-icon svg { width: 20px; height: 20px; }
 .hub-related-card h3 {
-  font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600;
-  color: #252C3A; margin: 0 0 4px;
+  font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 600;
+  color: #fff; margin: 0; line-height: 1.3;
+}
+.hub-related-card .rel-desc {
+  font-family: 'Assistant', sans-serif; font-size: 15px; line-height: 1.5;
+  color: rgba(255,255,255,0.6); margin: 0; flex: 1;
+}
+.hub-related-card .rel-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 4px;
 }
 .hub-related-card .rel-count {
-  font-family: 'Assistant', sans-serif; font-size: 13px; color: rgba(37,44,58,0.5);
+  font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.4); letter-spacing: 0.03em;
 }
+.hub-related-card .rel-arrow {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); display: flex;
+  align-items: center; justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.hub-related-card .rel-arrow svg { width: 14px; height: 14px; stroke: rgba(255,255,255,0.5); }
+.hub-related-card:hover .rel-arrow {
+  background: var(--card-accent); transform: translateX(2px);
+}
+.hub-related-card:hover .rel-arrow svg { stroke: #fff; }
 
 /* ========================================
    6. CTA
@@ -723,7 +813,7 @@ html, body { overflow-x: hidden; }
   position: relative;
 }
 .hub-cta-final h2 {
-  font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 600; margin: 0 0 12px;
+  font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 600; margin: 0 0 12px; color: #fff;
 }
 .hub-cta-final p {
   font-family: 'Assistant', sans-serif; font-size: 18px;
@@ -758,10 +848,10 @@ html, body { overflow-x: hidden; }
   .hub-chapter-title { font-size: 24px; }
   .hub-library { padding: 60px 0; }
   .hub-library h2 { font-size: 28px; }
-  .hub-related { padding: 60px 0; }
+  .hub-related { padding: 60px 0 80px; }
   .hub-related-heading { font-size: 28px; }
   .hub-cta-final h2 { font-size: 28px; }
-  .hub-related-card { flex: 0 0 160px; }
+  .hub-related-grid { grid-template-columns: 1fr; }
   .hub-library-search { width: 100%; }
 }
 @media (max-width: 480px) {
@@ -783,7 +873,6 @@ html, body { overflow-x: hidden; }
       <h1><?php echo esc_html($hub_headline); ?></h1>
       <p class="hub-hero-subtitle"><?php echo esc_html($hub_subtitle); ?></p>
       <div class="hub-hero-meta">
-        <div class="hub-hero-count"><span></span> <?php echo $cat_count; ?> <?php echo $cat_count === 1 ? 'Article' : 'Articles'; ?></div>
         <a href="#hub-content" class="hub-hero-start">Start Reading &darr;</a>
       </div>
     </div>
@@ -796,6 +885,17 @@ html, body { overflow-x: hidden; }
 <!-- Article Carousel -->
 <section class="hub-carousel-section">
   <div class="hub-container">
+    <div class="hub-carousel-header">
+      <span class="hub-carousel-count"><?php echo $cat_count; ?> Articles</span>
+      <div class="hub-carousel-controls">
+        <button class="hub-carousel-arrow hub-carousel-prev" id="carouselPrev" aria-label="Previous">
+          <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M13 4l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="hub-carousel-arrow hub-carousel-next" id="carouselNext" aria-label="Next">
+          <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
     <div class="hub-carousel-wrapper">
       <div class="hub-carousel-track" id="hubCarouselTrack">
         <?php
@@ -810,10 +910,8 @@ html, body { overflow-x: hidden; }
         while ($carousel_posts->have_posts()) : $carousel_posts->the_post();
         ?>
         <a href="<?php the_permalink(); ?>" class="hub-carousel-card">
-          <div class="hub-carousel-img">
-            <?php if (has_post_thumbnail()) : the_post_thumbnail('blog-card'); else : ?>
-              <div class="hub-carousel-fallback"></div>
-            <?php endif; ?>
+          <div class="hub-carousel-icon">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M4 5h12M4 10h8M4 15h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
           <div class="hub-carousel-title"><?php the_title(); ?></div>
         </a>
@@ -1037,10 +1135,18 @@ if (!empty($other_cats)) :
       foreach ($other_cats as $oc) :
         $rc = $hub_colors[$ri % count($hub_colors)];
         $ri++;
+        $desc = $oc->description ? $oc->description : 'Explore our ' . strtolower($oc->name) . ' articles and guides.';
       ?>
-        <a href="<?php echo esc_url(get_category_link($oc->term_id)); ?>" class="hub-related-card" style="border-top-color: <?php echo $rc; ?>;">
+        <a href="<?php echo esc_url(get_category_link($oc->term_id)); ?>" class="hub-related-card" style="--card-accent: <?php echo $rc; ?>;">
+          <div class="hub-related-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          </div>
           <h3><?php echo esc_html($oc->name); ?></h3>
-          <div class="rel-count"><?php echo $oc->count; ?> Articles</div>
+          <p class="rel-desc"><?php echo esc_html(wp_trim_words($desc, 18, '...')); ?></p>
+          <div class="rel-footer">
+            <span class="rel-count"><?php echo $oc->count; ?> <?php echo $oc->count === 1 ? 'Article' : 'Articles'; ?></span>
+            <span class="rel-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
         </a>
       <?php endforeach; ?>
     </div>
@@ -1079,6 +1185,20 @@ if (!empty($other_cats)) :
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(function(el) { revealObs.observe(el); });
+
+  /* ── Carousel Arrows ── */
+  var carouselTrack = document.getElementById('hubCarouselTrack');
+  var prevBtn = document.getElementById('carouselPrev');
+  var nextBtn = document.getElementById('carouselNext');
+  if (carouselTrack && prevBtn && nextBtn) {
+    var scrollAmount = 400;
+    prevBtn.addEventListener('click', function() {
+      carouselTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function() {
+      carouselTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  }
 
   /* ── Smooth Scroll for "Start Reading" ── */
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {

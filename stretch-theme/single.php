@@ -2410,8 +2410,8 @@ if ($related->have_posts()) :
   // ========================================
   var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-  // --- E1. Animated Section Dividers ---
-  if (article && !reducedMotion) {
+  // --- E1. Animated Section Dividers (disabled) ---
+  if (false && article && !reducedMotion) {
     var articleH2sForDividers = article.querySelectorAll('h2');
     var dividerObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {

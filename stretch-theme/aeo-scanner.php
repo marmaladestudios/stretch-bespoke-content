@@ -21,9 +21,6 @@
 
         <!-- App Header -->
         <div class="aeo-scanner-app-header">
-          <div class="aeo-scanner-app-icon">
-            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="#00BFF3" stroke-width="1.5"/><path d="M12 16l3 3 5-6" stroke="#00BFF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
           <div class="aeo-scanner-app-badge">Free Tool</div>
         </div>
 
@@ -33,23 +30,32 @@
           <p class="aeo-scanner-subtitle">Find out if your content is optimized for AI-powered search engines like ChatGPT, Gemini, and Perplexity.</p>
 
           <div class="aeo-scanner-features">
-            <div class="aeo-scanner-feature">
+            <div class="aeo-scanner-feature-card">
               <div class="aeo-scanner-feature-icon aeo-scanner-feature-icon--purple">
-                <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><rect x="2" y="4" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M6 8h8M6 11h5" stroke="currentColor" stroke-width="1.2"/></svg>
+                <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><rect x="2" y="4" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M6 8h8M6 11h5" stroke="currentColor" stroke-width="1.2"/></svg>
               </div>
-              <span>Analyzes heading structure, content depth &amp; formatting</span>
+              <div>
+                <strong>Content Analysis</strong>
+                <span>Heading structure, content depth, answer-first formatting</span>
+              </div>
             </div>
-            <div class="aeo-scanner-feature">
+            <div class="aeo-scanner-feature-card">
               <div class="aeo-scanner-feature-icon aeo-scanner-feature-icon--blue">
-                <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M10 2v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+                <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M10 2v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
               </div>
-              <span>Checks schema markup, E-E-A-T signals &amp; meta tags</span>
+              <div>
+                <strong>Technical Signals</strong>
+                <span>Schema markup, E-E-A-T signals, meta optimization</span>
+              </div>
             </div>
-            <div class="aeo-scanner-feature">
+            <div class="aeo-scanner-feature-card">
               <div class="aeo-scanner-feature-icon aeo-scanner-feature-icon--cyan">
-                <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M4 14l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M4 14l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
-              <span>Scores your page across 8 AEO dimensions with actionable fixes</span>
+              <div>
+                <strong>Actionable Report</strong>
+                <span>8 scored dimensions with specific fixes and recommended reading</span>
+              </div>
             </div>
           </div>
 
@@ -127,7 +133,7 @@
   font-family: 'Poppins', 'Assistant', sans-serif;
 }
 .aeo-scanner-container {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 0 40px;
   position: relative;
@@ -210,6 +216,7 @@
 .aeo-scanner-app-header {
   display: flex;
   align-items: center;
+  justify-content: center;
   justify-content: space-between;
   margin-bottom: 32px;
   position: relative;
@@ -252,27 +259,46 @@
   border-color: rgba(0,191,243,0.5);
 }
 
-/* ── Feature Bullets with Colored Icon Backgrounds ── */
+/* ── Feature Cards ── */
 .aeo-scanner-features {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
-  margin: 24px 0 32px;
+  margin: 28px 0 36px;
   position: relative;
   z-index: 1;
 }
-.aeo-scanner-feature {
+.aeo-scanner-feature-card {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
-  font-family: 'Assistant', sans-serif;
-  font-size: 15px;
-  color: rgba(255,255,255,0.7);
-  transition: color 0.2s, transform 0.15s;
+  padding: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
-.aeo-scanner-feature:hover {
-  color: rgba(255,255,255,0.9);
-  transform: translateX(4px);
+.aeo-scanner-feature-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+}
+.aeo-scanner-feature-card strong {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.aeo-scanner-feature-card span {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.4;
+}
+@media (max-width: 700px) {
+  .aeo-scanner-features { grid-template-columns: 1fr; }
 }
 .aeo-scanner-feature-icon {
   width: 32px;
@@ -630,6 +656,27 @@
   line-height: 1.45;
   font-family: 'Assistant', sans-serif;
 }
+.aeo-dim-article {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(133,96,168,0.08);
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #00BFF3;
+  transition: background 0.2s, transform 0.15s;
+}
+.aeo-dim-article:hover {
+  background: rgba(133,96,168,0.15);
+  transform: translateX(4px);
+  color: #00BFF3;
+}
+.aeo-dim-article-icon { font-size: 14px; }
 
 /* ── CTA ── */
 .aeo-scanner-cta {
@@ -1115,13 +1162,35 @@
       var statusBg = d.score >= 60 ? c + '22' : c + '22';
       var statusIconHtml = '<span class="aeo-dim-status-icon" style="background:' + statusBg + ';color:' + c + ';">' + dimStatusIcon(d.score) + '</span>';
 
+      // Map dimensions to recommended articles
+      var articleMap = {
+        'Heading Structure': { title: 'How to Structure Content for AI Answer Engines', slug: 'structure-content-for-ai' },
+        'Answer-First Format': { title: 'How to Structure Content for AI Answer Engines', slug: 'structure-content-for-ai' },
+        'Content Depth': { title: 'Building Topical Authority: The Content Cluster Strategy', slug: 'building-topical-authority-content-cluster-strategy-aeo' },
+        'Schema Markup': { title: 'Schema Markup for AEO: The Technical Guide', slug: 'schema-markup-for-aeo-technical-guide' },
+        'E-E-A-T Signals': { title: 'E-E-A-T Signals That AI Engines Actually Evaluate', slug: 'eeat-signals-ai-answer-engines-evaluate' },
+        'Internal Linking': { title: 'Building Topical Authority: The Content Cluster Strategy', slug: 'building-topical-authority-content-cluster-strategy-aeo' },
+        'Question Targeting': { title: 'Featured Snippets as the Bridge to AEO', slug: 'featured-snippets-bridge-to-aeo' },
+        'Meta Optimization': { title: 'What Is Answer Engine Optimization? Beginner\'s Guide', slug: 'what-is-answer-engine-optimization-beginners-guide' }
+      };
+
+      var recArticle = articleMap[d.name];
+      var articleHtml = '';
+      if (d.score < 70 && recArticle) {
+        articleHtml = '<a href="/blog/aeo/' + recArticle.slug + '/" class="aeo-dim-article">' +
+          '<span class="aeo-dim-article-icon">📖</span>' +
+          '<span>Read: ' + recArticle.title + '</span>' +
+        '</a>';
+      }
+
       card.innerHTML =
         '<div class="aeo-dim-card-header">' +
           '<span class="aeo-dim-name">' + statusIconHtml + d.name + '</span>' +
           '<span class="aeo-dim-score-badge" style="background:' + c + '22;color:' + c + ';">' + d.score + '/100</span>' +
         '</div>' +
         '<div class="aeo-dim-bar-track"><div class="aeo-dim-bar-fill" style="background:linear-gradient(90deg,' + c + ',' + c + 'aa);"></div></div>' +
-        '<p class="aeo-dim-rec">' + d.rec + '</p>';
+        '<p class="aeo-dim-rec">' + d.rec + '</p>' +
+        articleHtml;
       grid.appendChild(card);
       // Animate bar with staggered delay
       (function(fill, score, delay) {
