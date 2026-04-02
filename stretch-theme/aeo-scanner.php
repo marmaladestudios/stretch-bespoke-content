@@ -826,6 +826,88 @@
   }
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
+  /* ── Query Auto-Suggestion ── */
+  function suggestQuery(doc, url) {
+    // Helper: convert statement to question
+    function toQuestion(text) {
+      text = text.trim().replace(/\s+/g, ' ');
+      // Already a question
+      if (text.endsWith('?')) return text;
+      // "How to X" patterns
+      var howTo = text.match(/^how\s+to\s+(.+)/i);
+      if (howTo) return 'How do you ' + howTo[1].replace(/\.$/, '') + '?';
+      // "Guide to X" / "Introduction to X"
+      var guideTo = text.match(/^(?:a\s+)?(?:guide|introduction|intro)\s+to\s+(.+)/i);
+      if (guideTo) return 'What is ' + guideTo[1].replace(/\.$/, '') + '?';
+      // "N Ways/Tips/Steps to X"
+      var nWays = text.match(/^\d+\s+(?:ways|tips|steps|strategies|methods)\s+(?:to|for)\s+(.+)/i);
+      if (nWays) return 'How do you ' + nWays[1].replace(/\.$/, '') + '?';
+      // "What is X" already
+      if (/^what\s+is/i.test(text)) return text.replace(/\.$/, '') + '?';
+      // "Why X" / "When X" already question-like
+      if (/^(why|when|where|who|which|can|should|does|do|is|are)\s+/i.test(text)) return text.replace(/\.$/, '') + '?';
+      // Default: "What is [topic]?"
+      // Strip common suffixes like " | Brand Name", " - Brand"
+      var clean = text.replace(/\s*[\|\-–—]\s*[^|\-–—]+$/, '').trim();
+      if (clean.length > 5 && clean.length < 80) return 'What is ' + clean.toLowerCase() + '?';
+      return '';
+    }
+
+    // Priority 1: H1 tag
+    var h1 = doc.querySelector('h1');
+    if (h1) {
+      var h1Text = (h1.textContent || '').trim();
+      if (h1Text.length > 5) {
+        var q = toQuestion(h1Text);
+        if (q) return q;
+      }
+    }
+
+    // Priority 2: Meta description
+    var metaDesc = doc.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      var desc = (metaDesc.getAttribute('content') || '').trim();
+      if (desc.length > 20) {
+        // Extract the first sentence or clause
+        var firstSentence = desc.split(/[.!]/).filter(function(s) { return s.trim().length > 10; })[0];
+        if (firstSentence) {
+          var q = toQuestion(firstSentence.trim());
+          if (q) return q;
+        }
+      }
+    }
+
+    // Priority 3: First H2
+    var h2 = doc.querySelector('h2');
+    if (h2) {
+      var h2Text = (h2.textContent || '').trim();
+      if (h2Text.length > 5) {
+        var q = toQuestion(h2Text);
+        if (q) return q;
+      }
+    }
+
+    // Priority 4: Title tag
+    var title = doc.querySelector('title');
+    if (title) {
+      var titleText = (title.textContent || '').trim();
+      if (titleText.length > 5) {
+        var q = toQuestion(titleText);
+        if (q) return q;
+      }
+    }
+
+    // Fallback: extract from URL slug
+    try {
+      var pathname = new URL(url).pathname;
+      var slug = pathname.split('/').filter(function(s) { return s.length > 0; }).pop() || '';
+      var words = slug.replace(/[-_]/g, ' ').trim();
+      if (words.length > 3) return 'What is ' + words + '?';
+    } catch(e) {}
+
+    return 'What is this page about?';
+  }
+
   /* ── Typewriter Effect ── */
   function typewriterText(el, text, speed, callback) {
     el.textContent = '';
