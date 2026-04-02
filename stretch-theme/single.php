@@ -66,6 +66,34 @@ html, body { overflow-x: hidden; }
 .sp-header-inner {
   width: 100%;
 }
+/* Breadcrumbs */
+.sp-breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  margin-bottom: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.55;
+}
+.sp-breadcrumbs a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sp-breadcrumbs a:hover { color: #fff; }
+.sp-breadcrumbs .sp-bc-sep { color: rgba(255,255,255,0.35); }
+.sp-breadcrumbs .sp-bc-current {
+  color: rgba(255,255,255,0.7);
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .sp-cat-badge {
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
@@ -630,6 +658,7 @@ html, body { overflow-x: hidden; }
   font-size: 36px;
   font-weight: 600;
   margin: 0 0 12px;
+  color: #fff;
 }
 .sp-newsletter .nl-sub {
   font-family: 'Assistant', sans-serif;
@@ -801,6 +830,131 @@ html, body { overflow-x: hidden; }
   .sp-related-grid { grid-template-columns: 1fr; }
   .sp-header h1 { font-size: 26px; }
 }
+
+/* ========================================
+   HUB ARTICLES SIDEBAR
+   ======================================== */
+.sp-hub-sidebar {
+  margin-top: 32px;
+  max-width: 200px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.sp-hub-sidebar .sp-toc-label {
+  margin-bottom: 12px;
+}
+.sp-hub-acc {
+  margin-bottom: 4px;
+}
+.sp-hub-acc-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8560A8;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+.sp-hub-acc-trigger:hover { color: #00BFF3; }
+.sp-hub-acc-trigger .sp-hub-arrow {
+  font-size: 10px;
+  transition: transform 0.3s;
+}
+.sp-hub-acc-trigger.open .sp-hub-arrow { transform: rotate(90deg); }
+.sp-hub-acc-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.sp-hub-acc-list {
+  list-style: none;
+  padding: 0 0 8px 0;
+  margin: 0;
+  border-left: 2px solid #e8e8ec;
+}
+.sp-hub-acc-list li {
+  padding: 6px 0 6px 12px;
+}
+.sp-hub-acc-list a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: #999;
+  text-decoration: none;
+  transition: color 0.2s;
+  line-height: 1.4;
+  display: block;
+}
+.sp-hub-acc-list a:hover { color: #8560A8; }
+.sp-hub-acc-list .current-post a {
+  color: #8560A8;
+  font-weight: 500;
+}
+
+/* ========================================
+   MORE FROM HUB GRID
+   ======================================== */
+.sp-more-hub {
+  padding: 80px 0;
+  background: #fff;
+  position: relative;
+}
+.sp-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+.sp-hub-card {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.sp-hub-card:hover { transform: translateY(-6px); }
+.sp-hub-card-img {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background: #f9f9fb;
+}
+.sp-hub-card-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.sp-hub-card:hover .sp-hub-card-img img { transform: scale(1.05); }
+.sp-hub-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #252C3A;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+.sp-hub-card:hover h3 { color: #8560A8; }
+.sp-hub-card-meta {
+  font-size: 12px;
+  color: #999;
+}
+.sp-hub-card-img .fallback-gradient {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #8560A8, #5674B9);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Poppins', sans-serif; font-size: 16px; color: rgba(255,255,255,0.25);
+}
+
+@media (max-width: 960px) { .sp-hub-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .sp-hub-grid { grid-template-columns: 1fr; } }
 </style>
 
 <!-- Reading Progress Bar -->
@@ -810,6 +964,66 @@ html, body { overflow-x: hidden; }
 <nav class="sp-toc-sidebar" id="tocSidebar" aria-label="Table of contents">
   <div class="sp-toc-label">Contents</div>
   <ul class="sp-toc-list" id="tocList"></ul>
+
+  <?php
+  $current_post_id = get_the_ID();
+  if ($cat) :
+    $hub_posts = new WP_Query([
+        'post_type'      => 'post',
+        'posts_per_page' => 10,
+        'cat'            => $cat->term_id,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    ]);
+    $other_cats = get_categories(['hide_empty' => true, 'exclude' => [$cat->term_id]]);
+  ?>
+  <div class="sp-hub-sidebar" id="hubSidebar">
+    <div class="sp-toc-label">Hub Articles</div>
+
+    <!-- Current hub (expanded by default) -->
+    <div class="sp-hub-acc">
+      <button class="sp-hub-acc-trigger open" onclick="this.classList.toggle('open');var p=this.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">
+        <?php echo esc_html($cat->name); ?>
+        <span class="sp-hub-arrow">&#9654;</span>
+      </button>
+      <div class="sp-hub-acc-panel" style="max-height:500px;">
+        <ul class="sp-hub-acc-list">
+          <?php while ($hub_posts->have_posts()) : $hub_posts->the_post(); ?>
+            <li<?php if (get_the_ID() == $current_post_id) echo ' class="current-post"'; ?>>
+              <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+            </li>
+          <?php endwhile; wp_reset_postdata(); ?>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Other hubs (collapsed) -->
+    <?php foreach ($other_cats as $ocat) :
+      $ocat_posts = new WP_Query([
+          'post_type'      => 'post',
+          'posts_per_page' => 5,
+          'cat'            => $ocat->term_id,
+          'post_status'    => 'publish',
+      ]);
+      if ($ocat_posts->have_posts()) :
+    ?>
+    <div class="sp-hub-acc">
+      <button class="sp-hub-acc-trigger" onclick="this.classList.toggle('open');var p=this.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">
+        <?php echo esc_html($ocat->name); ?>
+        <span class="sp-hub-arrow">&#9654;</span>
+      </button>
+      <div class="sp-hub-acc-panel">
+        <ul class="sp-hub-acc-list">
+          <?php while ($ocat_posts->have_posts()) : $ocat_posts->the_post(); ?>
+            <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+          <?php endwhile; wp_reset_postdata(); ?>
+        </ul>
+      </div>
+    </div>
+    <?php endif; endforeach; ?>
+  </div>
+  <?php endif; ?>
 </nav>
 
 <!-- ============================
@@ -827,6 +1041,15 @@ html, body { overflow-x: hidden; }
         &middot; <?php echo get_the_date(); ?>
         &middot; <?php echo $read_time; ?> min read
       </p>
+      <nav class="sp-breadcrumbs" aria-label="Breadcrumb">
+        <a href="<?php echo esc_url(get_permalink(get_option('page_for_posts'))); ?>">Blog</a>
+        <span class="sp-bc-sep">/</span>
+        <?php if ($cat) : ?>
+          <a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>"><?php echo esc_html($cat->name); ?></a>
+          <span class="sp-bc-sep">/</span>
+        <?php endif; ?>
+        <span class="sp-bc-current"><?php the_title(); ?></span>
+      </nav>
     </div>
   </div>
 </section>
@@ -849,6 +1072,41 @@ html, body { overflow-x: hidden; }
 <section class="sp-section sp-content-section <?php echo has_post_thumbnail() ? 'has-featured' : ''; ?>">
   <article class="sp-article <?php echo has_post_thumbnail() ? 'has-featured' : ''; ?>">
     <?php the_content(); ?>
+
+    <!-- FAQ (inside article, before conclusion) -->
+    <div class="sp-faq-inline" style="margin: 48px 0; padding: 40px 0; border-top: 1px solid rgba(133,96,168,0.1); border-bottom: 1px solid rgba(133,96,168,0.1);">
+      <h2 style="text-align:center; margin-bottom:32px;">Frequently Asked Questions</h2>
+      <?php
+      $faqs = [];
+      if ($cat && stripos($cat->name, 'AEO') !== false) {
+          $faqs = [
+              ['What is Answer Engine Optimization?', 'AEO is the practice of optimizing content to be cited by AI-powered answer engines like ChatGPT, Gemini, and Perplexity. Unlike traditional SEO which focuses on ranking in search results, AEO focuses on getting your content referenced in AI-generated responses.'],
+              ['How is AEO different from SEO?', 'While SEO targets rankings in traditional search engine results pages, AEO targets citations in AI-generated answers. SEO relies heavily on backlinks and keyword optimization, while AEO prioritizes content structure, definitiveness, and expertise signals.'],
+              ['How long does it take to see results from AEO?', 'AEO results can vary, but most brands start seeing increased AI citations within 3-6 months of implementing structured content strategies. The key is consistency in producing authoritative, well-structured content.'],
+              ['Do I need AEO if I already do SEO?', 'Yes. As AI answer engines capture more search queries, brands that only optimize for traditional search risk losing visibility. AEO and SEO work together — many SEO best practices support AEO, but AEO requires additional focus on content structure and definitiveness.'],
+              ['Can Stretch Creative help with AEO?', 'Absolutely. Our content strategy team specializes in creating structured, authoritative content optimized for both traditional search engines and AI answer engines. We help brands build topical authority and get cited in AI responses.'],
+          ];
+      } else {
+          $faqs = [
+              ['How does content marketing drive business growth?', 'Quality content builds brand authority, drives organic traffic, and nurtures leads through the sales funnel. Consistently publishing valuable, relevant content positions your brand as a trusted resource in your industry.'],
+              ['How long does it take to see results from content marketing?', 'Most content marketing strategies begin showing measurable results within 3-6 months. SEO-focused content may take longer to rank, but the compounding effect of consistent publishing accelerates results over time.'],
+              ['What types of content does Stretch Creative produce?', 'We produce everything from blog articles and buying guides to product descriptions, ebooks, email campaigns, SEO content, video scripts, and more. Our team of 200+ creatives covers virtually every content need.'],
+              ['How do you maintain quality at scale?', 'We build dedicated writer cohorts calibrated to your brand voice. Each team goes through a calibration process, and every piece passes through editorial quality checks before delivery. Quality never compromises, regardless of volume.'],
+              ['What industries do you work with?', 'We work across ecommerce, SaaS, healthcare, finance, retail, publishing, and many more. Our writers have deep expertise across industries, and we match your project with writers who understand your space.'],
+          ];
+      }
+      foreach ($faqs as $faq) : ?>
+      <div class="sp-faq-item">
+        <button class="sp-faq-trigger" onclick="this.classList.toggle('open');var a=this.nextElementSibling;if(a.style.maxHeight){a.style.maxHeight=null}else{a.style.maxHeight=a.scrollHeight+'px'}">
+          <?php echo esc_html($faq[0]); ?>
+          <span class="sp-faq-icon">+</span>
+        </button>
+        <div class="sp-faq-answer">
+          <div class="sp-faq-answer-inner"><?php echo esc_html($faq[1]); ?></div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
 
     <!-- Inline horizontal share bar -->
     <div class="sp-share-inline">
@@ -918,54 +1176,48 @@ html, body { overflow-x: hidden; }
   </button>
 </div>
 
+<!-- ============================
+     6. MORE FROM THIS HUB
+     ============================ -->
+<?php
+$more_hub = new WP_Query([
+    'post_type'      => 'post',
+    'posts_per_page' => 4,
+    'post__not_in'   => [$current_post_id],
+    'cat'            => $cat ? $cat->term_id : 0,
+    'post_status'    => 'publish',
+]);
+if ($more_hub->have_posts() && $cat) :
+?>
+<section class="sp-section sp-more-hub">
+  <div class="sp-angle-divider" style="top:-1px;bottom:auto;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,0 0,60" fill="#f9f9fb"/></svg>
+  </div>
+  <div class="sp-container">
+    <h2 class="sp-related-heading sp-reveal">More from <?php echo esc_html($cat->name); ?></h2>
+    <div class="sp-hub-grid">
+      <?php while ($more_hub->have_posts()) : $more_hub->the_post(); ?>
+      <a href="<?php the_permalink(); ?>" class="sp-hub-card sp-reveal">
+        <div class="sp-hub-card-img">
+          <?php if (has_post_thumbnail()) : the_post_thumbnail('blog-card'); else : ?>
+            <div class="fallback-gradient">Stretch</div>
+          <?php endif; ?>
+        </div>
+        <div class="sp-hub-card-body">
+          <h3><?php the_title(); ?></h3>
+          <span class="sp-hub-card-meta"><?php echo get_the_date(); ?> &middot; <?php echo ceil(str_word_count(strip_tags(get_the_content())) / 250); ?> min</span>
+        </div>
+      </a>
+      <?php endwhile; wp_reset_postdata(); ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <?php endwhile; ?>
 
 <!-- ============================
-     FAQ SECTION
-     ============================ -->
-<section class="sp-section sp-faq">
-  <div class="sp-angle-divider" style="top:-1px;bottom:auto;">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,0 1440,60" fill="#fff"/></svg>
-  </div>
-  <div class="sp-faq-container">
-    <h2 class="sp-reveal">Frequently Asked Questions</h2>
-    <?php
-    // Generate contextual FAQs based on category
-    $faqs = [];
-    if ($cat && stripos($cat->name, 'AEO') !== false) {
-        $faqs = [
-            ['What is Answer Engine Optimization?', 'AEO is the practice of optimizing content to be cited by AI-powered answer engines like ChatGPT, Gemini, and Perplexity. Unlike traditional SEO which focuses on ranking in search results, AEO focuses on getting your content referenced in AI-generated responses.'],
-            ['How is AEO different from SEO?', 'While SEO targets rankings in traditional search engine results pages, AEO targets citations in AI-generated answers. SEO relies heavily on backlinks and keyword optimization, while AEO prioritizes content structure, definitiveness, and expertise signals.'],
-            ['How long does it take to see results from AEO?', 'AEO results can vary, but most brands start seeing increased AI citations within 3-6 months of implementing structured content strategies. The key is consistency in producing authoritative, well-structured content.'],
-            ['Do I need AEO if I already do SEO?', 'Yes. As AI answer engines capture more search queries, brands that only optimize for traditional search risk losing visibility. AEO and SEO work together — many SEO best practices support AEO, but AEO requires additional focus on content structure and definitiveness.'],
-            ['Can Stretch Creative help with AEO?', 'Absolutely. Our content strategy team specializes in creating structured, authoritative content optimized for both traditional search engines and AI answer engines. We help brands build topical authority and get cited in AI responses.'],
-        ];
-    } else {
-        $faqs = [
-            ['How does content marketing drive business growth?', 'Quality content builds brand authority, drives organic traffic, and nurtures leads through the sales funnel. Consistently publishing valuable, relevant content positions your brand as a trusted resource in your industry.'],
-            ['How long does it take to see results from content marketing?', 'Most content marketing strategies begin showing measurable results within 3-6 months. SEO-focused content may take longer to rank, but the compounding effect of consistent publishing accelerates results over time.'],
-            ['What types of content does Stretch Creative produce?', 'We produce everything from blog articles and buying guides to product descriptions, ebooks, email campaigns, SEO content, video scripts, and more. Our team of 200+ creatives covers virtually every content need.'],
-            ['How do you maintain quality at scale?', 'We build dedicated writer cohorts calibrated to your brand voice. Each team goes through a calibration process, and every piece passes through editorial quality checks before delivery. Quality never compromises, regardless of volume.'],
-            ['What industries do you work with?', 'We work across ecommerce, SaaS, healthcare, finance, retail, publishing, and many more. Our writers have deep expertise across industries, and we match your project with writers who understand your space.'],
-        ];
-    }
-    foreach ($faqs as $i => $faq) :
-    ?>
-    <div class="sp-faq-item sp-reveal">
-      <button class="sp-faq-trigger" onclick="this.classList.toggle('open');var a=this.nextElementSibling;if(a.style.maxHeight){a.style.maxHeight=null}else{a.style.maxHeight=a.scrollHeight+'px'}">
-        <?php echo esc_html($faq[0]); ?>
-        <span class="sp-faq-icon">+</span>
-      </button>
-      <div class="sp-faq-answer">
-        <div class="sp-faq-answer-inner"><?php echo esc_html($faq[1]); ?></div>
-      </div>
-    </div>
-    <?php endforeach; ?>
-  </div>
-</section>
-
-<!-- ============================
-     6. RELATED POSTS
+     7. RELATED POSTS
      ============================ -->
 <?php
 $related = new WP_Query([
@@ -1122,17 +1374,24 @@ if ($related->have_posts()) :
         tocList.appendChild(li);
       });
 
-      // Show/hide TOC when article is in view
-      var tocObs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            tocSidebar.classList.add('visible');
-          } else {
-            tocSidebar.classList.remove('visible');
-          }
-        });
-      }, { threshold: 0 });
-      tocObs.observe(article);
+      // Show/hide TOC — only visible while scrolling through article content
+      var hubSidebar = document.getElementById('hubSidebar');
+      function updateTocVisibility() {
+        var rect = article.getBoundingClientRect();
+        var articleTop = rect.top;
+        var articleBottom = rect.bottom - 300; // hide 300px before article ends
+        if (articleTop < window.innerHeight * 0.5 && articleBottom > 100) {
+          tocSidebar.classList.add('visible');
+          if (hubSidebar) { hubSidebar.style.opacity = '1'; }
+        } else {
+          tocSidebar.classList.remove('visible');
+          if (hubSidebar) { hubSidebar.style.opacity = '0'; }
+        }
+      }
+      window.addEventListener('scroll', function() {
+        requestAnimationFrame(updateTocVisibility);
+      }, { passive: true });
+      updateTocVisibility();
 
       // Highlight active section with IntersectionObserver
       var tocItems = tocList.querySelectorAll('.sp-toc-item');
