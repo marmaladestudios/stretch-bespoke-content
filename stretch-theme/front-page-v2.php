@@ -3065,8 +3065,8 @@ html, body { overflow-x: hidden; }
     });
   }
 
-  /* ---------- 4. LETTER-BY-LETTER HERO REVEAL ---------- */
-  if (!reducedMotion) {
+  /* ---------- 4. LETTER-BY-LETTER HERO REVEAL (disabled — breaks gradient text) ---------- */
+  if (false && !reducedMotion) {
     var heroTitle = document.querySelector('.v2-hero-title');
     if (heroTitle) {
       var html = heroTitle.innerHTML;
