@@ -5,7 +5,7 @@ services:
     dockerfilePath: ./Dockerfile
     disk:
       name: wp-data
-      mountPath: /var/lib/mysql
+      mountPath: /data
       sizeGB: 1
     envVars:
       - key: WORDPRESS_DB_HOST
