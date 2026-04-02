@@ -26,7 +26,7 @@
 
         <!-- Input State -->
         <div id="scannerInput" class="aeo-scanner-input">
-          <h2 class="aeo-scanner-heading">AEO Readiness Scanner</h2>
+          <h2 class="aeo-scanner-heading">Are you AEO Ready?</h2>
           <p class="aeo-scanner-subtitle">Find out if your content is optimized for AI-powered search engines like ChatGPT, Gemini, and Perplexity.</p>
 
           <div class="aeo-scanner-features">
@@ -111,6 +111,9 @@
             <p id="scannedUrl" class="aeo-scanner-scanned-url"></p>
           </div>
         </div>
+
+        <div class="aeo-scanner-predictions" id="predictionsPanel"></div>
+        <div class="aeo-scanner-passage" id="passagePanel"></div>
 
         <div class="aeo-scanner-dimensions" id="dimensionsGrid"></div>
 
@@ -801,6 +804,165 @@
 @media (max-width: 700px) {
   .aeo-scanner-query-form { flex-direction: column; }
 }
+
+/* ── AI Visibility Predictions ── */
+.aeo-scanner-predictions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.aeo-pred-card {
+  background: rgba(255,255,255,0.04);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.2s, background 0.2s;
+}
+.aeo-pred-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.06);
+}
+.aeo-pred-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.aeo-pred-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+.aeo-pred-badge {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.aeo-pred-reasons {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.aeo-pred-reasons li {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  color: #c0c8d8;
+  padding: 4px 0;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+.aeo-pred-reasons li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.aeo-pred-reasons li.aeo-pred-good::before { background: #28c840; }
+.aeo-pred-reasons li.aeo-pred-fix::before { background: #F5A623; }
+.aeo-pred-fixes-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #F5A623;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 12px 0 6px;
+}
+
+/* ── Simulated Answer Panel ── */
+.aeo-scanner-passage {
+  margin-bottom: 32px;
+}
+.aeo-passage-card {
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.aeo-passage-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.aeo-passage-heading-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(0,191,243,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #00BFF3;
+}
+.aeo-passage-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #6b7385;
+  margin: 16px 0 10px;
+}
+.aeo-passage-blockquote {
+  background: rgba(133,96,168,0.06);
+  border-left: 3px solid #8560A8;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 0 0 16px;
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #d0d6e0;
+}
+.aeo-passage-blockquote .aeo-kw-highlight {
+  background: rgba(0,191,243,0.15);
+  color: #00BFF3;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.aeo-passage-empty {
+  text-align: center;
+  padding: 24px;
+  color: #6b7385;
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 8px;
+}
+.aeo-passage-feedback {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  color: #a0a8b8;
+  margin: 0;
+  line-height: 1.5;
+}
+.aeo-passage-tip {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  color: #6b7385;
+  margin: 12px 0 0;
+  font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .aeo-scanner-predictions { grid-template-columns: 1fr; }
+}
 </style>
 
 <script>
@@ -1416,7 +1578,7 @@
   }
 
   /* ── Show Results ── */
-  function showResults(dims, url) {
+  function showResults(dims, url, query, predictions, passage) {
     var total = 0;
     for (var i = 0; i < dims.length; i++) total += dims[i].score;
     var overall = Math.round(total / dims.length);
@@ -1513,6 +1675,86 @@
         setTimeout(function() { fill.style.width = score + '%'; }, 200 + delay);
       })(card.querySelector('.aeo-dim-bar-fill'), d.score, i * 80);
     }
+
+    // ── Render AI Visibility Predictions ──
+    var predPanel = document.getElementById('predictionsPanel');
+    predPanel.innerHTML = '';
+
+    function renderPredCard(pred, title, iconSvg) {
+      var badgeColor = pred.level === 'High' ? '#28c840' : pred.level === 'Medium' ? '#F5A623' : '#E74C3C';
+      var card = document.createElement('div');
+      card.className = 'aeo-pred-card';
+
+      var reasonsHtml = '';
+      for (var r = 0; r < pred.reasons.length; r++) {
+        reasonsHtml += '<li class="aeo-pred-good">' + pred.reasons[r] + '</li>';
+      }
+      var fixesHtml = '';
+      if (pred.fixes.length > 0) {
+        fixesHtml = '<div class="aeo-pred-fixes-label">What to fix</div><ul class="aeo-pred-reasons">';
+        for (var f = 0; f < pred.fixes.length; f++) {
+          fixesHtml += '<li class="aeo-pred-fix">' + pred.fixes[f] + '</li>';
+        }
+        fixesHtml += '</ul>';
+      }
+
+      card.innerHTML =
+        '<div class="aeo-pred-card-header">' +
+          '<span class="aeo-pred-title">' + iconSvg + ' ' + title + '</span>' +
+          '<span class="aeo-pred-badge" style="background:' + badgeColor + '22;color:' + badgeColor + ';">' + pred.level + ' (' + pred.score + '%)</span>' +
+        '</div>' +
+        '<ul class="aeo-pred-reasons">' + reasonsHtml + '</ul>' +
+        fixesHtml;
+
+      return card;
+    }
+
+    predPanel.appendChild(renderPredCard(
+      predictions.google,
+      'Google AI Overview',
+      '<svg viewBox="0 0 18 18" width="16" height="16" fill="none" style="vertical-align:-2px;"><circle cx="9" cy="9" r="7" stroke="#00BFF3" stroke-width="1.5"/><path d="M9 5v4l3 2" stroke="#00BFF3" stroke-width="1.3" stroke-linecap="round"/></svg>'
+    ));
+    predPanel.appendChild(renderPredCard(
+      predictions.chat,
+      'AI Chat Citation',
+      '<svg viewBox="0 0 18 18" width="16" height="16" fill="none" style="vertical-align:-2px;"><rect x="2" y="3" width="14" height="10" rx="2" stroke="#8560A8" stroke-width="1.5"/><path d="M6 15l2-2h0" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round"/><path d="M6 7h6M6 10h4" stroke="#8560A8" stroke-width="1.2"/></svg>'
+    ));
+
+    // ── Render Simulated Answer Panel ──
+    var passPanel = document.getElementById('passagePanel');
+    passPanel.innerHTML = '';
+
+    var passCard = document.createElement('div');
+    passCard.className = 'aeo-passage-card';
+
+    var headingHtml = '<div class="aeo-passage-heading">' +
+      '<span class="aeo-passage-heading-icon"><svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>' +
+      'How AI would use your content' +
+    '</div>';
+
+    if (passage.found) {
+      // Highlight query keywords in the passage text
+      var highlightedText = passage.text;
+      var kwWords = query.toLowerCase().replace(/[?.,!]/g, '').split(/\s+/).filter(function(w) {
+        return w.length > 3 && ['what','how','why','when','where','this','that','with','from','your','have'].indexOf(w) === -1;
+      });
+      for (var k = 0; k < kwWords.length; k++) {
+        var regex = new RegExp('(' + kwWords[k].replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+        highlightedText = highlightedText.replace(regex, '<span class="aeo-kw-highlight">$1</span>');
+      }
+
+      passCard.innerHTML = headingHtml +
+        '<div class="aeo-passage-label">Most likely cited passage</div>' +
+        '<blockquote class="aeo-passage-blockquote">' + highlightedText + '</blockquote>' +
+        '<p class="aeo-passage-feedback">' + passage.feedback + '</p>' +
+        '<p class="aeo-passage-tip">Tip: AI engines prefer a direct 1-2 sentence answer followed by supporting detail.</p>';
+    } else {
+      passCard.innerHTML = headingHtml +
+        '<div class="aeo-passage-empty">' + passage.feedback + '</div>' +
+        '<p class="aeo-passage-tip">Tip: Add a concise paragraph (40-80 words) that directly answers your target query near the top of the page.</p>';
+    }
+
+    passPanel.appendChild(passCard);
   }
 
   /* ── Shared state ── */
