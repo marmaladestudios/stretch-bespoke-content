@@ -66,6 +66,17 @@
           <p class="aeo-scanner-note">Instant results &mdash; no signup required</p>
         </div>
 
+      <!-- Query Step -->
+      <div id="scannerQuery" class="aeo-scanner-query" style="display:none;">
+        <h2 class="aeo-scanner-heading">What question do you want to rank for?</h2>
+        <p class="aeo-scanner-subtitle">We detected this from your page — edit it if you have a different target query.</p>
+        <div class="aeo-scanner-query-form">
+          <input type="text" id="targetQuery" class="aeo-scanner-query-input" placeholder="e.g. What is answer engine optimization?" aria-label="Target query" />
+          <button id="analyzeBtn" class="aeo-scanner-btn">Analyze &rarr;</button>
+        </div>
+        <p class="aeo-scanner-note">This query shapes your AI visibility predictions</p>
+      </div>
+
       <!-- Loading State -->
       <div id="scannerLoading" class="aeo-scanner-loading" style="display:none;">
         <h2 class="aeo-scanner-heading">Analyzing Your Page</h2>
@@ -217,7 +228,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  justify-content: space-between;
   margin-bottom: 32px;
   position: relative;
   z-index: 1;
@@ -757,6 +767,39 @@
   .aeo-scanner-results-header { flex-direction: column; text-align: center; }
   .aeo-scanner-score-interp { margin-left: auto; margin-right: auto; }
   .aeo-scanner-dimensions { grid-template-columns: 1fr; }
+}
+
+/* ── Query Step ── */
+.aeo-scanner-query {
+  position: relative;
+  z-index: 1;
+}
+.aeo-scanner-query-form {
+  display: flex;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto 16px;
+}
+.aeo-scanner-query-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Assistant', sans-serif;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.aeo-scanner-query-input::placeholder { color: #6b7385; }
+.aeo-scanner-query-input:focus {
+  border-color: #8560A8;
+  box-shadow: 0 0 0 3px rgba(133,96,168,0.15), 0 0 20px rgba(133,96,168,0.08);
+  background: rgba(255,255,255,0.07);
+}
+@media (max-width: 700px) {
+  .aeo-scanner-query-form { flex-direction: column; }
 }
 </style>
 
