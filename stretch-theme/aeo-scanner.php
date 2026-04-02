@@ -908,6 +908,197 @@
     return 'What is this page about?';
   }
 
+  /* ── Citable Passage Extraction ── */
+  function extractCitablePassage(doc, query) {
+    var queryWords = query.toLowerCase().replace(/[?.,!]/g, '').split(/\s+/).filter(function(w) {
+      return w.length > 2 && ['what','how','why','when','where','who','which','can','do','does','is','are','the','and','for','that','this','with','from','your','you','have','has'].indexOf(w) === -1;
+    });
+    var paragraphs = doc.querySelectorAll('p');
+    var best = null;
+    var bestScore = -1;
+
+    for (var i = 0; i < paragraphs.length; i++) {
+      var text = (paragraphs[i].textContent || '').trim();
+      var words = text.split(/\s+/);
+      // Skip too short or too long
+      if (words.length < 15 || words.length > 200) continue;
+
+      var score = 0;
+      var lower = text.toLowerCase();
+
+      // Keyword overlap (most important signal)
+      var matchCount = 0;
+      for (var k = 0; k < queryWords.length; k++) {
+        if (lower.indexOf(queryWords[k]) !== -1) matchCount++;
+      }
+      if (queryWords.length > 0) {
+        score += (matchCount / queryWords.length) * 50;
+      }
+
+      // Ideal length bonus (40-120 words)
+      if (words.length >= 40 && words.length <= 120) score += 15;
+      else if (words.length >= 20 && words.length <= 150) score += 8;
+
+      // Starts with declarative statement (not a question)
+      if (text.charAt(text.length - 1) !== '?' && !/^(but|however|although|yet)\b/i.test(text)) score += 10;
+
+      // Position bonus — earlier paragraphs slightly preferred
+      if (i < 5) score += 10;
+      else if (i < 10) score += 5;
+
+      // Proximity to heading containing query words
+      var prev = paragraphs[i].previousElementSibling;
+      if (prev && /^H[1-6]$/.test(prev.tagName)) {
+        var hText = prev.textContent.toLowerCase();
+        var headingMatch = 0;
+        for (var k = 0; k < queryWords.length; k++) {
+          if (hText.indexOf(queryWords[k]) !== -1) headingMatch++;
+        }
+        if (headingMatch > 0) score += 15;
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        best = { text: text, score: score, wordCount: words.length, index: i };
+      }
+    }
+
+    if (!best || bestScore < 10) {
+      return { found: false, text: '', feedback: 'No clear extractable answer found for this query. Consider adding a concise paragraph (40-80 words) that directly answers the question.', wordCount: 0 };
+    }
+
+    // Generate feedback
+    var feedback = [];
+    if (best.wordCount > 120) feedback.push('This passage is ' + best.wordCount + ' words — AI engines prefer concise answers of 40-80 words. Consider tightening it.');
+    if (best.wordCount < 30) feedback.push('This passage is very short. AI engines prefer answers with enough context — aim for 40-80 words.');
+    if (best.score < 25) feedback.push('Weak query alignment — the passage doesn\'t strongly match your target query. Rewrite the opening to directly address the question.');
+    if (best.index > 10) feedback.push('This passage appears deep in the page. Move your best answer closer to the top for stronger AI visibility.');
+    if (feedback.length === 0) feedback.push('Strong candidate for AI citation. Clear, well-positioned, and relevant to your target query.');
+
+    return { found: true, text: best.text, feedback: feedback.join(' '), wordCount: best.wordCount };
+  }
+
+  /* ── AI Visibility Predictions ── */
+  function predictVisibility(dims, doc, query, passage) {
+    var queryWords = query.toLowerCase().replace(/[?.,!]/g, '').split(/\s+/).filter(function(w) {
+      return w.length > 2;
+    });
+
+    // Gather dimension scores by name for easy access
+    var dimScores = {};
+    for (var i = 0; i < dims.length; i++) {
+      dimScores[dims[i].name] = dims[i].score;
+    }
+
+    // === Google AI Overview Prediction ===
+    var gScore = 0;
+    var gReasons = [];
+    var gFixes = [];
+
+    // Query-content alignment (check if any heading contains query keywords)
+    var headings = doc.querySelectorAll('h1,h2,h3');
+    var headingMatchCount = 0;
+    for (var i = 0; i < headings.length; i++) {
+      var hLower = (headings[i].textContent || '').toLowerCase();
+      for (var k = 0; k < queryWords.length; k++) {
+        if (hLower.indexOf(queryWords[k]) !== -1) { headingMatchCount++; break; }
+      }
+    }
+    if (headingMatchCount >= 2) { gScore += 20; gReasons.push('Multiple headings match your target query'); }
+    else if (headingMatchCount >= 1) { gScore += 10; gReasons.push('One heading matches your target query'); }
+    else { gFixes.push('Add headings that directly include your target query keywords'); }
+
+    // Answer conciseness (from passage extraction)
+    if (passage.found && passage.wordCount >= 30 && passage.wordCount <= 80) {
+      gScore += 25; gReasons.push('Found a concise ' + passage.wordCount + '-word answer passage');
+    } else if (passage.found && passage.wordCount > 80) {
+      gScore += 12; gFixes.push('Your best answer passage is ' + passage.wordCount + ' words — tighten to 40-60 words for AI Overview format');
+    } else if (passage.found) {
+      gScore += 8; gFixes.push('Your answer passage is very brief — expand to 40-60 words with supporting context');
+    } else {
+      gFixes.push('No extractable answer found — add a concise paragraph directly answering the query');
+    }
+
+    // Content structure
+    if ((dimScores['Heading Structure'] || 0) >= 70) { gScore += 15; gReasons.push('Strong heading hierarchy for content parsing'); }
+    else { gFixes.push('Improve heading hierarchy — AI Overviews rely on well-structured content'); }
+
+    // Lists and tables (AI Overviews love these)
+    var lists = doc.querySelectorAll('ul, ol, table');
+    if (lists.length >= 3) { gScore += 10; gReasons.push('Structured formatting (lists/tables) detected'); }
+    else if (lists.length >= 1) { gScore += 5; }
+    else { gFixes.push('Add lists or tables — AI Overviews heavily favor structured formats'); }
+
+    // Schema markup
+    if ((dimScores['Schema Markup'] || 0) >= 60) { gScore += 10; gReasons.push('Schema markup helps AI understand content type'); }
+    else { gFixes.push('Add Article/FAQ schema to clarify content type for Google'); }
+
+    // E-E-A-T
+    if ((dimScores['E-E-A-T Signals'] || 0) >= 60) { gScore += 10; }
+
+    // Content depth
+    if ((dimScores['Content Depth'] || 0) >= 70) { gScore += 10; }
+
+    gScore = Math.min(gScore, 100);
+    var gLevel = gScore >= 65 ? 'High' : gScore >= 35 ? 'Medium' : 'Low';
+
+    // === AI Chat Citation Prediction ===
+    var cScore = 0;
+    var cReasons = [];
+    var cFixes = [];
+
+    // Comprehensive coverage
+    if ((dimScores['Content Depth'] || 0) >= 70) { cScore += 20; cReasons.push('Comprehensive content depth signals thorough coverage'); }
+    else if ((dimScores['Content Depth'] || 0) >= 50) { cScore += 10; cFixes.push('Expand content depth — chat models pull from the most comprehensive source'); }
+    else { cFixes.push('Thin content. Chat models prefer exhaustive resources — aim for 2,000+ words'); }
+
+    // Unique/original signals
+    var bodyText = (doc.body ? doc.body.textContent : '') || '';
+    var hasFirstPerson = /\b(I |we |our |my )\b/i.test(bodyText);
+    var hasData = /\b(\d+%|\d+x|survey|study|research|data shows|according to)\b/i.test(bodyText);
+    var hasExamples = /\b(for example|for instance|such as|e\.g\.|case study)\b/i.test(bodyText);
+    if (hasFirstPerson || hasData || hasExamples) {
+      var origScore = 0;
+      if (hasFirstPerson) origScore += 5;
+      if (hasData) origScore += 10;
+      if (hasExamples) origScore += 5;
+      cScore += origScore;
+      if (hasData) cReasons.push('Original data/research references detected');
+      if (hasExamples) cReasons.push('Specific examples strengthen citation likelihood');
+    }
+    if (!hasData && !hasExamples) { cFixes.push('Add original data, statistics, or specific examples — chat models favor unique content'); }
+
+    // Topical authority
+    if ((dimScores['Internal Linking'] || 0) >= 60) { cScore += 15; cReasons.push('Strong internal linking signals topical authority'); }
+    else { cFixes.push('Increase internal linking to signal topical authority'); }
+
+    // Factual density (crude: count sentences with numbers or specific claims)
+    var sentences = bodyText.split(/[.!?]+/).filter(function(s) { return s.trim().length > 20; });
+    var factualCount = 0;
+    for (var i = 0; i < sentences.length; i++) {
+      if (/\d/.test(sentences[i]) || /\b(because|therefore|specifically|exactly|precisely)\b/i.test(sentences[i])) factualCount++;
+    }
+    var factRatio = sentences.length > 0 ? factualCount / sentences.length : 0;
+    if (factRatio >= 0.3) { cScore += 15; cReasons.push('High factual density — concrete claims over filler'); }
+    else if (factRatio >= 0.15) { cScore += 8; }
+    else { cFixes.push('Increase factual density — replace vague statements with specific data and claims'); }
+
+    // Recency signals
+    if (/\b(2025|2026|updated|last updated|revised)\b/i.test(bodyText)) { cScore += 10; cReasons.push('Recency signals detected (dates/update language)'); }
+    else { cFixes.push('Add publication/update dates — chat models prefer fresh content'); }
+
+    // Query alignment bonus
+    if (passage.found) { cScore += 15; }
+
+    cScore = Math.min(cScore, 100);
+    var cLevel = cScore >= 65 ? 'High' : cScore >= 35 ? 'Medium' : 'Low';
+
+    return {
+      google: { score: gScore, level: gLevel, reasons: gReasons, fixes: gFixes },
+      chat: { score: cScore, level: cLevel, reasons: cReasons, fixes: cFixes }
+    };
+  }
+
   /* ── Typewriter Effect ── */
   function typewriterText(el, text, speed, callback) {
     el.textContent = '';
