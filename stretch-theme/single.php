@@ -419,18 +419,8 @@ html, body { overflow-x: hidden; }
    3. SHARE BAR
    ======================================== */
 .sp-share-bar {
-  position: fixed;
-  left: calc(50% - 480px);
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 90;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  display: none !important;
 }
-.sp-share-bar.visible { opacity: 1; }
 .sp-share-btn {
   width: 40px; height: 40px;
   border-radius: 50%;
@@ -451,22 +441,31 @@ html, body { overflow-x: hidden; }
 }
 .sp-share-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-/* Mobile share bar */
+/* Mobile share bar — hidden, replaced by inline bar */
 .sp-share-mobile {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 90;
-  background: #fff;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  padding: 10px 0;
-  justify-content: center;
-  gap: 16px;
+  display: none !important;
 }
-.sp-share-mobile .sp-share-btn {
-  width: 36px; height: 36px;
+
+/* Inline horizontal share bar */
+.sp-share-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 0;
+  margin-top: 48px;
+  border-top: 1px solid rgba(133,96,168,0.12);
+}
+.sp-share-inline-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 8px;
+}
+.sp-share-inline .sp-share-btn {
+  width: 44px; height: 44px;
 }
 
 /* ========================================
@@ -704,12 +703,73 @@ html, body { overflow-x: hidden; }
 }
 
 /* ========================================
+   FAQ SECTION
+   ======================================== */
+.sp-faq {
+  padding: 80px 0;
+  background: #f9f9fb;
+  position: relative;
+}
+.sp-faq-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.sp-faq h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #252C3A;
+  text-align: center;
+  margin-bottom: 48px;
+}
+.sp-faq-item {
+  border-bottom: 1px solid rgba(133,96,168,0.1);
+}
+.sp-faq-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: #323A51;
+  text-align: left;
+  transition: color 0.3s;
+  border-left: 3px solid transparent;
+  padding-left: 20px;
+}
+.sp-faq-trigger:hover,
+.sp-faq-trigger.open { color: #8560A8; border-left-color: #8560A8; }
+.sp-faq-icon {
+  font-size: 24px;
+  color: #8560A8;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.sp-faq-trigger.open .sp-faq-icon { transform: rotate(45deg); }
+.sp-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.sp-faq-answer-inner {
+  padding: 0 0 24px 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #666;
+}
+
+/* ========================================
    RESPONSIVE
    ======================================== */
 @media (max-width: 1100px) {
-  .sp-share-bar { display: none; }
-  .sp-share-mobile { display: flex; }
-  body { padding-bottom: 56px; }
+  /* share bars handled globally */
 }
 @media (max-width: 960px) {
   .sp-related-grid { grid-template-columns: repeat(2, 1fr); }
@@ -789,6 +849,23 @@ html, body { overflow-x: hidden; }
 <section class="sp-section sp-content-section <?php echo has_post_thumbnail() ? 'has-featured' : ''; ?>">
   <article class="sp-article <?php echo has_post_thumbnail() ? 'has-featured' : ''; ?>">
     <?php the_content(); ?>
+
+    <!-- Inline horizontal share bar -->
+    <div class="sp-share-inline">
+      <span class="sp-share-inline-label">Share</span>
+      <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <button class="sp-share-btn" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href);this.innerHTML='&#10003;';var btn=this;setTimeout(function(){btn.innerHTML='<svg viewBox=\'0 0 24 24\'><path d=\'M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z\'/><path d=\'M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z\'/></svg>'},2000)">
+        <svg viewBox="0 0 24 24"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+      </button>
+    </div>
   </article>
 
   <!-- Author Bio -->
@@ -842,6 +919,50 @@ html, body { overflow-x: hidden; }
 </div>
 
 <?php endwhile; ?>
+
+<!-- ============================
+     FAQ SECTION
+     ============================ -->
+<section class="sp-section sp-faq">
+  <div class="sp-angle-divider" style="top:-1px;bottom:auto;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,0 1440,60" fill="#fff"/></svg>
+  </div>
+  <div class="sp-faq-container">
+    <h2 class="sp-reveal">Frequently Asked Questions</h2>
+    <?php
+    // Generate contextual FAQs based on category
+    $faqs = [];
+    if ($cat && stripos($cat->name, 'AEO') !== false) {
+        $faqs = [
+            ['What is Answer Engine Optimization?', 'AEO is the practice of optimizing content to be cited by AI-powered answer engines like ChatGPT, Gemini, and Perplexity. Unlike traditional SEO which focuses on ranking in search results, AEO focuses on getting your content referenced in AI-generated responses.'],
+            ['How is AEO different from SEO?', 'While SEO targets rankings in traditional search engine results pages, AEO targets citations in AI-generated answers. SEO relies heavily on backlinks and keyword optimization, while AEO prioritizes content structure, definitiveness, and expertise signals.'],
+            ['How long does it take to see results from AEO?', 'AEO results can vary, but most brands start seeing increased AI citations within 3-6 months of implementing structured content strategies. The key is consistency in producing authoritative, well-structured content.'],
+            ['Do I need AEO if I already do SEO?', 'Yes. As AI answer engines capture more search queries, brands that only optimize for traditional search risk losing visibility. AEO and SEO work together — many SEO best practices support AEO, but AEO requires additional focus on content structure and definitiveness.'],
+            ['Can Stretch Creative help with AEO?', 'Absolutely. Our content strategy team specializes in creating structured, authoritative content optimized for both traditional search engines and AI answer engines. We help brands build topical authority and get cited in AI responses.'],
+        ];
+    } else {
+        $faqs = [
+            ['How does content marketing drive business growth?', 'Quality content builds brand authority, drives organic traffic, and nurtures leads through the sales funnel. Consistently publishing valuable, relevant content positions your brand as a trusted resource in your industry.'],
+            ['How long does it take to see results from content marketing?', 'Most content marketing strategies begin showing measurable results within 3-6 months. SEO-focused content may take longer to rank, but the compounding effect of consistent publishing accelerates results over time.'],
+            ['What types of content does Stretch Creative produce?', 'We produce everything from blog articles and buying guides to product descriptions, ebooks, email campaigns, SEO content, video scripts, and more. Our team of 200+ creatives covers virtually every content need.'],
+            ['How do you maintain quality at scale?', 'We build dedicated writer cohorts calibrated to your brand voice. Each team goes through a calibration process, and every piece passes through editorial quality checks before delivery. Quality never compromises, regardless of volume.'],
+            ['What industries do you work with?', 'We work across ecommerce, SaaS, healthcare, finance, retail, publishing, and many more. Our writers have deep expertise across industries, and we match your project with writers who understand your space.'],
+        ];
+    }
+    foreach ($faqs as $i => $faq) :
+    ?>
+    <div class="sp-faq-item sp-reveal">
+      <button class="sp-faq-trigger" onclick="this.classList.toggle('open');var a=this.nextElementSibling;if(a.style.maxHeight){a.style.maxHeight=null}else{a.style.maxHeight=a.scrollHeight+'px'}">
+        <?php echo esc_html($faq[0]); ?>
+        <span class="sp-faq-icon">+</span>
+      </button>
+      <div class="sp-faq-answer">
+        <div class="sp-faq-answer-inner"><?php echo esc_html($faq[1]); ?></div>
+      </div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</section>
 
 <!-- ============================
      6. RELATED POSTS
