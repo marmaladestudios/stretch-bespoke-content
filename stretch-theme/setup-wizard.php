@@ -330,12 +330,134 @@ if ($step === 1) {
     update_option('blogname', 'Stretch Creative');
     echo "✓ Site title set<br>";
 
+    echo '<br><strong style="color:#28c840;">Step 6 complete!</strong>';
+    echo '<br><br><a href="?step=7" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 7: Demo AEO Post →</a>';
+
+} elseif ($step === 7) {
+    // ── STEP 7: Rich Demo AEO Post ──
+    echo '<strong>Step 7: Creating demo AEO post...</strong><br>';
+
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+    require_once ABSPATH . 'wp-admin/includes/taxonomy.php';
+
+    // Get or create AEO category
+    $aeo_cat = get_category_by_slug('aeo');
+    if (!$aeo_cat) {
+        $result = wp_insert_term('AEO', 'category', ['description' => 'Answer Engine Optimization — strategies for getting your content cited by AI-powered search engines.']);
+        $aeo_cat_id = is_array($result) ? $result['term_id'] : 0;
+    } else {
+        $aeo_cat_id = $aeo_cat->term_id;
+    }
+    echo "✓ AEO category ready<br>";
+
+    // Check if post exists
+    $existing = get_posts(['name' => 'the-complete-guide-to-answer-engine-optimization-aeo-in-2026', 'post_type' => 'post', 'numberposts' => 1]);
+    if ($existing) {
+        echo "- Demo post already exists<br>";
+    } else {
+        $post_content = '<p>The search landscape is undergoing its most significant transformation in over two decades. As AI-powered answer engines like ChatGPT, Google\'s AI Overviews, Perplexity, and Claude reshape how people find information, a new discipline has emerged: Answer Engine Optimization (AEO). For brands that depend on organic visibility, understanding and implementing AEO isn\'t optional — it\'s existential. This guide breaks down everything you need to know to position your brand for the AI-driven search era.</p>
+
+<h2>What Is Answer Engine Optimization?</h2>
+
+<p>Answer Engine Optimization is the practice of structuring your content, brand signals, and digital presence so that AI-powered answer engines cite, reference, and recommend your brand when responding to user queries. Unlike traditional SEO, which focuses on ranking in a list of blue links, AEO focuses on becoming the source that AI systems trust and surface in their generated responses.</p>
+
+<p>Think of it this way: when someone asks ChatGPT "What\'s the best approach to content strategy for SaaS companies?" — the brands that appear in that answer didn\'t get there by accident. They got there because their content was structured, authoritative, and optimized in ways that AI models recognize and prefer.</p>
+
+<figure><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop" alt="AI search"><figcaption>AI-powered search engines are reshaping how content is discovered.</figcaption></figure>
+
+<h2>AEO vs Traditional SEO</h2>
+
+<table>
+<thead><tr><th></th><th>Traditional SEO</th><th>AEO</th></tr></thead>
+<tbody>
+<tr><td>Goal</td><td>Rank on page 1</td><td>Get cited in AI answers</td></tr>
+<tr><td>Format</td><td>Keywords in content</td><td>Structured, definitive answers</td></tr>
+<tr><td>Signals</td><td>Backlinks, authority</td><td>Expertise, clarity, structure</td></tr>
+<tr><td>Result</td><td>Click to website</td><td>Brand mention in AI response</td></tr>
+<tr><td>Measurement</td><td>Rankings, traffic</td><td>Citations, brand visibility</td></tr>
+</tbody>
+</table>
+
+<blockquote class="pullquote"><p>The brands that will dominate the next decade of search are the ones optimizing for AI answer engines today — not tomorrow.</p></blockquote>
+
+<h2>How AI Answer Engines Work</h2>
+
+<p>To optimize for answer engines, you first need to understand how they select and synthesize sources. Models like GPT-4, Gemini, and Claude are trained on vast corpora of web content, but they also use retrieval-augmented generation (RAG) to pull in real-time information. When a user asks a question, the AI doesn\'t just recall memorized data — it actively searches, evaluates, and synthesizes information from multiple sources to generate a comprehensive response.</p>
+
+<p>The selection process favors content that demonstrates clear expertise, provides definitive answers, and is structured in ways that AI systems can easily parse. This means your content needs to be more than just "good" — it needs to be optimally structured for machine comprehension while remaining genuinely valuable for human readers.</p>
+
+<h2>7 Key AEO Strategies</h2>
+
+<h3>1. Structure Content with Clear Headings and Definitive Statements</h3>
+<p>AI models parse content hierarchically. Clear H2/H3 heading structures, concise topic sentences, and definitive statements make your content easier for AI to understand and cite. Avoid burying key information in long paragraphs — lead with the answer.</p>
+
+<h3>2. Lead with the Answer, Then Explain</h3>
+<p>The inverted pyramid isn\'t just for journalism anymore. When addressing a question, state your answer clearly in the first sentence, then provide supporting context, evidence, and nuance. This mirrors how AI systems extract and present information.</p>
+
+<h3>3. Use Schema Markup and Structured Data</h3>
+<p>Schema markup helps AI understand the context and relationships within your content. FAQ schema, HowTo schema, and Article schema all provide machine-readable signals that can increase your content\'s visibility in AI-generated responses.</p>
+
+<h3>4. Build Topical Authority Through Content Clusters</h3>
+<p>AI systems evaluate not just individual pages but your brand\'s overall authority on a topic. Build comprehensive content clusters that comprehensively cover your core topics. A pillar page supported by dozens of detailed subtopic pages signals to AI that your brand is a genuine authority on the subject.</p>
+
+<figure><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=400&fit=crop" alt="Data analytics"><figcaption>Data-driven content strategies are essential for AEO success.</figcaption></figure>
+
+<h3>5. Optimize for Featured Snippets — The Bridge to AEO</h3>
+<p>Featured snippets remain a critical bridge between traditional SEO and AEO. Content that earns featured snippets demonstrates exactly the qualities that AI answer engines look for: clear structure, definitive answers, and authoritative sourcing.</p>
+
+<h3>6. Create Original Research and Data</h3>
+<p>AI models heavily favor original data, unique research findings, and proprietary insights. When your content includes statistics, survey results, or analysis that can\'t be found elsewhere, AI systems are more likely to cite your brand as the authoritative source.</p>
+
+<h3>7. Maintain E-E-A-T Signals</h3>
+<p>Experience, Expertise, Authoritativeness, and Trustworthiness (E-E-A-T) are not just Google\'s quality guidelines — they\'re the fundamental attributes that AI systems evaluate when choosing which sources to cite. Ensure your content clearly demonstrates first-hand experience, features expert authors with verifiable credentials, is published on an authoritative domain, and maintains consistent accuracy and trustworthiness.</p>
+
+<hr>
+
+<h2>Measuring AEO Success</h2>
+
+<p>Traditional SEO metrics like rankings and organic traffic remain important, but AEO introduces new dimensions of measurement. Brand radar tools can track how often your brand is mentioned in AI-generated responses. Citation tracking monitors which of your content pieces are being referenced by AI systems.</p>
+
+<p>The most forward-thinking brands are already building dashboards that combine traditional SEO metrics with AEO-specific measurements: AI citation frequency, brand mention sentiment in AI responses, and share of voice in AI-generated answers for their target topics.</p>
+
+<h2>Getting Started with AEO</h2>
+
+<p>The good news is that AEO and SEO are complementary, not competing strategies. Many of the fundamentals overlap: create authoritative content, structure it clearly, build topical depth, and maintain strong E-E-A-T signals. The key additions for AEO are the emphasis on definitive statements, machine-readable structure, and original insights that AI systems can\'t find elsewhere.</p>
+
+<blockquote class="pullquote"><p>AEO isn\'t replacing SEO — it\'s the next layer. The brands that master both will own the future of organic visibility.</p></blockquote>';
+
+        $admin = get_user_by('login', 'admin');
+        $post_id = wp_insert_post([
+            'post_title' => 'The Complete Guide to Answer Engine Optimization (AEO) in 2026',
+            'post_name' => 'the-complete-guide-to-answer-engine-optimization-aeo-in-2026',
+            'post_content' => $post_content,
+            'post_status' => 'publish',
+            'post_type' => 'post',
+            'post_category' => [$aeo_cat_id],
+            'post_author' => $admin ? $admin->ID : 1,
+        ]);
+        echo "✓ Created demo post (ID: {$post_id})<br>";
+
+        // Featured image
+        try {
+            $tmp = download_url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=630&fit=crop', 30);
+            if (!is_wp_error($tmp)) {
+                $img_id = media_handle_sideload(['name' => 'aeo-guide-featured.jpg', 'tmp_name' => $tmp], $post_id, 'AEO Guide Featured Image');
+                if (!is_wp_error($img_id)) {
+                    set_post_thumbnail($post_id, $img_id);
+                    echo "✓ Featured image set<br>";
+                }
+            }
+        } catch (Exception $e) { echo "✗ Featured image failed<br>"; }
+    }
+
     echo '<br><strong style="color:#28c840;font-size:18px;">✓ All setup complete!</strong>';
     echo '<br><br><a href="' . home_url('/') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;font-weight:600;">View Your Site →</a>';
     echo '<br><br><em style="color:#999;">Remember to delete this Setup page and remove setup-wizard.php from the theme.</em>';
 
 } else {
-    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 6 steps.</p>';
+    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 7 steps.</p>';
     echo '<p style="font-size:14px;color:#999;">Pages already created will be skipped.</p>';
     echo '<br><a href="?step=1" style="display:inline-block;background:#8560A8;color:#fff;padding:16px 36px;font-size:17px;text-decoration:none;">Start Setup: Step 1 →</a>';
 }
