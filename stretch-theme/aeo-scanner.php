@@ -35,8 +35,8 @@
                 <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><rect x="2" y="4" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M6 8h8M6 11h5" stroke="currentColor" stroke-width="1.2"/></svg>
               </div>
               <div>
-                <strong>Content Analysis</strong>
-                <span>Heading structure, content depth, answer-first formatting</span>
+                <strong>AI Visibility Predictions</strong>
+                <span>Google AI Overview & chat citation likelihood for your target query</span>
               </div>
             </div>
             <div class="aeo-scanner-feature-card">
@@ -44,8 +44,8 @@
                 <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M10 2v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
               </div>
               <div>
-                <strong>Technical Signals</strong>
-                <span>Schema markup, E-E-A-T signals, meta optimization</span>
+                <strong>Simulated AI Answer</strong>
+                <span>See which passage AI engines would extract from your page</span>
               </div>
             </div>
             <div class="aeo-scanner-feature-card">
@@ -53,8 +53,8 @@
                 <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M4 14l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
               <div>
-                <strong>Actionable Report</strong>
-                <span>8 scored dimensions with specific fixes and recommended reading</span>
+                <strong>PDF Report</strong>
+                <span>Download a branded report with scores, fixes, and priority actions</span>
               </div>
             </div>
           </div>
