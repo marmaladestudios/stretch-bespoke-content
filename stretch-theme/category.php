@@ -320,21 +320,89 @@ html, body { overflow-x: hidden; }
 }
 .hub-toc-list {
   list-style: none; padding: 0; margin: 0;
-  border-left: 2px solid #e8e8ec;
 }
-.hub-toc-item {
-  padding: 8px 0 8px 16px; text-align: left;
+.hub-toc-chapter { margin-bottom: 8px; }
+.hub-toc-chapter > a {
+  font-size: 13px; font-weight: 600; color: #252C3A;
+  text-decoration: none; display: block; padding: 6px 0 6px 16px;
   border-left: 2px solid transparent; margin-left: -2px;
+  transition: color 0.2s;
 }
-.hub-toc-item a {
-  font-size: 13px; color: #999; text-decoration: none;
+.hub-toc-chapter.active > a { color: #8560A8; border-left-color: #8560A8; }
+.hub-toc-sub { list-style: none; padding: 0; margin: 0 0 0 16px; }
+.hub-toc-sub .hub-toc-item { padding: 4px 0 4px 12px; border-left: 1px solid #e8e8ec; margin-left: 0; }
+.hub-toc-sub .hub-toc-item a {
+  font-size: 12px; color: #bbb; text-decoration: none;
   font-family: 'Poppins', sans-serif; display: block; line-height: 1.4;
   transition: color 0.2s;
 }
-.hub-toc-item.active { border-left-color: #8560A8; }
-.hub-toc-item.active a { color: #8560A8; font-weight: 500; }
-.hub-toc-item a:hover { color: #8560A8; }
+.hub-toc-sub .hub-toc-item.active a { color: #8560A8; font-weight: 500; }
+.hub-toc-sub .hub-toc-item.active { border-left-color: #8560A8; }
+.hub-toc-sub .hub-toc-item a:hover { color: #8560A8; }
 @media (max-width: 1280px) { .hub-toc { display: none; } }
+
+/* ========================================
+   ARTICLE CAROUSEL
+   ======================================== */
+.hub-carousel-section {
+  background: #fff;
+  padding: 0 0 40px;
+  overflow: hidden;
+}
+.hub-carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  margin: 0 -40px;
+  padding: 0 40px;
+}
+.hub-carousel-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 10px 0 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.hub-carousel-track::-webkit-scrollbar { display: none; }
+.hub-carousel-card {
+  min-width: 220px;
+  max-width: 220px;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+.hub-carousel-card:hover { transform: translateY(-4px); }
+.hub-carousel-img {
+  width: 220px;
+  height: 140px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #f0f0f4;
+}
+.hub-carousel-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.hub-carousel-card:hover .hub-carousel-img img { transform: scale(1.05); }
+.hub-carousel-fallback {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #8560A8, #5674B9);
+}
+.hub-carousel-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #252C3A;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hub-carousel-card:hover .hub-carousel-title { color: #8560A8; }
 
 /* ========================================
    3. PILLAR CONTENT
@@ -361,7 +429,7 @@ html, body { overflow-x: hidden; }
   margin-bottom: 64px;
   scroll-margin-top: 100px;
 }
-.hub-content-section h2 {
+.hub-content-section h3 {
   font-family: 'Poppins', sans-serif;
   font-size: 32px; font-weight: 600; line-height: 1.25;
   color: #252C3A; margin: 0 0 24px;
@@ -684,7 +752,7 @@ html, body { overflow-x: hidden; }
   .hub-hero h1 { font-size: 36px; }
   .hub-pillar-content { padding: 60px 0 40px; }
   .hub-pillar-article { padding: 0 24px; }
-  .hub-content-section h2 { font-size: 26px; }
+  .hub-content-section h3 { font-size: 26px; }
   .hub-pullquote { margin: 32px -24px; padding: 32px 24px; }
   .hub-pullquote p { font-size: 18px; }
   .hub-chapter-title { font-size: 24px; }
@@ -700,7 +768,7 @@ html, body { overflow-x: hidden; }
   .hub-hero h1 { font-size: 28px; }
   .hub-hero-subtitle { font-size: 17px; }
   .hub-hero-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .hub-content-section h2 { font-size: 22px; }
+  .hub-content-section h3 { font-size: 22px; }
 }
 </style>
 
@@ -725,15 +793,58 @@ html, body { overflow-x: hidden; }
   </div>
 </section>
 
+<!-- Article Carousel -->
+<section class="hub-carousel-section">
+  <div class="hub-container">
+    <div class="hub-carousel-wrapper">
+      <div class="hub-carousel-track" id="hubCarouselTrack">
+        <?php
+        $carousel_posts = new WP_Query([
+            'post_type' => 'post',
+            'posts_per_page' => 10,
+            'cat' => $cat_id,
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC',
+        ]);
+        while ($carousel_posts->have_posts()) : $carousel_posts->the_post();
+        ?>
+        <a href="<?php the_permalink(); ?>" class="hub-carousel-card">
+          <div class="hub-carousel-img">
+            <?php if (has_post_thumbnail()) : the_post_thumbnail('blog-card'); else : ?>
+              <div class="hub-carousel-fallback"></div>
+            <?php endif; ?>
+          </div>
+          <div class="hub-carousel-title"><?php the_title(); ?></div>
+        </a>
+        <?php endwhile; wp_reset_postdata(); ?>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AEO Scanner Tool -->
+<?php if ($current_cat && $current_cat->slug === 'aeo') : ?>
+  <?php get_template_part('aeo-scanner'); ?>
+<?php endif; ?>
+
 <!-- ============================
      2. TABLE OF CONTENTS (fixed sidebar)
      ============================ -->
 <nav class="hub-toc" id="hubToc" aria-label="Table of contents">
   <div class="hub-toc-label">Contents</div>
   <ul class="hub-toc-list">
-    <?php foreach ($sections as $si => $sec) : ?>
-      <li class="hub-toc-item" data-section="hub-section-<?php echo $si; ?>">
-        <a href="#hub-section-<?php echo $si; ?>"><?php echo esc_html($sec['heading']); ?></a>
+    <?php foreach ($hub['chapters'] as $ci => $chapter) : ?>
+      <li class="hub-toc-chapter" data-section="hub-chapter-<?php echo $ci; ?>">
+        <a href="#hub-chapter-<?php echo $ci; ?>"><?php echo esc_html($chapter['title']); ?></a>
+        <ul class="hub-toc-sub">
+          <?php foreach ($chapter['sections'] as $si) :
+            if (isset($sections[$si])) : ?>
+            <li class="hub-toc-item" data-section="hub-section-<?php echo $si; ?>">
+              <a href="#hub-section-<?php echo $si; ?>"><?php echo esc_html($sections[$si]['heading']); ?></a>
+            </li>
+          <?php endif; endforeach; ?>
+        </ul>
       </li>
     <?php endforeach; ?>
   </ul>
@@ -772,14 +883,14 @@ html, body { overflow-x: hidden; }
           echo '<div class="hub-pillar-article">';
           echo '<div class="hub-chapter-header hub-reveal">';
           echo '<span class="hub-chapter-label">Part ' . ($ci + 1) . '</span>';
-          echo '<div class="hub-chapter-title">' . esc_html($chapter['title']) . '</div>';
+          echo '<h2 class="hub-chapter-title" id="hub-chapter-' . $ci . '">' . esc_html($chapter['title']) . '</h2>';
           echo '</div>';
           break;
         }
       }
     ?>
       <div class="hub-content-section hub-reveal" id="hub-section-<?php echo $si; ?>">
-        <h2><?php echo esc_html($sec['heading']); ?></h2>
+        <h3><?php echo esc_html($sec['heading']); ?></h3>
         <div class="hub-section-body">
           <?php echo wp_kses_post($sec['content']); ?>
         </div>
@@ -852,8 +963,6 @@ html, body { overflow-x: hidden; }
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/></svg>
   </div>
 </section>
-
-<?php get_template_part('aeo-scanner'); ?>
 
 <!-- ============================
      4. ARTICLE LIBRARY
@@ -986,12 +1095,13 @@ if (!empty($other_cats)) :
   var toc = document.getElementById('hubToc');
   var contentSection = document.getElementById('hub-content');
   var tocItems = toc ? toc.querySelectorAll('.hub-toc-item') : [];
+  var tocChapters = toc ? toc.querySelectorAll('.hub-toc-chapter') : [];
   var sectionEls = document.querySelectorAll('.hub-content-section');
 
   if (toc && contentSection) {
     function updateTocVis() {
       var rect = contentSection.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.3 && rect.bottom > 200) {
+      if (rect.top < window.innerHeight * 0.3 && rect.bottom > 300) {
         toc.classList.add('visible');
       } else {
         toc.classList.remove('visible');
@@ -1000,13 +1110,22 @@ if (!empty($other_cats)) :
     window.addEventListener('scroll', function() { requestAnimationFrame(updateTocVis); }, { passive: true });
     updateTocVis();
 
-    /* Active section tracking */
+    /* Active section tracking — highlights section and parent chapter */
     var sectionObs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) {
           var id = e.target.id;
           tocItems.forEach(function(item) {
             item.classList.toggle('active', item.getAttribute('data-section') === id);
+          });
+          /* Highlight parent chapter */
+          tocChapters.forEach(function(ch) {
+            var childItems = ch.querySelectorAll('.hub-toc-item');
+            var anyActive = false;
+            childItems.forEach(function(ci) {
+              if (ci.getAttribute('data-section') === id) anyActive = true;
+            });
+            ch.classList.toggle('active', anyActive);
           });
         }
       });
