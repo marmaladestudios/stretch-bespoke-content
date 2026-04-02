@@ -60,11 +60,53 @@ html, body { overflow-x: hidden; }
   text-align: center;
   position: relative;
   min-height: 60vh;
+  overflow: hidden;
+}
+/* Hero grid overlay — populated by JS */
+.sp-header-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.sp-header-grid-inner {
+  position: absolute;
+  inset: -60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 60px);
+  grid-auto-rows: 60px;
+  transition: transform 0.4s ease-out;
+}
+.sp-grid-cell {
+  border: 1px solid rgba(255,255,255,0.025);
+}
+.sp-grid-cell.colored {
+  background: var(--cell-color);
+  animation: sp-cellPulse 4s ease-in-out infinite;
+  animation-delay: var(--cell-delay, 0s);
+}
+@keyframes sp-cellPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.sp-header-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 65% 60% at 50% 45%, rgba(37,44,58,0.98) 0%, rgba(37,44,58,0.85) 35%, rgba(37,44,58,0.4) 55%, transparent 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-grid-cell.colored { animation: none; }
   display: flex;
   align-items: center;
 }
 .sp-header-inner {
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 /* Breadcrumbs */
 .sp-breadcrumbs {
@@ -139,6 +181,16 @@ html, body { overflow-x: hidden; }
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  position: relative;
+}
+.sp-featured-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(133,96,168,0.2) 0%, transparent 40%, rgba(0,191,243,0.15) 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  border-radius: 16px;
 }
 .sp-featured-img img {
   width: 100%;
@@ -219,6 +271,7 @@ html, body { overflow-x: hidden; }
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   margin: 32px 0;
+  filter: saturate(0.9);
 }
 .sp-article ul, .sp-article ol {
   margin: 0 0 24px;
@@ -309,24 +362,79 @@ html, body { overflow-x: hidden; }
 .sp-article .wp-block-pullquote p::after,
 .sp-article .pullquote p::after { content: '\201D'; color: #8560A8; }
 
-/* Figure & figcaption */
+/* Figure & figcaption — scroll-activated gradient border */
+@property --sp-border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --sp-border-progress {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
 .sp-article figure {
-  margin: 36px 0;
-  padding: 0;
+  margin: 48px -40px 72px;
+  padding: 4px;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #e8e8ec;
+  transition: background 0.6s ease;
+}
+.sp-article figure.border-active {
+  background: conic-gradient(
+    from var(--sp-border-angle),
+    #8560A8 0%,
+    #5674B9 calc(var(--sp-border-progress) * 0.25),
+    #448CCB calc(var(--sp-border-progress) * 0.5),
+    #00BFF3 var(--sp-border-progress),
+    #e8e8ec var(--sp-border-progress),
+    #e8e8ec 100%
+  );
+  animation: sp-borderSpin 40s linear infinite;
+}
+.sp-article figure.border-complete {
+  background: conic-gradient(
+    from var(--sp-border-angle),
+    #8560A8, #5674B9, #448CCB, #00BFF3, #8560A8
+  );
+  animation: sp-borderSpin 40s linear infinite;
+}
+@keyframes sp-borderSpin {
+  to { --sp-border-angle: 360deg; }
+}
+/* Glow — uses box-shadow instead of pseudo to work with overflow:hidden */
+.sp-article figure.border-complete {
+  box-shadow: 0 0 24px rgba(133,96,168,0.2), 0 0 48px rgba(0,191,243,0.1);
 }
 .sp-article figure img {
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-radius: 14px;
   margin: 0;
   width: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+.sp-article figure:hover img {
+  transform: scale(1.01);
 }
 .sp-article figcaption {
-  font-family: 'Assistant', sans-serif;
-  font-size: 14px;
-  color: #888;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8560A8;
   text-align: center;
-  margin-top: 12px;
+  margin: 0;
+  padding: 16px 0 0;
+  position: absolute;
+  bottom: -36px;
+  left: 0;
+  right: 0;
+  z-index: 2;
   line-height: 1.5;
+  letter-spacing: 0.3px;
   font-style: italic;
 }
 
@@ -413,15 +521,17 @@ html, body { overflow-x: hidden; }
 .sp-toc-sidebar {
   position: fixed;
   left: max(20px, calc((100vw - 780px) / 2 - 260px));
-  top: 50%;
-  transform: translateY(-50%);
+  top: 160px;
   width: 200px;
-  max-height: 60vh;
+  max-height: calc(100vh - 140px);
   overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
   z-index: 50;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+.sp-toc-sidebar::-webkit-scrollbar { display: none; }
 .sp-toc-sidebar.visible { opacity: 1; }
 .sp-toc-label {
   font-family: 'Poppins', sans-serif;
@@ -812,6 +922,7 @@ html, body { overflow-x: hidden; }
   .sp-article { padding: 0 24px; font-size: 17px; }
   .sp-article.has-featured { padding-top: 40px; }
   .sp-article h2 { font-size: 24px; }
+  .sp-article figure { margin-left: 0; margin-right: 0; }
   .sp-article h3 { font-size: 20px; }
   .sp-article blockquote { padding: 20px 24px; font-size: 16px; }
   .sp-article .pullquote, .sp-article .wp-block-pullquote { margin-left: 0; margin-right: 0; padding: 28px 16px; }
@@ -848,28 +959,33 @@ html, body { overflow-x: hidden; }
 }
 .sp-hub-acc-trigger {
   width: 100%;
-  background: none;
-  border: none;
   padding: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
   font-weight: 600;
-  color: #8560A8;
-  text-align: left;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+.sp-hub-acc-link {
+  color: #8560A8;
+  text-decoration: none;
   transition: color 0.2s;
+  flex: 1;
 }
-.sp-hub-acc-trigger:hover { color: #00BFF3; }
+.sp-hub-acc-link:hover { color: #00BFF3; }
 .sp-hub-acc-trigger .sp-hub-arrow {
-  font-size: 10px;
-  transition: transform 0.3s;
+  font-size: 14px;
+  font-weight: 300;
+  color: #bbb;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: transform 0.3s, color 0.2s;
 }
-.sp-hub-acc-trigger.open .sp-hub-arrow { transform: rotate(90deg); }
+.sp-hub-acc-trigger .sp-hub-arrow:hover { color: #8560A8; }
+.sp-hub-acc-trigger.open .sp-hub-arrow { transform: rotate(45deg); color: #8560A8; }
 .sp-hub-acc-panel {
   max-height: 0;
   overflow: hidden;
@@ -926,7 +1042,17 @@ html, body { overflow-x: hidden; }
   border-radius: 8px;
   margin-bottom: 16px;
   background: #f9f9fb;
+  position: relative;
 }
+.sp-hub-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(133,96,168,0.1) 0%, transparent 60%, rgba(0,191,243,0.06) 100%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.sp-hub-card:hover .sp-hub-card-img::after { opacity: 0; }
 .sp-hub-card-img img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.4s ease;
@@ -955,10 +1081,292 @@ html, body { overflow-x: hidden; }
 
 @media (max-width: 960px) { .sp-hub-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .sp-hub-grid { grid-template-columns: 1fr; } }
+
+/* ========================================
+   ENGAGEMENT: Reading Time Pill
+   ======================================== */
+.sp-read-time-pill {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: rgba(37,44,58,0.9);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  z-index: 90;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.sp-read-time-pill.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sp-read-time-pill .pill-icon {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #00BFF3;
+  margin-right: 8px;
+  animation: sp-pillPulse 2s ease infinite;
+}
+@keyframes sp-pillPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ========================================
+   ENGAGEMENT: Inline Content Upgrade CTA
+   ======================================== */
+.sp-content-upgrade {
+  margin: 48px -20px;
+  padding: 36px 40px;
+  background: linear-gradient(135deg, #252C3A 0%, #1a1f2e 100%);
+  border-radius: 16px;
+  border-left: 4px solid;
+  border-image: linear-gradient(180deg, #8560A8, #00BFF3) 1;
+  position: relative;
+  overflow: hidden;
+}
+.sp-content-upgrade::after {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(0,191,243,0.08), transparent 70%);
+  pointer-events: none;
+}
+.sp-content-upgrade-overline {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: #00BFF3; margin-bottom: 12px;
+}
+.sp-content-upgrade h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px; font-weight: 600;
+  color: #fff; margin-bottom: 12px; line-height: 1.3;
+}
+.sp-content-upgrade p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; color: rgba(255,255,255,0.7);
+  line-height: 1.6; margin-bottom: 20px;
+}
+.sp-content-upgrade-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #8560A8, #00BFF3);
+  color: #fff; font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 500;
+  padding: 12px 28px; border-radius: 6px;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.sp-content-upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(133,96,168,0.3);
+}
+
+/* ========================================
+   ENGAGEMENT: Text Highlight Share
+   ======================================== */
+.sp-text-share {
+  position: absolute;
+  background: #252C3A;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.sp-text-share.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.sp-text-share::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 12px; height: 12px;
+  background: #252C3A;
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(45deg);
+}
+.sp-text-share a {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.sp-text-share a:hover { background: #8560A8; }
+.sp-text-share a svg { width: 14px; height: 14px; fill: currentColor; }
+
+/* ========================================
+   ENGAGEMENT: Sticky CTA Bar
+   ======================================== */
+.sp-sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(37,44,58,0.95);
+  backdrop-filter: blur(12px);
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 80;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.sp-sticky-cta.visible { transform: translateY(0); }
+.sp-sticky-cta-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px; font-weight: 400; color: #fff;
+}
+.sp-sticky-cta-text strong { color: #00BFF3; font-weight: 500; }
+.sp-sticky-cta-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #8560A8, #00BFF3);
+  color: #fff; font-family: 'Poppins', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 10px 24px; border-radius: 6px;
+  text-decoration: none; white-space: nowrap;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.sp-sticky-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(133,96,168,0.3);
+}
+.sp-sticky-cta-close {
+  background: none; border: none; color: rgba(255,255,255,0.5);
+  font-size: 18px; cursor: pointer; padding: 4px 8px; margin-left: 16px;
+  transition: color 0.2s;
+}
+.sp-sticky-cta-close:hover { color: #fff; }
+@media (max-width: 768px) {
+  .sp-sticky-cta { padding: 12px 20px; flex-wrap: wrap; gap: 8px; }
+  .sp-sticky-cta-text { font-size: 13px; flex: 1; }
+}
+
+/* ========================================
+   ENGAGEMENT: Key Takeaway Boxes
+   ======================================== */
+.sp-key-takeaway {
+  margin: 32px 0;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, rgba(133,96,168,0.06), rgba(0,191,243,0.04));
+  border-left: 3px solid #8560A8;
+  border-radius: 0 12px 12px 0;
+}
+.sp-key-takeaway-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #8560A8; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sp-key-takeaway-label::before {
+  content: '\1F4A1'; font-size: 14px;
+}
+.sp-key-takeaway p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: #252C3A; line-height: 1.55;
+  margin: 0;
+}
+
+/* ========================================
+   ENGAGEMENT: Next Article Teaser
+   ======================================== */
+.sp-next-article {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.08);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 85;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.sp-next-article.visible { transform: translateY(0); }
+.sp-next-article-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: #8560A8;
+}
+.sp-next-article-img {
+  width: 80px; height: 56px;
+  border-radius: 8px;
+  overflow: hidden; flex-shrink: 0;
+}
+.sp-next-article-img img { width: 100%; height: 100%; object-fit: cover; }
+.sp-next-article-text { flex: 1; }
+.sp-next-article-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: #252C3A; line-height: 1.3;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sp-next-article-title:hover { color: #8560A8; }
+.sp-next-article-close {
+  background: none; border: none;
+  color: #bbb; font-size: 20px;
+  cursor: pointer; padding: 4px 8px;
+}
+@media (max-width: 768px) {
+  .sp-next-article { padding: 16px 20px; }
+  .sp-next-article-img { width: 60px; height: 42px; }
+  .sp-next-article-title { font-size: 13px; }
+}
+
+/* ========================================
+   ENGAGEMENT: Reduced Motion
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .sp-read-time-pill,
+  .sp-sticky-cta,
+  .sp-next-article,
+  .sp-text-share,
+  .sp-content-upgrade-btn { transition: none; }
+  .sp-read-time-pill .pill-icon { animation: none; }
+}
 </style>
 
 <!-- Reading Progress Bar -->
 <div class="sp-progress-bar" id="readingProgress"></div>
+
+<!-- Reading Time Pill -->
+<div class="sp-read-time-pill" id="readTimePill"><span class="pill-icon"></span><span id="readTimePillText"><?php echo $read_time; ?> min left</span></div>
+
+<!-- Text Highlight Share Tooltip -->
+<div class="sp-text-share" id="textShare">
+  <a id="textShareTwitter" href="#" target="_blank" rel="noopener noreferrer" title="Share on X">
+    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+  </a>
+  <a id="textShareLinkedIn" href="#" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn">
+    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+  </a>
+</div>
 
 <!-- Table of Contents Sidebar (populated via JS) -->
 <nav class="sp-toc-sidebar" id="tocSidebar" aria-label="Table of contents">
@@ -967,6 +1375,7 @@ html, body { overflow-x: hidden; }
 
   <?php
   $current_post_id = get_the_ID();
+  $saved_cat = $cat;
   if ($cat) :
     $hub_posts = new WP_Query([
         'post_type'      => 'post',
@@ -979,14 +1388,14 @@ html, body { overflow-x: hidden; }
     $other_cats = get_categories(['hide_empty' => true, 'exclude' => [$cat->term_id]]);
   ?>
   <div class="sp-hub-sidebar" id="hubSidebar">
-    <div class="sp-toc-label">Hub Articles</div>
+    <div class="sp-toc-label">Learn</div>
 
     <!-- Current hub (expanded by default) -->
     <div class="sp-hub-acc">
-      <button class="sp-hub-acc-trigger open" onclick="this.classList.toggle('open');var p=this.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">
-        <?php echo esc_html($cat->name); ?>
-        <span class="sp-hub-arrow">&#9654;</span>
-      </button>
+      <div class="sp-hub-acc-trigger open">
+        <a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>" class="sp-hub-acc-link"><?php echo esc_html($cat->name); ?></a>
+        <span class="sp-hub-arrow" onclick="var t=this.parentElement;t.classList.toggle('open');var p=t.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">+</span>
+      </div>
       <div class="sp-hub-acc-panel" style="max-height:500px;">
         <ul class="sp-hub-acc-list">
           <?php while ($hub_posts->have_posts()) : $hub_posts->the_post(); ?>
@@ -1009,10 +1418,10 @@ html, body { overflow-x: hidden; }
       if ($ocat_posts->have_posts()) :
     ?>
     <div class="sp-hub-acc">
-      <button class="sp-hub-acc-trigger" onclick="this.classList.toggle('open');var p=this.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">
-        <?php echo esc_html($ocat->name); ?>
-        <span class="sp-hub-arrow">&#9654;</span>
-      </button>
+      <div class="sp-hub-acc-trigger">
+        <a href="<?php echo esc_url(get_category_link($ocat->term_id)); ?>" class="sp-hub-acc-link"><?php echo esc_html($ocat->name); ?></a>
+        <span class="sp-hub-arrow" onclick="var t=this.parentElement;t.classList.toggle('open');var p=t.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">+</span>
+      </div>
       <div class="sp-hub-acc-panel">
         <ul class="sp-hub-acc-list">
           <?php while ($ocat_posts->have_posts()) : $ocat_posts->the_post(); ?>
@@ -1029,7 +1438,8 @@ html, body { overflow-x: hidden; }
 <!-- ============================
      1. ARTICLE HEADER
      ============================ -->
-<section class="sp-section sp-header">
+<section class="sp-section sp-header" id="spHeader">
+  <div class="sp-header-grid"><div class="sp-header-grid-inner" id="spGridInner"></div></div>
   <div class="sp-container sp-header-inner">
     <div class="sp-reveal">
       <?php if ($cat) : ?>
@@ -1138,7 +1548,15 @@ html, body { overflow-x: hidden; }
         <?php else : ?>
           <p>Content creator and strategist at Stretch Creative, focused on helping brands tell their story effectively.</p>
         <?php endif; ?>
-        <a href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="sp-author-link">View all posts &rarr;</a>
+        <div style="display:flex;gap:16px;align-items:center;margin-top:8px;">
+          <a href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" class="sp-author-link">View all posts &rarr;</a>
+          <?php $linkedin = get_the_author_meta('linkedin'); if ($linkedin) : ?>
+            <a href="<?php echo esc_url($linkedin); ?>" target="_blank" rel="noopener" class="sp-author-link" style="display:inline-flex;align-items:center;gap:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          <?php endif; ?>
+        </div>
       </div>
     </div>
   </div>
@@ -1180,6 +1598,8 @@ html, body { overflow-x: hidden; }
      6. MORE FROM THIS HUB
      ============================ -->
 <?php
+wp_reset_postdata();
+$cat = $saved_cat; // Restore category after sub-queries
 $more_hub = new WP_Query([
     'post_type'      => 'post',
     'posts_per_page' => 4,
@@ -1303,6 +1723,89 @@ if ($related->have_posts()) :
 
 <script>
 (function() {
+  // Hero grid generation
+  var gridInner = document.getElementById('spGridInner');
+  if (gridInner) {
+    var cellSize = 60;
+    var cols = Math.ceil((window.innerWidth + 120) / cellSize);
+    var rows = Math.ceil((window.innerHeight * 0.6 + 120) / cellSize);
+    var total = cols * rows;
+    var coloredCount = Math.floor(total * 0.18);
+    var gradients = [
+      'rgba(133,96,168,0.18)', 'rgba(133,96,168,0.14)',
+      'rgba(86,116,185,0.16)', 'rgba(86,116,185,0.12)',
+      'rgba(0,191,243,0.14)', 'rgba(0,191,243,0.10)',
+      'rgba(68,140,203,0.14)', 'rgba(133,96,168,0.22)',
+      'rgba(0,191,243,0.18)'
+    ];
+    var coloredSet = new Set();
+    while (coloredSet.size < coloredCount) coloredSet.add(Math.floor(Math.random() * total));
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < total; i++) {
+      var cell = document.createElement('div');
+      cell.className = 'sp-grid-cell';
+      if (coloredSet.has(i)) {
+        cell.classList.add('colored');
+        cell.style.setProperty('--cell-color', gradients[Math.floor(Math.random() * gradients.length)]);
+        cell.style.setProperty('--cell-delay', (Math.random() * 4).toFixed(1) + 's');
+      }
+      frag.appendChild(cell);
+    }
+    gridInner.appendChild(frag);
+
+    // Mouse parallax on hero grid
+    var spHeader = document.getElementById('spHeader');
+    if (spHeader && !('ontouchstart' in window) && window.innerWidth > 768) {
+      spHeader.addEventListener('mousemove', function(e) {
+        var rect = spHeader.getBoundingClientRect();
+        var mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        var my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        gridInner.style.transform = 'translate(' + (mx * 15) + 'px, ' + (my * 15) + 'px)';
+      });
+      spHeader.addEventListener('mouseleave', function() {
+        gridInner.style.transform = 'translate(0, 0)';
+      });
+    }
+  }
+
+  // Figure gradient border fill on scroll
+  var figures = document.querySelectorAll('.sp-article figure');
+  if (figures.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    function updateFigureBorders() {
+      figures.forEach(function(fig) {
+        var rect = fig.getBoundingClientRect();
+        var viewH = window.innerHeight;
+
+        // Start filling when figure enters bottom 80% of viewport
+        // Complete when figure center reaches viewport center
+        var figCenter = rect.top + rect.height / 2;
+        var startPoint = viewH * 0.85;
+        var endPoint = viewH * 0.4;
+
+        if (rect.top < startPoint && rect.bottom > 0) {
+          var progress = Math.min(1, Math.max(0, (startPoint - figCenter) / (startPoint - endPoint)));
+          var pct = Math.round(progress * 100);
+
+          if (pct >= 100) {
+            fig.classList.remove('border-active');
+            fig.classList.add('border-complete');
+          } else if (pct > 0) {
+            fig.classList.add('border-active');
+            fig.classList.remove('border-complete');
+            fig.style.setProperty('--sp-border-progress', pct + '%');
+          }
+        } else {
+          fig.classList.remove('border-active', 'border-complete');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', function() {
+      requestAnimationFrame(updateFigureBorders);
+    }, { passive: true });
+    updateFigureBorders();
+  }
+
   // Scroll reveals
   var revealEls = document.querySelectorAll('.sp-reveal');
   var observer = new IntersectionObserver(function(entries) {
@@ -1416,7 +1919,201 @@ if ($related->have_posts()) :
       tocSidebar.style.display = 'none';
     }
   }
+
+  // ========================================
+  // ENGAGEMENT FEATURES
+  // ========================================
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- 1. Reading Time Pill ---
+  var readTimePill = document.getElementById('readTimePill');
+  var readTimePillText = document.getElementById('readTimePillText');
+  var totalReadTime = <?php echo $read_time; ?>;
+  var stickyCtaEl = document.getElementById('stickyCta');
+  var nextArticleEl = document.getElementById('nextArticle');
+  var stickyCtaClosed = false;
+  var nextArticleClosed = false;
+
+  // Listen for close button clicks
+  if (stickyCtaEl) {
+    stickyCtaEl.querySelector('.sp-sticky-cta-close').addEventListener('click', function() {
+      stickyCtaClosed = true;
+    });
+  }
+  if (nextArticleEl) {
+    nextArticleEl.querySelector('.sp-next-article-close').addEventListener('click', function() {
+      nextArticleClosed = true;
+    });
+  }
+
+  if (readTimePill && article && contentSection && !reducedMotion) {
+    window.addEventListener('scroll', function() {
+      requestAnimationFrame(function() {
+        var rect = contentSection.getBoundingClientRect();
+        var sectionTop = rect.top + window.scrollY;
+        var sectionHeight = contentSection.offsetHeight;
+        var scrolled = window.scrollY - sectionTop;
+        var progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
+        var minutesLeft = Math.max(0, Math.ceil(totalReadTime * (1 - progress)));
+
+        // Check if article is in view
+        var articleRect = article.getBoundingClientRect();
+        var articleInView = articleRect.top < window.innerHeight && articleRect.bottom > 0;
+
+        // Check if sticky CTA or next article is showing
+        var bottomBarVisible = (stickyCtaEl && stickyCtaEl.classList.contains('visible')) ||
+                               (nextArticleEl && nextArticleEl.classList.contains('visible'));
+
+        if (articleInView && !bottomBarVisible && minutesLeft > 0) {
+          readTimePillText.textContent = minutesLeft + ' min left';
+          readTimePill.classList.add('visible');
+        } else {
+          readTimePill.classList.remove('visible');
+        }
+      });
+    }, { passive: true });
+  }
+
+  // --- 2. Inline Content Upgrade CTA ---
+  if (article) {
+    var articleH2s = article.querySelectorAll('h2');
+    if (articleH2s.length >= 3) {
+      var upgradeBox = document.createElement('div');
+      upgradeBox.className = 'sp-content-upgrade sp-reveal';
+      upgradeBox.innerHTML = '<div class="sp-content-upgrade-overline">Free Consultation</div>'
+          + '<h3>Want us to build a content strategy for your brand?</h3>'
+          + '<p>Our team of 200+ creatives can help you dominate organic search and get cited by AI answer engines. Let\'s talk about your goals.</p>'
+          + '<a href="/contact-stretch-creative/" class="sp-content-upgrade-btn">Book a Free Consult \u2192</a>';
+      articleH2s[2].parentNode.insertBefore(upgradeBox, articleH2s[2]);
+      // Observe for reveal animation
+      observer.observe(upgradeBox);
+    }
+  }
+
+  // --- 3. Text Highlight Share ---
+  var textShareEl = document.getElementById('textShare');
+  var textShareTwitter = document.getElementById('textShareTwitter');
+  var textShareLinkedIn = document.getElementById('textShareLinkedIn');
+  if (textShareEl && article && !reducedMotion) {
+    article.addEventListener('mouseup', function(e) {
+      var selection = window.getSelection();
+      var selectedText = selection.toString().trim();
+      if (selectedText.length > 5) {
+        var range = selection.getRangeAt(0);
+        var rect = range.getBoundingClientRect();
+        var pageUrl = encodeURIComponent(window.location.href);
+        var encodedText = encodeURIComponent(selectedText.substring(0, 280));
+
+        textShareTwitter.href = 'https://twitter.com/intent/tweet?text=' + encodedText + '&url=' + pageUrl;
+        textShareLinkedIn.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + pageUrl;
+
+        textShareEl.style.top = (rect.top + window.scrollY - 56) + 'px';
+        textShareEl.style.left = (rect.left + rect.width / 2 - 44) + 'px';
+        textShareEl.classList.add('visible');
+      } else {
+        textShareEl.classList.remove('visible');
+      }
+    });
+
+    document.addEventListener('mousedown', function(e) {
+      if (!textShareEl.contains(e.target)) {
+        textShareEl.classList.remove('visible');
+      }
+    });
+  }
+
+  // --- 4. Sticky CTA Bar & 6. Next Article Teaser ---
+  if (contentSection && !reducedMotion) {
+    window.addEventListener('scroll', function() {
+      requestAnimationFrame(function() {
+        var rect = contentSection.getBoundingClientRect();
+        var sectionTop = rect.top + window.scrollY;
+        var sectionHeight = contentSection.offsetHeight;
+        var scrolled = window.scrollY - sectionTop;
+        var progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - window.innerHeight)));
+
+        // Next article: show at 90%+, hide below 80%
+        if (nextArticleEl && !nextArticleClosed) {
+          if (progress >= 0.9) {
+            nextArticleEl.classList.add('visible');
+            // Hide sticky CTA when next article shows
+            if (stickyCtaEl) stickyCtaEl.classList.remove('visible');
+          } else if (progress < 0.8) {
+            nextArticleEl.classList.remove('visible');
+          }
+        }
+
+        // Sticky CTA: show 60%-90%, hide below 40% or above 90%
+        if (stickyCtaEl && !stickyCtaClosed) {
+          var nextArticleShowing = nextArticleEl && nextArticleEl.classList.contains('visible');
+          if (progress >= 0.6 && progress < 0.9 && !nextArticleShowing) {
+            stickyCtaEl.classList.add('visible');
+          } else if (progress < 0.4 || progress >= 0.9) {
+            stickyCtaEl.classList.remove('visible');
+          }
+        }
+      });
+    }, { passive: true });
+  }
+
+  // --- 5. Key Takeaway Boxes ---
+  if (article) {
+    var h2sForTakeaway = article.querySelectorAll('h2');
+    var takeaways = [
+      { index: 0, text: 'AEO is the practice of structuring content so AI-powered engines cite your brand \u2014 it\u2019s becoming as essential as traditional SEO.' },
+      { index: 3, text: 'Structure your content with clear headings, lead with answers, and build topical authority through content clusters.' }
+    ];
+    takeaways.forEach(function(tk) {
+      if (h2sForTakeaway.length > tk.index) {
+        var h2El = h2sForTakeaway[tk.index];
+        // Find the first paragraph sibling after this h2
+        var nextEl = h2El.nextElementSibling;
+        while (nextEl && nextEl.tagName !== 'P') {
+          nextEl = nextEl.nextElementSibling;
+        }
+        if (nextEl) {
+          var takeawayBox = document.createElement('div');
+          takeawayBox.className = 'sp-key-takeaway sp-reveal';
+          takeawayBox.innerHTML = '<div class="sp-key-takeaway-label">Key Takeaway</div>'
+              + '<p>' + tk.text + '</p>';
+          nextEl.parentNode.insertBefore(takeawayBox, nextEl.nextSibling);
+          observer.observe(takeawayBox);
+        }
+      }
+    });
+  }
 })();
 </script>
+
+<!-- Sticky CTA Bar -->
+<div class="sp-sticky-cta" id="stickyCta">
+  <span class="sp-sticky-cta-text">Need help with <strong>content strategy</strong>?</span>
+  <a href="/contact-stretch-creative/" class="sp-sticky-cta-btn">Talk to Our Team &rarr;</a>
+  <button class="sp-sticky-cta-close" onclick="this.parentElement.style.display='none'" aria-label="Close">&times;</button>
+</div>
+
+<!-- Next Article Teaser -->
+<?php
+$next_post = get_adjacent_post(true, '', false, 'category');
+if (!$next_post) {
+    $next_post = get_adjacent_post(true, '', true, 'category');
+}
+if ($next_post) :
+?>
+<div class="sp-next-article" id="nextArticle">
+  <div>
+    <div class="sp-next-article-label">Next Article</div>
+  </div>
+  <?php if (has_post_thumbnail($next_post->ID)) : ?>
+  <div class="sp-next-article-img">
+    <?php echo get_the_post_thumbnail($next_post->ID, 'thumbnail'); ?>
+  </div>
+  <?php endif; ?>
+  <div class="sp-next-article-text">
+    <a href="<?php echo get_permalink($next_post->ID); ?>" class="sp-next-article-title"><?php echo esc_html($next_post->post_title); ?></a>
+  </div>
+  <button class="sp-next-article-close" onclick="this.parentElement.style.display='none'" aria-label="Close">&times;</button>
+</div>
+<?php endif; ?>
 
 <?php get_footer(); ?>
