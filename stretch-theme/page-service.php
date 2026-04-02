@@ -220,48 +220,47 @@ html, body { overflow-x: hidden; }
     radial-gradient(ellipse at 50% 80%, rgba(86,116,185,0.05) 0%, transparent 50%);
 }
 
-/* Floating shapes with parallax */
-.svc-hero-shapes {
+/* Grid pattern overlay — built dynamically with JS for colored squares */
+.svc-hero-grid {
   position: absolute; inset: 0;
   pointer-events: none; z-index: 1;
+  overflow: hidden;
 }
-.svc-shape {
-  position: absolute; border-radius: 50%; opacity: 0.12;
-  will-change: transform;
-  transition: transform 0.3s ease-out;
+.svc-grid-container {
+  position: absolute; inset: -60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 60px);
+  grid-auto-rows: 60px;
+  transition: transform 0.4s ease-out;
 }
-.svc-shape-1 {
-  width: 300px; height: 300px; top: 10%; left: 5%;
-  background: radial-gradient(circle, #8560A8, transparent);
-  transform: translate(calc(var(--mx, 0) * 20px), calc(var(--my, 0) * 20px));
+.svc-grid-cell {
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: background 0.6s ease, border-color 0.6s ease;
 }
-.svc-shape-2 {
-  width: 200px; height: 200px; top: 55%; left: 65%;
-  background: radial-gradient(circle, #5674B9, transparent);
-  transform: translate(calc(var(--mx, 0) * -15px), calc(var(--my, 0) * -15px));
+.svc-grid-cell.colored {
+  background: var(--cell-color);
+  border-color: rgba(255,255,255,0.06);
+  animation: svc-cellPulse 4s ease-in-out infinite;
+  animation-delay: var(--cell-delay, 0s);
 }
-.svc-shape-3 {
-  width: 150px; height: 150px; top: 20%; right: 10%;
-  background: radial-gradient(circle, #00BFF3, transparent);
-  transform: translate(calc(var(--mx, 0) * 25px), calc(var(--my, 0) * 12px));
+@keyframes svc-cellPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
-.svc-shape-4 {
-  width: 100px; height: 100px; bottom: 15%; left: 30%;
-  background: radial-gradient(circle, #448CCB, transparent);
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  transform: translate(calc(var(--mx, 0) * -10px), calc(var(--my, 0) * 18px));
+.svc-hero:hover .svc-grid-container {
+  transform: translate(calc(var(--gmx, 0) * 15px), calc(var(--gmy, 0) * 15px));
 }
-.svc-shape-5 {
-  width: 80px; height: 80px; top: 40%; left: 45%;
-  background: radial-gradient(circle, #8560A8, transparent);
-  opacity: 0.08;
-  transform: translate(calc(var(--mx, 0) * 30px), calc(var(--my, 0) * -20px));
+/* Radial mask — clear center for text, colored cells visible at edges */
+.svc-hero-grid::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 55% 50% at 50% 50%, rgba(37,44,58,0.95) 0%, rgba(37,44,58,0.7) 30%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
 }
-.svc-shape-6 {
-  width: 250px; height: 250px; bottom: 5%; right: 5%;
-  background: radial-gradient(circle, #5674B9, transparent);
-  opacity: 0.06;
-  transform: translate(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * 8px));
+@media (prefers-reduced-motion: reduce) {
+  .svc-grid-cell.colored { animation: none; }
+  .svc-hero:hover .svc-grid-container { transform: none; }
 }
 
 .svc-hero-content {
@@ -949,14 +948,7 @@ html, body { overflow-x: hidden; }
      ======================================== -->
 <section class="svc-section svc-hero" aria-label="Hero" id="svcHero">
   <div class="svc-hero-mesh"></div>
-  <div class="svc-hero-shapes" id="svcHeroShapes">
-    <div class="svc-shape svc-shape-1"></div>
-    <div class="svc-shape svc-shape-2"></div>
-    <div class="svc-shape svc-shape-3"></div>
-    <div class="svc-shape svc-shape-4"></div>
-    <div class="svc-shape svc-shape-5"></div>
-    <div class="svc-shape svc-shape-6"></div>
-  </div>
+  <div class="svc-hero-grid" id="svcHeroGrid"><div class="svc-grid-container" id="svcGridContainer"></div></div>
 
   <div class="svc-container">
     <div class="svc-hero-content">
@@ -1266,15 +1258,59 @@ html, body { overflow-x: hidden; }
     });
   });
 
-  /* ---------- PARALLAX ON HERO SHAPES ---------- */
-  if (!isTouchDevice && !reducedMotion && window.innerWidth > 768) {
-    var heroShapes = document.getElementById('svcHeroShapes');
-    if (heroShapes) {
-      document.addEventListener('mousemove', function(e) {
-        var mx = (e.clientX / window.innerWidth - 0.5) * 2;
-        var my = (e.clientY / window.innerHeight - 0.5) * 2;
-        heroShapes.style.setProperty('--mx', mx);
-        heroShapes.style.setProperty('--my', my);
+  /* ---------- HERO GRID GENERATION ---------- */
+  var gridContainer = document.getElementById('svcGridContainer');
+  var heroSection = document.getElementById('svcHero');
+  if (gridContainer && heroSection) {
+    var cellSize = 60;
+    var cols = Math.ceil((window.innerWidth + 120) / cellSize);
+    var rows = Math.ceil((window.innerHeight + 120) / cellSize);
+    var totalCells = cols * rows;
+    var coloredCount = Math.floor(totalCells * 0.18);
+
+    var gradients = [
+      'rgba(133,96,168,0.18)',
+      'rgba(133,96,168,0.14)',
+      'rgba(86,116,185,0.16)',
+      'rgba(86,116,185,0.12)',
+      'rgba(0,191,243,0.14)',
+      'rgba(0,191,243,0.10)',
+      'rgba(68,140,203,0.14)',
+      'rgba(133,96,168,0.22)',
+      'rgba(0,191,243,0.18)',
+    ];
+
+    // Pick random indices for colored cells
+    var coloredIndices = new Set();
+    while (coloredIndices.size < coloredCount) {
+      coloredIndices.add(Math.floor(Math.random() * totalCells));
+    }
+
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < totalCells; i++) {
+      var cell = document.createElement('div');
+      cell.className = 'svc-grid-cell';
+      if (coloredIndices.has(i)) {
+        cell.classList.add('colored');
+        cell.style.setProperty('--cell-color', gradients[Math.floor(Math.random() * gradients.length)]);
+        cell.style.setProperty('--cell-delay', (Math.random() * 4).toFixed(1) + 's');
+      }
+      fragment.appendChild(cell);
+    }
+    gridContainer.appendChild(fragment);
+
+    // Mouse tracking for grid parallax
+    if (!isTouchDevice && !reducedMotion && window.innerWidth > 768) {
+      heroSection.addEventListener('mousemove', function(e) {
+        var rect = heroSection.getBoundingClientRect();
+        var mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        var my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        gridContainer.style.setProperty('--gmx', mx.toFixed(3));
+        gridContainer.style.setProperty('--gmy', my.toFixed(3));
+        gridContainer.style.transform = 'translate(' + (mx * 15) + 'px, ' + (my * 15) + 'px)';
+      });
+      heroSection.addEventListener('mouseleave', function() {
+        gridContainer.style.transform = 'translate(0, 0)';
       });
     }
   }

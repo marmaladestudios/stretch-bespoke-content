@@ -167,17 +167,24 @@ html, body { overflow-x: hidden; }
   box-shadow: 0 20px 60px rgba(37,44,58,0.12);
 }
 .team-avatar {
-  width: 80px; height: 80px;
+  width: 140px; height: 140px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
-  font-size: 22px; font-weight: 600;
+  font-size: 28px; font-weight: 600;
   color: #fff;
   margin: 0 auto 20px;
   position: relative;
   z-index: 1;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 20px rgba(133,96,168,0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.team-card:hover .team-avatar {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(133,96,168,0.25);
 }
 .team-card h3 {
   font-family: 'Poppins', sans-serif;
@@ -385,34 +392,33 @@ html, body { overflow-x: hidden; }
 
     <div class="team-grid">
       <?php
-      $team_members = array(
-        array('name' => 'Chris Reid', 'role' => 'CEO', 'initials' => 'CR', 'color' => '#8560A8', 'bio' => 'Founder and visionary behind Stretch Creative. Chris built the company on a belief that content creation should be fair, collaborative, and exceptional.'),
-        array('name' => 'Kelsi Carrell', 'role' => 'Head of Operations', 'initials' => 'KC', 'color' => '#5674B9', 'bio' => 'Kelsi keeps the engine running smoothly, coordinating teams, timelines, and deliverables with precision and care.'),
-        array('name' => 'Jesse Galvon Reid', 'role' => 'CPO', 'initials' => 'JR', 'color' => '#448CCB', 'bio' => 'Jesse leads product development and innovation, ensuring Stretch stays ahead of the curve in content solutions.'),
-        array('name' => 'Kristen Bailey', 'role' => 'Editor-In-Chief', 'initials' => 'KB', 'color' => '#00BFF3', 'bio' => 'Kristen sets the editorial standard across all content, ensuring quality, consistency, and brand voice alignment.'),
-        array('name' => 'Josh Wong', 'role' => 'Director of Video Content', 'initials' => 'JW', 'color' => '#8560A8', 'bio' => 'Josh brings stories to life through video, leading our growing visual content capabilities with creativity and technical skill.'),
-        array('name' => 'Jeanine Gordon', 'role' => 'Managing Editor', 'initials' => 'JG', 'color' => '#5674B9', 'bio' => 'Jeanine manages editorial workflows and writer relationships, keeping content on track and on brand.'),
-        array('name' => 'Fiona Ferguson', 'role' => 'Community & Recruitment', 'initials' => 'FF', 'color' => '#448CCB', 'bio' => 'Fiona nurtures our creative community and finds the best new talent to join the Stretch family.'),
-        array('name' => 'Kristyn Pacione', 'role' => 'Client Services', 'initials' => 'KP', 'color' => '#00BFF3', 'bio' => 'Kristyn is the bridge between our clients and our creative teams, ensuring every partnership thrives.'),
-        array('name' => 'MacKenzie Sanford', 'role' => 'Editor + Resource Coordinator', 'initials' => 'MS', 'color' => '#8560A8', 'bio' => 'MacKenzie wears two hats with ease, editing content while coordinating the resources that make delivery seamless.'),
-        array('name' => 'Jessica DeWolf', 'role' => 'Lead Editor', 'initials' => 'JD', 'color' => '#5674B9', 'bio' => 'Jessica brings sharp editorial instincts and attention to detail to every piece that passes through her hands.'),
-        array('name' => 'Leslie Jeffries', 'role' => 'Senior Copywriter', 'initials' => 'LJ', 'color' => '#448CCB', 'bio' => 'Leslie crafts compelling copy that connects with audiences and drives results across industries.'),
-        array('name' => 'Jodi Noblett', 'role' => 'Copywriter', 'initials' => 'JN', 'color' => '#00BFF3', 'bio' => 'Jodi brings creativity and curiosity to every brief, delivering content that engages and inspires.'),
-      );
+      $team_members = get_option('stretch_team_members', []);
+      if (empty($team_members)) {
+          // Fallback if option not set
+          $team_members = [
+              ['name' => 'Chris Reid', 'title' => 'CEO', 'photo_id' => 0, 'url' => ''],
+              ['name' => 'Kelsi Carrell', 'title' => 'Head of Operations', 'photo_id' => 0, 'url' => ''],
+          ];
+      }
 
+      $colors = ['#8560A8', '#5674B9', '#448CCB', '#00BFF3'];
       $delay = 1;
       foreach ($team_members as $i => $member) :
         $d = ($delay % 6) + 1;
+        $color = $colors[$i % count($colors)];
+        $initials = implode('', array_map(function($w) { return strtoupper(substr($w, 0, 1)); }, explode(' ', $member['name'])));
+        $has_photo = !empty($member['url']);
       ?>
       <div class="team-card v2-reveal v2-delay-<?php echo $d; ?>">
-        <div class="team-avatar" style="background: <?php echo $member['color']; ?>;">
-          <?php echo $member['initials']; ?>
-        </div>
-        <h3><?php echo $member['name']; ?></h3>
-        <span class="team-role"><?php echo $member['role']; ?></span>
-        <div class="team-card-overlay">
-          <p><?php echo $member['bio']; ?></p>
-        </div>
+        <?php if ($has_photo) : ?>
+          <div class="team-avatar" style="background: url('<?php echo esc_url($member['url']); ?>') center/cover; font-size: 0;"></div>
+        <?php else : ?>
+          <div class="team-avatar" style="background: <?php echo $color; ?>;">
+            <?php echo $initials; ?>
+          </div>
+        <?php endif; ?>
+        <h3><?php echo esc_html($member['name']); ?></h3>
+        <span class="team-role"><?php echo esc_html($member['title']); ?></span>
       </div>
       <?php
         $delay++;

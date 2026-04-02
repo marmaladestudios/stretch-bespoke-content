@@ -2298,7 +2298,7 @@ html, body { overflow-x: hidden; }
       <span class="v2-overline">01</span>
       <h3>Content Writing</h3>
       <p>From long-form editorial to product descriptions, our subject-matter experts craft compelling copy that sounds like your brand and ranks where it matters.</p>
-      <a href="/services/" class="v2-service-cta">Explore Content <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="/content-writing-at-any-scale/" class="v2-service-cta">Explore Content <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 
@@ -2310,7 +2310,7 @@ html, body { overflow-x: hidden; }
       <span class="v2-overline">02</span>
       <h3>SEO &amp; Content Strategy</h3>
       <p>Data-driven content strategies that identify high-intent topics, capture organic share, and turn search visibility into measurable business outcomes.</p>
-      <a href="/services/" class="v2-service-cta">Explore Strategy <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="/seo_content_strategy_services/" class="v2-service-cta">Explore Strategy <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 
@@ -2322,7 +2322,7 @@ html, body { overflow-x: hidden; }
       <span class="v2-overline">03</span>
       <h3>Graphic Design</h3>
       <p>Visual storytelling that elevates every touchpoint &mdash; from infographics and social assets to full brand systems that make an impression.</p>
-      <a href="/services/" class="v2-service-cta">Explore Design <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="/graphic_design_services/" class="v2-service-cta">Explore Design <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 
@@ -2334,7 +2334,7 @@ html, body { overflow-x: hidden; }
       <span class="v2-overline">04</span>
       <h3>Videography</h3>
       <p>End-to-end video production &mdash; concept through post. Brand films, product videos, and social-first content that stops the scroll.</p>
-      <a href="/services/" class="v2-service-cta">Explore Video <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="/video-content-services/" class="v2-service-cta">Explore Video <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
   <div class="v2-angle-divider">

@@ -41,7 +41,7 @@
           'menu_class'      => 'nav-links',
           'menu_id'         => 'primaryMenu',
           'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-          'depth'           => 1,
+          'depth'           => 2,
       ]);
       ?>
     <?php endif; ?>

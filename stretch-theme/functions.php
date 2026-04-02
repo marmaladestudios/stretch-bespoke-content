@@ -13,6 +13,60 @@ require_once get_template_directory() . '/inc/customizer.php';
 require_once get_template_directory() . '/inc/acf-fields.php';
 
 /**
+ * Fix blog/category/post permalink resolution.
+ * The permalink /blog/%category%/%postname%/ causes category rules to
+ * match post URLs. This adds higher-priority post rewrite rules.
+ */
+function stretch_fix_blog_rewrites() {
+    add_rewrite_rule(
+        'blog/([^/]+)/([^/]+)/?$',
+        'index.php?category_name=$matches[1]&name=$matches[2]',
+        'top'
+    );
+    add_rewrite_rule(
+        'blog/([^/]+)/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$',
+        'index.php?category_name=$matches[1]&name=$matches[2]&feed=$matches[3]',
+        'top'
+    );
+    add_rewrite_rule(
+        'blog/([^/]+)/([^/]+)/trackback/?$',
+        'index.php?category_name=$matches[1]&name=$matches[2]&tb=1',
+        'top'
+    );
+    add_rewrite_rule(
+        'blog/([^/]+)/([^/]+)/comment-page-([0-9]{1,})/?$',
+        'index.php?category_name=$matches[1]&name=$matches[2]&cpage=$matches[3]',
+        'top'
+    );
+}
+add_action('init', 'stretch_fix_blog_rewrites');
+
+/**
+ * Rewrite category URLs from /category/slug/ to /blog/slug/
+ */
+function stretch_category_link($link, $term_id) {
+    return str_replace('/category/', '/blog/', $link);
+}
+add_filter('category_link', 'stretch_category_link', 10, 2);
+
+/**
+ * Add rewrite rule for /blog/slug/ to serve category archives
+ */
+function stretch_blog_category_rewrites() {
+    add_rewrite_rule(
+        'blog/([^/]+)/?$',
+        'index.php?category_name=$matches[1]',
+        'bottom'
+    );
+    add_rewrite_rule(
+        'blog/([^/]+)/page/([0-9]+)/?$',
+        'index.php?category_name=$matches[1]&paged=$matches[2]',
+        'bottom'
+    );
+}
+add_action('init', 'stretch_blog_category_rewrites');
+
+/**
  * Enqueue styles and scripts.
  */
 function stretch_enqueue_assets() {

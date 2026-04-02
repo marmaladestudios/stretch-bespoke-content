@@ -376,7 +376,28 @@ html, body { overflow-x: hidden; }
 .sp-article .wp-block-pullquote p::after,
 .sp-article .pullquote p::after { content: '\201D'; color: #8560A8; }
 
-/* Figure & figcaption — scroll-activated gradient border */
+/* Figure & figcaption — clean treatment */
+.sp-article figure {
+  margin: 48px -40px;
+  padding: 0;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.sp-article figure img {
+  border-radius: 16px;
+  margin: 0;
+  width: 100%;
+  display: block;
+  box-shadow: 0 8px 32px rgba(37,44,58,0.12);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.sp-article figure:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(133,96,168,0.18);
+}
+
+/* Gradient border animation — for CTA cards only */
 @property --sp-border-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -387,16 +408,16 @@ html, body { overflow-x: hidden; }
   initial-value: 0%;
   inherits: false;
 }
-.sp-article figure {
-  margin: 48px -40px 72px;
-  padding: 4px;
-  position: relative;
-  border-radius: 18px;
-  overflow: hidden;
+@keyframes sp-borderSpin {
+  to { --sp-border-angle: 360deg; }
+}
+.sp-gradient-border {
+  padding: 3px;
   background: #e8e8ec;
+  border-radius: 20px;
   transition: background 0.6s ease;
 }
-.sp-article figure.border-active {
+.sp-gradient-border.border-active {
   background: conic-gradient(
     from var(--sp-border-angle),
     #8560A8 0%,
@@ -406,33 +427,15 @@ html, body { overflow-x: hidden; }
     #e8e8ec var(--sp-border-progress),
     #e8e8ec 100%
   );
-  animation: sp-borderSpin 40s linear infinite;
+  animation: sp-borderSpin 19s linear infinite;
 }
-.sp-article figure.border-complete {
+.sp-gradient-border.border-complete {
   background: conic-gradient(
     from var(--sp-border-angle),
     #8560A8, #5674B9, #448CCB, #00BFF3, #8560A8
   );
-  animation: sp-borderSpin 40s linear infinite;
-}
-@keyframes sp-borderSpin {
-  to { --sp-border-angle: 360deg; }
-}
-/* Glow — uses box-shadow instead of pseudo to work with overflow:hidden */
-.sp-article figure.border-complete {
+  animation: sp-borderSpin 19s linear infinite;
   box-shadow: 0 0 24px rgba(133,96,168,0.2), 0 0 48px rgba(0,191,243,0.1);
-}
-.sp-article figure img {
-  border-radius: 14px;
-  margin: 0;
-  width: 100%;
-  display: block;
-  position: relative;
-  z-index: 1;
-  transition: transform 0.4s ease;
-}
-.sp-article figure:hover img {
-  transform: scale(1.01);
 }
 .sp-article figcaption {
   font-family: 'Poppins', sans-serif;
@@ -528,6 +531,16 @@ html, body { overflow-x: hidden; }
 }
 .admin-bar .sp-progress-bar { top: 32px; }
 @media (max-width: 782px) { .admin-bar .sp-progress-bar { top: 46px; } }
+
+/* Nav logo alignment — match article content left edge on post pages */
+.site-nav .container {
+  max-width: 1200px;
+  padding-left: calc((100vw - 780px) / 2);
+  padding-right: 40px;
+}
+@media (max-width: 960px) {
+  .site-nav .container { padding-left: 24px; padding-right: 24px; }
+}
 
 /* ========================================
    TABLE OF CONTENTS SIDEBAR
@@ -1101,21 +1114,7 @@ html, body { overflow-x: hidden; }
    ENGAGEMENT: Reading Time Pill
    ======================================== */
 .sp-read-time-pill {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  background: rgba(37,44,58,0.9);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 20px;
-  z-index: 90;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s;
+  display: none !important;
   pointer-events: none;
 }
 .sp-read-time-pill.visible {
@@ -1137,15 +1136,15 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .sp-content-upgrade {
   margin: 48px -20px;
+}
+.sp-content-upgrade-inner {
   padding: 36px 40px;
   background: linear-gradient(135deg, #252C3A 0%, #1a1f2e 100%);
-  border-radius: 16px;
-  border-left: 4px solid;
-  border-image: linear-gradient(180deg, #8560A8, #00BFF3) 1;
+  border-radius: 17px;
   position: relative;
   overflow: hidden;
 }
-.sp-content-upgrade::after {
+.sp-content-upgrade-inner::after {
   content: '';
   position: absolute;
   top: -50px; right: -50px;
@@ -1411,21 +1410,22 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .sp-reading-position {
   position: fixed;
-  left: max(12px, calc((100vw - 780px) / 2 - 180px));
-  bottom: 80px;
+  right: 24px;
+  top: 80px;
   font-family: 'Poppins', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  color: #bbb;
+  color: #999;
   letter-spacing: 0.5px;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
   opacity: 0;
   transition: opacity 0.3s;
   z-index: 50;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
+.admin-bar .sp-reading-position { top: 112px; }
 .sp-reading-position.visible { opacity: 1; }
-@media (max-width: 1280px) { .sp-reading-position { display: none; } }
+@media (max-width: 960px) { .sp-reading-position { display: none; } }
 
 /* ========================================
    ENGAGEMENT: Interactive Comparison Table
@@ -1843,18 +1843,6 @@ html, body { overflow-x: hidden; }
       <?php endforeach; ?>
     </div>
 
-    <!-- Reaction Buttons -->
-    <div class="sp-reactions">
-      <div class="sp-reactions-label">Was this article helpful?</div>
-      <div class="sp-reactions-btns">
-        <button class="sp-reaction-btn" data-reaction="love" aria-label="Love it">&#129321;</button>
-        <button class="sp-reaction-btn" data-reaction="helpful" aria-label="Helpful">&#128077;</button>
-        <button class="sp-reaction-btn" data-reaction="interesting" aria-label="Interesting">&#129300;</button>
-        <button class="sp-reaction-btn" data-reaction="meh" aria-label="Not helpful">&#128528;</button>
-      </div>
-      <div class="sp-reaction-thanks" id="reactionThanks">Thanks for your feedback!</div>
-    </div>
-
     <!-- Inline horizontal share bar -->
     <div class="sp-share-inline">
       <span class="sp-share-inline-label">Share</span>
@@ -2105,14 +2093,12 @@ if ($related->have_posts()) :
     }
   }
 
-  // Figure + hero image gradient border fill on scroll
-  var featuredImg = document.querySelector('.sp-featured-img');
-  var figures = document.querySelectorAll('.sp-article figure');
-  var allBorderEls = Array.prototype.slice.call(figures);
-  if (featuredImg) allBorderEls.unshift(featuredImg);
-  if (allBorderEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Gradient border fill on scroll — for CTA cards and featured image
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     function updateFigureBorders() {
-      allBorderEls.forEach(function(fig) {
+      // Re-query each time to catch dynamically injected elements
+      var borderEls = document.querySelectorAll('.sp-gradient-border, .sp-featured-img');
+      borderEls.forEach(function(fig) {
         var rect = fig.getBoundingClientRect();
         var viewH = window.innerHeight;
 
@@ -2319,11 +2305,13 @@ if ($related->have_posts()) :
     var articleH2s = article.querySelectorAll('h2');
     if (articleH2s.length >= 3) {
       var upgradeBox = document.createElement('div');
-      upgradeBox.className = 'sp-content-upgrade sp-reveal';
-      upgradeBox.innerHTML = '<div class="sp-content-upgrade-overline">Free Consultation</div>'
+      upgradeBox.className = 'sp-content-upgrade sp-gradient-border sp-reveal';
+      upgradeBox.innerHTML = '<div class="sp-content-upgrade-inner">'
+          + '<div class="sp-content-upgrade-overline">Free Consultation</div>'
           + '<h3>Want us to build a content strategy for your brand?</h3>'
           + '<p>Our team of 200+ creatives can help you dominate organic search and get cited by AI answer engines. Let\'s talk about your goals.</p>'
-          + '<a href="/contact-stretch-creative/" class="sp-content-upgrade-btn">Book a Free Consult \u2192</a>';
+          + '<a href="/contact-stretch-creative/" class="sp-content-upgrade-btn">Book a Free Consult \u2192</a>'
+          + '</div>';
       articleH2s[2].parentNode.insertBefore(upgradeBox, articleH2s[2]);
       // Observe for reveal animation
       observer.observe(upgradeBox);
@@ -2449,8 +2437,8 @@ if ($related->have_posts()) :
     });
   }
 
-  // --- E2. Custom Illustrated Icons on H2 Headings ---
-  if (article) {
+  // --- E2. Custom Illustrated Icons on H2 Headings (disabled) ---
+  if (false && article) {
     var iconMap = [
       { keywords: ['what', 'introduction', 'overview'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><path d="M9 21h6M12 3a6 6 0 014 10.47V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-3.53A6 6 0 0112 3z"/></svg>' },
       { keywords: ['seo', 'search', 'ranking'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M16 16l4.5 4.5"/></svg>' },
@@ -2608,9 +2596,9 @@ if ($related->have_posts()) :
     });
   }
 
-  // --- E8. Scroll Depth Milestones ---
+  // --- E8. Scroll Depth Milestones (disabled) ---
   var milestoneToast = document.getElementById('milestoneToast');
-  if (milestoneToast && contentSection) {
+  if (false && milestoneToast && contentSection) {
     var milestone50 = false;
     var milestone80 = false;
 
