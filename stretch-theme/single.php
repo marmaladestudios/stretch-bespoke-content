@@ -178,23 +178,37 @@ html, body { overflow-x: hidden; }
   padding: 0 40px;
 }
 .sp-featured-img {
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  padding: 4px;
+  background: #e8e8ec;
   position: relative;
+  transition: background 0.6s ease;
 }
-.sp-featured-img::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(133,96,168,0.2) 0%, transparent 40%, rgba(0,191,243,0.15) 100%);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  border-radius: 16px;
+.sp-featured-img.border-active {
+  background: conic-gradient(
+    from var(--sp-border-angle, 0deg),
+    #8560A8 0%,
+    #5674B9 calc(var(--sp-border-progress, 0%) * 0.25),
+    #448CCB calc(var(--sp-border-progress, 0%) * 0.5),
+    #00BFF3 var(--sp-border-progress, 0%),
+    #e8e8ec var(--sp-border-progress, 0%),
+    #e8e8ec 100%
+  );
+  animation: sp-borderSpin 40s linear infinite;
+}
+.sp-featured-img.border-complete {
+  background: conic-gradient(
+    from var(--sp-border-angle, 0deg),
+    #8560A8, #5674B9, #448CCB, #00BFF3, #8560A8
+  );
+  animation: sp-borderSpin 40s linear infinite;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 24px rgba(133,96,168,0.2), 0 0 48px rgba(0,191,243,0.1);
 }
 .sp-featured-img img {
   width: 100%;
   display: block;
+  border-radius: 14px;
 }
 
 /* Accent bar */
@@ -589,8 +603,8 @@ html, body { overflow-x: hidden; }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 32px 0;
-  margin-top: 48px;
+  padding: 24px 0;
+  margin-top: 24px;
   border-top: 1px solid rgba(133,96,168,0.12);
 }
 .sp-share-inline-label {
@@ -823,6 +837,7 @@ html, body { overflow-x: hidden; }
   font-size: 36px;
   font-weight: 600;
   margin: 0 0 24px;
+  color: #fff;
 }
 .sp-cta-final .cta-btn {
   display: inline-block;
@@ -1157,10 +1172,10 @@ html, body { overflow-x: hidden; }
 .sp-content-upgrade-btn {
   display: inline-block;
   background: linear-gradient(135deg, #8560A8, #00BFF3);
-  color: #fff; font-family: 'Poppins', sans-serif;
+  color: #fff !important; font-family: 'Poppins', sans-serif;
   font-size: 14px; font-weight: 500;
   padding: 12px 28px; border-radius: 6px;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .sp-content-upgrade-btn:hover {
@@ -1350,10 +1365,320 @@ html, body { overflow-x: hidden; }
   .sp-content-upgrade-btn { transition: none; }
   .sp-read-time-pill .pill-icon { animation: none; }
 }
+
+/* ========================================
+   ENGAGEMENT: Animated Section Dividers
+   ======================================== */
+.sp-section-divider {
+  height: 2px;
+  margin: 48px 0;
+  background: linear-gradient(90deg, #8560A8, #5674B9, #448CCB, #00BFF3);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sp-section-divider.drawn { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .sp-section-divider { transform: scaleX(1); transition: none; }
+}
+
+/* ========================================
+   ENGAGEMENT: Custom Illustrated Icons on H2
+   ======================================== */
+.sp-heading-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(133,96,168,0.1), rgba(0,191,243,0.08));
+  margin-right: 12px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.sp-heading-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.sp-article h2 {
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================
+   ENGAGEMENT: Reading Position Marker
+   ======================================== */
+.sp-reading-position {
+  position: fixed;
+  left: max(12px, calc((100vw - 780px) / 2 - 180px));
+  bottom: 80px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #bbb;
+  letter-spacing: 0.5px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 50;
+}
+.sp-reading-position.visible { opacity: 1; }
+@media (max-width: 1280px) { .sp-reading-position { display: none; } }
+
+/* ========================================
+   ENGAGEMENT: Interactive Comparison Table
+   ======================================== */
+.sp-article table tbody tr { cursor: pointer; position: relative; }
+.sp-article table tbody tr.highlighted {
+  background: rgba(133,96,168,0.08) !important;
+}
+.sp-article table tbody tr.highlighted td:first-child {
+  font-weight: 600;
+  color: #8560A8;
+}
+
+/* ========================================
+   ENGAGEMENT: Copy Button on Quotes
+   ======================================== */
+.sp-copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(133,96,168,0.08);
+  border: 1px solid rgba(133,96,168,0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #8560A8;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 5;
+}
+.sp-copy-btn:hover {
+  background: #8560A8;
+  color: #fff;
+  border-color: #8560A8;
+}
+.sp-copy-btn.copied {
+  background: #28c840;
+  color: #fff;
+  border-color: #28c840;
+}
+
+/* ========================================
+   ENGAGEMENT: Reaction Buttons
+   ======================================== */
+.sp-reactions {
+  text-align: center;
+  padding: 32px 0;
+  margin: 32px 0;
+}
+.sp-reactions-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #252C3A;
+  margin-bottom: 16px;
+}
+.sp-reactions-btns {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.sp-reaction-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #e8e8ec;
+  background: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sp-reaction-btn:hover {
+  transform: scale(1.2);
+  border-color: #8560A8;
+  box-shadow: 0 4px 16px rgba(133,96,168,0.15);
+}
+.sp-reaction-btn.selected {
+  transform: scale(1.15);
+  border-color: #8560A8;
+  background: rgba(133,96,168,0.08);
+  box-shadow: 0 4px 16px rgba(133,96,168,0.2);
+}
+.sp-reaction-btn.selected:hover {
+  transform: scale(1.25);
+}
+.sp-reaction-thanks {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  color: #8560A8;
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.sp-reaction-thanks.visible { opacity: 1; }
+
+/* ========================================
+   ENGAGEMENT: Exit Intent Popup
+   ======================================== */
+.sp-exit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(37,44,58,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.sp-exit-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.sp-exit-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.sp-exit-overlay.visible .sp-exit-modal {
+  transform: scale(1) translateY(0);
+}
+.sp-exit-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: none; border: none;
+  font-size: 24px; color: #bbb;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.sp-exit-close:hover { color: #252C3A; }
+.sp-exit-icon {
+  width: 64px; height: 64px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, rgba(133,96,168,0.1), rgba(0,191,243,0.08));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+.sp-exit-modal h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px; font-weight: 600;
+  color: #252C3A; margin-bottom: 12px;
+}
+.sp-exit-modal p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; color: #666;
+  line-height: 1.6; margin-bottom: 24px;
+}
+.sp-exit-form {
+  display: flex; gap: 8px;
+}
+.sp-exit-form input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid #e8e8ec;
+  border-radius: 10px;
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.sp-exit-form input:focus { border-color: #8560A8; }
+.sp-exit-form button {
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #8560A8, #00BFF3);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.sp-exit-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(133,96,168,0.3);
+}
+.sp-exit-skip {
+  display: block;
+  margin-top: 16px;
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px;
+  color: #bbb;
+  background: none; border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.sp-exit-skip:hover { color: #8560A8; }
+
+/* ========================================
+   ENGAGEMENT: Scroll Depth Milestones
+   ======================================== */
+.sp-milestone-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(37,44,58,0.9);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 10px 20px;
+  border-radius: 20px;
+  z-index: 95;
+  opacity: 0;
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sp-milestone-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.sp-milestone-toast .toast-emoji { font-size: 16px; }
+@media (prefers-reduced-motion: reduce) {
+  .sp-milestone-toast,
+  .sp-exit-overlay,
+  .sp-exit-modal,
+  .sp-reaction-btn,
+  .sp-copy-btn,
+  .sp-reading-position { transition: none; }
+}
 </style>
 
 <!-- Reading Progress Bar -->
 <div class="sp-progress-bar" id="readingProgress"></div>
+
+<!-- Reading Position Marker -->
+<div class="sp-reading-position" id="readingPosition">0% through</div>
+
+<!-- Milestone Toast -->
+<div class="sp-milestone-toast" id="milestoneToast"><span class="toast-emoji"></span><span class="toast-text"></span></div>
 
 <!-- Reading Time Pill -->
 <div class="sp-read-time-pill" id="readTimePill"><span class="pill-icon"></span><span id="readTimePillText"><?php echo $read_time; ?> min left</span></div>
@@ -1484,7 +1809,7 @@ html, body { overflow-x: hidden; }
     <?php the_content(); ?>
 
     <!-- FAQ (inside article, before conclusion) -->
-    <div class="sp-faq-inline" style="margin: 48px 0; padding: 40px 0; border-top: 1px solid rgba(133,96,168,0.1); border-bottom: 1px solid rgba(133,96,168,0.1);">
+    <div class="sp-faq-inline" style="margin: 48px 0 0; padding: 40px 0 0; border-top: 1px solid rgba(133,96,168,0.1);">
       <h2 style="text-align:center; margin-bottom:32px;">Frequently Asked Questions</h2>
       <?php
       $faqs = [];
@@ -1516,6 +1841,18 @@ html, body { overflow-x: hidden; }
         </div>
       </div>
       <?php endforeach; ?>
+    </div>
+
+    <!-- Reaction Buttons -->
+    <div class="sp-reactions">
+      <div class="sp-reactions-label">Was this article helpful?</div>
+      <div class="sp-reactions-btns">
+        <button class="sp-reaction-btn" data-reaction="love" aria-label="Love it">&#129321;</button>
+        <button class="sp-reaction-btn" data-reaction="helpful" aria-label="Helpful">&#128077;</button>
+        <button class="sp-reaction-btn" data-reaction="interesting" aria-label="Interesting">&#129300;</button>
+        <button class="sp-reaction-btn" data-reaction="meh" aria-label="Not helpful">&#128528;</button>
+      </div>
+      <div class="sp-reaction-thanks" id="reactionThanks">Thanks for your feedback!</div>
     </div>
 
     <!-- Inline horizontal share bar -->
@@ -1768,11 +2105,14 @@ if ($related->have_posts()) :
     }
   }
 
-  // Figure gradient border fill on scroll
+  // Figure + hero image gradient border fill on scroll
+  var featuredImg = document.querySelector('.sp-featured-img');
   var figures = document.querySelectorAll('.sp-article figure');
-  if (figures.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  var allBorderEls = Array.prototype.slice.call(figures);
+  if (featuredImg) allBorderEls.unshift(featuredImg);
+  if (allBorderEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     function updateFigureBorders() {
-      figures.forEach(function(fig) {
+      allBorderEls.forEach(function(fig) {
         var rect = fig.getBoundingClientRect();
         var viewH = window.innerHeight;
 
@@ -2082,6 +2422,226 @@ if ($related->have_posts()) :
       }
     });
   }
+
+  // ========================================
+  // ELITE ENGAGEMENT FEATURES
+  // ========================================
+  var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  // --- E1. Animated Section Dividers ---
+  if (article && !reducedMotion) {
+    var articleH2sForDividers = article.querySelectorAll('h2');
+    var dividerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('drawn');
+          dividerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    articleH2sForDividers.forEach(function(h2, idx) {
+      if (idx === 0) return; // skip first h2
+      var divider = document.createElement('div');
+      divider.className = 'sp-section-divider';
+      h2.parentNode.insertBefore(divider, h2);
+      dividerObserver.observe(divider);
+    });
+  }
+
+  // --- E2. Custom Illustrated Icons on H2 Headings ---
+  if (article) {
+    var iconMap = [
+      { keywords: ['what', 'introduction', 'overview'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><path d="M9 21h6M12 3a6 6 0 014 10.47V17a1 1 0 01-1 1h-6a1 1 0 01-1-1v-3.53A6 6 0 0112 3z"/></svg>' },
+      { keywords: ['seo', 'search', 'ranking'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M16 16l4.5 4.5"/></svg>' },
+      { keywords: ['ai', 'answer engine', 'machine', 'how'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><path d="M8 6h8M6 8v8M18 8v8M8 18h8M8 8l2.5 2.5M16 8l-2.5 2.5M8 16l2.5-2.5M16 16l-2.5-2.5"/></svg>' },
+      { keywords: ['strategy', 'key', 'steps', 'tips'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5"><path d="M4 7h4M4 12h4M4 17h4M12 7h8M12 12h8M12 17h8"/><path d="M2 7l1 1 2-2M2 12l1 1 2-2M2 17l1 1 2-2" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
+      { keywords: ['measure', 'success', 'result', 'impact'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><path d="M4 20h16M4 20V10l4-3 4 5 4-7 4 4v11"/></svg>' },
+      { keywords: ['start', 'getting', 'begin', 'future'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5"><path d="M12 2C6 8 6 14 6 14h12s0-6-6-12zM6 14l-2 4 4-2M18 14l2 4-4-2M10 16v4M14 16v4"/></svg>' },
+      { keywords: ['vs', 'comparison', 'difference'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5"><path d="M12 3v18M4 7l8-4 8 4M4 7l2 6h-4M20 7l-2 6h4"/><circle cx="4" cy="13" r="0.5" fill="#5674B9"/><circle cx="20" cy="13" r="0.5" fill="#5674B9"/></svg>' },
+      { keywords: ['faq', 'question'], svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 114 2.83V14"/><circle cx="12" cy="17" r="0.5" fill="#448CCB"/></svg>' }
+    ];
+    var defaultIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><path d="M12 2l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17l-5.8 3-1.1-6.5L.4 8.8l6.5-.9z"/></svg>';
+
+    var allH2sForIcons = article.querySelectorAll('h2');
+    allH2sForIcons.forEach(function(h2) {
+      var text = h2.textContent.toLowerCase();
+      var matchedSvg = defaultIcon;
+      for (var i = 0; i < iconMap.length; i++) {
+        var found = false;
+        for (var j = 0; j < iconMap[i].keywords.length; j++) {
+          if (text.indexOf(iconMap[i].keywords[j]) !== -1) {
+            found = true;
+            break;
+          }
+        }
+        if (found) {
+          matchedSvg = iconMap[i].svg;
+          break;
+        }
+      }
+      var iconSpan = document.createElement('span');
+      iconSpan.className = 'sp-heading-icon';
+      iconSpan.innerHTML = matchedSvg;
+      h2.insertBefore(iconSpan, h2.firstChild);
+    });
+  }
+
+  // --- E3. Reading Position Marker ---
+  var readingPosEl = document.getElementById('readingPosition');
+  if (readingPosEl && article && contentSection) {
+    window.addEventListener('scroll', function() {
+      requestAnimationFrame(function() {
+        var rect = contentSection.getBoundingClientRect();
+        var sTop = rect.top + window.scrollY;
+        var sHeight = contentSection.offsetHeight;
+        var scrolled = window.scrollY - sTop;
+        var pct = Math.max(0, Math.min(100, Math.round((scrolled / (sHeight - window.innerHeight)) * 100)));
+
+        var articleRect = article.getBoundingClientRect();
+        var inView = articleRect.top < window.innerHeight && articleRect.bottom > 0;
+
+        if (inView && pct > 0 && pct < 100) {
+          readingPosEl.textContent = pct + '% through';
+          readingPosEl.classList.add('visible');
+        } else {
+          readingPosEl.classList.remove('visible');
+        }
+      });
+    }, { passive: true });
+  }
+
+  // --- E4. Interactive Comparison Table ---
+  if (article) {
+    var tableRows = article.querySelectorAll('table tbody tr');
+    tableRows.forEach(function(row) {
+      row.addEventListener('click', function() {
+        var wasHighlighted = row.classList.contains('highlighted');
+        // Remove from all rows in same table
+        var tbody = row.parentElement;
+        tbody.querySelectorAll('tr.highlighted').forEach(function(r) {
+          r.classList.remove('highlighted');
+        });
+        if (!wasHighlighted) {
+          row.classList.add('highlighted');
+        }
+      });
+    });
+  }
+
+  // --- E5. Copy Button on Quotes and Takeaways ---
+  if (article) {
+    var copyTargets = article.querySelectorAll('blockquote, .wp-block-pullquote, .pullquote, .sp-key-takeaway');
+    copyTargets.forEach(function(el) {
+      el.style.position = 'relative';
+      var btn = document.createElement('button');
+      btn.className = 'sp-copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var textContent = el.textContent.replace(/^Copy/, '').replace(/^Copied!/, '').trim();
+        navigator.clipboard.writeText(textContent);
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+      el.appendChild(btn);
+    });
+  }
+
+  // --- E6. Reaction Buttons ---
+  var reactionBtns = document.querySelectorAll('.sp-reaction-btn');
+  var reactionThanks = document.getElementById('reactionThanks');
+  if (reactionBtns.length && reactionThanks) {
+    reactionBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var wasSelected = btn.classList.contains('selected');
+        reactionBtns.forEach(function(b) { b.classList.remove('selected'); });
+        if (!wasSelected) {
+          btn.classList.add('selected');
+          reactionThanks.classList.add('visible');
+          // Bounce animation
+          btn.style.transform = 'scale(1.3)';
+          setTimeout(function() { btn.style.transform = ''; }, 200);
+        } else {
+          reactionThanks.classList.remove('visible');
+        }
+      });
+    });
+  }
+
+  // --- E7. Exit Intent Popup ---
+  var exitOverlay = document.getElementById('exitOverlay');
+  if (exitOverlay && !isTouchDevice) {
+    var exitShown = false;
+    var exitScrollThreshold = 0.3;
+
+    function closeExitPopup() {
+      exitOverlay.classList.remove('visible');
+    }
+
+    document.getElementById('exitClose').addEventListener('click', closeExitPopup);
+    document.getElementById('exitSkip').addEventListener('click', closeExitPopup);
+    exitOverlay.addEventListener('click', function(e) {
+      if (e.target === exitOverlay) closeExitPopup();
+    });
+
+    document.addEventListener('mouseleave', function(e) {
+      if (exitShown) return;
+      if (e.clientY >= 10) return;
+
+      // Check scroll progress
+      if (contentSection) {
+        var rect = contentSection.getBoundingClientRect();
+        var sTop = rect.top + window.scrollY;
+        var sHeight = contentSection.offsetHeight;
+        var scrolled = window.scrollY - sTop;
+        var progress = Math.max(0, Math.min(1, scrolled / (sHeight - window.innerHeight)));
+        if (progress < exitScrollThreshold) return;
+      }
+
+      exitShown = true;
+      exitOverlay.classList.add('visible');
+    });
+  }
+
+  // --- E8. Scroll Depth Milestones ---
+  var milestoneToast = document.getElementById('milestoneToast');
+  if (milestoneToast && contentSection) {
+    var milestone50 = false;
+    var milestone80 = false;
+
+    function showMilestone(emoji, text) {
+      milestoneToast.querySelector('.toast-emoji').textContent = emoji;
+      milestoneToast.querySelector('.toast-text').textContent = text;
+      milestoneToast.classList.add('visible');
+      setTimeout(function() {
+        milestoneToast.classList.remove('visible');
+      }, 3000);
+    }
+
+    window.addEventListener('scroll', function() {
+      requestAnimationFrame(function() {
+        var rect = contentSection.getBoundingClientRect();
+        var sTop = rect.top + window.scrollY;
+        var sHeight = contentSection.offsetHeight;
+        var scrolled = window.scrollY - sTop;
+        var progress = Math.max(0, Math.min(1, scrolled / (sHeight - window.innerHeight)));
+
+        if (!milestone50 && progress >= 0.5) {
+          milestone50 = true;
+          showMilestone('\uD83D\uDD25', "You're halfway through!");
+        }
+        if (!milestone80 && progress >= 0.8) {
+          milestone80 = true;
+          showMilestone('\uD83C\uDFAF', 'Almost there \u2014 keep going!');
+        }
+      });
+    }, { passive: true });
+  }
 })();
 </script>
 
@@ -2115,5 +2675,20 @@ if ($next_post) :
   <button class="sp-next-article-close" onclick="this.parentElement.style.display='none'" aria-label="Close">&times;</button>
 </div>
 <?php endif; ?>
+
+<!-- Exit Intent Overlay -->
+<div class="sp-exit-overlay" id="exitOverlay">
+  <div class="sp-exit-modal">
+    <button class="sp-exit-close" id="exitClose">&times;</button>
+    <div class="sp-exit-icon">&#128203;</div>
+    <h3>Before you go...</h3>
+    <p>Get our free AEO checklist &mdash; 15 actionable steps to get your content cited by AI answer engines.</p>
+    <div class="sp-exit-form">
+      <input type="email" placeholder="your@email.com" aria-label="Email">
+      <button type="button" onclick="this.textContent='Sent! \u2713';this.style.background='#28c840';">Get It Free</button>
+    </div>
+    <button class="sp-exit-skip" id="exitSkip">No thanks, I'll figure it out myself</button>
+  </div>
+</div>
 
 <?php get_footer(); ?>
