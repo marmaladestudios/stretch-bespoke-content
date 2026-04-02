@@ -119,7 +119,13 @@
 
         <div class="aeo-scanner-cta">
           <a href="/contact-stretch-creative/" class="aeo-scanner-cta-btn">Want to improve your score? Talk to our AEO experts &rarr;</a>
-          <button id="scanAgainBtn" class="aeo-scanner-again">Scan Another Page</button>
+          <div class="aeo-scanner-cta-row">
+            <button id="downloadPdfBtn" class="aeo-scanner-pdf-btn">
+              <svg viewBox="0 0 18 18" width="16" height="16" fill="none" style="vertical-align:-2px;"><path d="M9 2v10M5 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 14h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Download PDF Report
+            </button>
+            <button id="scanAgainBtn" class="aeo-scanner-again">Scan Another Page</button>
+          </div>
         </div>
       </div>
 
@@ -963,6 +969,38 @@
 @media (max-width: 700px) {
   .aeo-scanner-predictions { grid-template-columns: 1fr; }
 }
+
+/* ── CTA Row ── */
+.aeo-scanner-cta-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.aeo-scanner-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: rgba(133,96,168,0.12);
+  color: #c0a8e0;
+  border: 1px solid rgba(133,96,168,0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.aeo-scanner-pdf-btn:hover {
+  background: rgba(133,96,168,0.2);
+  border-color: rgba(133,96,168,0.5);
+  color: #fff;
+  transform: translateY(-1px);
+}
+@media (max-width: 700px) {
+  .aeo-scanner-cta-row { flex-direction: column; align-items: center; }
+}
 </style>
 
 <script>
@@ -1584,6 +1622,12 @@
     var overall = Math.round(total / dims.length);
     var color = scoreColor(overall);
     var grade = scoreGrade(overall);
+    lastDims = dims;
+    lastQuery = query;
+    lastPredictions = predictions;
+    lastPassage = passage;
+    lastOverallScore = overall;
+    lastGrade = grade;
 
     // Hide loading, show results
     document.getElementById('scannerLoading').style.display = 'none';
@@ -1757,10 +1801,264 @@
     passPanel.appendChild(passCard);
   }
 
+  /* ── PDF Report Generation ── */
+  function generatePDF(dims, url, query, predictions, passage, overallScore, grade) {
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF('p', 'mm', 'a4');
+    var pageW = 210;
+    var margin = 20;
+    var contentW = pageW - margin * 2;
+    var y = 0;
+
+    function addFooter() {
+      doc.setFontSize(9);
+      doc.setTextColor(120, 120, 140);
+      doc.text('Prepared by Stretch Creative — stretchcreative.co', margin, 285);
+      doc.text('Want help improving your score? Visit stretchcreative.co/contact-stretch-creative/', margin, 290);
+    }
+
+    // ── Cover Page ──
+    doc.setFillColor(37, 44, 58);
+    doc.rect(0, 0, pageW, 297, 'F');
+
+    // Brand header bar
+    doc.setFillColor(133, 96, 168);
+    doc.rect(0, 0, pageW, 6, 'F');
+
+    // Title
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(28);
+    doc.setTextColor(255, 255, 255);
+    doc.text('AEO Readiness Report', margin, 50);
+
+    // Subtitle
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(13);
+    doc.setTextColor(160, 168, 184);
+    doc.text('AI Visibility Analysis', margin, 62);
+
+    // URL and query
+    doc.setFontSize(11);
+    doc.setTextColor(200, 200, 220);
+    doc.text('URL: ' + url, margin, 85, { maxWidth: contentW });
+    doc.text('Target Query: ' + query, margin, 95, { maxWidth: contentW });
+    doc.text('Date: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), margin, 105);
+
+    // Score circle (simplified)
+    var scoreColor2 = overallScore >= 80 ? [40, 200, 64] : overallScore >= 60 ? [0, 191, 243] : overallScore >= 40 ? [245, 166, 35] : [231, 76, 60];
+    doc.setFillColor(45, 52, 68);
+    doc.circle(pageW / 2, 160, 30, 'F');
+    doc.setDrawColor(scoreColor2[0], scoreColor2[1], scoreColor2[2]);
+    doc.setLineWidth(2.5);
+    doc.circle(pageW / 2, 160, 30, 'S');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(32);
+    doc.setTextColor(scoreColor2[0], scoreColor2[1], scoreColor2[2]);
+    doc.text(String(overallScore), pageW / 2, 157, { align: 'center' });
+    doc.setFontSize(16);
+    doc.text(grade, pageW / 2, 170, { align: 'center' });
+
+    // Branding
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(107, 115, 133);
+    doc.text('Stretch Creative', pageW / 2, 210, { align: 'center' });
+    doc.text('stretchcreative.co', pageW / 2, 218, { align: 'center' });
+
+    addFooter();
+
+    // ── Page 2: AI Visibility ──
+    doc.addPage();
+    doc.setFillColor(255, 255, 255);
+    doc.rect(0, 0, pageW, 297, 'F');
+
+    doc.setFillColor(133, 96, 168);
+    doc.rect(0, 0, pageW, 6, 'F');
+
+    y = 24;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(37, 44, 58);
+    doc.text('AI Visibility Predictions', margin, y);
+    y += 14;
+
+    function writePredSection(pred, title) {
+      var badgeColor = pred.level === 'High' ? [40, 200, 64] : pred.level === 'Medium' ? [245, 166, 35] : [231, 76, 60];
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.setTextColor(37, 44, 58);
+      doc.text(title + ': ', margin, y);
+      doc.setTextColor(badgeColor[0], badgeColor[1], badgeColor[2]);
+      doc.text(pred.level + ' (' + pred.score + '%)', margin + doc.getTextWidth(title + ': '), y);
+      y += 8;
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(80, 80, 100);
+      for (var r = 0; r < pred.reasons.length; r++) {
+        var lines = doc.splitTextToSize('+ ' + pred.reasons[r], contentW - 10);
+        doc.text(lines, margin + 5, y);
+        y += lines.length * 5;
+      }
+      if (pred.fixes.length > 0) {
+        y += 3;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(245, 166, 35);
+        doc.text('WHAT TO FIX:', margin + 5, y);
+        y += 5;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(80, 80, 100);
+        for (var f = 0; f < pred.fixes.length; f++) {
+          var lines = doc.splitTextToSize('- ' + pred.fixes[f], contentW - 10);
+          doc.text(lines, margin + 5, y);
+          y += lines.length * 5;
+        }
+      }
+      y += 10;
+    }
+
+    writePredSection(predictions.google, 'Google AI Overview');
+    writePredSection(predictions.chat, 'AI Chat Citation');
+
+    // Simulated Answer
+    y += 5;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(37, 44, 58);
+    doc.text('Simulated AI Answer', margin, y);
+    y += 8;
+
+    if (passage.found) {
+      doc.setFillColor(245, 243, 250);
+      var passLines = doc.splitTextToSize(passage.text, contentW - 16);
+      var passHeight = passLines.length * 5 + 12;
+      doc.rect(margin, y - 4, contentW, passHeight, 'F');
+      doc.setDrawColor(133, 96, 168);
+      doc.setLineWidth(0.8);
+      doc.line(margin, y - 4, margin, y - 4 + passHeight);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 80);
+      doc.text(passLines, margin + 8, y + 2);
+      y += passHeight + 6;
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 120);
+      var fbLines = doc.splitTextToSize(passage.feedback, contentW);
+      doc.text(fbLines, margin, y);
+      y += fbLines.length * 4 + 4;
+    } else {
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(10);
+      doc.setTextColor(120, 120, 140);
+      doc.text(passage.feedback, margin, y);
+      y += 8;
+    }
+
+    addFooter();
+
+    // ── Page 3: Dimension Breakdown ──
+    doc.addPage();
+    doc.setFillColor(255, 255, 255);
+    doc.rect(0, 0, pageW, 297, 'F');
+
+    doc.setFillColor(133, 96, 168);
+    doc.rect(0, 0, pageW, 6, 'F');
+
+    y = 24;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(37, 44, 58);
+    doc.text('Dimension Breakdown', margin, y);
+    y += 12;
+
+    for (var i = 0; i < dims.length; i++) {
+      var d = dims[i];
+      var dColor = d.score >= 80 ? [40, 200, 64] : d.score >= 60 ? [0, 191, 243] : d.score >= 40 ? [245, 166, 35] : [231, 76, 60];
+
+      if (y > 260) {
+        addFooter();
+        doc.addPage();
+        doc.setFillColor(255, 255, 255);
+        doc.rect(0, 0, pageW, 297, 'F');
+        doc.setFillColor(133, 96, 168);
+        doc.rect(0, 0, pageW, 6, 'F');
+        y = 24;
+      }
+
+      // Dimension name and score
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.setTextColor(37, 44, 58);
+      doc.text(d.name, margin, y);
+      doc.setTextColor(dColor[0], dColor[1], dColor[2]);
+      doc.text(d.score + '/100', margin + contentW - 20, y, { align: 'right' });
+
+      // Score bar
+      y += 4;
+      doc.setFillColor(230, 230, 235);
+      doc.roundedRect(margin, y, contentW, 3, 1.5, 1.5, 'F');
+      doc.setFillColor(dColor[0], dColor[1], dColor[2]);
+      doc.roundedRect(margin, y, contentW * (d.score / 100), 3, 1.5, 1.5, 'F');
+      y += 6;
+
+      // Recommendation
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(80, 80, 100);
+      var recLines = doc.splitTextToSize(d.rec, contentW);
+      doc.text(recLines, margin, y);
+      y += recLines.length * 4 + 8;
+    }
+
+    // ── Priority Action List ──
+    y += 5;
+    if (y > 240) {
+      addFooter();
+      doc.addPage();
+      doc.setFillColor(255, 255, 255);
+      doc.rect(0, 0, pageW, 297, 'F');
+      doc.setFillColor(133, 96, 168);
+      doc.rect(0, 0, pageW, 6, 'F');
+      y = 24;
+    }
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(37, 44, 58);
+    doc.text('Priority Actions', margin, y);
+    y += 10;
+
+    // Sort dims by score ascending, take top 3
+    var sorted = dims.slice().sort(function(a, b) { return a.score - b.score; });
+    var top3 = sorted.slice(0, 3);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(60, 60, 80);
+    for (var i = 0; i < top3.length; i++) {
+      var actionLines = doc.splitTextToSize((i + 1) + '. ' + top3[i].name + ' (' + top3[i].score + '/100): ' + top3[i].rec, contentW);
+      doc.text(actionLines, margin, y);
+      y += actionLines.length * 5 + 4;
+    }
+
+    addFooter();
+
+    // Save
+    var filename = 'AEO-Report-' + new Date().toISOString().slice(0, 10) + '.pdf';
+    doc.save(filename);
+  }
+
   /* ── Shared state ── */
   var fetchedHtml = null;
   var fetchedUrl = null;
   var parsedDoc = null;
+  var lastDims = null;
+  var lastQuery = null;
+  var lastPredictions = null;
+  var lastPassage = null;
+  var lastOverallScore = 0;
+  var lastGrade = '';
 
   /* ── Event Listeners ── */
   document.getElementById('scanBtn').addEventListener('click', async function() {
@@ -1940,6 +2238,13 @@
     fetchedHtml = null;
     fetchedUrl = null;
     parsedDoc = null;
+  });
+
+  // PDF download
+  document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+    if (lastDims) {
+      generatePDF(lastDims, fetchedUrl, lastQuery, lastPredictions, lastPassage, lastOverallScore, lastGrade);
+    }
   });
 })();
 </script>

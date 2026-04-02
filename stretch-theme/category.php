@@ -923,6 +923,7 @@ html, body { overflow-x: hidden; }
 
 <!-- AEO Scanner Tool -->
 <?php if ($current_cat && $current_cat->slug === 'aeo') : ?>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" crossorigin="anonymous"></script>
   <?php get_template_part('aeo-scanner'); ?>
 <?php endif; ?>
 
