@@ -64,5 +64,32 @@ export WORDPRESS_DB_USER="wordpress"
 export WORDPRESS_DB_PASSWORD="wordpress"
 export WORDPRESS_DB_NAME="wordpress"
 
-# Let WordPress entrypoint handle wp-config.php and start Apache
-exec docker-entrypoint.sh apache2-foreground
+# Run WordPress entrypoint to set up wp-config.php and copy core files
+# (This overwrites /var/www/html, so we copy our theme AFTER)
+docker-entrypoint.sh apache2-foreground &
+WP_PID=$!
+
+# Wait for WordPress files to be in place
+echo "Waiting for WordPress to initialize files..."
+for i in $(seq 1 30); do
+    if [ -f /var/www/html/wp-includes/version.php ]; then
+        echo "WordPress files ready."
+        break
+    fi
+    sleep 1
+done
+
+# Copy theme from staging into the live WordPress install
+echo "Installing Stretch Creative theme..."
+cp -rf /tmp/stretch-theme/ /var/www/html/wp-content/themes/stretch-theme/
+chown -R www-data:www-data /var/www/html/wp-content/themes/stretch-theme/
+
+# Copy setup scripts
+cp -f /tmp/setup-content.php /var/www/html/setup-content.php 2>/dev/null || true
+cp -f /tmp/setup-images.php /var/www/html/setup-images.php 2>/dev/null || true
+cp -f /tmp/setup-logos.php /var/www/html/setup-logos.php 2>/dev/null || true
+
+echo "Theme installed."
+
+# Wait for Apache process
+wait $WP_PID
