@@ -1402,20 +1402,20 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .sp-reading-position {
   position: fixed;
-  right: 24px;
-  top: 80px;
+  right: calc((100vw - 780px) / 2 - 30px);
+  top: 160px;
   font-family: 'Poppins', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  color: #999;
+  color: #bbb;
   letter-spacing: 0.5px;
   opacity: 0;
   transition: opacity 0.3s;
-  z-index: 50;
+  z-index: 49;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
-.admin-bar .sp-reading-position { top: 112px; }
+.admin-bar .sp-reading-position { top: 192px; }
 .sp-reading-position.visible { opacity: 1; }
 @media (max-width: 960px) { .sp-reading-position { display: none; } }
 
