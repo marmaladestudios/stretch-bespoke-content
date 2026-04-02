@@ -78,6 +78,12 @@ $services['content-writing-at-any-scale'] = [
             'description' => 'Every piece of content goes through our multi-stage editorial process — including writing, editing, fact-checking, and QA — to ensure it meets your standards before delivery. No surprises, no rework.',
         ],
     ],
+    'stats' => [
+        ['label' => 'Writers', 'value' => '200', 'suffix' => '+'],
+        ['label' => 'Minimums', 'value' => 'No Minimums', 'suffix' => ''],
+        ['label' => 'Industries', 'value' => '10', 'suffix' => '+'],
+        ['label' => 'On-Time Delivery', 'value' => '98', 'suffix' => '%'],
+    ],
     'faqs' => [
         [
             'question' => 'How does Stretch match writers to my brand?',
@@ -153,6 +159,12 @@ $services['seo_content_strategy_services'] = [
             'title'       => 'Measurable Results',
             'description' => 'We set clear KPIs from the start and track performance rigorously. You get regular reports showing exactly how your content is performing — traffic, rankings, conversions — along with actionable recommendations for continuous improvement.',
         ],
+    ],
+    'stats' => [
+        ['label' => 'Keywords Analyzed', 'value' => '500', 'suffix' => 'K+'],
+        ['label' => 'Results Timeline', 'value' => '3-6', 'suffix' => 'mo'],
+        ['label' => 'Strategy', 'value' => '100', 'suffix' => '%'],
+        ['label' => 'Approach', 'value' => 'Data-Driven', 'suffix' => ''],
     ],
     'faqs' => [
         [
@@ -246,6 +258,12 @@ $services['graphic_design_services'] = [
             'description' => 'Every asset is delivered in all the formats you need — web, print, social, and more. We provide source files, optimized exports, and platform-specific variations so your visuals look perfect everywhere they appear.',
         ],
     ],
+    'stats' => [
+        ['label' => 'Designers', 'value' => '50', 'suffix' => '+'],
+        ['label' => 'Turnaround', 'value' => '24', 'suffix' => 'hr'],
+        ['label' => 'Formats', 'value' => 'Multiple', 'suffix' => ''],
+        ['label' => 'Brand Match', 'value' => 'On-Brand Always', 'suffix' => ''],
+    ],
     'faqs' => [
         [
             'question' => 'Can your designers match our existing brand guidelines?',
@@ -329,6 +347,12 @@ $services['video-content-services'] = [
             'title'       => 'Multiple Formats',
             'description' => 'One shoot, many assets. We plan every production to maximize your investment by capturing content that can be repurposed across formats — full-length videos, social cuts, GIFs, thumbnails, and still frames — all from a single session.',
         ],
+    ],
+    'stats' => [
+        ['label' => 'Experience', 'value' => '30', 'suffix' => 'yr'],
+        ['label' => 'Production', 'value' => 'End-to-End', 'suffix' => ''],
+        ['label' => 'Quality', 'value' => '4K', 'suffix' => ''],
+        ['label' => 'Distribution', 'value' => 'Multi-Platform', 'suffix' => ''],
     ],
     'faqs' => [
         [
