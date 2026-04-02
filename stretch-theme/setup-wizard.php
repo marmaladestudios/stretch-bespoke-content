@@ -59,17 +59,28 @@ if ($step === 1) {
     // ── STEP 2: Categories & Posts ──
     echo '<strong>Step 2: Creating categories & posts...</strong><br>';
 
+    require_once ABSPATH . 'wp-admin/includes/taxonomy.php';
+
     $cats = [];
     foreach (['Content Marketing', 'Ecommerce', 'SEO', 'AEO'] as $name) {
         $term = term_exists($name, 'category');
-        if ($term) { $cats[$name] = $term['term_id']; }
-        else { $cats[$name] = wp_create_category($name); }
+        if ($term) {
+            $cats[$name] = is_array($term) ? $term['term_id'] : $term;
+        } else {
+            $result = wp_insert_term($name, 'category');
+            if (is_wp_error($result)) {
+                echo "✗ Category failed: {$name} — " . $result->get_error_message() . "<br>";
+                $cats[$name] = 1; // fallback to Uncategorized
+            } else {
+                $cats[$name] = $result['term_id'];
+            }
+        }
         echo "✓ Category: {$name}<br>";
     }
 
     // Set AEO description
-    if (isset($cats['AEO'])) {
-        wp_update_term($cats['AEO'], 'category', ['description' => 'Answer Engine Optimization — strategies for getting your content cited by AI-powered search engines.']);
+    if (isset($cats['AEO']) && $cats['AEO'] > 1) {
+        wp_update_term(intval($cats['AEO']), 'category', ['description' => 'Answer Engine Optimization — strategies for getting your content cited by AI-powered search engines.']);
     }
 
     $posts = [
