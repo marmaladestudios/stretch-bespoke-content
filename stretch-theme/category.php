@@ -296,18 +296,23 @@ html, body { overflow-x: hidden; }
 }
 
 /* ========================================
-   2. TABLE OF CONTENTS — Right Sidebar
+   2. TABLE OF CONTENTS — Left Sidebar
    ======================================== */
 .hub-toc {
   position: fixed;
-  right: max(20px, calc((100vw - 780px) / 2 - 280px));
+  left: max(20px, calc((100vw - 780px) / 2 - 260px));
   top: 160px;
   width: 200px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  scrollbar-width: none;
   z-index: 50;
   opacity: 0;
   transition: opacity 0.3s;
 }
+.hub-toc::-webkit-scrollbar { display: none; }
 .hub-toc.visible { opacity: 1; }
+.admin-bar .hub-toc { top: 192px; }
 .hub-toc-label {
   font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
   text-transform: uppercase; letter-spacing: 2px; color: #bbb;
@@ -315,18 +320,18 @@ html, body { overflow-x: hidden; }
 }
 .hub-toc-list {
   list-style: none; padding: 0; margin: 0;
-  border-right: 2px solid #e8e8ec;
+  border-left: 2px solid #e8e8ec;
 }
 .hub-toc-item {
-  padding: 8px 16px 8px 0; text-align: right;
-  border-right: 2px solid transparent; margin-right: -2px;
+  padding: 8px 0 8px 16px; text-align: left;
+  border-left: 2px solid transparent; margin-left: -2px;
 }
 .hub-toc-item a {
   font-size: 13px; color: #999; text-decoration: none;
   font-family: 'Poppins', sans-serif; display: block; line-height: 1.4;
   transition: color 0.2s;
 }
-.hub-toc-item.active { border-right-color: #8560A8; }
+.hub-toc-item.active { border-left-color: #8560A8; }
 .hub-toc-item.active a { color: #8560A8; font-weight: 500; }
 .hub-toc-item a:hover { color: #8560A8; }
 @media (max-width: 1280px) { .hub-toc { display: none; } }
@@ -371,16 +376,99 @@ html, body { overflow-x: hidden; }
 }
 .hub-content-section .hub-section-body p:last-child { margin-bottom: 0; }
 
-/* Section divider */
-.hub-section-divider {
-  width: 60px; height: 3px; margin: 48px 0;
-  background: linear-gradient(90deg, #8560A8, #00BFF3);
-  border-radius: 2px;
-  opacity: 0; transform: scaleX(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  transform-origin: left center;
+/* Chapter headers */
+.hub-chapter { padding: 20px 0; }
+.hub-chapter-header {
+  margin: 80px 0 48px;
+  padding: 0;
+  text-align: center;
 }
-.hub-section-divider.visible { opacity: 1; transform: scaleX(1); }
+.hub-chapter-header:first-child { margin-top: 0; }
+.hub-chapter-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: #8560A8; display: block; margin-bottom: 8px;
+}
+.hub-chapter-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px; font-weight: 600;
+  color: #252C3A;
+}
+
+/* Pull quote */
+.hub-pullquote {
+  text-align: center;
+  margin: 40px -40px;
+  padding: 40px;
+  border-top: 2px solid rgba(133,96,168,0.12);
+  border-bottom: 2px solid rgba(133,96,168,0.12);
+}
+.hub-pullquote p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px; font-weight: 500;
+  color: #252C3A; line-height: 1.5;
+  font-style: italic; margin: 0;
+}
+.hub-pullquote p::before { content: '\201C'; color: #8560A8; }
+.hub-pullquote p::after { content: '\201D'; color: #8560A8; }
+
+/* Key points box */
+.hub-keypoints {
+  margin: 32px 0;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, rgba(133,96,168,0.06), rgba(0,191,243,0.04));
+  border-radius: 12px;
+  border: 1px solid rgba(133,96,168,0.08);
+}
+.hub-keypoints-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #8560A8; margin-bottom: 16px;
+}
+.hub-keypoints ol {
+  margin: 0; padding: 0 0 0 20px;
+}
+.hub-keypoints li {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; line-height: 1.6;
+  color: #323A51; margin-bottom: 8px;
+}
+.hub-keypoints li::marker { color: #8560A8; font-weight: 600; }
+
+/* Inline spoke link */
+.hub-inline-link {
+  margin-top: 16px;
+}
+.hub-inline-link a {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: #8560A8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.hub-inline-link a:hover { color: #00BFF3; }
+
+/* Pillar article tables */
+.hub-pillar-article table {
+  width: 100%; border-collapse: collapse;
+  margin: 24px 0; border-radius: 12px;
+  overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.hub-pillar-article table thead {
+  background: linear-gradient(135deg, #252C3A, #323A51);
+}
+.hub-pillar-article table thead th {
+  padding: 14px 20px; text-align: left;
+  font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500;
+  color: #fff; letter-spacing: 0.5px;
+}
+.hub-pillar-article table tbody td {
+  padding: 12px 20px; font-size: 15px;
+  border-bottom: 1px solid #f0f0f4;
+}
+.hub-pillar-article table tbody tr:hover { background: #f9f9fb; }
 
 /* ========================================
    SPOKE CARD — Inline Article Recommendation
@@ -597,6 +685,9 @@ html, body { overflow-x: hidden; }
   .hub-pillar-content { padding: 60px 0 40px; }
   .hub-pillar-article { padding: 0 24px; }
   .hub-content-section h2 { font-size: 26px; }
+  .hub-pullquote { margin: 32px -24px; padding: 32px 24px; }
+  .hub-pullquote p { font-size: 18px; }
+  .hub-chapter-title { font-size: 24px; }
   .hub-library { padding: 60px 0; }
   .hub-library h2 { font-size: 28px; }
   .hub-related { padding: 60px 0; }
@@ -652,17 +743,40 @@ html, body { overflow-x: hidden; }
      3. PILLAR CONTENT
      ============================ -->
 <section class="hub-section hub-pillar-content" id="hub-content">
-  <div class="hub-pillar-article">
 
     <?php if ($hub_intro) : ?>
-      <div class="hub-intro hub-reveal">
-        <?php echo wp_kses_post($hub_intro); ?>
+      <div class="hub-pillar-article">
+        <div class="hub-intro hub-reveal">
+          <?php echo wp_kses_post($hub_intro); ?>
+        </div>
       </div>
     <?php endif; ?>
 
-    <?php foreach ($sections as $si => $sec) :
+    <?php
+    $current_chapter = -1;
+    $chapter_bgs = ['#fff', '#f9f9fb', '#fff'];
+    $chapters = !empty($hub['chapters']) ? $hub['chapters'] : [];
+
+    foreach ($sections as $si => $sec) :
       $slug = !empty($sec['article_slug']) ? $sec['article_slug'] : '';
       $spoke = isset($spoke_posts[$slug]) ? $spoke_posts[$slug] : null;
+      $card_style = !empty($sec['card_style']) ? $sec['card_style'] : 'card';
+
+      // Check if we need a new chapter header
+      foreach ($chapters as $ci => $chapter) {
+        if (in_array($si, $chapter['sections']) && $ci !== $current_chapter) {
+          if ($current_chapter >= 0) echo '</div></div>'; // close previous chapter
+          $current_chapter = $ci;
+          $bg = isset($chapter_bgs[$ci]) ? $chapter_bgs[$ci] : '#fff';
+          echo '<div class="hub-chapter" style="background:' . esc_attr($bg) . ';">';
+          echo '<div class="hub-pillar-article">';
+          echo '<div class="hub-chapter-header hub-reveal">';
+          echo '<span class="hub-chapter-label">Part ' . ($ci + 1) . '</span>';
+          echo '<div class="hub-chapter-title">' . esc_html($chapter['title']) . '</div>';
+          echo '</div>';
+          break;
+        }
+      }
     ?>
       <div class="hub-content-section hub-reveal" id="hub-section-<?php echo $si; ?>">
         <h2><?php echo esc_html($sec['heading']); ?></h2>
@@ -670,31 +784,71 @@ html, body { overflow-x: hidden; }
           <?php echo wp_kses_post($sec['content']); ?>
         </div>
 
-        <?php if ($spoke) : ?>
-          <a href="<?php echo esc_url($spoke['permalink']); ?>" class="hub-spoke-card">
-            <div class="hub-spoke-card-img">
-              <?php if (!empty($spoke['thumbnail'])) : ?>
-                <img src="<?php echo esc_url($spoke['thumbnail']); ?>" alt="<?php echo esc_attr($spoke['title']); ?>">
-              <?php else : ?>
-                <div class="fallback-spoke">S</div>
-              <?php endif; ?>
+        <?php // Special element: table
+        if (!empty($sec['table'])) : ?>
+          <div class="hub-reveal">
+            <?php echo $sec['table']; ?>
+          </div>
+          <?php if (!empty($sec['content_after_table'])) : ?>
+            <div class="hub-section-body hub-reveal">
+              <?php echo wp_kses_post($sec['content_after_table']); ?>
             </div>
-            <div class="hub-spoke-card-content">
-              <div class="hub-spoke-card-label">Deep Dive</div>
-              <div class="hub-spoke-card-title"><?php echo esc_html($spoke['title']); ?></div>
-              <span class="hub-spoke-card-link">Read the full guide &rarr;</span>
-            </div>
-          </a>
+          <?php endif; ?>
+        <?php endif; ?>
+
+        <?php // Special element: pullquote
+        if (!empty($sec['pullquote'])) : ?>
+          <div class="hub-pullquote hub-reveal">
+            <p><?php echo wp_kses_post($sec['pullquote']); ?></p>
+          </div>
+        <?php endif; ?>
+
+        <?php // Additional content after special elements
+        if (!empty($sec['content_after'])) : ?>
+          <div class="hub-section-body hub-reveal">
+            <?php echo wp_kses_post($sec['content_after']); ?>
+          </div>
+        <?php endif; ?>
+
+        <?php // Special element: keypoints
+        if (!empty($sec['keypoints'])) : ?>
+          <div class="hub-keypoints hub-reveal">
+            <div class="hub-keypoints-label">Key Points</div>
+            <ol>
+              <?php foreach ($sec['keypoints'] as $kp) : ?>
+                <li><?php echo esc_html($kp); ?></li>
+              <?php endforeach; ?>
+            </ol>
+          </div>
+        <?php endif; ?>
+
+        <?php // Spoke card (varied style)
+        if ($spoke && $card_style !== 'none') :
+          if ($card_style === 'inline') : ?>
+            <p class="hub-inline-link hub-reveal"><?php echo html_entity_decode('&#x1F4D6;'); ?> <a href="<?php echo esc_url($spoke['permalink']); ?>">Read the full guide: <?php echo esc_html($spoke['title']); ?> &rarr;</a></p>
+          <?php else : ?>
+            <a href="<?php echo esc_url($spoke['permalink']); ?>" class="hub-spoke-card hub-reveal">
+              <div class="hub-spoke-card-img">
+                <?php if (!empty($spoke['thumbnail'])) : ?>
+                  <img src="<?php echo esc_url($spoke['thumbnail']); ?>" alt="<?php echo esc_attr($spoke['title']); ?>">
+                <?php else : ?>
+                  <div class="fallback-spoke">S</div>
+                <?php endif; ?>
+              </div>
+              <div class="hub-spoke-card-content">
+                <div class="hub-spoke-card-label">Deep Dive</div>
+                <div class="hub-spoke-card-title"><?php echo esc_html($spoke['title']); ?></div>
+                <span class="hub-spoke-card-link">Read the full guide &rarr;</span>
+              </div>
+            </a>
+          <?php endif; ?>
         <?php endif; ?>
       </div>
 
-      <?php if ($si < count($sections) - 1) : ?>
-        <div class="hub-section-divider hub-reveal"></div>
-      <?php endif; ?>
-
     <?php endforeach; ?>
 
-  </div>
+    <?php // Close last chapter
+    if ($current_chapter >= 0) echo '</div></div>'; ?>
 
   <div class="hub-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/></svg>
