@@ -56,15 +56,27 @@ function stretch_blog_category_rewrites() {
     add_rewrite_rule(
         'blog/([^/]+)/?$',
         'index.php?category_name=$matches[1]',
-        'bottom'
+        'top'
     );
     add_rewrite_rule(
         'blog/([^/]+)/page/([0-9]+)/?$',
         'index.php?category_name=$matches[1]&paged=$matches[2]',
-        'bottom'
+        'top'
     );
 }
 add_action('init', 'stretch_blog_category_rewrites');
+
+/**
+ * Flush rewrite rules when they change (version-gated).
+ */
+function stretch_maybe_flush_rewrites() {
+    $version = '2.0';
+    if (get_option('stretch_rewrite_version') !== $version) {
+        flush_rewrite_rules();
+        update_option('stretch_rewrite_version', $version);
+    }
+}
+add_action('init', 'stretch_maybe_flush_rewrites');
 
 /**
  * Enqueue styles and scripts.
