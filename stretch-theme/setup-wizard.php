@@ -587,11 +587,25 @@ if ($step === 1) {
     echo '<br><br><a href="?step=9" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 9: Seed Blog Posts →</a>';
 
 } elseif ($step === 9) {
-    // ── STEP 9: Seed Blog Posts from data/blog-posts.json ──
-    echo '<strong>Step 9: Seeding blog posts...</strong><br>';
+    // ── STEP 9: Seed Blog Posts from data/blog-posts.json (batched to avoid timeout) ──
 
-    @ini_set('max_execution_time', 600);
-    @set_time_limit(600);
+    // Disable output buffering / gzip so the user sees progress in real time
+    @ini_set('zlib.output_compression', 'Off');
+    @ini_set('output_buffering', 'Off');
+    @ini_set('implicit_flush', 1);
+    while (ob_get_level()) { ob_end_flush(); }
+    header('X-Accel-Buffering: no');
+    header('Content-Encoding: identity');
+
+    @ini_set('max_execution_time', 120);
+    @set_time_limit(120);
+
+    $batch_size   = 8; // posts per request; Render kills long-running HTTP requests
+    $skip_thumbs  = isset($_GET['skip_thumbs']) && $_GET['skip_thumbs'] === '1';
+    $batch        = isset($_GET['batch']) ? max(0, intval($_GET['batch'])) : 0;
+
+    echo '<strong>Step 9: Seeding blog posts (batch ' . ($batch + 1) . ')</strong><br>';
+    flush();
 
     require_once ABSPATH . 'wp-admin/includes/media.php';
     require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -605,7 +619,13 @@ if ($step === 1) {
         if (!is_array($posts_data)) {
             echo "✗ Failed to parse blog-posts.json<br>";
         } else {
-            $created = 0; $skipped = 0; $thumbs_ok = 0; $thumbs_fail = 0;
+            $total      = count($posts_data);
+            $start      = $batch * $batch_size;
+            $end        = min($start + $batch_size, $total);
+            $slice      = array_slice($posts_data, $start, $batch_size);
+
+            echo "Processing posts {$start}–" . ($end - 1) . " of {$total}" . ($skip_thumbs ? ' (skip thumbs)' : '') . "<br><br>";
+            flush();
 
             // Preload category term IDs
             $cat_ids = [];
@@ -617,10 +637,13 @@ if ($step === 1) {
 
             $uploads_base_url = rtrim(home_url('/'), '/');
 
-            foreach ($posts_data as $pd) {
+            $created = 0; $skipped = 0; $thumbs_ok = 0; $thumbs_fail = 0;
+
+            foreach ($slice as $pd) {
                 if (empty($pd['slug']) || empty($pd['title'])) continue;
                 if (get_page_by_path($pd['slug'], OBJECT, 'post')) {
                     $skipped++;
+                    echo "- Exists: {$pd['slug']}<br>"; flush();
                     continue;
                 }
 
@@ -641,50 +664,61 @@ if ($step === 1) {
                     'post_category' => $cat_term_ids,
                 ]);
 
-                if (is_wp_error($post_id) || !$post_id) { echo "✗ Failed: {$pd['slug']}<br>"; continue; }
+                if (is_wp_error($post_id) || !$post_id) {
+                    echo "✗ Failed: {$pd['slug']}<br>"; flush();
+                    continue;
+                }
 
                 if (!empty($pd['tags'])) wp_set_post_tags($post_id, $pd['tags']);
 
-                // Thumbnail sideload — try prod-host URL (in case uploads are synced),
-                // fallback to thumb_source (original Unsplash/etc URL) if provided.
-                $thumb_candidates = [];
-                if (!empty($pd['thumb_url'])) {
-                    // Rewrite localhost to prod host so prod's own uploads are tried
-                    $candidate = preg_replace('#^https?://[^/]+#', $uploads_base_url, $pd['thumb_url']);
-                    $thumb_candidates[] = $candidate;
-                }
-                if (!empty($pd['thumb_source'])) $thumb_candidates[] = $pd['thumb_source'];
+                // Thumbnail sideload (skipped when ?skip_thumbs=1)
+                if (!$skip_thumbs) {
+                    $thumb_candidates = [];
+                    if (!empty($pd['thumb_url'])) {
+                        $candidate = preg_replace('#^https?://[^/]+#', $uploads_base_url, $pd['thumb_url']);
+                        $thumb_candidates[] = $candidate;
+                    }
+                    if (!empty($pd['thumb_source'])) $thumb_candidates[] = $pd['thumb_source'];
 
-                foreach ($thumb_candidates as $url) {
-                    $tmp = download_url($url, 30);
-                    if (is_wp_error($tmp)) continue;
-                    $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
-                    $name = sanitize_title($pd['slug']) . '.' . $ext;
-                    $id = media_handle_sideload(['name' => $name, 'tmp_name' => $tmp], $post_id);
-                    if (is_wp_error($id)) { @unlink($tmp); continue; }
-                    set_post_thumbnail($post_id, $id);
-                    $thumbs_ok++;
-                    break;
-                }
-                if (empty($thumb_candidates) || (!get_post_thumbnail_id($post_id) && !empty($thumb_candidates))) {
-                    $thumbs_fail++;
+                    $got_thumb = false;
+                    foreach ($thumb_candidates as $url) {
+                        $tmp = download_url($url, 6); // short timeout — fail fast
+                        if (is_wp_error($tmp)) continue;
+                        $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
+                        $name = sanitize_title($pd['slug']) . '.' . $ext;
+                        $id = media_handle_sideload(['name' => $name, 'tmp_name' => $tmp], $post_id);
+                        if (is_wp_error($id)) { @unlink($tmp); continue; }
+                        set_post_thumbnail($post_id, $id);
+                        $got_thumb = true;
+                        $thumbs_ok++;
+                        break;
+                    }
+                    if (!empty($thumb_candidates) && !$got_thumb) $thumbs_fail++;
                 }
 
                 $created++;
                 echo "✓ {$pd['slug']}<br>";
-                // Flush output so the user sees progress
-                if (ob_get_level()) ob_flush();
                 flush();
             }
 
-            echo "<br><strong>Created:</strong> {$created} · <strong>Skipped (already exist):</strong> {$skipped}<br>";
-            echo "<strong>Thumbnails:</strong> {$thumbs_ok} downloaded · {$thumbs_fail} unavailable<br>";
+            echo "<br><strong>Batch summary:</strong> {$created} created · {$skipped} skipped · {$thumbs_ok} thumbs · {$thumbs_fail} thumb fails<br>";
+            flush();
+
+            $next_batch = $batch + 1;
+            $more = ($next_batch * $batch_size) < $total;
+
+            if ($more) {
+                $next_url = '?step=9&batch=' . $next_batch . ($skip_thumbs ? '&skip_thumbs=1' : '');
+                echo '<br><a href="' . esc_url($next_url) . '" id="nextBatch" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Continue: Batch ' . ($next_batch + 1) . ' →</a>';
+                echo '<br><br><em style="color:#999;">Auto-advancing in 2 seconds…</em>';
+                echo '<script>setTimeout(function(){ window.location.href = ' . json_encode($next_url) . '; }, 2000);</script>';
+            } else {
+                echo '<br><strong style="color:#28c840;font-size:18px;">✓ All posts seeded!</strong>';
+                echo '<br><br><a href="' . home_url('/blog/') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;font-weight:600;">View Blog →</a>';
+                echo '<br><br><em style="color:#999;">Remember to delete the Setup page and remove setup-wizard.php from the theme.</em>';
+            }
         }
     }
-
-    echo '<br><strong style="color:#28c840;font-size:18px;">✓ All setup complete!</strong>';
-    echo '<br><br><a href="' . home_url('/') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;font-weight:600;">View Your Site →</a>';
-    echo '<br><br><em style="color:#999;">Remember to delete this Setup page and remove setup-wizard.php from the theme.</em>';
 
 } else {
     echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 9 steps.</p>';
