@@ -79,6 +79,28 @@ if ($step === 1) {
     update_post_meta($bce_id, '_wp_page_template', 'page-bespoke-content-experience.php');
     echo "✓ Bespoke Content Experience (under /services/)<br>";
 
+    // Our Work (portfolio) page
+    $our_work = get_page_by_path('our-work');
+    $our_work_id = $our_work ? $our_work->ID : wp_insert_post([
+        'post_title'  => 'Our Work',
+        'post_name'   => 'our-work',
+        'post_type'   => 'page',
+        'post_status' => 'publish',
+    ]);
+    update_post_meta($our_work_id, '_wp_page_template', 'page-portfolio.php');
+    echo "✓ Our Work page<br>";
+
+    // Pricing page
+    $pricing = get_page_by_path('pricing');
+    $pricing_id = $pricing ? $pricing->ID : wp_insert_post([
+        'post_title'  => 'Pricing',
+        'post_name'   => 'pricing',
+        'post_type'   => 'page',
+        'post_status' => 'publish',
+    ]);
+    update_post_meta($pricing_id, '_wp_page_template', 'page-pricing.php');
+    echo "✓ Pricing page<br>";
+
     echo '<br><strong style="color:#28c840;">Step 1 complete!</strong>';
     echo '<br><br><a href="?step=2" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 2: Blog Posts →</a>';
 
@@ -89,12 +111,26 @@ if ($step === 1) {
     require_once ABSPATH . 'wp-admin/includes/taxonomy.php';
 
     $cats = [];
-    foreach (['Content Marketing', 'Ecommerce', 'SEO', 'AEO'] as $name) {
+    $category_defs = [
+        'AEO'               => 'Answer Engine Optimization — strategies and insights for getting your content cited by AI-powered search engines like ChatGPT, Gemini, and Perplexity.',
+        'Content Marketing' => 'Strategy, storytelling, and the craft of content that compounds over time.',
+        'SEO'               => 'Technical audits, ranking strategies, and SEO that stands up to Google updates.',
+        'Ecommerce'         => 'Content and optimization strategies built for online retail.',
+        'Generative AI'     => 'How AI is reshaping content creation, research, and brand discovery.',
+        'Video Content'     => 'Video marketing, YouTube SEO, and visual storytelling that converts.',
+        'Creative Dojo'     => 'Behind-the-scenes dispatches from the Stretch Creative studio.',
+    ];
+    foreach ($category_defs as $name => $description) {
         $term = term_exists($name, 'category');
         if ($term) {
             $cats[$name] = is_array($term) ? $term['term_id'] : $term;
+            // Update description if empty
+            $existing = get_term($cats[$name], 'category');
+            if ($existing && empty($existing->description)) {
+                wp_update_term($cats[$name], 'category', ['description' => $description]);
+            }
         } else {
-            $result = wp_insert_term($name, 'category');
+            $result = wp_insert_term($name, 'category', ['description' => $description]);
             if (is_wp_error($result)) {
                 echo "✗ Category failed: {$name} — " . $result->get_error_message() . "<br>";
                 $cats[$name] = 1; // fallback to Uncategorized
@@ -201,26 +237,57 @@ if ($step === 1) {
     $items = wp_get_nav_menu_items($primary_id);
     if ($items) foreach ($items as $item) wp_delete_post($item->ID, true);
 
+    // Top-level: Solutions
     $solutions_item_id = wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Solutions', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
 
-    // Bespoke Content Experience — child of Solutions, first position
-    $bce_page = get_page_by_path('services/bespoke-content-experience') ?: get_page_by_path('bespoke-content-experience');
-    if ($bce_page) {
-        wp_update_nav_menu_item($primary_id, 0, [
-            'menu-item-title'     => 'Bespoke Content Experience',
-            'menu-item-object'    => 'page',
-            'menu-item-object-id' => $bce_page->ID,
-            'menu-item-type'      => 'post_type',
-            'menu-item-parent-id' => $solutions_item_id,
-            'menu-item-status'    => 'publish',
-        ]);
+    // Solutions children (in display order)
+    $sol_children = [
+        ['Bespoke Content Experience', 'services/bespoke-content-experience', 'bespoke-content-experience'],
+        ['Content Writing',             'content-writing-at-any-scale',        null],
+        ['Content Strategy',            'content-strategy',                    null],
+        ['SEO Strategy & Services',     'seo_content_strategy_services',       null],
+        ['Paid Advertising',            'paid-advertising',                    null],
+        ['Graphic Design',              'graphic_design_services',             null],
+        ['Video & Photography',         'video-content-services',              null],
+    ];
+    foreach ($sol_children as $child) {
+        [$title, $primary_slug, $fallback_slug] = $child;
+        $child_page = get_page_by_path($primary_slug) ?: ($fallback_slug ? get_page_by_path($fallback_slug) : null);
+        if ($child_page) {
+            wp_update_nav_menu_item($primary_id, 0, [
+                'menu-item-title'     => $title,
+                'menu-item-object'    => 'page',
+                'menu-item-object-id' => $child_page->ID,
+                'menu-item-type'      => 'post_type',
+                'menu-item-parent-id' => $solutions_item_id,
+                'menu-item-status'    => 'publish',
+            ]);
+        } else {
+            echo "- Skipped nav child (page missing): {$title}<br>";
+        }
     }
 
+    // Top-level items
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Our Story', 'menu-item-url' => home_url('/about-stretch-creative/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Our Team', 'menu-item-url' => home_url('/the-team/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
+
+    // Our Work — link to page if it exists
+    $our_work_page = get_page_by_path('our-work');
+    if ($our_work_page) {
+        wp_update_nav_menu_item($primary_id, 0, [
+            'menu-item-title'     => 'Our Work',
+            'menu-item-object'    => 'page',
+            'menu-item-object-id' => $our_work_page->ID,
+            'menu-item-type'      => 'post_type',
+            'menu-item-status'    => 'publish',
+        ]);
+    } else {
+        wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Our Work', 'menu-item-url' => home_url('/our-work/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
+    }
+
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Blog', 'menu-item-url' => home_url('/blog/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Contact Us', 'menu-item-url' => home_url('/contact-stretch-creative/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom', 'menu-item-classes' => 'btn-primary nav-cta']);
-    echo "✓ Primary menu<br>";
+    echo "✓ Primary menu (Solutions dropdown + Our Work + Blog + Contact)<br>";
 
     foreach (['Solutions' => 'footer-1', 'Company' => 'footer-2', 'Stay Connected' => 'footer-3'] as $name => $loc) {
         $menu = wp_get_nav_menu_object($name);
@@ -493,12 +560,35 @@ if ($step === 1) {
         } catch (Exception $e) { echo "✗ Featured image failed<br>"; }
     }
 
+    echo '<br><strong style="color:#28c840;">Step 7 complete!</strong>';
+    echo '<br><br><a href="?step=8" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 8: AEO Hub Pillar →</a>';
+
+} elseif ($step === 8) {
+    // ── STEP 8: AEO Hub Pillar Content ──
+    echo '<strong>Step 8: Populating AEO hub pillar content...</strong><br>';
+
+    $aeo_hub_file = get_template_directory() . '/setup-aeo-hub.php';
+    if (!file_exists($aeo_hub_file)) {
+        echo "✗ setup-aeo-hub.php not found in theme<br>";
+    } else {
+        // setup-aeo-hub.php declares $aeo_hub and calls update_option at the end.
+        // Loading it here runs that same code.
+        $existing = get_option('stretch_hub_aeo');
+        include $aeo_hub_file;
+        $after = get_option('stretch_hub_aeo');
+        if ($after && !empty($after['headline'])) {
+            echo "✓ AEO hub content saved (" . count($after['sections'] ?? []) . " sections)<br>";
+        } else {
+            echo "✗ AEO hub option is empty — check setup-aeo-hub.php<br>";
+        }
+    }
+
     echo '<br><strong style="color:#28c840;font-size:18px;">✓ All setup complete!</strong>';
     echo '<br><br><a href="' . home_url('/') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;font-weight:600;">View Your Site →</a>';
     echo '<br><br><em style="color:#999;">Remember to delete this Setup page and remove setup-wizard.php from the theme.</em>';
 
 } else {
-    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 7 steps.</p>';
+    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 8 steps.</p>';
     echo '<p style="font-size:14px;color:#999;">Pages already created will be skipped.</p>';
     echo '<br><a href="?step=1" style="display:inline-block;background:#8560A8;color:#fff;padding:16px 36px;font-size:17px;text-decoration:none;">Start Setup: Step 1 →</a>';
 }
