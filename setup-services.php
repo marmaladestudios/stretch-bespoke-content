@@ -19,43 +19,51 @@ $services['content-writing-at-any-scale'] = [
     'offerings'   => [
         [
             'title'       => 'Blog Articles',
-            'description' => 'Informative, engaging blog posts written by subject-matter experts and optimized for search. Whether you need a steady stream of weekly posts or a one-time batch, our writers deliver publish-ready content that drives organic traffic and positions your brand as a thought leader.',
+            'description' => 'Get blog content that performs the way you want it to — educate or inspire, pitch or plug, teach or tempt. From thought leadership and lifestyle pieces to listicles and how-to\'s, we\'ll create blog articles that are helpful, accurate, and a pleasure to read.',
         ],
         [
             'title'       => 'Buying Guides',
-            'description' => 'Comprehensive, research-driven buying guides that help your customers make informed purchase decisions. We combine product expertise with SEO best practices to create guides that rank well and convert browsers into buyers.',
+            'description' => 'A perfect balance of romance copy to inspire and useful information to educate, a buying guide establishes your authority, builds trust, showcases your brand, and helps your customers choose just what they need.',
         ],
         [
             'title'       => 'User-Generated Content',
-            'description' => 'Authentic, relatable content that mirrors the voice of real customers. From product reviews to community-style posts, we create UGC-style content that builds trust and social proof for your brand.',
-        ],
-        [
-            'title'       => 'Ebooks & White Papers',
-            'description' => 'Long-form, authoritative content that establishes your expertise and generates leads. Our writers produce in-depth ebooks and white papers backed by research, data, and original insights that your audience will want to download and share.',
+            'description' => 'Build trust and credibility with user-generated content. Our UGC writers create super-engaging content — photos included — that sparks inspiration and a sense of community and helps influence purchases.',
         ],
         [
             'title'       => 'Expert-Written or Reviewed',
-            'description' => 'Content written or reviewed by credentialed experts in fields like health, finance, law, and technology. We match your content with qualified professionals to ensure accuracy, trustworthiness, and compliance with E-E-A-T standards.',
+            'description' => 'Expertise, experience, authoritativeness, and trust (E-E-A-T) is everything when you\'re writing what Google calls "Your Money, Your Life" (YMYL) content — medical, financial, and other important topics that do best when they\'re written or reviewed by a credentialed expert. Byline included.',
         ],
         [
             'title'       => 'Product Descriptions',
-            'description' => 'Persuasive, SEO-friendly product descriptions that highlight key features and benefits. Whether you have 50 SKUs or 50,000, we scale our writing teams to deliver consistent, on-brand copy that drives conversions.',
+            'description' => 'The almighty product description is often the very last thing a visitor sees before they ADD TO CART (or leave the page), so they gotta be good: engaging, informative, accurate, and on-brand. Leave it to Stretch to write spectacular product descriptions that help drive sales.',
         ],
         [
             'title'       => 'Product Listing Pages',
-            'description' => 'Optimized product listing and category pages that improve discoverability and guide shoppers through your catalog. We write compelling copy that balances SEO requirements with a seamless user experience.',
+            'description' => 'Product listing pages — aka category landing pages or "bottom copy" — give your customers loads of helpful information to inform their purchasing decisions, whatever their funnel position. We\'ll convince them they\'re making the right choice, or help them find exactly what they\'re looking for.',
         ],
         [
             'title'       => 'Email & Social Content',
-            'description' => 'Engaging email campaigns, newsletters, and social media copy that nurture leads and keep your audience connected. We write content tailored to each platform and stage of the customer journey.',
+            'description' => 'Getting people to open, read, and act on your emails — or like and share your social posts — is like pulling teeth if your content is as painful to read as a root canal. Email and social media are very special birds, and we\'re fluent in their subtle, musical language.',
         ],
         [
-            'title'       => 'Google Ads, Banners & Landing Pages',
-            'description' => 'High-converting ad copy, banner text, and landing page content designed to maximize click-through and conversion rates. We write concise, action-oriented messaging that aligns with your campaign goals and brand voice.',
+            'title'       => 'Photo Sourcing',
+            'description' => 'We\'ll find and acquire images for use in your content — from your internal database, free or paid stock photo libraries, or other sources — fully licensed and ready to ship.',
         ],
         [
-            'title'       => 'Website Copy',
-            'description' => 'Clear, compelling website copy that communicates your value proposition and guides visitors toward action. From homepages to service pages, we craft messaging that reflects your brand and resonates with your target audience.',
+            'title'       => 'Expert Review',
+            'description' => 'Our roster of credentialed experts in fields like health, finance, and law will review the content we produce. An expert-reviewed byline gives the piece more authority in the eyes of search engines and your readers.',
+        ],
+        [
+            'title'       => 'Incorporate Interview',
+            'description' => 'Have an existing interview transcript? We\'ll turn it into a Q&A blog or pull the best quotes into a feature piece — making your subject-matter expertise work harder.',
+        ],
+        [
+            'title'       => 'Conduct Expert Interviews',
+            'description' => 'We\'ll interview your stakeholders for you. We write the questions, run the video conference, and turn the transcript into publish-ready content.',
+        ],
+        [
+            'title'       => 'Create Editorial Briefs',
+            'description' => 'Hand us your keyword and SEO research and we\'ll build editorial briefs that give writers a clear roadmap to high-performing content — angle, structure, sources, and voice all spelled out.',
         ],
     ],
     'why_heading' => 'Why Stretch?',
@@ -108,40 +116,44 @@ $services['content-writing-at-any-scale'] = [
 // 2. SEO & Content Strategy Services
 // ============================================================
 $services['seo_content_strategy_services'] = [
-    'headline'    => 'SEO & Content Strategy Services',
-    'subheadline' => "Google's message on SEO is crystal clear: No matter how 'optimized' your content is, it won't perform to its potential if it isn't fundamentally helpful to begin with.",
+    'headline'    => 'SEO Strategy & Services',
+    'subheadline' => "From detailed enterprise audits and rank tracking to SEO-Lite for smaller brands, our services flex to what you actually need — so you only pay for the work that moves the needle.",
     'offerings'   => [
         [
             'title'       => 'Keyword Research',
-            'description' => 'We identify the highest-value keywords for your business using advanced tools and competitive analysis. Our research goes beyond search volume — we evaluate intent, difficulty, and opportunity to build a keyword strategy that drives qualified traffic to your site.',
-        ],
-        [
-            'title'       => 'Content Strategy',
-            'description' => 'A comprehensive content roadmap aligned with your business goals, audience needs, and SEO opportunities. We plan topic clusters, content types, publishing cadences, and distribution strategies that work together to grow your organic footprint.',
+            'description' => 'Success in SEO starts with the right keywords. Our SEO team does a deep dive into your niche to uncover the keywords most relevant to your audience. We pay attention to context, search intent, and the story the keywords tell.',
         ],
         [
             'title'       => 'SEO Content Briefs',
-            'description' => 'Detailed, data-driven briefs that set your writers up for success. Each brief includes target keywords, search intent analysis, competitive benchmarks, recommended structure, and specific guidance to ensure every piece of content is optimized from the start.',
+            'description' => 'Success in SEO starts with the right keywords and a solid strategy — but it doesn\'t end there. We\'ll take your keywords (or do the research for you) and create editorial briefs that help our writers produce comprehensive, reader-friendly articles that are genuinely helpful and authentically authoritative.',
+        ],
+        [
+            'title'       => 'On-Page Optimization',
+            'description' => 'Title tags, meta descriptions, header hierarchy, internal linking, schema markup, and content structure — optimized across every page that matters. We handle the detail work that separates pages that rank from pages that sit on page two.',
         ],
         [
             'title'       => 'Audits & Analyses',
-            'description' => 'Thorough audits of your existing content and SEO performance. We analyze your site architecture, content gaps, technical issues, and competitive landscape to identify quick wins and long-term strategic opportunities.',
+            'description' => 'Our internal SEO team provides insight and expert advice on improving the performance of your website and your content. Whatever information you need, we can deliver it with audits like a standalone keyword gap analysis, a link audit, or keyword performance tracking.',
         ],
         [
             'title'       => 'Article Optimizations & Rewrites',
-            'description' => 'Breathe new life into underperforming content. We optimize existing articles with updated keywords, improved structure, fresh information, and enhanced readability — often yielding significant ranking improvements without starting from scratch.',
+            'description' => 'If your existing content is a little rough around the edges — or it was last updated in 2015 — leave it to us to dust off the cobwebs and give it the head-to-toe SEO treatment, plus a good, old-fashioned spit-shine to clean it up and make it current, cohesive, relevant, and results-oriented.',
         ],
         [
             'title'       => 'A/B Testing',
-            'description' => 'Data-driven experimentation to find what resonates with your audience. We test headlines, meta descriptions, content formats, CTAs, and page layouts to continuously improve your click-through rates and conversions.',
+            'description' => 'Not sure why your content isn\'t performing? We\'ll help you gain insight into user behavior with A/B testing, then work with you to refine your site\'s UX and improve content for a more satisfying experience and better search results.',
         ],
         [
-            'title'       => 'CMS Loading & Optimizing',
-            'description' => 'We handle the entire content loading process — from formatting and tagging to image optimization and metadata setup. Your content goes live publish-ready, with proper schema markup, internal linking, and technical SEO best practices baked in.',
+            'title'       => 'SEO-Lite for Small Brands',
+            'description' => "Enterprise-grade SEO is overkill for most small and mid-sized brands. Our SEO-Lite offering delivers the essentials — foundational audits, targeted keyword work, on-page fundamentals, and light-touch reporting — at a price point that actually fits a lean marketing budget.",
+        ],
+        [
+            'title'       => 'Rank Tracking & Reporting',
+            'description' => "Transparent, business-focused reporting on the keywords and pages that matter to your revenue. We track rankings, organic traffic, click-through rates, and conversions — then translate the data into clear recommendations on what to do next.",
         ],
     ],
     'why_heading' => 'Why Stretch?',
-    'why_intro'   => "Our SEO experts know the ins and outs of keyword research and data analysis. Our editorial team is tuned into the human ethos and user experience. Together, they're a perfect balance of science and art.",
+    'why_intro'   => "Our SEO experts know the ins and outs of keyword research and data analysis. Our editorial team is tuned into the human ethos and user experience. Together, they're a perfect balance of science and art — and they scale from SEO-Lite engagements to full enterprise programs.",
     'benefits'    => [
         [
             'title'       => 'SEO at Any Scale',
@@ -206,36 +218,20 @@ $services['graphic_design_services'] = [
     'subheadline' => "Increase trust, engagement, and brand recognition with design that's always on-brand.",
     'offerings'   => [
         [
-            'title'       => 'Infographics & Illustration',
-            'description' => 'Custom infographics and illustrations that transform complex data and concepts into visually compelling, shareable assets. Our designers work with your content team to distill key messages into graphics that enhance understanding and drive engagement.',
-        ],
-        [
-            'title'       => 'Social Media Carousels',
-            'description' => 'Scroll-stopping carousel designs optimized for Instagram, LinkedIn, and other social platforms. Each carousel is crafted to tell a story, educate your audience, or showcase products in a format that maximizes engagement and shares.',
-        ],
-        [
-            'title'       => 'Product Photography',
-            'description' => 'Professional product photography that showcases your items in the best light. From clean e-commerce shots on white backgrounds to styled lifestyle contexts, we capture images that build trust and drive purchase decisions.',
-        ],
-        [
-            'title'       => 'Lifestyle Photography',
-            'description' => 'Authentic lifestyle photography that tells your brand story and connects with your audience emotionally. We plan and execute photo shoots that show your products or services in real-world settings, creating aspirational imagery for your marketing.',
-        ],
-        [
-            'title'       => 'Cartoons',
-            'description' => 'Original cartoon illustrations that add personality and approachability to your brand communications. Whether for blog posts, social media, or internal communications, custom cartoons make your content memorable and distinctly yours.',
-        ],
-        [
-            'title'       => 'Publication Design',
-            'description' => 'Professional layout and design for ebooks, white papers, reports, magazines, and other long-form publications. We create polished, on-brand documents that elevate your content and make a strong impression on your audience.',
+            'title'       => 'Infographics & Illustrations',
+            'description' => 'Our talented designers turn complicated data or ideas into relatable, visually appealing graphics to inform, inspire, and educate your audience.',
         ],
         [
             'title'       => 'Logos & Icons',
-            'description' => 'Distinctive logo designs and custom icon sets that strengthen your visual brand identity. From brand-new logos to icon libraries for your website and app, we create cohesive visual assets that work across every touchpoint.',
+            'description' => 'Increase brand recognition and enhance your content and credibility with graphics like logos and icons for your website, blog articles, or other assets.',
         ],
         [
-            'title'       => 'Photo Sourcing',
-            'description' => 'Expert photo sourcing and curation when custom photography isn\'t needed. We search premium stock libraries and select images that feel authentic and on-brand — no generic stock art. Every image is licensed, optimized, and ready to use.',
+            'title'       => 'Social Media Carousels',
+            'description' => 'Scroll-stopping carousel designs optimized for Instagram, LinkedIn, and other social platforms — crafted to tell a story, educate your audience, or showcase products in a format that maximizes engagement.',
+        ],
+        [
+            'title'       => 'Publication Design',
+            'description' => 'Professional layout and design for ebooks, white papers, reports, and long-form publications. Polished, on-brand documents that elevate your content and make a strong impression.',
         ],
     ],
     'why_heading' => 'Why Stretch?',
@@ -296,36 +292,60 @@ $services['graphic_design_services'] = [
 // 4. Video Content Services
 // ============================================================
 $services['video-content-services'] = [
-    'headline'    => 'Video Content Services',
-    'subheadline' => "Cut out the middlemen, and pay less for more. Our in-house Creative Director is an executive producer and storytelling mastermind with a cinematic eye and 30 years of experience.",
+    'headline'    => 'Video & Photography Production',
+    'subheadline' => "Cut out the middlemen, and pay less for more. Our in-house Creative Director brings 30 years of experience to every shoot — video or photography — for a cinematic eye and a streamlined crew you can actually afford.",
     'offerings'   => [
         [
             'title'       => 'Brand Stories',
-            'description' => 'Cinematic brand films that capture your company\'s mission, values, and unique story. We produce polished, emotionally resonant videos that connect with your audience on a human level and differentiate your brand in a crowded market.',
+            'description' => 'Let us tell your brand story — ideated, written, and produced with keen attention to your vibe, values, and vision. We\'ll help turn your ideas into a solid concept and shoot a sleek, cinematic production you\'ll be proud to share far and wide.',
         ],
         [
             'title'       => 'Corporate Video Services',
-            'description' => 'Professional corporate videos for training, internal communications, investor relations, and recruitment. We bring the same production quality and storytelling craft to corporate work that we apply to consumer-facing content.',
-        ],
-        [
-            'title'       => 'Documentaries',
-            'description' => 'Long-form documentary content that dives deep into your brand story, industry, or cause. Our documentary team handles everything from research and pre-production through filming, editing, and distribution — creating compelling narratives that build authority and trust.',
+            'description' => 'Get your message across with expert visual storytelling, complete with hooks that draw in and engage any audience. We\'ll produce interesting videos to highlight your company\'s achievements for investors, create training videos for new hires, or explainer videos for sales and marketing.',
         ],
         [
             'title'       => 'TV Advertisements',
-            'description' => 'Broadcast-quality TV commercials that capture attention and drive action. From concept and scripting through production and post, we create ads that deliver your message with impact and meet all broadcast specifications.',
+            'description' => 'Television commercials have a lot of moving parts that traditionally involve a slew of decision-makers and creators — and that\'s why they\'re generally so expensive. We streamline the TV ad process by cutting out the various middle people and creating your commercials entirely in-house, from ideation and scriptwriting to pre- and post-production.',
         ],
         [
-            'title'       => 'Interviews',
-            'description' => 'Professionally produced interview content featuring executives, customers, thought leaders, or subject-matter experts. We handle everything from question development and lighting setup to multi-camera filming and polished editing.',
+            'title'       => 'Social Media Ads',
+            'description' => 'Our smart, clever copywriters and talented video production team create fun, shareable social media posts and ads designed to convert — and to be remembered. We\'ll run with your concept or put our heads together to come up with ideas you can take back to your team. However we roll, we\'ll do it in close collaboration with your marketing department.',
         ],
         [
-            'title'       => 'Social Media Advertisements',
-            'description' => 'Thumb-stopping social video ads optimized for every platform — Instagram Reels, TikTok, YouTube Shorts, Facebook, and LinkedIn. We create platform-native content with the right aspect ratios, pacing, and hooks to maximize engagement and ROAS.',
+            'title'       => 'Documentaries',
+            'description' => 'Telling real stories of real people, our documentaries are a blend of emotion, information, and inspiration.',
         ],
         [
             'title'       => 'Motion Graphics & Animation',
-            'description' => 'Eye-catching motion graphics and animation that bring abstract concepts to life. From animated explainers and logo reveals to data visualizations and kinetic typography, we create dynamic visual content that elevates your brand.',
+            'description' => 'Make your corporate video or brand story more informative or entertaining with customized motion graphics or animations. Repurpose these moving bits for social media or email campaigns to maximize your marketing dollars.',
+        ],
+        [
+            'title'       => 'Interviews',
+            'description' => 'Give your employees, stakeholders, or customers a voice with interview videos that get to the heart of the matter. We\'ll dispatch a local videographer to capture the footage and then bring it in-house to turn it into a production worthy of any distribution channel. We can even repurpose it into blog posts or sound bites — or incorporate the footage into other visual assets.',
+        ],
+        [
+            'title'       => 'Pre-Production',
+            'description' => 'May include ideating, scriptwriting, talent and location scouting, storyboarding, and more — everything that needs to happen before the cameras roll.',
+        ],
+        [
+            'title'       => 'Production',
+            'description' => 'Includes all aspects of shooting the video — from direction and lighting to sound and sets to talent management.',
+        ],
+        [
+            'title'       => 'Post-Production',
+            'description' => 'May include trimming clips, adding transitions and special effects, enhancing audio levels, and adding titles, sub-titles, animations, or moving graphics to create a cohesive and engaging final product.',
+        ],
+        [
+            'title'       => 'Video Interviewing',
+            'description' => 'We\'ll film an interview with your subject, either remotely or in person, no matter where they\'re located. We\'ll edit it as you like or break it into snippets for use on a website or social media. The transcript can be used to create blog posts.',
+        ],
+        [
+            'title'       => 'Product Photography',
+            'description' => 'Exceptional product photography is the backbone of a successful e-comm. We\'ll capture the essence of your products and highlight their features with stunning visuals that leave a lasting impression.',
+        ],
+        [
+            'title'       => 'Lifestyle Photography',
+            'description' => 'Leave it to our photographers to capture real moments that highlight the authenticity of your brand and connect with your audience in a memorable way.',
         ],
     ],
     'why_heading' => 'Why Stretch?',
@@ -370,6 +390,195 @@ $services['video-content-services'] = [
         [
             'question' => 'Can you create video content for social media specifically?',
             'answer'   => 'Absolutely. Social-first video is one of our specialties. We produce platform-native content optimized for Instagram Reels, TikTok, YouTube Shorts, LinkedIn, and Facebook — with the right aspect ratios, pacing, captions, and hooks that each platform demands. We can also repurpose longer-form content into social-ready cuts.',
+        ],
+    ],
+];
+
+
+// ============================================================
+// 5. Content Strategy
+// ============================================================
+$services['content-strategy'] = [
+    'headline'    => 'Content Strategy That Drives Results',
+    'subheadline' => "Whether you're starting from zero or scaling what's already working, we plug in wherever you need strategic support — from SEO-backed roadmaps to winning editorial briefs.",
+    'offerings'   => [
+        [
+            'title'       => 'Content Roadmaps',
+            'description' => 'A full content roadmap built from audience research, competitive analysis, and SEO opportunity — with clear topic clusters, formats, and cadences mapped against your business goals.',
+        ],
+        [
+            'title'       => 'Editorial Content Briefs',
+            'description' => 'Thorough briefs that set writers up to win. We define angle, audience, key points, sources, and structure so every piece lands in your voice and performs in search.',
+        ],
+        [
+            'title'       => 'Audience & Persona Research',
+            'description' => 'Deep qualitative and quantitative research to understand who you are writing for, what they care about, and how to earn their attention at each stage of the journey.',
+        ],
+        [
+            'title'       => 'Content Audits',
+            'description' => 'A clear-eyed look at what you have live today — what is performing, what should be optimized, what should be consolidated, and what should be retired.',
+        ],
+        [
+            'title'       => 'Channel Strategy',
+            'description' => 'Decide where your content should live and how it should travel — blog, social, email, owned properties — with a plan for amplification, not just publication.',
+        ],
+        [
+            'title'       => 'Editorial Calendar Management',
+            'description' => 'We run the calendar: topic intake, prioritization, assignment, deadline tracking, and publishing cadence — so nothing slips and every month moves the strategy forward.',
+        ],
+        [
+            'title'       => 'Topic Cluster Architecture',
+            'description' => 'Pillar-and-cluster frameworks that build topical authority and internal linking equity, designed to compound organic performance over time.',
+        ],
+        [
+            'title'       => 'User Journey Mapping',
+            'description' => 'Let us map your entire customer journey across all digital touchpoints, from initial brand interaction through to purchasing decisions — so your content meets readers where they actually are.',
+        ],
+        [
+            'title'       => 'Marketing Position',
+            'description' => 'We\'ll conduct a competitor and market review to help inform your go-to-market strategy, tone of voice, and launch campaign approach.',
+        ],
+        [
+            'title'       => 'Product Naming',
+            'description' => 'Our creatives will give your products the best names ever — names that stick, tell a story, and survive a trademark search.',
+        ],
+    ],
+    'why_heading' => 'Why Stretch?',
+    'why_intro'   => "Strategy without execution is a document. We sit at the intersection of research, editorial, and SEO — so the strategy we build is the one your team can actually ship.",
+    'benefits'    => [
+        [
+            'title'       => 'Rooted in Research',
+            'description' => 'Every recommendation is backed by data — keyword research, SERP analysis, audience insights, and content performance — not gut instinct or template frameworks.',
+        ],
+        [
+            'title'       => 'Plug In Where You Need',
+            'description' => "Start from scratch, audit what exists, or jump into the middle of an active program — we scope the engagement to match the gap you're trying to fill.",
+        ],
+        [
+            'title'       => 'SEO-Integrated',
+            'description' => 'Our strategists and SEO team sit together. The strategy you get is already optimized for discovery, not bolted onto an SEO plan after the fact.',
+        ],
+        [
+            'title'       => 'Built to Execute',
+            'description' => 'Everything we deliver is actionable — briefs writers can pick up, calendars editors can run, frameworks designers can build against. No shelf-ware.',
+        ],
+    ],
+    'stats' => [
+        ['label' => 'Approach', 'value' => 'Custom', 'suffix' => ''],
+        ['label' => 'Integration', 'value' => 'SEO + Editorial', 'suffix' => ''],
+        ['label' => 'Strategists', 'value' => 'Senior', 'suffix' => ''],
+        ['label' => 'Delivery', 'value' => 'Actionable', 'suffix' => ''],
+    ],
+    'faqs' => [
+        [
+            'question' => 'Can you build a content strategy from scratch?',
+            'answer'   => 'Yes. We start with a discovery deep-dive, run competitive and keyword research, and build a content strategy from the ground up — including audience definition, topic clusters, channel mix, and editorial cadence.',
+        ],
+        [
+            'question' => 'Can you work with a strategy we already have?',
+            'answer'   => 'Absolutely. We regularly plug into existing programs — auditing the current strategy, identifying gaps, and either filling them ourselves or arming your team with the frameworks and briefs to execute better.',
+        ],
+        [
+            'question' => "What's included in your editorial briefs?",
+            'answer'   => 'Target keyword and search intent, recommended angle, working title, reader takeaways, required sources, structural recommendations, internal linking opportunities, and voice/tone notes — everything a writer needs to deliver a publish-ready draft.',
+        ],
+        [
+            'question' => 'How long until we see results from a new strategy?',
+            'answer'   => 'Content strategy is a long game. Expect early signals — better briefs, more aligned output, reduced rework — within the first 30-60 days. Organic traffic improvements typically compound over 3 to 9 months depending on domain authority and publishing velocity.',
+        ],
+        [
+            'question' => 'Do you support execution or just strategy?',
+            'answer'   => 'Both. Some clients hire us for the strategy layer only; others want us to execute it through writing, design, and video. We scale up or down based on what your team needs — and what your team already has covered.',
+        ],
+    ],
+];
+
+// ============================================================
+// 6. Paid Advertising
+// ============================================================
+$services['paid-advertising'] = [
+    'headline'    => 'Paid Advertising That Actually Converts',
+    'subheadline' => "Stop wasting money on ads that miss the mark. We build and run Google, Meta, and social campaigns that reach your audience, boost conversions, and grow your revenue.",
+    'offerings'   => [
+        [
+            'title'       => 'Google Search Ads',
+            'description' => 'Intent-driven campaigns built around the keywords your customers actually use. We structure accounts for efficiency, write ad copy that earns the click, and manage bids to maximize every dollar.',
+        ],
+        [
+            'title'       => 'Google Display & YouTube',
+            'description' => 'Awareness and retargeting across the Google Display Network and YouTube. We pair smart audience targeting with on-brand creative to drive qualified impressions at efficient CPMs.',
+        ],
+        [
+            'title'       => 'Meta Ads (Facebook & Instagram)',
+            'description' => 'Full-funnel Meta campaigns from prospecting to retargeting. We handle audience research, creative direction, copywriting, and optimization — all in one place.',
+        ],
+        [
+            'title'       => 'LinkedIn Ads',
+            'description' => 'B2B campaigns tuned for decision-makers. We target by role, industry, and account, then build message variants that speak to each buyer stage.',
+        ],
+        [
+            'title'       => 'Retargeting Campaigns',
+            'description' => 'Bring back the visitors who already know you. We build sophisticated retargeting audiences and sequenced messaging that moves warm traffic toward conversion.',
+        ],
+        [
+            'title'       => 'Ad Creative & Copy',
+            'description' => 'Static, video, carousel — our in-house design and writing teams produce platform-native creative variants built for testing. No subcontractors, no handoff gaps.',
+        ],
+        [
+            'title'       => 'Landing Page Optimization',
+            'description' => "Ads don't fail in isolation — the landing page is half the equation. We audit, redesign, and test landing pages to close the gap between click and conversion.",
+        ],
+        [
+            'title'       => 'Reporting & Insights',
+            'description' => 'Weekly or monthly reporting tied to the metrics that matter to your business — CAC, ROAS, pipeline, revenue — not vanity metrics dressed up as performance.',
+        ],
+    ],
+    'why_heading' => 'Why Stretch?',
+    'why_intro'   => "Most paid shops treat creative and media as separate disciplines — and your CAC pays the price. We run them together, which is exactly why our campaigns compound.",
+    'benefits'    => [
+        [
+            'title'       => 'Creative + Media Under One Roof',
+            'description' => 'Your writers, designers, videographers, and media buyers are on the same team — so creative iterates as fast as the data demands, with no agency ping-pong.',
+        ],
+        [
+            'title'       => 'Transparent Reporting',
+            'description' => "You see the account. You see the spend. You see what's working. No black-box dashboards, no mystery line items — just clear reporting tied to your goals.",
+        ],
+        [
+            'title'       => 'Built for ROI',
+            'description' => "We optimize for business outcomes, not platform metrics. If an ad looks great but isn't converting, we kill it. If a scrappy variant is winning, we scale it.",
+        ],
+        [
+            'title'       => 'Always Testing',
+            'description' => 'Paid only stays efficient if you keep testing. We run structured creative and audience tests every cycle — so performance moves up instead of decaying over time.',
+        ],
+    ],
+    'stats' => [
+        ['label' => 'Platforms', 'value' => '6', 'suffix' => '+'],
+        ['label' => 'Reporting', 'value' => 'Transparent', 'suffix' => ''],
+        ['label' => 'Creative', 'value' => 'In-House', 'suffix' => ''],
+        ['label' => 'Focus', 'value' => 'ROI', 'suffix' => ''],
+    ],
+    'faqs' => [
+        [
+            'question' => 'What platforms do you run ads on?',
+            'answer'   => 'Google (Search, Display, YouTube, Performance Max), Meta (Facebook, Instagram), LinkedIn, TikTok, and Reddit. We recommend platforms based on where your audience actually converts — not which ones the agency is comfortable with.',
+        ],
+        [
+            'question' => 'Do you handle creative too, or just media buying?',
+            'answer'   => 'Both. Our writers, designers, and video team produce ad creative in-house, which is why we can iterate weekly instead of every few months. You get creative and media as one integrated engagement.',
+        ],
+        [
+            'question' => "What's the minimum ad spend you'll work with?",
+            'answer'   => 'It depends on the platform and objective, but we generally recommend a minimum of $5K/month in working media to see meaningful results. We can scope smaller engagements for specific campaigns or testing windows.',
+        ],
+        [
+            'question' => 'How do you report on performance?',
+            'answer'   => 'Weekly Loom walkthroughs or monthly live reviews, depending on your preference. Every report ties spend to outcomes that matter to your business — conversions, pipeline, revenue, CAC, ROAS — with clear recommendations on what to scale, cut, or test next.',
+        ],
+        [
+            'question' => 'Who owns the ad accounts?',
+            'answer'   => 'You do. Always. We run in your ad accounts and tracking, so if we ever part ways, you keep the data, the creative, the pixels, and the learnings. No hostage accounts.',
         ],
     ],
 ];
