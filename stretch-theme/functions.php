@@ -42,10 +42,12 @@ function stretch_fix_blog_rewrites() {
 add_action('init', 'stretch_fix_blog_rewrites');
 
 /**
- * Rewrite category URLs from /category/slug/ to /blog/slug/
+ * Rewrite category URLs from /blog/category/slug/ to /blog/slug/
+ * (category_structure is /blog/category/%category%, so we strip the
+ * redundant /category/ segment rather than introducing a second /blog/).
  */
 function stretch_category_link($link, $term_id) {
-    return str_replace('/category/', '/blog/', $link);
+    return str_replace('/blog/category/', '/blog/', $link);
 }
 add_filter('category_link', 'stretch_category_link', 10, 2);
 
@@ -182,4 +184,62 @@ function stretch_section_classes() {
         'id'    => $id ? esc_attr($id) : '',
         'style' => get_sub_field('custom_background_color') ? 'background-color:' . esc_attr(get_sub_field('custom_background_color')) . ';' : '',
     ];
+}
+
+
+/**
+ * Curated portfolio items keyed for filtering.
+ * Single source of truth used by /our-work/ and the inline
+ * "Selected Work" strip on service sub-pages.
+ */
+function stretch_get_portfolio() {
+    return [
+        // Writing
+        ['id' => 2939, 'client' => 'Paperless Post',     'category' => 'writing', 'subcat' => 'Blog Article'],
+        ['id' => 2940, 'client' => 'Etsy',                'category' => 'writing', 'subcat' => 'Product Listing Pages'],
+        ['id' => 2941, 'client' => 'Walgreens',           'category' => 'writing', 'subcat' => 'Expert-Written Content'],
+        ['id' => 2942, 'client' => 'Grove Co',            'category' => 'writing', 'subcat' => 'User-Generated Content'],
+        ['id' => 2943, 'client' => 'Grove Collaborative', 'category' => 'writing', 'subcat' => 'User-Generated Content'],
+        ['id' => 2944, 'client' => 'Brixton × Coors',     'category' => 'writing', 'subcat' => 'Email Marketing'],
+        ['id' => 2945, 'client' => 'Reef',                'category' => 'writing', 'subcat' => 'Social Media'],
+        ['id' => 2946, 'client' => 'Reef',                'category' => 'writing', 'subcat' => 'Social Media'],
+
+        // Graphic Design
+        ['id' => 2949, 'client' => 'Intuit QuickBooks',   'category' => 'design',  'subcat' => 'Infographic'],
+        ['id' => 2950, 'client' => 'Remitly',             'category' => 'design',  'subcat' => 'Infographic'],
+
+        // Video & Photography
+        ['id' => 2947, 'client' => 'Meyer\'s Clean Day',  'category' => 'video',   'subcat' => 'Product Photography'],
+        ['id' => 2948, 'client' => 'Meyer\'s Clean Day',  'category' => 'video',   'subcat' => 'Lifestyle Photography'],
+        ['id' => 2951, 'client' => 'WeWork',              'category' => 'video',   'subcat' => 'Lifestyle Photography'],
+        ['id' => 2952, 'client' => 'Vicis',               'category' => 'video',   'subcat' => 'Brand Story',      'vimeo' => '900872814'],
+        ['id' => 2953, 'client' => 'Open Road',           'category' => 'video',   'subcat' => 'Corporate Video',  'vimeo' => '875315890'],
+        ['id' => 2954, 'client' => 'Family Flowers',      'category' => 'video',   'subcat' => 'Documentary',      'vimeo' => '875333898'],
+        ['id' => 2955, 'client' => 'NHL',                 'category' => 'video',   'subcat' => 'TV Advertisement', 'vimeo' => '875337016'],
+        ['id' => 2956, 'client' => 'Monster Energy',      'category' => 'video',   'subcat' => 'Social Media Ad',  'vimeo' => '875314882'],
+    ];
+}
+
+/**
+ * Map a service-page slug to a list of portfolio attachment IDs
+ * to feature in the inline "Selected Work" strip. Empty array hides the strip.
+ */
+function stretch_get_portfolio_for_service($slug) {
+    $map = [
+        'content-writing-at-any-scale'  => [2939, 2940, 2941, 2942, 2944, 2945],
+        'graphic_design_services'       => [2949, 2950],
+        'video-content-services'        => [2952, 2947, 2948, 2953, 2956, 2955],
+        'paid-advertising'              => [2956, 2955],
+        // SEO + Content Strategy left empty — strip hides automatically
+    ];
+    if (empty($map[$slug])) return [];
+    $ids = $map[$slug];
+    $all = stretch_get_portfolio();
+    $by_id = [];
+    foreach ($all as $item) $by_id[$item['id']] = $item;
+    $out = [];
+    foreach ($ids as $id) {
+        if (isset($by_id[$id])) $out[] = $by_id[$id];
+    }
+    return $out;
 }
