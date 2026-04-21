@@ -583,12 +583,111 @@ if ($step === 1) {
         }
     }
 
+    echo '<br><strong style="color:#28c840;">Step 8 complete!</strong>';
+    echo '<br><br><a href="?step=9" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 9: Seed Blog Posts →</a>';
+
+} elseif ($step === 9) {
+    // ── STEP 9: Seed Blog Posts from data/blog-posts.json ──
+    echo '<strong>Step 9: Seeding blog posts...</strong><br>';
+
+    @ini_set('max_execution_time', 600);
+    @set_time_limit(600);
+
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+
+    $json_path = get_template_directory() . '/data/blog-posts.json';
+    if (!file_exists($json_path)) {
+        echo "✗ data/blog-posts.json not found<br>";
+    } else {
+        $posts_data = json_decode(file_get_contents($json_path), true);
+        if (!is_array($posts_data)) {
+            echo "✗ Failed to parse blog-posts.json<br>";
+        } else {
+            $created = 0; $skipped = 0; $thumbs_ok = 0; $thumbs_fail = 0;
+
+            // Preload category term IDs
+            $cat_ids = [];
+            foreach (get_categories(['hide_empty' => false]) as $c) { $cat_ids[$c->slug] = $c->term_id; }
+
+            // Default author: first admin user
+            $admins = get_users(['role' => 'administrator', 'number' => 1]);
+            $default_author = $admins ? $admins[0]->ID : 1;
+
+            $uploads_base_url = rtrim(home_url('/'), '/');
+
+            foreach ($posts_data as $pd) {
+                if (empty($pd['slug']) || empty($pd['title'])) continue;
+                if (get_page_by_path($pd['slug'], OBJECT, 'post')) {
+                    $skipped++;
+                    continue;
+                }
+
+                $cat_term_ids = [];
+                foreach (($pd['categories'] ?? []) as $slug) {
+                    if (isset($cat_ids[$slug])) $cat_term_ids[] = $cat_ids[$slug];
+                }
+
+                $post_id = wp_insert_post([
+                    'post_title'    => $pd['title'],
+                    'post_name'     => $pd['slug'],
+                    'post_content'  => $pd['content'] ?? '',
+                    'post_excerpt'  => $pd['excerpt'] ?? '',
+                    'post_status'   => $pd['status'] ?? 'publish',
+                    'post_type'     => 'post',
+                    'post_date_gmt' => $pd['date'] ?? current_time('mysql', 1),
+                    'post_author'   => $default_author,
+                    'post_category' => $cat_term_ids,
+                ]);
+
+                if (is_wp_error($post_id) || !$post_id) { echo "✗ Failed: {$pd['slug']}<br>"; continue; }
+
+                if (!empty($pd['tags'])) wp_set_post_tags($post_id, $pd['tags']);
+
+                // Thumbnail sideload — try prod-host URL (in case uploads are synced),
+                // fallback to thumb_source (original Unsplash/etc URL) if provided.
+                $thumb_candidates = [];
+                if (!empty($pd['thumb_url'])) {
+                    // Rewrite localhost to prod host so prod's own uploads are tried
+                    $candidate = preg_replace('#^https?://[^/]+#', $uploads_base_url, $pd['thumb_url']);
+                    $thumb_candidates[] = $candidate;
+                }
+                if (!empty($pd['thumb_source'])) $thumb_candidates[] = $pd['thumb_source'];
+
+                foreach ($thumb_candidates as $url) {
+                    $tmp = download_url($url, 30);
+                    if (is_wp_error($tmp)) continue;
+                    $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
+                    $name = sanitize_title($pd['slug']) . '.' . $ext;
+                    $id = media_handle_sideload(['name' => $name, 'tmp_name' => $tmp], $post_id);
+                    if (is_wp_error($id)) { @unlink($tmp); continue; }
+                    set_post_thumbnail($post_id, $id);
+                    $thumbs_ok++;
+                    break;
+                }
+                if (empty($thumb_candidates) || (!get_post_thumbnail_id($post_id) && !empty($thumb_candidates))) {
+                    $thumbs_fail++;
+                }
+
+                $created++;
+                echo "✓ {$pd['slug']}<br>";
+                // Flush output so the user sees progress
+                if (ob_get_level()) ob_flush();
+                flush();
+            }
+
+            echo "<br><strong>Created:</strong> {$created} · <strong>Skipped (already exist):</strong> {$skipped}<br>";
+            echo "<strong>Thumbnails:</strong> {$thumbs_ok} downloaded · {$thumbs_fail} unavailable<br>";
+        }
+    }
+
     echo '<br><strong style="color:#28c840;font-size:18px;">✓ All setup complete!</strong>';
     echo '<br><br><a href="' . home_url('/') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;font-weight:600;">View Your Site →</a>';
     echo '<br><br><em style="color:#999;">Remember to delete this Setup page and remove setup-wizard.php from the theme.</em>';
 
 } else {
-    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 8 steps.</p>';
+    echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 9 steps.</p>';
     echo '<p style="font-size:14px;color:#999;">Pages already created will be skipped.</p>';
     echo '<br><a href="?step=1" style="display:inline-block;background:#8560A8;color:#fff;padding:16px 36px;font-size:17px;text-decoration:none;">Start Setup: Step 1 →</a>';
 }
