@@ -40,10 +40,17 @@ if ($step === 1) {
     echo "✓ Blog page created<br>";
 
     $pages = [
-        ['Our Story', 'about-stretch-creative', 'page-about.php'],
-        ['Our Team', 'the-team', 'page-team.php'],
-        ['Solutions', 'stretch-creative-solutions', 'page-solutions.php'],
-        ['Contact Stretch Creative', 'contact-stretch-creative', 'page-contact.php'],
+        ['Our Story',                       'about-stretch-creative',          'page-about.php'],
+        ['Our Team',                        'the-team',                        'page-team.php'],
+        ['Solutions',                       'stretch-creative-solutions',      'page-solutions.php'],
+        ['Contact Stretch Creative',        'contact-stretch-creative',        'page-contact.php'],
+        // Service pages — all use the shared page-service.php template
+        ['Content Writing at Any Scale',    'content-writing-at-any-scale',    'page-service.php'],
+        ['SEO Strategy & Services',         'seo_content_strategy_services',   'page-service.php'],
+        ['Graphic Design Services',         'graphic_design_services',         'page-service.php'],
+        ['Video & Photography Production',  'video-content-services',          'page-service.php'],
+        ['Content Strategy',                'content-strategy',                'page-service.php'],
+        ['Paid Advertising',                'paid-advertising',                'page-service.php'],
     ];
     foreach ($pages as $p) {
         $ex = get_page_by_path($p[1]);
