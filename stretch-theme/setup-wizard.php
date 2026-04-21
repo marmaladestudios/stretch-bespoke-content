@@ -639,65 +639,94 @@ if ($step === 1) {
 
             $created = 0; $skipped = 0; $thumbs_ok = 0; $thumbs_fail = 0;
 
+            $thumbs_dir = get_template_directory() . '/data/thumbs';
+
             foreach ($slice as $pd) {
                 if (empty($pd['slug']) || empty($pd['title'])) continue;
-                if (get_page_by_path($pd['slug'], OBJECT, 'post')) {
-                    $skipped++;
-                    echo "- Exists: {$pd['slug']}<br>"; flush();
-                    continue;
+
+                $existing = get_page_by_path($pd['slug'], OBJECT, 'post');
+                $post_id  = 0;
+                $is_new   = false;
+
+                if ($existing) {
+                    $post_id = $existing->ID;
+                    if (get_post_thumbnail_id($post_id) || $skip_thumbs) {
+                        $skipped++;
+                        echo "- Exists: {$pd['slug']}<br>"; flush();
+                        continue;
+                    }
+                    echo "→ Backfilling thumb: {$pd['slug']}<br>"; flush();
+                } else {
+                    $cat_term_ids = [];
+                    foreach (($pd['categories'] ?? []) as $cat_slug) {
+                        if (isset($cat_ids[$cat_slug])) $cat_term_ids[] = $cat_ids[$cat_slug];
+                    }
+
+                    $post_id = wp_insert_post([
+                        'post_title'    => $pd['title'],
+                        'post_name'     => $pd['slug'],
+                        'post_content'  => $pd['content'] ?? '',
+                        'post_excerpt'  => $pd['excerpt'] ?? '',
+                        'post_status'   => $pd['status'] ?? 'publish',
+                        'post_type'     => 'post',
+                        'post_date_gmt' => $pd['date'] ?? current_time('mysql', 1),
+                        'post_author'   => $default_author,
+                        'post_category' => $cat_term_ids,
+                    ]);
+
+                    if (is_wp_error($post_id) || !$post_id) {
+                        echo "✗ Failed: {$pd['slug']}<br>"; flush();
+                        continue;
+                    }
+
+                    if (!empty($pd['tags'])) wp_set_post_tags($post_id, $pd['tags']);
+                    $is_new = true;
+                    $created++;
                 }
 
-                $cat_term_ids = [];
-                foreach (($pd['categories'] ?? []) as $slug) {
-                    if (isset($cat_ids[$slug])) $cat_term_ids[] = $cat_ids[$slug];
-                }
-
-                $post_id = wp_insert_post([
-                    'post_title'    => $pd['title'],
-                    'post_name'     => $pd['slug'],
-                    'post_content'  => $pd['content'] ?? '',
-                    'post_excerpt'  => $pd['excerpt'] ?? '',
-                    'post_status'   => $pd['status'] ?? 'publish',
-                    'post_type'     => 'post',
-                    'post_date_gmt' => $pd['date'] ?? current_time('mysql', 1),
-                    'post_author'   => $default_author,
-                    'post_category' => $cat_term_ids,
-                ]);
-
-                if (is_wp_error($post_id) || !$post_id) {
-                    echo "✗ Failed: {$pd['slug']}<br>"; flush();
-                    continue;
-                }
-
-                if (!empty($pd['tags'])) wp_set_post_tags($post_id, $pd['tags']);
-
-                // Thumbnail sideload (skipped when ?skip_thumbs=1)
+                // Thumbnail handling — local WebP first, then source URL fallback
                 if (!$skip_thumbs) {
-                    $thumb_candidates = [];
-                    if (!empty($pd['thumb_url'])) {
-                        $candidate = preg_replace('#^https?://[^/]+#', $uploads_base_url, $pd['thumb_url']);
-                        $thumb_candidates[] = $candidate;
-                    }
-                    if (!empty($pd['thumb_source'])) $thumb_candidates[] = $pd['thumb_source'];
-
                     $got_thumb = false;
-                    foreach ($thumb_candidates as $url) {
-                        $tmp = download_url($url, 6); // short timeout — fail fast
-                        if (is_wp_error($tmp)) continue;
-                        $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
-                        $name = sanitize_title($pd['slug']) . '.' . $ext;
-                        $id = media_handle_sideload(['name' => $name, 'tmp_name' => $tmp], $post_id);
-                        if (is_wp_error($id)) { @unlink($tmp); continue; }
-                        set_post_thumbnail($post_id, $id);
-                        $got_thumb = true;
-                        $thumbs_ok++;
-                        break;
+
+                    // 1. Try bundled local WebP (fastest, always works)
+                    $local_thumb = $thumbs_dir . '/' . $pd['slug'] . '.webp';
+                    if (file_exists($local_thumb)) {
+                        $tmp = wp_tempnam($pd['slug'] . '.webp');
+                        if ($tmp && copy($local_thumb, $tmp)) {
+                            $name = sanitize_title($pd['slug']) . '.webp';
+                            $att_id = media_handle_sideload(['name' => $name, 'tmp_name' => $tmp], $post_id);
+                            if (!is_wp_error($att_id)) {
+                                set_post_thumbnail($post_id, $att_id);
+                                $got_thumb = true;
+                                $thumbs_ok++;
+                            } else {
+                                @unlink($tmp);
+                            }
+                        }
                     }
-                    if (!empty($thumb_candidates) && !$got_thumb) $thumbs_fail++;
+
+                    // 2. Fallback to thumb_source URL if we have one and local missed
+                    if (!$got_thumb && !empty($pd['thumb_source'])) {
+                        $url = $pd['thumb_source'];
+                        $tmp = download_url($url, 6);
+                        if (!is_wp_error($tmp)) {
+                            $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
+                            $name = sanitize_title($pd['slug']) . '.' . $ext;
+                            $att_id = media_handle_sideload(['name' => $name, 'tmp_name' => $tmp], $post_id);
+                            if (!is_wp_error($att_id)) {
+                                set_post_thumbnail($post_id, $att_id);
+                                $got_thumb = true;
+                                $thumbs_ok++;
+                            } else {
+                                @unlink($tmp);
+                            }
+                        }
+                    }
+
+                    if (!$got_thumb) $thumbs_fail++;
                 }
 
-                $created++;
-                echo "✓ {$pd['slug']}<br>";
+                echo ($is_new ? '✓' : '★') . ' ' . $pd['slug'] . '<br>';
                 flush();
             }
 
