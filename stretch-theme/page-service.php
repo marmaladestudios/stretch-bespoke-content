@@ -59,9 +59,11 @@ if (empty($stats)) {
 // Pull quote by slug
 $pull_quotes = [
     'content-writing-at-any-scale' => 'Whether you need one piece or a thousand, <span class="svc-quote-accent">quality never compromises.</span>',
-    'seo_content_strategy_services' => 'Great SEO starts with <span class="svc-quote-accent">genuinely helpful content</span> — everything else follows.',
+    'seo_content_strategy_services' => 'From enterprise audits to SEO-Lite — <span class="svc-quote-accent">you only pay for what you need.</span>',
     'graphic_design_services' => 'Design is not decoration. It is <span class="svc-quote-accent">communication, trust, and brand equity</span> made visible.',
     'video-content-services' => 'Every frame tells a story. We make sure <span class="svc-quote-accent">yours is unforgettable.</span>',
+    'content-strategy' => 'Strategy without execution is a document. We build the kind <span class="svc-quote-accent">your team can actually ship.</span>',
+    'paid-advertising' => 'Creative and media, under one roof — <span class="svc-quote-accent">which is exactly why our campaigns compound.</span>',
 ];
 $pull_quote = isset($pull_quotes[$slug]) ? $pull_quotes[$slug] : 'Whatever the challenge, we bring <span class="svc-quote-accent">craft, scale, and consistency</span> to every project.';
 
@@ -86,6 +88,16 @@ $testimonials = [
         'quote' => 'The production quality blew us away. We expected a typical corporate video and got something cinematic. Our CEO said it was the best brand investment we made all year.',
         'name'  => 'Head of Brand',
         'title' => 'Healthcare Technology Company',
+    ],
+    'content-strategy' => [
+        'quote' => 'Stretch came in, audited every piece of content we had, and handed us a roadmap our team could actually execute on. Six months later our organic traffic is up and every brief our writers pick up sets them up to win.',
+        'name'  => 'Director of Content Marketing',
+        'title' => 'B2B SaaS Company',
+    ],
+    'paid-advertising' => [
+        'quote' => 'We had been splitting creative and media across two agencies and paying for the friction. Stretch brought it under one roof and our CAC dropped within the first quarter. The testing velocity is the real unlock.',
+        'name'  => 'VP of Growth',
+        'title' => 'DTC Consumer Brand',
     ],
 ];
 $testimonial = isset($testimonials[$slug]) ? $testimonials[$slug] : $testimonials['content-writing-at-any-scale'];
@@ -500,6 +512,192 @@ html, body { overflow-x: hidden; }
 }
 .svc-offering-row.svc-offering-even .svc-offering-body p {
   margin-left: auto;
+}
+
+/* ========================================
+   5.5 SELECTED WORK — INLINE PORTFOLIO STRIP
+   ======================================== */
+.svc-selected-work {
+  padding: 100px 0;
+  background: #f9f9fb;
+  position: relative;
+}
+.svc-work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+}
+.svc-work-grid.svc-work-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.svc-work-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 16px rgba(37,44,58,0.06);
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease;
+}
+.svc-work-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 56px rgba(37,44,58,0.14);
+}
+.svc-work-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  display: block;
+}
+.svc-work-card:hover img { transform: scale(1.05); }
+.svc-work-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(37,44,58,0.92) 0%, rgba(37,44,58,0.4) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+.svc-work-card:hover .svc-work-overlay { opacity: 1; }
+.svc-work-meta {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 22px;
+  z-index: 2;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+}
+.svc-work-card:hover .svc-work-meta {
+  transform: translateY(0);
+  opacity: 1;
+}
+.svc-work-tag {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #00BFF3;
+  border: 1px solid rgba(0,191,243,0.4);
+  padding: 4px 10px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+.svc-work-client {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px; font-weight: 500;
+  color: #fff; line-height: 1.2;
+  margin: 0;
+}
+.svc-work-vimeo {
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 3;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.svc-work-vimeo svg { width: 14px; height: 14px; margin-left: 2px; }
+.svc-work-link-wrap {
+  text-align: center;
+  margin-top: 48px;
+}
+.svc-work-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: #8560A8;
+  text-decoration: none;
+  padding: 12px 28px;
+  border: 1px solid rgba(133,96,168,0.3);
+  border-radius: 100px;
+  transition: all 0.3s ease;
+}
+.svc-work-link:hover {
+  gap: 14px;
+  background: rgba(133,96,168,0.06);
+  border-color: rgba(133,96,168,0.6);
+  color: #5674B9;
+}
+
+/* Lightbox */
+.svc-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,18,28,0.94);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.svc-lightbox.open { display: flex; opacity: 1; }
+.svc-lightbox-inner {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svc-lightbox img,
+.svc-lightbox iframe {
+  max-width: 100%;
+  max-height: 75vh;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  display: block;
+}
+.svc-lightbox iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+.svc-lightbox-meta {
+  margin-top: 18px;
+  text-align: center;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+.svc-lightbox-client { font-size: 22px; font-weight: 500; margin: 0 0 6px; }
+.svc-lightbox-tag {
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #00BFF3; opacity: 0.85;
+}
+.svc-lightbox-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  font-size: 22px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10000;
+}
+.svc-lightbox-close:hover {
+  background: rgba(255,255,255,0.2);
+  transform: rotate(90deg);
 }
 
 /* ========================================
@@ -1046,10 +1244,75 @@ html, body { overflow-x: hidden; }
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/>
+    </svg>
+  </div>
+</section>
+<?php endif; ?>
+
+
+<!-- ========================================
+     5.5 SELECTED WORK — INLINE PORTFOLIO STRIP
+     ======================================== -->
+<?php
+$service_portfolio = function_exists('stretch_get_portfolio_for_service')
+    ? stretch_get_portfolio_for_service($slug)
+    : [];
+if (!empty($service_portfolio)) :
+    $grid_class = count($service_portfolio) <= 2 ? 'svc-work-grid svc-work-grid-2' : 'svc-work-grid';
+?>
+<section class="svc-section svc-selected-work" aria-label="Selected Work">
+  <div class="svc-container">
+    <div class="svc-section-heading">
+      <span class="svc-overline svc-reveal">Recent Work</span>
+      <h2 class="svc-reveal svc-delay-1">Selected <span class="svc-gradient-text">Work</span></h2>
+    </div>
+
+    <div class="<?php echo $grid_class; ?>">
+      <?php foreach ($service_portfolio as $i => $item) :
+        $img = wp_get_attachment_image_url($item['id'], 'large');
+        $img_full = wp_get_attachment_image_url($item['id'], 'full');
+        $alt = get_post_meta($item['id'], '_wp_attachment_image_alt', true);
+        if (!$img) continue;
+      ?>
+        <a href="#" class="svc-work-card svc-reveal svc-delay-<?php echo (($i % 4) + 1); ?>"
+           data-img="<?php echo esc_url($img_full); ?>"
+           data-client="<?php echo esc_attr($item['client']); ?>"
+           data-tag="<?php echo esc_attr($item['subcat']); ?>"
+           <?php if (!empty($item['vimeo'])) : ?>data-vimeo="<?php echo esc_attr($item['vimeo']); ?>"<?php endif; ?>
+           aria-label="<?php echo esc_attr($item['client'] . ' — ' . $item['subcat']); ?>">
+          <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($alt ?: $item['client'] . ' ' . $item['subcat']); ?>" loading="lazy">
+          <?php if (!empty($item['vimeo'])) : ?>
+          <div class="svc-work-vimeo" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
+          </div>
+          <?php endif; ?>
+          <div class="svc-work-overlay"></div>
+          <div class="svc-work-meta">
+            <span class="svc-work-tag"><?php echo esc_html($item['subcat']); ?></span>
+            <h3 class="svc-work-client"><?php echo esc_html($item['client']); ?></h3>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="svc-work-link-wrap svc-reveal">
+      <a href="/our-work/" class="svc-work-link">View all work &rarr;</a>
+    </div>
+  </div>
+
+  <div class="svc-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
       <polygon points="0,60 1440,0 1440,60" fill="#1a1f2e"/>
     </svg>
   </div>
 </section>
+
+<!-- Lightbox for selected work -->
+<div class="svc-lightbox" id="svcLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="svc-lightbox-close" id="svcLightboxClose" aria-label="Close">&times;</button>
+  <div class="svc-lightbox-inner" id="svcLightboxInner"></div>
+</div>
 <?php endif; ?>
 
 
@@ -1369,6 +1632,51 @@ html, body { overflow-x: hidden; }
         btn.style.transition = 'transform 0.4s cubic-bezier(0.16,1,0.3,1)';
         setTimeout(function() { btn.style.transition = ''; }, 400);
       });
+    });
+  }
+
+  /* ---------- SELECTED WORK LIGHTBOX ---------- */
+  var svcLb       = document.getElementById('svcLightbox');
+  var svcLbInner  = document.getElementById('svcLightboxInner');
+  var svcLbClose  = document.getElementById('svcLightboxClose');
+  var svcWorkCards = document.querySelectorAll('.svc-work-card');
+
+  if (svcLb && svcLbInner && svcWorkCards.length) {
+    function svcOpenLb(card) {
+      var imgUrl = card.dataset.img;
+      var client = card.dataset.client;
+      var tag    = card.dataset.tag;
+      var vimeo  = card.dataset.vimeo;
+      var media  = vimeo
+        ? '<iframe src="https://player.vimeo.com/video/' + vimeo + '?h=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>'
+        : '<img src="' + imgUrl + '" alt="' + client + '">';
+      svcLbInner.innerHTML = media +
+        '<div class="svc-lightbox-meta">' +
+          '<p class="svc-lightbox-client">' + client + '</p>' +
+          '<span class="svc-lightbox-tag">' + tag + '</span>' +
+        '</div>';
+      svcLb.classList.add('open');
+      svcLb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function svcCloseLb() {
+      svcLb.classList.remove('open');
+      svcLb.setAttribute('aria-hidden', 'true');
+      svcLbInner.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+    svcWorkCards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        svcOpenLb(card);
+      });
+    });
+    svcLbClose.addEventListener('click', svcCloseLb);
+    svcLb.addEventListener('click', function(e) {
+      if (e.target === svcLb) svcCloseLb();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && svcLb.classList.contains('open')) svcCloseLb();
     });
   }
 

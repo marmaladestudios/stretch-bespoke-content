@@ -290,6 +290,205 @@ html, body { overflow-x: hidden; }
   line-height: 1.6; color: #777; margin: 0;
 }
 
+/* ---------- Enhanced Service Cards (new layout) ---------- */
+.sol-services-subtitle {
+  font-family: 'Assistant', sans-serif;
+  font-size: 18px; font-weight: 300; line-height: 1.7;
+  color: #555;
+  max-width: 640px;
+  margin: 16px auto 0;
+}
+.sol-svc-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 36px 32px;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+.sol-svc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--svc-start, #8560A8), var(--svc-end, #00BFF3));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sol-svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(37,44,58,0.1);
+}
+.sol-svc-card:hover::before { opacity: 1; }
+.sol-svc-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--svc-icon-bg, rgba(133,96,168,0.1)), var(--svc-icon-bg-end, rgba(0,191,243,0.1)));
+}
+.sol-svc-icon svg { width: 26px; height: 26px; }
+.sol-svc-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; font-weight: 600;
+  color: #252C3A; margin: 0 0 12px;
+}
+.sol-svc-card p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px; font-weight: 300;
+  line-height: 1.7; color: #555;
+  margin: 0 0 20px;
+  flex: 1;
+}
+.sol-svc-link {
+  display: inline-flex;
+  align-items: center; gap: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: #8560A8;
+  transition: gap 0.3s ease, color 0.3s ease;
+  margin-top: auto;
+  align-self: flex-start;
+}
+.sol-svc-card:hover .sol-svc-link { gap: 12px; color: #00BFF3; }
+
+/* ---------- Add-Ons Callout ---------- */
+.sol-addons {
+  margin-top: 56px;
+  text-align: center;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.sol-addons-label {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: #8560A8;
+  padding: 6px 16px;
+  border: 1px solid rgba(133,96,168,0.3);
+  border-radius: 100px;
+}
+.sol-addons-items {
+  display: inline-flex;
+  gap: 12px;
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 400;
+  color: #555;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.sol-addons-items span + span::before {
+  content: '\2022';
+  color: #8560A8;
+  margin-right: 12px;
+  opacity: 0.6;
+}
+
+/* ========================================
+   3.5 WHY TRUST STRETCH (PROPS)
+   ======================================== */
+.sol-trust {
+  padding: 120px 0;
+  background: linear-gradient(170deg, #1a1f2e, #252C3A);
+  position: relative;
+  overflow: hidden;
+}
+.sol-trust::before {
+  content: '';
+  position: absolute;
+  top: 20%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0,191,243,0.04), transparent);
+  pointer-events: none;
+}
+.sol-trust::after {
+  content: '';
+  position: absolute;
+  bottom: -10%; right: -5%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(133,96,168,0.05), transparent);
+  pointer-events: none;
+}
+.sol-trust-heading {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 64px;
+  position: relative;
+}
+.sol-trust-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; color: #00BFF3;
+  display: block; margin-bottom: 16px;
+}
+.sol-trust-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(30px, 3.8vw, 44px);
+  font-weight: 600; color: #fff;
+  margin: 0 0 24px; letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+.sol-trust-intro {
+  font-family: 'Assistant', sans-serif;
+  font-size: 18px; font-weight: 300; line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  margin: 0;
+}
+.sol-trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  position: relative;
+}
+.sol-prop-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), background 0.4s ease, box-shadow 0.4s ease;
+}
+.sol-prop-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--prop-start, #8560A8), var(--prop-end, #00BFF3));
+  opacity: 0.8;
+}
+.sol-prop-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,191,243,0.15);
+}
+.sol-prop-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; font-weight: 600;
+  color: #fff; margin: 0 0 12px;
+  letter-spacing: -0.3px;
+}
+.sol-prop-card p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+}
+
 /* ========================================
    4. CTA
    ======================================== */
@@ -343,6 +542,7 @@ html, body { overflow-x: hidden; }
 @media (max-width: 960px) {
   .sol-cards-grid { grid-template-columns: 1fr; }
   .sol-services-grid { grid-template-columns: repeat(2, 1fr); }
+  .sol-trust-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   .v2-container { padding: 0 24px; }
@@ -351,11 +551,15 @@ html, body { overflow-x: hidden; }
   .sol-cards-section { padding: 80px 0; }
   .sol-card { min-height: 360px; }
   .sol-services { padding: 80px 0; }
+  .sol-trust { padding: 80px 0; }
   .sol-cta { padding: 70px 0; }
+  .sol-addons { margin-top: 40px; flex-direction: column; }
 }
 @media (max-width: 480px) {
   .v2-container { padding: 0 16px; }
   .sol-services-grid { grid-template-columns: 1fr; }
+  .sol-svc-card { padding: 28px 24px; }
+  .sol-prop-card { padding: 28px 24px; }
 }
 </style>
 
@@ -503,80 +707,113 @@ html, body { overflow-x: hidden; }
   <div class="v2-container">
     <div class="sol-services-heading">
       <span class="v2-overline v2-reveal">Everything We Do</span>
-      <h2 class="v2-reveal v2-delay-1">Our <span class="gradient-text">Services</span></h2>
+      <h2 class="v2-reveal v2-delay-1">Multiple services <span class="gradient-text">&times; one agency</span></h2>
+      <p class="sol-services-subtitle v2-reveal v2-delay-2">Scale your brand with strategy, storytelling, and visuals that connect and convert.</p>
     </div>
 
     <div class="sol-services-grid">
-      <div class="sol-service-card v2-reveal v2-delay-1">
-        <div class="sol-service-icon">
+      <a href="/content-writing-at-any-scale/" class="sol-svc-card v2-reveal v2-delay-1" style="--svc-start:#8560A8;--svc-end:#5674B9;--svc-icon-bg:rgba(133,96,168,0.1);--svc-icon-bg-end:rgba(86,116,185,0.1);">
+        <div class="sol-svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
         </div>
-        <h3>Product Copy</h3>
-        <p>Compelling descriptions that sell</p>
+        <h3>Content Writing</h3>
+        <p>Our roster of writers can take on whatever written content you need &mdash; B2B, B2C, SaaS, eCommerce &mdash; always fully optimized with current SEO best practices.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <a href="/graphic_design_services/" class="sol-svc-card v2-reveal v2-delay-2" style="--svc-start:#5674B9;--svc-end:#448CCB;--svc-icon-bg:rgba(86,116,185,0.1);--svc-icon-bg-end:rgba(68,140,203,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 1 0 10 10c0-4.22-4.5-3-5-6s-1-4-5-4z"/></svg>
+        </div>
+        <h3>Graphic Design</h3>
+        <p>We create infographics, white papers, and ebooks that make your brand stand out and your message stick. We have the talent to match your needs &mdash; and your budget.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <a href="/video-content-services/" class="sol-svc-card v2-reveal v2-delay-3" style="--svc-start:#448CCB;--svc-end:#00BFF3;--svc-icon-bg:rgba(68,140,203,0.1);--svc-icon-bg-end:rgba(0,191,243,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
+        <h3>Video &amp; Photography</h3>
+        <p>Our in-house crew handles video and photography under one roof — concept, filming, editing, motion graphics, product shoots, and lifestyle shoots — so more of your budget stays on the screen.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <a href="/seo_content_strategy_services/" class="sol-svc-card v2-reveal v2-delay-1" style="--svc-start:#00BFF3;--svc-end:#5674B9;--svc-icon-bg:rgba(0,191,243,0.1);--svc-icon-bg-end:rgba(86,116,185,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>SEO Strategy &amp; Services</h3>
+        <p>Our SEO services range from detailed audits and tracking for enterprise operations to SEO-Lite for smaller brands &mdash; you only pay for what you need.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <a href="/content-strategy/" class="sol-svc-card v2-reveal v2-delay-2" style="--svc-start:#8560A8;--svc-end:#448CCB;--svc-icon-bg:rgba(133,96,168,0.1);--svc-icon-bg-end:rgba(68,140,203,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 2v20"/><path d="M4 4h11l2 3-2 3H4"/><path d="M4 12h9l2 3-2 3H4"/></svg>
+        </div>
+        <h3>Content Strategy</h3>
+        <p>We&rsquo;re here to provide whatever support you need with your content strategy &mdash; we can create it from scratch starting with SEO research or jump in to help you create winning editorial content briefs.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <a href="/paid-advertising/" class="sol-svc-card v2-reveal v2-delay-3" style="--svc-start:#5674B9;--svc-end:#00BFF3;--svc-icon-bg:rgba(86,116,185,0.1);--svc-icon-bg-end:rgba(0,191,243,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <h3>Paid Advertising</h3>
+        <p>Stop wasting money on ads that miss the mark. We&rsquo;re experts in creating Google and Facebook ads that reach your target audience, boost conversions, and grow your revenue.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+    </div>
+
+    <div class="sol-addons v2-reveal v2-delay-4">
+      <span class="sol-addons-label">Add-On Services</span>
+      <span class="sol-addons-items">
+        <span>Budget management</span>
+        <span>CMS loading</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="#1a1f2e"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ========================================
+     3.5 WHY TRUST STRETCH
+     ======================================== -->
+<section class="v2-section sol-trust" aria-label="Why Trust Stretch">
+  <div class="v2-container">
+    <div class="sol-trust-heading">
+      <span class="v2-overline v2-reveal">Why Trust Stretch</span>
+      <h2 class="v2-reveal v2-delay-1">We don&rsquo;t just create content &mdash; <span class="gradient-text">we solve problems.</span></h2>
+      <p class="sol-trust-intro v2-reveal v2-delay-2">Get the most out of your budget with integrated, end-to-end content solutions. Transparent processes and consistent communication among our writing, design, SEO, video, and ads teams ensures your content is consistent across all of your channels.</p>
+    </div>
+
+    <div class="sol-trust-grid">
+      <div class="sol-prop-card v2-reveal v2-delay-1" style="--prop-start:#8560A8;--prop-end:#5674B9;">
+        <h3>We&rsquo;re an extension of your team</h3>
+        <p>We&rsquo;re not a one-size-fits-all agency, and we never set it and forget it. Regularly scheduled touch-base calls and easy access to your Client Services Team and Managing Editor keep our partnership fresh and current. That makes it easy for us to pivot with you when big changes come down the pipeline (for better or worse).</p>
       </div>
 
-      <div class="sol-service-card v2-reveal v2-delay-2">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </div>
-        <h3>Banner Sales Copy</h3>
-        <p>High-impact messaging for ads</p>
+      <div class="sol-prop-card v2-reveal v2-delay-2" style="--prop-start:#5674B9;--prop-end:#448CCB;">
+        <h3>Stay agile in the face of change</h3>
+        <p>It&rsquo;s more important than ever to stay current on trends in content, SEO, and AI &mdash; and we&rsquo;re on top of it at the agency level. Everything we produce at Stretch is optimized for the search engines using current SEO best practices. AI Overviews got you down? We can help you correct the course and weatherproof your content.</p>
       </div>
 
-      <div class="sol-service-card v2-reveal v2-delay-3">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <h3>Email &amp; Social</h3>
-        <p>Engaging campaigns that convert</p>
+      <div class="sol-prop-card v2-reveal v2-delay-3" style="--prop-start:#448CCB;--prop-end:#00BFF3;">
+        <h3>Keep more of your money on the screen</h3>
+        <p>We&rsquo;re not the cheapest content agency, but we&rsquo;re far from the most expensive. What makes us so cost-effective is our end-to-end model &mdash; you don&rsquo;t need a separate SEO agency, production company, or content creators. Anything you can&rsquo;t handle in-house, we can take on under one roof &mdash; one invoice, one primary contact, a multitude of services, all customizable to your specific needs.</p>
       </div>
 
-      <div class="sol-service-card v2-reveal v2-delay-1">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        </div>
-        <h3>Ebooks &amp; Gated Content</h3>
-        <p>Lead magnets that drive downloads</p>
-      </div>
-
-      <div class="sol-service-card v2-reveal v2-delay-2">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3>Blogs &amp; Articles</h3>
-        <p>Publish-ready content at scale</p>
-      </div>
-
-      <div class="sol-service-card v2-reveal v2-delay-3">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        </div>
-        <h3>SEO Services</h3>
-        <p>Strategy that drives organic growth</p>
-      </div>
-
-      <div class="sol-service-card v2-reveal v2-delay-1">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <h3>Content Optimization</h3>
-        <p>Refresh and improve existing content</p>
-      </div>
-
-      <div class="sol-service-card v2-reveal v2-delay-2">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-        </div>
-        <h3>Design Services</h3>
-        <p>Visual content that stands out</p>
-      </div>
-
-      <div class="sol-service-card v2-reveal v2-delay-3">
-        <div class="sol-service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
-        <h3>Content at Scale</h3>
-        <p>Volume production, zero compromise</p>
+      <div class="sol-prop-card v2-reveal v2-delay-4" style="--prop-start:#8560A8;--prop-end:#00BFF3;">
+        <h3>Scale with ease</h3>
+        <p>From the get-go, your dedicated creative teams are fully trained and supported in producing consistent, on-brand content for all of your channels. If you need to increase production or kick off a whole new project with new content types, we can ramp up to full production quick and easy.</p>
       </div>
     </div>
   </div>

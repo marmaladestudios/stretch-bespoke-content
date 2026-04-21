@@ -226,6 +226,82 @@ html, body { overflow-x: hidden; }
 }
 
 /* ========================================
+   2.5 STRATEGIC PARTNER
+   ======================================== */
+.about-partner {
+  padding: 120px 0;
+  background: #fafbfd;
+  position: relative;
+}
+.about-partner-heading {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 64px;
+}
+.about-partner-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(30px, 3.5vw, 42px);
+  font-weight: 600;
+  color: #252C3A;
+  margin: 0 0 20px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+.about-partner-subtitle {
+  font-family: 'Assistant', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #555;
+  margin: 0;
+}
+.about-partner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.about-partner-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px 32px;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 4px 24px rgba(37,44,58,0.04);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+}
+.about-partner-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(37,44,58,0.1);
+}
+.about-partner-number {
+  font-family: 'Poppins', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--num-start, #8560A8), var(--num-end, #00BFF3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+.about-partner-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #252C3A;
+  margin: 0 0 12px;
+}
+.about-partner-card p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #555;
+  margin: 0;
+}
+
+/* ========================================
    3. VALUES GRID
    ======================================== */
 .about-values {
@@ -543,6 +619,10 @@ html, body { overflow-x: hidden; }
     grid-template-columns: 1fr;
     gap: 50px;
   }
+  .about-partner-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
   .about-values-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -557,6 +637,7 @@ html, body { overflow-x: hidden; }
   .about-hero { padding: 100px 0 70px; }
   .about-hero-content h1 { font-size: 34px; }
   .about-story { padding: 80px 0; }
+  .about-partner { padding: 80px 0; }
   .about-values { padding: 80px 0; }
   .about-process { padding: 80px 0; }
   .about-cta { padding: 70px 0; }
@@ -622,6 +703,45 @@ html, body { overflow-x: hidden; }
       </div>
       <div class="about-story-image v2-reveal-right">
         <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" alt="Team collaboration at Stretch Creative" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,0 1440,60 1440,60 0,60" fill="#fafbfd"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ========================================
+     2.5 STRATEGIC PARTNER
+     ======================================== -->
+<section class="v2-section about-partner" aria-label="Why Partner With Us">
+  <div class="v2-container">
+    <div class="about-partner-heading">
+      <h2 class="v2-reveal">We&rsquo;re less a vendor, more a <span class="gradient-text">strategic content partner</span></h2>
+      <p class="about-partner-subtitle v2-reveal v2-delay-1">Our personalized approach and full menu of content services make us your one-stop partner for any or all of your SEO and content needs.</p>
+    </div>
+
+    <div class="about-partner-grid">
+      <div class="about-partner-card v2-reveal v2-delay-1" style="--num-start:#8560A8;--num-end:#5674B9;">
+        <div class="about-partner-number">01</div>
+        <h3>Dedicated Creative Teams</h3>
+        <p>We hand-pick a dedicated team of talented writers and editors for your content who are trained and supported by a Managing Editor.</p>
+      </div>
+
+      <div class="about-partner-card v2-reveal v2-delay-2" style="--num-start:#5674B9;--num-end:#448CCB;">
+        <div class="about-partner-number">02</div>
+        <h3>Flexible Engagements</h3>
+        <p>We offer a few engagement options, from &hellip; to &hellip;. Our goal is to maximize your budget and keep you agile.</p>
+      </div>
+
+      <div class="about-partner-card v2-reveal v2-delay-3" style="--num-start:#448CCB;--num-end:#00BFF3;">
+        <div class="about-partner-number">03</div>
+        <h3>Integrated Services</h3>
+        <p>Our content services include writing, graphic design, video production, photography, SEO, and paid &mdash; all working together to ensure consistency across all of your channels.</p>
       </div>
     </div>
   </div>
