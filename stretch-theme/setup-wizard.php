@@ -52,6 +52,33 @@ if ($step === 1) {
         echo "✓ {$p[0]}<br>";
     }
 
+    // Services parent page (landing hub for /services/{slug}/ children)
+    $services = get_page_by_path('services');
+    $services_id = $services ? $services->ID : wp_insert_post([
+        'post_title'  => 'Services',
+        'post_name'   => 'services',
+        'post_type'   => 'page',
+        'post_status' => 'publish',
+    ]);
+    echo "✓ Services parent page<br>";
+
+    // Bespoke Content Experience — nested under /services/
+    $bce = get_page_by_path('services/bespoke-content-experience') ?: get_page_by_path('bespoke-content-experience');
+    if ($bce) {
+        $bce_id = $bce->ID;
+        wp_update_post(['ID' => $bce_id, 'post_parent' => $services_id]);
+    } else {
+        $bce_id = wp_insert_post([
+            'post_title'  => 'Bespoke Content Experience',
+            'post_name'   => 'bespoke-content-experience',
+            'post_type'   => 'page',
+            'post_status' => 'publish',
+            'post_parent' => $services_id,
+        ]);
+    }
+    update_post_meta($bce_id, '_wp_page_template', 'page-bespoke-content-experience.php');
+    echo "✓ Bespoke Content Experience (under /services/)<br>";
+
     echo '<br><strong style="color:#28c840;">Step 1 complete!</strong>';
     echo '<br><br><a href="?step=2" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 2: Blog Posts →</a>';
 
@@ -174,7 +201,21 @@ if ($step === 1) {
     $items = wp_get_nav_menu_items($primary_id);
     if ($items) foreach ($items as $item) wp_delete_post($item->ID, true);
 
-    wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Solutions', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
+    $solutions_item_id = wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Solutions', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
+
+    // Bespoke Content Experience — child of Solutions, first position
+    $bce_page = get_page_by_path('services/bespoke-content-experience') ?: get_page_by_path('bespoke-content-experience');
+    if ($bce_page) {
+        wp_update_nav_menu_item($primary_id, 0, [
+            'menu-item-title'     => 'Bespoke Content Experience',
+            'menu-item-object'    => 'page',
+            'menu-item-object-id' => $bce_page->ID,
+            'menu-item-type'      => 'post_type',
+            'menu-item-parent-id' => $solutions_item_id,
+            'menu-item-status'    => 'publish',
+        ]);
+    }
+
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Our Story', 'menu-item-url' => home_url('/about-stretch-creative/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Our Team', 'menu-item-url' => home_url('/the-team/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
     wp_update_nav_menu_item($primary_id, 0, ['menu-item-title' => 'Blog', 'menu-item-url' => home_url('/blog/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);

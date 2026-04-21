@@ -127,6 +127,7 @@ html, body { overflow-x: hidden; }
   height: 150%;
   background: radial-gradient(ellipse at center, rgba(86,116,185,0.08) 0%, transparent 70%);
   pointer-events: none;
+  animation: v2-heroGlowA 18s ease-in-out infinite alternate;
 }
 .v2-hero::after {
   content: '';
@@ -137,6 +138,58 @@ html, body { overflow-x: hidden; }
   height: 80%;
   background: radial-gradient(ellipse at center, rgba(133,96,168,0.06) 0%, transparent 70%);
   pointer-events: none;
+  animation: v2-heroGlowB 22s ease-in-out infinite alternate;
+}
+@keyframes v2-heroGlowA {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-6%, 4%) scale(1.1); opacity: 0.75; }
+}
+@keyframes v2-heroGlowB {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  100% { transform: translate(5%, -3%) scale(1.12); opacity: 1; }
+}
+
+/* Drifting orbs (independent of mouse parallax shapes) */
+.v2-hero-orbs { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.v2-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.v2-orb-a {
+  width: 520px; height: 520px;
+  top: -120px; left: -140px;
+  background: radial-gradient(circle, rgba(133,96,168,0.55), transparent 70%);
+  animation: v2-orbDriftA 26s ease-in-out infinite;
+}
+.v2-orb-b {
+  width: 460px; height: 460px;
+  top: 20%; right: -160px;
+  background: radial-gradient(circle, rgba(0,191,243,0.38), transparent 70%);
+  animation: v2-orbDriftB 32s ease-in-out infinite;
+}
+.v2-orb-c {
+  width: 380px; height: 380px;
+  bottom: -120px; left: 30%;
+  background: radial-gradient(circle, rgba(86,116,185,0.4), transparent 70%);
+  animation: v2-orbDriftC 24s ease-in-out infinite;
+}
+@keyframes v2-orbDriftA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(80px, 60px) scale(1.08); }
+}
+@keyframes v2-orbDriftB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-100px, 40px) scale(0.92); }
+}
+@keyframes v2-orbDriftC {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, -70px) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-hero::before, .v2-hero::after, .v2-orb { animation: none !important; }
 }
 
 /* Floating shapes */
@@ -196,13 +249,16 @@ html, body { overflow-x: hidden; }
 .v2-hero-inner {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
 }
 
 /* Hero text */
+.v2-hero-text { width: 100%; }
 .v2-hero-text .v2-overline {
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
@@ -228,8 +284,8 @@ html, body { overflow-x: hidden; }
   font-weight: 300;
   line-height: 1.7;
   color: rgba(255,255,255,0.7);
-  margin-bottom: 16px;
-  max-width: 480px;
+  margin: 0 auto 16px;
+  max-width: 560px;
 }
 .v2-hero-text .v2-supporting {
   font-family: 'Assistant', sans-serif;
@@ -267,42 +323,6 @@ html, body { overflow-x: hidden; }
 }
 .v2-hero-text .v2-btn-primary:hover::before { opacity: 1; }
 .v2-hero-text .v2-btn-primary span { position: relative; z-index: 1; }
-
-/* Hero visual — illustrated composition */
-.v2-hero-visual {
-  position: relative;
-}
-.v2-hero-visual svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Hero illustration float animations */
-@keyframes v2-illoFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-@keyframes v2-illoFloatAlt {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-@keyframes v2-illoBlobDrift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(6px, -4px) scale(1.02); }
-  66% { transform: translate(-4px, 5px) scale(0.98); }
-}
-.v2-illo-phone {
-  animation: v2-illoFloat 3s ease-in-out infinite;
-}
-.v2-illo-browser {
-  animation: v2-illoFloatAlt 4s ease-in-out infinite;
-}
-.v2-illo-blob {
-  animation: v2-illoBlobDrift 8s ease-in-out infinite;
-}
-.v2-illo-blob:nth-of-type(2) { animation-delay: -2.5s; }
-.v2-illo-blob:nth-of-type(3) { animation-delay: -5s; }
 
 /* ========================================
    2. GRADIENT ACCENT BAR
@@ -1581,12 +1601,7 @@ html, body { overflow-x: hidden; }
    ======================================== */
 @media (max-width: 960px) {
   .v2-hero-inner {
-    grid-template-columns: 1fr;
-    gap: 50px;
-  }
-  .v2-hero-visual {
-    max-width: 500px;
-    margin: 0 auto;
+    gap: 40px;
   }
   .v2-stats-bar-inner {
     grid-template-columns: repeat(2, 1fr);
@@ -1737,9 +1752,6 @@ html, body { overflow-x: hidden; }
   .v2-hero-text .v2-supporting { font-size: 13px; }
   .v2-hero-text .v2-btn-primary { padding: 14px 28px; font-size: 14px; width: 100%; text-align: center; box-sizing: border-box; }
   .v2-hero-inner { gap: 32px; }
-
-  /* Hide browser mockup on small mobile — too complex to render well */
-  .v2-hero-visual { display: none; }
 
   /* --- Pull quote --- */
   .v2-pull-quote { padding: 48px 0; }
@@ -1984,6 +1996,11 @@ html, body { overflow-x: hidden; }
      1. CINEMATIC HERO
      ======================================== -->
 <section class="v2-section v2-hero" aria-label="Hero">
+  <div class="v2-hero-orbs" aria-hidden="true">
+    <div class="v2-orb v2-orb-a"></div>
+    <div class="v2-orb v2-orb-b"></div>
+    <div class="v2-orb v2-orb-c"></div>
+  </div>
   <div class="v2-hero-shapes" id="heroShapes">
     <div class="v2-shape v2-shape-1"></div>
     <div class="v2-shape v2-shape-2"></div>
@@ -2003,210 +2020,6 @@ html, body { overflow-x: hidden; }
         <a href="/contact-stretch-creative/" class="v2-btn-primary v2-reveal v2-delay-5"><span>Let&rsquo;s Chat &rarr;</span></a>
       </div>
 
-      <div class="v2-hero-visual v2-reveal v2-delay-3">
-        <svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of creative digital services including mobile, web, video, and design">
-          <defs>
-            <linearGradient id="illoPhoneScreen" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1a1a2e"/>
-              <stop offset="100%" stop-color="#12121f"/>
-            </linearGradient>
-            <linearGradient id="illoBarGrad1" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#5674B9"/>
-              <stop offset="100%" stop-color="#8560A8"/>
-            </linearGradient>
-            <linearGradient id="illoBarGrad2" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#448CCB"/>
-              <stop offset="100%" stop-color="#5674B9"/>
-            </linearGradient>
-            <linearGradient id="illoBarGrad3" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#00BFF3"/>
-              <stop offset="100%" stop-color="#448CCB"/>
-            </linearGradient>
-            <filter id="illoShadow" x="-10%" y="-10%" width="130%" height="140%">
-              <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.25"/>
-            </filter>
-            <filter id="illoShadowSm" x="-10%" y="-10%" width="130%" height="140%">
-              <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.2"/>
-            </filter>
-          </defs>
-
-          <!-- === Background Blobs === -->
-          <g class="v2-illo-blob">
-            <path d="M80 180 C40 120, 130 60, 200 90 C270 120, 250 200, 190 240 C130 280, 120 240, 80 180Z" fill="#8560A8" opacity="0.18"/>
-          </g>
-          <g class="v2-illo-blob">
-            <path d="M400 60 C450 20, 540 50, 530 120 C520 190, 460 200, 420 170 C380 140, 350 100, 400 60Z" fill="#F5A623" opacity="0.2"/>
-          </g>
-          <g class="v2-illo-blob">
-            <path d="M350 340 C400 300, 520 310, 540 370 C560 430, 500 480, 430 470 C360 460, 300 380, 350 340Z" fill="#00BFF3" opacity="0.13"/>
-          </g>
-
-          <!-- === Decorative Floating Elements === -->
-          <!-- Small dots -->
-          <circle cx="95" cy="90" r="3" fill="#fff" opacity="0.18"/>
-          <circle cx="520" cy="100" r="4" fill="#00BFF3" opacity="0.25"/>
-          <circle cx="560" cy="260" r="3" fill="#8560A8" opacity="0.3"/>
-          <circle cx="50" cy="320" r="5" fill="#fff" opacity="0.1"/>
-          <circle cx="140" cy="60" r="3.5" fill="#00BFF3" opacity="0.2"/>
-          <circle cx="480" cy="440" r="4" fill="#fff" opacity="0.15"/>
-          <circle cx="30" cy="230" r="2.5" fill="#5674B9" opacity="0.25"/>
-
-          <!-- Sparkle / 4-pointed stars -->
-          <g opacity="0.2" fill="#fff">
-            <path d="M540 180 L543 186 L540 192 L537 186Z"/>
-            <path d="M540 180 L546 186 L540 192 L534 186Z"/>
-          </g>
-          <g opacity="0.15" fill="#00BFF3">
-            <path d="M70 400 L72.5 405 L70 410 L67.5 405Z"/>
-            <path d="M70 400 L75 405 L70 410 L65 405Z"/>
-          </g>
-          <g opacity="0.18" fill="#8560A8">
-            <path d="M460 50 L462 54 L460 58 L458 54Z"/>
-            <path d="M460 50 L464 54 L460 58 L456 54Z"/>
-          </g>
-
-          <!-- Mini network graph -->
-          <g opacity="0.15" stroke="#fff" stroke-width="1">
-            <circle cx="555" cy="340" r="3" fill="#5674B9" stroke="none" opacity="0.4"/>
-            <circle cx="580" cy="360" r="2.5" fill="#8560A8" stroke="none" opacity="0.4"/>
-            <circle cx="565" cy="380" r="2" fill="#00BFF3" stroke="none" opacity="0.4"/>
-            <line x1="555" y1="340" x2="580" y2="360"/>
-            <line x1="580" y1="360" x2="565" y2="380"/>
-            <line x1="555" y1="340" x2="565" y2="380"/>
-          </g>
-
-          <!-- Small geometric shapes -->
-          <rect x="42" cy="140" y="140" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1" fill="none" opacity="0.12" transform="rotate(15 46 144)"/>
-          <circle cx="510" cy="460" r="5" stroke="#5674B9" stroke-width="1" fill="none" opacity="0.15"/>
-
-          <!-- === Browser Window (center-right, behind phone) === -->
-          <g class="v2-illo-browser" filter="url(#illoShadow)" transform="rotate(2.5 420 230)">
-            <!-- Window frame -->
-            <rect x="280" y="80" width="260" height="320" rx="10" fill="#fff"/>
-            <!-- Browser chrome -->
-            <rect x="280" y="80" width="260" height="32" rx="10" fill="#f0f0f4"/>
-            <!-- Bottom corners of chrome are square -->
-            <rect x="280" y="102" width="260" height="10" fill="#f0f0f4"/>
-            <!-- Three dots -->
-            <circle cx="298" cy="96" r="4" fill="#ff5f57"/>
-            <circle cx="312" cy="96" r="4" fill="#febc2e"/>
-            <circle cx="326" cy="96" r="4" fill="#28c840"/>
-            <!-- URL bar -->
-            <rect x="344" y="89" width="180" height="14" rx="4" fill="#e4e4ea"/>
-            <!-- Content area -->
-            <!-- Heading lines -->
-            <rect x="300" y="128" width="140" height="8" rx="3" fill="#252C3A" opacity="0.7"/>
-            <rect x="300" y="144" width="100" height="8" rx="3" fill="#252C3A" opacity="0.4"/>
-            <!-- Paragraph text lines -->
-            <rect x="300" y="168" width="220" height="5" rx="2" fill="#c0c0c8"/>
-            <rect x="300" y="180" width="200" height="5" rx="2" fill="#c0c0c8"/>
-            <rect x="300" y="192" width="210" height="5" rx="2" fill="#c0c0c8"/>
-            <rect x="300" y="204" width="150" height="5" rx="2" fill="#c0c0c8"/>
-            <!-- Image placeholder -->
-            <rect x="300" y="224" width="220" height="90" rx="6" fill="#e8e8f0"/>
-            <g opacity="0.3">
-              <circle cx="410" cy="258" r="12" stroke="#aaa" stroke-width="1.5" fill="none"/>
-              <path d="M385 298 L400 278 L415 290 L430 270 L445 298Z" fill="#ccc" opacity="0.5"/>
-            </g>
-            <!-- CTA button -->
-            <rect x="300" y="330" width="100" height="28" rx="6" fill="#8560A8"/>
-            <rect x="316" y="340" width="68" height="8" rx="3" fill="#fff" opacity="0.9"/>
-            <!-- Small text after button -->
-            <rect x="300" y="372" width="180" height="5" rx="2" fill="#c0c0c8" opacity="0.6"/>
-            <rect x="300" y="384" width="140" height="5" rx="2" fill="#c0c0c8" opacity="0.6"/>
-          </g>
-
-          <!-- === Smartphone / Mobile Device (center-left, prominent) === -->
-          <g class="v2-illo-phone" filter="url(#illoShadow)">
-            <!-- Phone frame -->
-            <rect x="100" y="100" width="170" height="310" rx="18" fill="#1a1a2e"/>
-            <!-- Screen bezel inset -->
-            <rect x="110" y="115" width="150" height="280" rx="8" fill="url(#illoPhoneScreen)"/>
-            <!-- Notch -->
-            <rect x="155" y="100" width="60" height="12" rx="6" fill="#1a1a2e"/>
-            <!-- Search bar -->
-            <rect x="120" y="130" width="130" height="22" rx="6" fill="rgba(255,255,255,0.07)"/>
-            <circle cx="133" cy="141" r="5" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
-            <rect x="144" y="138" width="60" height="5" rx="2" fill="rgba(255,255,255,0.15)"/>
-            <!-- Content text lines -->
-            <rect x="120" y="165" width="130" height="5" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <rect x="120" y="176" width="110" height="5" rx="2" fill="rgba(255,255,255,0.08)"/>
-            <rect x="120" y="187" width="120" height="5" rx="2" fill="rgba(255,255,255,0.08)"/>
-            <!-- Bar chart -->
-            <g transform="translate(120, 280)">
-              <!-- Chart baseline -->
-              <line x1="0" y1="90" x2="130" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-              <!-- Grid lines -->
-              <line x1="0" y1="30" x2="130" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
-              <line x1="0" y1="60" x2="130" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
-              <!-- Bars -->
-              <rect x="8" y="55" width="16" height="35" rx="3" fill="url(#illoBarGrad1)"/>
-              <rect x="32" y="30" width="16" height="60" rx="3" fill="url(#illoBarGrad2)"/>
-              <rect x="56" y="42" width="16" height="48" rx="3" fill="url(#illoBarGrad1)"/>
-              <rect x="80" y="15" width="16" height="75" rx="3" fill="url(#illoBarGrad3)"/>
-              <rect x="104" y="5" width="16" height="85" rx="3" fill="url(#illoBarGrad3)"/>
-              <!-- Chart labels -->
-              <text x="16" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q1</text>
-              <text x="40" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q2</text>
-              <text x="64" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q3</text>
-              <text x="88" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q4</text>
-              <text x="112" y="102" fill="rgba(255,255,255,0.3)" font-size="6" text-anchor="middle" font-family="sans-serif">Q5</text>
-            </g>
-            <!-- Small heading above chart -->
-            <rect x="120" y="210" width="90" height="6" rx="2" fill="rgba(255,255,255,0.18)"/>
-            <rect x="120" y="222" width="70" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
-            <!-- Growth arrow -->
-            <g transform="translate(215, 215)">
-              <path d="M0 18 L15 0" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M10 0 L15 0 L15 5" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-          </g>
-
-          <!-- === Video Player (bottom-right, overlapping) === -->
-          <g filter="url(#illoShadowSm)">
-            <rect x="370" y="360" width="180" height="110" rx="10" fill="#252C3A"/>
-            <!-- Play button -->
-            <circle cx="460" cy="400" r="20" stroke="#fff" stroke-width="2" fill="none" opacity="0.8"/>
-            <path d="M453 390 L453 410 L470 400Z" fill="#fff" opacity="0.8"/>
-            <!-- Progress bar background -->
-            <rect x="385" y="448" width="150" height="4" rx="2" fill="rgba(255,255,255,0.1)"/>
-            <!-- Progress bar fill -->
-            <rect x="385" y="448" width="55" height="4" rx="2" fill="#00BFF3"/>
-            <!-- Progress dot -->
-            <circle cx="440" cy="450" r="5" fill="#00BFF3"/>
-            <!-- HD badge -->
-            <rect x="520" y="366" width="22" height="12" rx="3" fill="rgba(255,255,255,0.12)"/>
-            <text x="531" y="375" fill="rgba(255,255,255,0.6)" font-size="7" text-anchor="middle" font-family="sans-serif" font-weight="600">HD</text>
-            <!-- Timestamp -->
-            <text x="395" y="442" fill="rgba(255,255,255,0.4)" font-size="7" font-family="sans-serif">1:24 / 3:05</text>
-          </g>
-
-          <!-- === Pencil + Color Palette (bottom-left area) === -->
-          <g transform="translate(80, 420) rotate(-30)">
-            <!-- Pencil body -->
-            <rect x="0" y="0" width="100" height="14" rx="2" fill="#F5A623"/>
-            <rect x="0" y="0" width="100" height="7" rx="2" fill="#F7BC5E"/>
-            <!-- Pencil tip -->
-            <polygon points="100,0 100,14 118,7" fill="#252C3A"/>
-            <polygon points="112,4 112,10 118,7" fill="#e8c9a0"/>
-            <!-- Eraser end -->
-            <rect x="-12" y="1" width="14" height="12" rx="3" fill="#E88B9C"/>
-            <rect x="-2" y="0" width="4" height="14" rx="0" fill="#c0c0c0"/>
-          </g>
-          <!-- Color swatches -->
-          <circle cx="100" cy="468" r="9" fill="#8560A8"/>
-          <circle cx="123" cy="468" r="9" fill="#5674B9"/>
-          <circle cx="146" cy="468" r="9" fill="#00BFF3"/>
-          <circle cx="100" cy="468" r="9" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.3"/>
-          <circle cx="123" cy="468" r="9" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.3"/>
-          <circle cx="146" cy="468" r="9" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.3"/>
-
-          <!-- === More scattered decorative elements === -->
-          <circle cx="310" cy="50" r="2" fill="#fff" opacity="0.12"/>
-          <circle cx="240" cy="470" r="3" fill="#5674B9" opacity="0.2"/>
-          <rect x="570" cy="430" y="430" width="6" height="6" rx="1" stroke="#00BFF3" stroke-width="0.8" fill="none" opacity="0.2" transform="rotate(20 573 433)"/>
-        </svg>
-      </div>
     </div>
   </div>
 </section>
@@ -2354,7 +2167,7 @@ html, body { overflow-x: hidden; }
         <h2>Bespoke Content<br>Experience</h2>
         <p>Custom-built interactive content experiences that transform passive readers into engaged participants. Think calculators, assessments, and data-driven tools &mdash; all wrapped in your brand and designed to generate qualified leads.</p>
         <p>Each experience is hand-coded, fully responsive, and engineered for performance. No templates. No iframes. Pure, on-brand engagement.</p>
-        <a href="/bespoke-content-experience/" class="v2-btn-outline">See It In Action &rarr;</a>
+        <a href="/services/bespoke-content-experience/" class="v2-btn-outline">See It In Action &rarr;</a>
       </div>
 
       <div class="v2-bespoke-app v2-reveal-right">
