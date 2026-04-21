@@ -293,6 +293,9 @@ if ($step === 1) {
         $menu = wp_get_nav_menu_object($name);
         $mid = $menu ? $menu->term_id : wp_create_nav_menu($name);
         $menu_locations[$loc] = $mid;
+        // Wipe existing items so re-running Step 4 doesn't append duplicates
+        $existing = wp_get_nav_menu_items($mid);
+        if ($existing) foreach ($existing as $item) wp_delete_post($item->ID, true);
     }
 
     wp_update_nav_menu_item($menu_locations['footer-1'], 0, ['menu-item-title' => 'Ecommerce', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
