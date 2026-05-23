@@ -14,101 +14,161 @@ $services = [];
 // 1. Content Writing at Any Scale
 // ============================================================
 $services['content-writing-at-any-scale'] = [
-    'headline'    => 'Content Writing at Any Scale',
-    'subheadline' => "We partner with marketing, sales, and SEO teams to produce large or small volumes of content, fine-tuned to perform exactly how you want it to.",
-    'offerings'   => [
-        [
-            'title'       => 'Blog Articles',
-            'description' => 'Get blog content that performs the way you want it to — educate or inspire, pitch or plug, teach or tempt. From thought leadership and lifestyle pieces to listicles and how-to\'s, we\'ll create blog articles that are helpful, accurate, and a pleasure to read.',
-        ],
-        [
-            'title'       => 'Buying Guides',
-            'description' => 'A perfect balance of romance copy to inspire and useful information to educate, a buying guide establishes your authority, builds trust, showcases your brand, and helps your customers choose just what they need.',
-        ],
-        [
-            'title'       => 'User-Generated Content',
-            'description' => 'Build trust and credibility with user-generated content. Our UGC writers create super-engaging content — photos included — that sparks inspiration and a sense of community and helps influence purchases.',
-        ],
-        [
-            'title'       => 'Expert-Written or Reviewed',
-            'description' => 'Expertise, experience, authoritativeness, and trust (E-E-A-T) is everything when you\'re writing what Google calls "Your Money, Your Life" (YMYL) content — medical, financial, and other important topics that do best when they\'re written or reviewed by a credentialed expert. Byline included.',
-        ],
-        [
-            'title'       => 'Product Descriptions',
-            'description' => 'The almighty product description is often the very last thing a visitor sees before they ADD TO CART (or leave the page), so they gotta be good: engaging, informative, accurate, and on-brand. Leave it to Stretch to write spectacular product descriptions that help drive sales.',
-        ],
-        [
-            'title'       => 'Product Listing Pages',
-            'description' => 'Product listing pages — aka category landing pages or "bottom copy" — give your customers loads of helpful information to inform their purchasing decisions, whatever their funnel position. We\'ll convince them they\'re making the right choice, or help them find exactly what they\'re looking for.',
-        ],
-        [
-            'title'       => 'Email & Social Content',
-            'description' => 'Getting people to open, read, and act on your emails — or like and share your social posts — is like pulling teeth if your content is as painful to read as a root canal. Email and social media are very special birds, and we\'re fluent in their subtle, musical language.',
-        ],
-        [
-            'title'       => 'Photo Sourcing',
-            'description' => 'We\'ll find and acquire images for use in your content — from your internal database, free or paid stock photo libraries, or other sources — fully licensed and ready to ship.',
-        ],
-        [
-            'title'       => 'Expert Review',
-            'description' => 'Our roster of credentialed experts in fields like health, finance, and law will review the content we produce. An expert-reviewed byline gives the piece more authority in the eyes of search engines and your readers.',
-        ],
-        [
-            'title'       => 'Incorporate Interview',
-            'description' => 'Have an existing interview transcript? We\'ll turn it into a Q&A blog or pull the best quotes into a feature piece — making your subject-matter expertise work harder.',
-        ],
-        [
-            'title'       => 'Conduct Expert Interviews',
-            'description' => 'We\'ll interview your stakeholders for you. We write the questions, run the video conference, and turn the transcript into publish-ready content.',
-        ],
-        [
-            'title'       => 'Create Editorial Briefs',
-            'description' => 'Hand us your keyword and SEO research and we\'ll build editorial briefs that give writers a clear roadmap to high-performing content — angle, structure, sources, and voice all spelled out.',
+    // -------- Hero --------
+    'headline'       => 'Content Writing at Any Scale',
+    'subheadline'    => 'Your voice, your brand, your story — publish-ready and on time, every time.',
+    'hero_text'      => "Whether you need five blog posts or five thousand product descriptions, we'll build you a dedicated team of writers who know your industry, speak your language, and deliver content that performs. No chasing. No rewrites. No compromises.",
+    'hero_cta_label' => "Let's Talk Content",
+    'hero_cta_url'   => '/contact-stretch-creative/',
+
+    // -------- Problem --------
+    'problem' => [
+        'overline'   => 'The Reality',
+        'heading'    => 'Sound Familiar?',
+        'subheading' => "Most content bottlenecks aren't a volume problem — they're a quality problem.",
+        'text'       => "You've got a content calendar, a strategy, and a backlog that never seems to shrink. What you don't have is a writing team that gets it — one that understands your brand, hits your deadlines, and produces work you can actually publish without spending half your day cleaning it up. Generic writers produce generic content. And generic content doesn't rank, doesn't convert, and doesn't sound remotely like you.",
+    ],
+
+    // -------- Solution --------
+    'solution' => [
+        'overline'   => 'The Solution',
+        'heading'    => 'Publish-Ready Content, Built Around You',
+        'subheading' => "We're not a content mill — we're an extension of your team.",
+        'text'       => "Stretch Creative partners with in-house marketing teams, SEO agencies, ecommerce brands, and publishers to produce content that's accurate, on-brand, and built to perform. We handle the briefs, the writing, the editing, and the delivery — so you can focus on strategy, not copy-editing someone else's work.",
+        'cta_label'  => 'Get in Touch',
+        'cta_url'    => '/contact-stretch-creative/',
+    ],
+
+    // -------- Capabilities (Offerings) --------
+    'offerings_overline'   => 'Capabilities',
+    'offerings_heading'    => 'What We Write',
+    'offerings_subheading' => 'From a single landing page to a thousand product descriptions — we do it all.',
+    'offerings_intro'      => "Our writers are specialists, not generalists. We'll match you with a cohort that has real industry experience and a genuine grasp of your audience.",
+    'offerings' => [
+        ['title' => 'Blog articles & thought leadership', 'description' => "Helpful, well-researched, and written to rank. From how-to's and listicles to long-form guides and opinion pieces."],
+        ['title' => 'Buying guides',                     'description' => 'The perfect balance of editorial romance and practical information, built to inspire confidence and drive decisions.'],
+        ['title' => 'Product descriptions',              'description' => 'Engaging, accurate, and on-brand copy that earns the ADD TO CART.'],
+        ['title' => 'Product listing pages',             'description' => 'Category copy that educates, guides, and converts at every funnel stage.'],
+        ['title' => 'Ebooks & white papers',             'description' => 'Authoritative, well-structured gated content that establishes expertise and captures leads.'],
+        ['title' => 'Email & social content',            'description' => 'Copy people actually open, read, and act on.'],
+        ['title' => 'Google Ads, banners & landing pages', 'description' => 'Ads and the pages they lead to, written together and dialed in to perform.'],
+        ['title' => 'Website copy',                      'description' => "Clear, compelling, and optimized — whether you're starting from scratch or refreshing what's there."],
+        ['title' => 'User-generated content',            'description' => 'First-person, authentic UGC written by experienced writers who know how to make it land.'],
+        ['title' => 'Expert-written & E-E-A-T content',  'description' => 'For YMYL topics that need a credentialed byline and the authority to back it up.'],
+    ],
+
+    // -------- Process (How It Works) --------
+    'process' => [
+        'overline'   => 'Process',
+        'heading'    => 'How It Works',
+        'subheading' => 'A collaborative process designed to get better with every piece we produce.',
+        'intro'      => "Great content doesn't come from sending briefs into a void. It comes from a process that's built around your brand — and a team that's invested in getting it right.",
+        'steps' => [
+            ['title' => 'Consultation',         'description' => 'We start with a conversation. We want to understand your goals, your audience, your pain points, and what "great" looks like for you.'],
+            ['title' => 'Brief & style guide',  'description' => 'We document everything: your brand voice, tone, formatting preferences, off-limits topics, and must-haves. This becomes the north star for your entire cohort.'],
+            ['title' => 'Curate your team',     'description' => "We hand-select writers with experience in your industry. You're welcome to meet them."],
+            ['title' => 'Calibrate',            'description' => 'Before we scale, we write a handful of pieces and pressure-test the process. We gather your feedback, make adjustments, and get everything dialed in.'],
+            ['title' => 'Create',               'description' => 'Production begins. Your dedicated project manager oversees the workflow and keeps everything on track, on time, and on brand.'],
+            ['title' => 'Deliver & report',     'description' => 'You receive publish-ready content. We review performance with you regularly and keep refining — because good gets better.'],
         ],
     ],
-    'why_heading' => 'Why Stretch?',
-    'why_intro'   => "Whether you're a small business or a formidable Fortune 100, your content needs to be trustworthy, authoritative, and — above all — helpful to the reader.",
-    'benefits'    => [
-        [
-            'title'       => 'Dedicated Cohorts',
-            'description' => 'We build a dedicated team of writers specifically for your brand. Your cohort learns your voice, style guide, and audience inside and out — so every piece of content sounds like it came from your in-house team.',
-        ],
-        [
-            'title'       => 'Authoritative Content',
-            'description' => "Our writers are experienced professionals, not anonymous freelancers. We match subject-matter experts to your projects so your content is accurate, credible, and aligned with Google's E-E-A-T guidelines.",
-        ],
-        [
-            'title'       => 'Collaborative Process',
-            'description' => 'We work alongside your team, not in a silo. From intake calls to editorial reviews, our process is transparent and collaborative. You stay in the loop at every stage, and feedback is always welcome.',
-        ],
-        [
-            'title'       => 'Consistent Quality',
-            'description' => 'Every piece of content goes through our multi-stage editorial process — including writing, editing, fact-checking, and QA — to ensure it meets your standards before delivery. No surprises, no rework.',
-        ],
+
+    // -------- Why Stretch / Benefits --------
+    'why_heading' => 'Why Stretch Creative',
+    'why_intro'   => "Quality doesn't take a back seat when volume goes up. A lot of agencies promise scale. Fewer can promise quality at scale. At Stretch, the two aren't in conflict — they're the whole point.",
+    'benefits' => [
+        ['title' => 'Dedicated cohorts',         'description' => "Your writers aren't shared across dozens of clients. They're yours, and they'll know your brand as well as you do."],
+        ['title' => 'Industry-matched writers',  'description' => "We don't assign random generalists. We find writers with genuine expertise in your space, so the content is authoritative from day one."],
+        ['title' => 'Consistent quality',        'description' => 'Our internal editorial process means every piece that lands in your inbox is ready to publish — not ready to be fixed.'],
+        ['title' => 'A single point of contact', 'description' => 'One dedicated project manager oversees everything, keeps communication clean, and makes sure nothing slips through the cracks.'],
+        ['title' => 'No monthly minimums',       'description' => "Scale up, scale down, or maintain a steady rhythm. We'll match your pace."],
     ],
+
+    // -------- Stats --------
     'stats' => [
-        ['label' => 'Writers', 'value' => '200', 'suffix' => '+'],
-        ['label' => 'Minimums', 'value' => 'No Minimums', 'suffix' => ''],
-        ['label' => 'Industries', 'value' => '10', 'suffix' => '+'],
-        ['label' => 'On-Time Delivery', 'value' => '98', 'suffix' => '%'],
+        ['label' => 'Writers',          'value' => '200',          'suffix' => '+'],
+        ['label' => 'Minimums',         'value' => 'No Minimums',  'suffix' => ''],
+        ['label' => 'Industries',       'value' => '10',           'suffix' => '+'],
+        ['label' => 'On-Time Delivery', 'value' => '98',           'suffix' => '%'],
     ],
+
+    // -------- Testimonials (3 real) --------
+    'testimonials_heading'    => 'What Our Clients Say',
+    'testimonials_subheading' => 'A few of the brands that trust us with their content.',
+    'testimonials' => [
+        [
+            'quote' => "Working with Stretch Creative has been the biggest difference-maker in scaling Grove Collaborative's SEO content operations. Not only that, the Stretch Creative team has been a pure joy to work with — they've been one of the best agencies I've worked with during my SEO career, and I cannot recommend them enough.",
+            'name'  => 'Kristen Haney',
+            'title' => 'Sr. Growth Manager SEO Content, Grove Collaborative',
+        ],
+        [
+            'quote' => 'We have worked with Stretch on numerous projects across multiple channels and global markets. They were heavily involved in each project to get it across the line in a timely manner and strive to deliver the highest quality of work.',
+            'name'  => 'Karen Hewitt',
+            'title' => 'Sr. Marketing Manager Demand Generation, WeWork',
+        ],
+        [
+            'quote' => 'Stretch is professional, punctual, and overall an amazing asset for us. No matter the task or turnaround time, they do a great job of bringing our brand identity to life and delivering assets on time.',
+            'name'  => 'Keenan Wilson',
+            'title' => 'Marketing Manager, Stance',
+        ],
+    ],
+
+    // -------- FAQ --------
     'faqs' => [
         [
-            'question' => 'How does Stretch match writers to my brand?',
-            'answer'   => 'We start with a detailed onboarding process where we learn your brand voice, tone, style guidelines, and subject-matter requirements. Based on that, we assemble a dedicated cohort of writers with relevant expertise. Your cohort works exclusively on your content, ensuring consistency across every deliverable.',
+            'question' => 'What does "content at any scale" actually mean?',
+            'answer'   => 'Whether you need five articles a month or five hundred product descriptions a week, we have the team and the process to handle it. Volume never comes at the expense of quality — our editorial workflow makes sure of that.',
         ],
         [
-            'question' => 'What if I only need a small volume of content?',
-            'answer'   => "We work with brands of all sizes, from startups needing a handful of blog posts to enterprises requiring thousands of product descriptions per month. There are no minimums — we'll build a plan that fits your needs and budget.",
+            'question' => 'Can you write for my industry?',
+            'answer'   => "Almost certainly. Our roster covers ecommerce, SaaS, health and wellness, finance, home and lifestyle, publishing, and more. We'll match you with writers who have real experience in your space — and if you need a credentialed expert byline for YMYL content, we have those, too.",
         ],
         [
-            'question' => 'How do you ensure content quality at scale?',
-            'answer'   => 'Every piece of content passes through our multi-stage quality assurance process. This includes editorial review, fact-checking, plagiarism scanning, and style-guide compliance checks. As volume increases, we add editors and QA specialists to maintain the same high standards.',
+            'question' => 'How do you handle large-scale projects?',
+            'answer'   => "With a dedicated project manager, detailed onboarding, collaborative tools, and a calibration phase before we ramp up production. By the time we're operating at full volume, your cohort knows your brand inside and out.",
         ],
         [
-            'question' => 'Can your writers handle specialized or technical topics?',
-            'answer'   => 'Absolutely. We have writers with professional backgrounds in healthcare, finance, technology, legal, SaaS, ecommerce, and many other industries. For topics requiring extra credibility, we can also arrange expert reviews by credentialed professionals.',
+            'question' => 'How does pricing work?',
+            'answer'   => "Our pricing is competitive, flexible, and built around your actual needs — the volume, complexity, and type of content you require. We'll put together a model that works for your budget and fairly compensates our writers, which means lower turnover and a team that stays invested in your brand long-term.",
         ],
+        [
+            'question' => 'Do you have monthly minimums?',
+            'answer'   => "No. We'll work with you at whatever pace makes sense for your business.",
+        ],
+    ],
+
+    // -------- Closing CTA --------
+    'cta' => [
+        'heading'      => 'Ready to Scale Your Content?',
+        'subheading'   => "Let's build something great together.",
+        'text'         => "Whether you need a handful of pieces or a full content operation, we'll put together a team that knows your brand and delivers work you're proud to publish. No fluff. No chasing. Just great content — at any scale.",
+        'button_label' => 'Get in Touch',
+        'button_url'   => '/contact-stretch-creative/',
+        'secondary'    => false,
+    ],
+];
+
+// ============================================================
+// Shared testimonials (reused across all service pages until we have
+// service-specific ones)
+// ============================================================
+$shared_testimonials_heading    = 'What Our Clients Say';
+$shared_testimonials_subheading = 'A few of the brands that trust us with their content.';
+$shared_testimonials = [
+    [
+        'quote' => "Working with Stretch Creative has been the biggest difference-maker in scaling Grove Collaborative's SEO content operations. Not only that, the Stretch Creative team has been a pure joy to work with — they've been one of the best agencies I've worked with during my SEO career, and I cannot recommend them enough.",
+        'name'  => 'Kristen Haney',
+        'title' => 'Sr. Growth Manager SEO Content, Grove Collaborative',
+    ],
+    [
+        'quote' => 'We have worked with Stretch on numerous projects across multiple channels and global markets. They were heavily involved in each project to get it across the line in a timely manner and strive to deliver the highest quality of work.',
+        'name'  => 'Karen Hewitt',
+        'title' => 'Sr. Marketing Manager Demand Generation, WeWork',
+    ],
+    [
+        'quote' => 'Stretch is professional, punctual, and overall an amazing asset for us. No matter the task or turnaround time, they do a great job of bringing our brand identity to life and delivering assets on time.',
+        'name'  => 'Keenan Wilson',
+        'title' => 'Marketing Manager, Stance',
     ],
 ];
 
@@ -587,6 +647,16 @@ $services['paid-advertising'] = [
 // ============================================================
 // Save options and update page templates
 // ============================================================
+// Inject shared testimonials into any service that doesn't already define its own
+foreach ($services as $slug => &$data) {
+    if (empty($data['testimonials'])) {
+        $data['testimonials']             = $shared_testimonials;
+        $data['testimonials_heading']     = $shared_testimonials_heading;
+        $data['testimonials_subheading']  = $shared_testimonials_subheading;
+    }
+}
+unset($data);
+
 foreach ($services as $slug => $data) {
     // Save option
     update_option('stretch_service_' . $slug, $data, false);

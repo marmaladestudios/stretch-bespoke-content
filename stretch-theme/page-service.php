@@ -11,14 +11,26 @@ $slug    = get_post_field('post_name', get_the_ID());
 $service = get_option('stretch_service_' . $slug, []);
 
 // Defaults
-$headline    = !empty($service['headline'])    ? $service['headline']    : get_the_title();
-$subheadline = !empty($service['subheadline']) ? $service['subheadline'] : '';
-$offerings   = !empty($service['offerings'])   ? $service['offerings']   : [];
-$why_heading = !empty($service['why_heading']) ? $service['why_heading'] : 'Why Stretch?';
-$why_intro   = !empty($service['why_intro'])   ? $service['why_intro']   : '';
-$benefits    = !empty($service['benefits'])    ? $service['benefits']    : [];
-$faqs        = !empty($service['faqs'])        ? $service['faqs']        : [];
-$stats       = !empty($service['stats'])       ? $service['stats']       : [];
+$headline        = !empty($service['headline'])        ? $service['headline']        : get_the_title();
+$subheadline     = !empty($service['subheadline'])     ? $service['subheadline']     : '';
+$hero_text       = !empty($service['hero_text'])       ? $service['hero_text']       : '';
+$hero_cta_label  = !empty($service['hero_cta_label'])  ? $service['hero_cta_label']  : 'Get Started';
+$hero_cta_url    = !empty($service['hero_cta_url'])    ? $service['hero_cta_url']    : '/contact-stretch-creative/';
+$problem         = !empty($service['problem'])         ? $service['problem']         : [];
+$solution        = !empty($service['solution'])        ? $service['solution']        : [];
+$offerings_intro      = !empty($service['offerings_intro'])      ? $service['offerings_intro']      : '';
+$offerings            = !empty($service['offerings'])            ? $service['offerings']            : [];
+$offerings_overline   = !empty($service['offerings_overline'])   ? $service['offerings_overline']   : 'Services';
+$offerings_heading    = !empty($service['offerings_heading'])    ? $service['offerings_heading']    : 'What We Deliver';
+$offerings_subheading = !empty($service['offerings_subheading']) ? $service['offerings_subheading'] : '';
+$process         = !empty($service['process'])         ? $service['process']         : [];
+$why_heading     = !empty($service['why_heading'])     ? $service['why_heading']     : 'Why Stretch?';
+$why_intro       = !empty($service['why_intro'])       ? $service['why_intro']       : '';
+$benefits        = !empty($service['benefits'])        ? $service['benefits']        : [];
+$testimonials_list = !empty($service['testimonials']) ? $service['testimonials']    : [];
+$faqs            = !empty($service['faqs'])            ? $service['faqs']            : [];
+$stats           = !empty($service['stats'])           ? $service['stats']           : [];
+$cta             = !empty($service['cta'])             ? $service['cta']             : [];
 
 // Default stats by slug
 if (empty($stats)) {
@@ -296,7 +308,20 @@ html, body { overflow-x: hidden; }
   font-family: 'Assistant', sans-serif;
   font-size: 19px; font-weight: 300; line-height: 1.7;
   color: rgba(255,255,255,0.7);
-  max-width: 620px; margin: 0 auto 40px;
+  max-width: 620px; margin: 0 auto 20px;
+}
+.svc-hero-content .svc-hero-body {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+  max-width: 680px; margin: 0 auto 40px;
+}
+.svc-cta-content .svc-cta-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px; font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 16px;
+  letter-spacing: 0.2px;
 }
 .svc-btn-primary {
   display: inline-block;
@@ -378,6 +403,123 @@ html, body { overflow-x: hidden; }
 }
 
 /* ========================================
+   3.5 PROBLEM / SOLUTION (optional)
+   ======================================== */
+.svc-problem {
+  padding: 120px 0 100px;
+  background: linear-gradient(180deg, #f7f6fc 0%, #fafafd 100%);
+  position: relative;
+  overflow: hidden;
+}
+.svc-problem::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(133,96,168,0.04), transparent 60%);
+  pointer-events: none;
+}
+.svc-problem-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.svc-problem-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8560A8;
+  display: block; margin-bottom: 18px;
+}
+.svc-problem h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(34px, 4.2vw, 50px);
+  font-weight: 600; color: #252C3A;
+  margin: 0 0 22px; line-height: 1.1;
+  letter-spacing: -0.8px;
+}
+.svc-problem-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 500;
+  color: #8560A8;
+  margin: 0 0 32px; line-height: 1.45;
+  max-width: 720px;
+  margin-left: auto; margin-right: auto;
+}
+.svc-problem-text {
+  font-family: 'Assistant', sans-serif;
+  font-size: 18px; font-weight: 300; line-height: 1.8;
+  color: #4a5066;
+  max-width: 740px; margin: 0 auto;
+}
+.svc-problem-text strong {
+  color: #252C3A; font-weight: 500;
+}
+
+.svc-solution {
+  padding: 110px 0 110px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.svc-solution::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,191,243,0.05), transparent 60%);
+  pointer-events: none;
+}
+.svc-solution::after {
+  content: '';
+  position: absolute;
+  bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(86,116,185,0.04), transparent 60%);
+  pointer-events: none;
+}
+.svc-solution-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.svc-solution-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #00BFF3;
+  display: block; margin-bottom: 18px;
+}
+.svc-solution h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(34px, 4.2vw, 50px);
+  font-weight: 600; color: #252C3A;
+  margin: 0 0 22px; line-height: 1.1;
+  letter-spacing: -0.8px;
+}
+.svc-solution-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 500;
+  color: #5674B9;
+  margin: 0 0 28px; line-height: 1.45;
+  max-width: 720px;
+  margin-left: auto; margin-right: auto;
+}
+.svc-solution-text {
+  font-family: 'Assistant', sans-serif;
+  font-size: 18px; font-weight: 300; line-height: 1.8;
+  color: #4a5066;
+  max-width: 740px; margin: 0 auto 40px;
+}
+
+/* ========================================
    4. PULL QUOTE BANNER
    ======================================== */
 .svc-pull-quote {
@@ -442,6 +584,22 @@ html, body { overflow-x: hidden; }
   font-family: 'Poppins', sans-serif;
   font-size: clamp(32px, 4vw, 44px);
   font-weight: 600; color: #252C3A; margin: 0;
+}
+.svc-offerings-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(17px, 1.9vw, 21px);
+  font-weight: 500;
+  color: #5674B9;
+  margin: 18px auto 0;
+  max-width: 720px;
+  line-height: 1.45;
+}
+.svc-offerings-intro {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px; font-weight: 300; line-height: 1.7;
+  color: #4a5066;
+  margin: 16px auto 0;
+  max-width: 700px;
 }
 
 .svc-offering-list {
@@ -512,6 +670,104 @@ html, body { overflow-x: hidden; }
 }
 .svc-offering-row.svc-offering-even .svc-offering-body p {
   margin-left: auto;
+}
+
+/* ========================================
+   5.25 PROCESS / HOW IT WORKS (optional)
+   ======================================== */
+.svc-process {
+  padding: 120px 0;
+  background: #f9f9fb;
+  position: relative;
+  overflow: hidden;
+}
+.svc-process::before {
+  content: '';
+  position: absolute;
+  bottom: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(86,116,185,0.04), transparent 60%);
+  pointer-events: none;
+}
+.svc-process-sub {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 500;
+  color: #5674B9;
+  text-align: center;
+  margin: -40px auto 24px;
+  max-width: 720px;
+  line-height: 1.4;
+  position: relative;
+}
+.svc-process-intro {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px; font-weight: 300; line-height: 1.75;
+  color: #4a5066;
+  text-align: center;
+  max-width: 720px; margin: 0 auto 56px;
+  position: relative;
+}
+.svc-process-steps {
+  list-style: none; padding: 0;
+  max-width: 860px; margin: 0 auto;
+  position: relative;
+}
+.svc-process-steps::before {
+  content: '';
+  position: absolute;
+  left: 39px; top: 40px; bottom: 40px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(133,96,168,0.4) 0%, rgba(86,116,185,0.4) 40%, rgba(68,140,203,0.4) 70%, rgba(0,191,243,0.4) 100%);
+  z-index: 0;
+}
+.svc-process-step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  align-items: flex-start;
+  padding: 16px 0;
+  position: relative;
+}
+.svc-process-num {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px; font-weight: 600;
+  color: #8560A8;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(37,44,58,0.06);
+  border: 2px solid rgba(133,96,168,0.2);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+}
+.svc-process-step:hover .svc-process-num {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(133,96,168,0.18);
+}
+.svc-process-step:nth-child(6n+1) .svc-process-num { color: #8560A8; border-color: rgba(133,96,168,0.45); }
+.svc-process-step:nth-child(6n+2) .svc-process-num { color: #6e6eb5; border-color: rgba(110,110,181,0.45); }
+.svc-process-step:nth-child(6n+3) .svc-process-num { color: #5674B9; border-color: rgba(86,116,185,0.45); }
+.svc-process-step:nth-child(6n+4) .svc-process-num { color: #448CCB; border-color: rgba(68,140,203,0.45); }
+.svc-process-step:nth-child(6n+5) .svc-process-num { color: #2cb0e0; border-color: rgba(44,176,224,0.45); }
+.svc-process-step:nth-child(6n+6) .svc-process-num { color: #00BFF3; border-color: rgba(0,191,243,0.45); }
+.svc-process-body {
+  padding-top: 14px;
+}
+.svc-process-body h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px; font-weight: 600;
+  color: #252C3A; margin: 0 0 10px;
+  letter-spacing: -0.3px;
+}
+.svc-process-body p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 300;
+  line-height: 1.75; color: #4a5066; margin: 0;
+  max-width: 640px;
 }
 
 /* ========================================
@@ -742,6 +998,16 @@ html, body { overflow-x: hidden; }
   gap: 32px;
   position: relative;
 }
+.svc-benefits-grid.svc-benefits-odd .svc-benefit-card:last-child {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 16px);
+  margin: 0 auto;
+}
+@media (max-width: 960px) {
+  .svc-benefits-grid.svc-benefits-odd .svc-benefit-card:last-child {
+    max-width: none;
+  }
+}
 .svc-benefit-card {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
@@ -842,6 +1108,97 @@ html, body { overflow-x: hidden; }
 .svc-testimonial-attr span {
   font-weight: 300; color: #888;
   margin-left: 8px;
+}
+/* Multi-testimonial grid */
+.svc-testimonials-heading {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.svc-testimonials-heading .svc-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; color: #00BFF3;
+  display: block; margin-bottom: 16px;
+}
+.svc-testimonials-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(30px, 3.6vw, 42px);
+  font-weight: 600; color: #252C3A; margin: 0 0 10px;
+  letter-spacing: -0.5px;
+}
+.svc-testimonials-sub {
+  font-family: 'Assistant', sans-serif;
+  font-size: 17px; font-weight: 300;
+  color: #5b6275; margin: 0 auto;
+  max-width: 620px; line-height: 1.6;
+}
+.svc-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.svc-testimonials-grid.svc-testimonials-2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 880px;
+}
+.svc-testimonial-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 44px 30px 30px;
+  position: relative;
+  border: 1px solid rgba(37,44,58,0.06);
+  box-shadow: 0 4px 24px rgba(37,44,58,0.05);
+  transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.svc-testimonial-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8560A8, #5674B9, #00BFF3);
+  opacity: 0.85;
+}
+.svc-testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 44px rgba(37,44,58,0.12);
+}
+.svc-testimonial-card-mark {
+  font-family: Georgia, serif;
+  font-size: 72px; line-height: 0.6;
+  color: rgba(133,96,168,0.16);
+  margin: 0 0 6px;
+  user-select: none;
+}
+.svc-testimonial-card-quote {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15.5px; font-weight: 400;
+  font-style: italic;
+  color: #323A51; line-height: 1.7;
+  margin: 0 0 24px;
+  flex: 1;
+}
+.svc-testimonial-card-attr {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(37,44,58,0.08);
+}
+.svc-testimonial-card-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14.5px; font-weight: 600;
+  color: #8560A8;
+  margin: 0 0 4px;
+  letter-spacing: 0.1px;
+}
+.svc-testimonial-card-title {
+  font-family: 'Assistant', sans-serif;
+  font-size: 13px; font-weight: 300;
+  color: #6e7488;
+  line-height: 1.45;
 }
 
 /* ========================================
@@ -1065,6 +1422,8 @@ html, body { overflow-x: hidden; }
 @media (max-width: 960px) {
   .svc-stats-inner { grid-template-columns: repeat(2, 1fr); }
   .svc-benefits-grid { grid-template-columns: 1fr; }
+  .svc-testimonials-grid { grid-template-columns: 1fr; max-width: 560px; }
+  .svc-testimonials-grid.svc-testimonials-2 { grid-template-columns: 1fr; max-width: 560px; }
   .svc-offering-row {
     grid-template-columns: 80px 1fr;
     gap: 28px;
@@ -1090,6 +1449,14 @@ html, body { overflow-x: hidden; }
   .svc-offering-row.svc-offering-even .svc-offering-body { order: 0; }
   .svc-offering-row.svc-offering-even .svc-offering-body p { margin-left: 0; }
   .svc-offering-number { font-size: 48px; }
+  .svc-problem { padding: 80px 0 70px; }
+  .svc-solution { padding: 70px 0 80px; }
+  .svc-process { padding: 80px 0; }
+  .svc-process-steps::before { left: 29px; }
+  .svc-process-step { grid-template-columns: 60px 1fr; gap: 20px; }
+  .svc-process-num { width: 60px; height: 60px; font-size: 17px; }
+  .svc-process-body { padding-top: 8px; }
+  .svc-process-body h3 { font-size: 19px; }
   .svc-why { padding: 80px 0; }
   .svc-testimonial { padding: 70px 0; }
   .svc-faq { padding: 80px 0; }
@@ -1155,7 +1522,10 @@ html, body { overflow-x: hidden; }
       <?php if ($subheadline) : ?>
         <p class="svc-subtitle svc-reveal svc-delay-3"><?php echo esc_html($subheadline); ?></p>
       <?php endif; ?>
-      <a href="/contact-stretch-creative/" class="svc-btn-primary svc-reveal svc-delay-4"><span>Get Started &rarr;</span></a>
+      <?php if ($hero_text) : ?>
+        <p class="svc-hero-body svc-reveal svc-delay-3"><?php echo esc_html($hero_text); ?></p>
+      <?php endif; ?>
+      <a href="<?php echo esc_url($hero_cta_url); ?>" class="svc-btn-primary svc-reveal svc-delay-4"><span><?php echo esc_html($hero_cta_label); ?> &rarr;</span></a>
     </div>
   </div>
 
@@ -1199,6 +1569,76 @@ html, body { overflow-x: hidden; }
 
 
 <!-- ========================================
+     3.5 PROBLEM / SOLUTION (optional)
+     ======================================== -->
+<?php if (!empty($problem)) :
+  $p_heading = !empty($problem['heading']) ? $problem['heading'] : '';
+  $p_sub     = !empty($problem['subheading']) ? $problem['subheading'] : '';
+  $p_text    = !empty($problem['text']) ? $problem['text'] : '';
+  $p_overline = !empty($problem['overline']) ? $problem['overline'] : 'The Reality';
+?>
+<section class="svc-section svc-problem" aria-label="The Problem">
+  <div class="svc-container">
+    <div class="svc-problem-inner">
+      <span class="svc-problem-overline svc-reveal"><?php echo esc_html($p_overline); ?></span>
+      <?php if ($p_heading) : ?>
+        <h2 class="svc-reveal svc-delay-1"><?php echo esc_html($p_heading); ?></h2>
+      <?php endif; ?>
+      <?php if ($p_sub) : ?>
+        <p class="svc-problem-sub svc-reveal svc-delay-2"><?php echo esc_html($p_sub); ?></p>
+      <?php endif; ?>
+      <?php if ($p_text) : ?>
+        <p class="svc-problem-text svc-reveal svc-delay-3"><?php echo wp_kses_post($p_text); ?></p>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <div class="svc-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+<?php endif; ?>
+
+
+<?php if (!empty($solution)) :
+  $s_heading = !empty($solution['heading']) ? $solution['heading'] : '';
+  $s_sub     = !empty($solution['subheading']) ? $solution['subheading'] : '';
+  $s_text    = !empty($solution['text']) ? $solution['text'] : '';
+  $s_overline = !empty($solution['overline']) ? $solution['overline'] : 'The Solution';
+  $s_cta_label = !empty($solution['cta_label']) ? $solution['cta_label'] : '';
+  $s_cta_url   = !empty($solution['cta_url']) ? $solution['cta_url'] : '/contact-stretch-creative/';
+?>
+<section class="svc-section svc-solution" aria-label="The Solution">
+  <div class="svc-container">
+    <div class="svc-solution-inner">
+      <span class="svc-solution-overline svc-reveal"><?php echo esc_html($s_overline); ?></span>
+      <?php if ($s_heading) : ?>
+        <h2 class="svc-reveal svc-delay-1"><?php echo esc_html($s_heading); ?></h2>
+      <?php endif; ?>
+      <?php if ($s_sub) : ?>
+        <p class="svc-solution-sub svc-reveal svc-delay-2"><?php echo esc_html($s_sub); ?></p>
+      <?php endif; ?>
+      <?php if ($s_text) : ?>
+        <p class="svc-solution-text svc-reveal svc-delay-3"><?php echo wp_kses_post($s_text); ?></p>
+      <?php endif; ?>
+      <?php if ($s_cta_label) : ?>
+        <a href="<?php echo esc_url($s_cta_url); ?>" class="svc-btn-primary svc-reveal svc-delay-4"><span><?php echo esc_html($s_cta_label); ?> &rarr;</span></a>
+      <?php endif; ?>
+    </div>
+  </div>
+
+  <div class="svc-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/>
+    </svg>
+  </div>
+</section>
+<?php endif; ?>
+
+
+<!-- ========================================
      4. PULL QUOTE BANNER
      ======================================== -->
 <section class="svc-section svc-pull-quote" aria-label="Pull Quote">
@@ -1221,8 +1661,22 @@ html, body { overflow-x: hidden; }
 <section class="svc-section svc-offerings" aria-label="What We Deliver">
   <div class="svc-container">
     <div class="svc-section-heading">
-      <span class="svc-overline svc-reveal">Services</span>
-      <h2 class="svc-reveal svc-delay-1">What We <span class="svc-gradient-text">Deliver</span></h2>
+      <span class="svc-overline svc-reveal"><?php echo esc_html($offerings_overline); ?></span>
+      <h2 class="svc-reveal svc-delay-1"><?php
+        $owords = explode(' ', $offerings_heading);
+        if (count($owords) >= 2) {
+          $olast = array_pop($owords);
+          echo esc_html(implode(' ', $owords)) . ' <span class="svc-gradient-text">' . esc_html($olast) . '</span>';
+        } else {
+          echo esc_html($offerings_heading);
+        }
+      ?></h2>
+      <?php if (!empty($offerings_subheading)) : ?>
+        <p class="svc-offerings-sub svc-reveal svc-delay-2"><?php echo esc_html($offerings_subheading); ?></p>
+      <?php endif; ?>
+      <?php if (!empty($offerings_intro)) : ?>
+        <p class="svc-offerings-intro svc-reveal svc-delay-3"><?php echo wp_kses_post($offerings_intro); ?></p>
+      <?php endif; ?>
     </div>
 
     <div class="svc-offering-list">
@@ -1252,13 +1706,77 @@ html, body { overflow-x: hidden; }
 
 
 <!-- ========================================
-     5.5 SELECTED WORK — INLINE PORTFOLIO STRIP
+     5.25 PROCESS / HOW IT WORKS (optional)
      ======================================== -->
 <?php
+// Pre-compute portfolio existence for divider logic below
 $service_portfolio = function_exists('stretch_get_portfolio_for_service')
     ? stretch_get_portfolio_for_service($slug)
     : [];
-if (!empty($service_portfolio)) :
+$has_portfolio = !empty($service_portfolio);
+?>
+<?php if (!empty($process) && !empty($process['steps'])) :
+  $pr_heading  = !empty($process['heading'])  ? $process['heading']  : 'How It Works';
+  $pr_sub      = !empty($process['subheading']) ? $process['subheading'] : '';
+  $pr_intro    = !empty($process['intro'])    ? $process['intro']    : '';
+  $pr_overline = !empty($process['overline']) ? $process['overline'] : 'Process';
+  $pr_steps    = $process['steps'];
+?>
+<section class="svc-section svc-process" aria-label="How It Works">
+  <div class="svc-container">
+    <div class="svc-section-heading">
+      <span class="svc-overline svc-reveal"><?php echo esc_html($pr_overline); ?></span>
+      <h2 class="svc-reveal svc-delay-1"><?php
+        // Highlight the last word with gradient if heading has 2+ words
+        $words = explode(' ', $pr_heading);
+        if (count($words) >= 2) {
+          $last = array_pop($words);
+          echo esc_html(implode(' ', $words)) . ' <span class="svc-gradient-text">' . esc_html($last) . '</span>';
+        } else {
+          echo esc_html($pr_heading);
+        }
+      ?></h2>
+    </div>
+
+    <?php if ($pr_sub) : ?>
+      <p class="svc-process-sub svc-reveal svc-delay-2"><?php echo esc_html($pr_sub); ?></p>
+    <?php endif; ?>
+    <?php if ($pr_intro) : ?>
+      <p class="svc-process-intro svc-reveal svc-delay-3"><?php echo wp_kses_post($pr_intro); ?></p>
+    <?php endif; ?>
+
+    <ol class="svc-process-steps">
+      <?php foreach ($pr_steps as $i => $step) :
+        $num = str_pad($i + 1, 2, '0', STR_PAD_LEFT);
+        $delay = min(($i % 4) + 1, 4);
+      ?>
+        <li class="svc-process-step svc-reveal-left svc-delay-<?php echo $delay; ?>">
+          <div class="svc-process-num" aria-hidden="true"><?php echo $num; ?></div>
+          <div class="svc-process-body">
+            <h3><?php echo esc_html($step['title']); ?></h3>
+            <p><?php echo esc_html($step['description']); ?></p>
+          </div>
+        </li>
+      <?php endforeach; ?>
+    </ol>
+  </div>
+
+  <?php if (!$has_portfolio) : ?>
+  <div class="svc-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="#1a1f2e"/>
+    </svg>
+  </div>
+  <?php endif; ?>
+</section>
+<?php endif; ?>
+
+
+<!-- ========================================
+     5.5 SELECTED WORK — INLINE PORTFOLIO STRIP
+     ======================================== -->
+<?php
+if ($has_portfolio) :
     $grid_class = count($service_portfolio) <= 2 ? 'svc-work-grid svc-work-grid-2' : 'svc-work-grid';
 ?>
 <section class="svc-section svc-selected-work" aria-label="Selected Work">
@@ -1331,7 +1849,7 @@ if (!empty($service_portfolio)) :
       <p class="svc-why-intro svc-reveal svc-delay-2"><?php echo esc_html($why_intro); ?></p>
     <?php endif; ?>
 
-    <div class="svc-benefits-grid">
+    <div class="svc-benefits-grid<?php echo (count($benefits) % 2 === 1 && count($benefits) > 2) ? ' svc-benefits-odd' : ''; ?>">
       <?php foreach ($benefits as $i => $item) :
         $accent = ($i % 4) + 1;
         $delay  = ($i % 4) + 1;
@@ -1356,18 +1874,51 @@ if (!empty($service_portfolio)) :
 
 
 <!-- ========================================
-     7. TESTIMONIAL
+     7. TESTIMONIAL(S)
      ======================================== -->
-<section class="svc-section svc-testimonial" aria-label="Testimonial">
+<?php
+$has_multi_testimonials = is_array($testimonials_list) && count($testimonials_list) >= 2;
+?>
+<section class="svc-section svc-testimonial" aria-label="<?php echo $has_multi_testimonials ? 'Client Testimonials' : 'Testimonial'; ?>">
   <div class="svc-container">
-    <div class="svc-testimonial-inner svc-reveal">
-      <div class="svc-testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
-      <p class="svc-testimonial-text">&ldquo;<?php echo esc_html($testimonial['quote']); ?>&rdquo;</p>
-      <div class="svc-testimonial-attr">
-        <?php echo esc_html($testimonial['name']); ?>
-        <span>&mdash; <?php echo esc_html($testimonial['title']); ?></span>
+    <?php if ($has_multi_testimonials) :
+      $tm_count = count($testimonials_list);
+      $grid_class = $tm_count === 2 ? 'svc-testimonials-grid svc-testimonials-2' : 'svc-testimonials-grid';
+      $tm_heading    = !empty($service['testimonials_heading']) ? $service['testimonials_heading'] : 'What Our Clients Say';
+      $tm_subheading = !empty($service['testimonials_subheading']) ? $service['testimonials_subheading'] : '';
+    ?>
+      <div class="svc-testimonials-heading">
+        <span class="svc-overline svc-reveal">Social Proof</span>
+        <h2 class="svc-reveal svc-delay-1"><?php echo esc_html($tm_heading); ?></h2>
+        <?php if ($tm_subheading) : ?>
+          <p class="svc-testimonials-sub svc-reveal svc-delay-2"><?php echo esc_html($tm_subheading); ?></p>
+        <?php endif; ?>
       </div>
-    </div>
+
+      <div class="<?php echo esc_attr($grid_class); ?>">
+        <?php foreach ($testimonials_list as $i => $tm) :
+          $delay = min(($i % 3) + 1, 4);
+        ?>
+          <article class="svc-testimonial-card svc-reveal svc-delay-<?php echo $delay; ?>">
+            <div class="svc-testimonial-card-mark" aria-hidden="true">&ldquo;</div>
+            <p class="svc-testimonial-card-quote">&ldquo;<?php echo esc_html($tm['quote']); ?>&rdquo;</p>
+            <div class="svc-testimonial-card-attr">
+              <div class="svc-testimonial-card-name"><?php echo esc_html($tm['name']); ?></div>
+              <div class="svc-testimonial-card-title"><?php echo esc_html($tm['title']); ?></div>
+            </div>
+          </article>
+        <?php endforeach; ?>
+      </div>
+    <?php else : ?>
+      <div class="svc-testimonial-inner svc-reveal">
+        <div class="svc-testimonial-quote-mark" aria-hidden="true">&ldquo;</div>
+        <p class="svc-testimonial-text">&ldquo;<?php echo esc_html($testimonial['quote']); ?>&rdquo;</p>
+        <div class="svc-testimonial-attr">
+          <?php echo esc_html($testimonial['name']); ?>
+          <span>&mdash; <?php echo esc_html($testimonial['title']); ?></span>
+        </div>
+      </div>
+    <?php endif; ?>
   </div>
 
   <div class="svc-angle-divider">
@@ -1431,11 +1982,26 @@ if (!empty($service_portfolio)) :
   </div>
 
   <div class="svc-cta-content">
-    <h2 class="svc-reveal">Ready to <span class="svc-gradient-text">Get Started</span>?</h2>
-    <p class="svc-reveal svc-delay-1">Tell us about your project and we&rsquo;ll show you how Stretch can help.</p>
+    <?php
+      $cta_heading      = !empty($cta['heading'])      ? $cta['heading']      : 'Ready to Get Started?';
+      $cta_subheading   = !empty($cta['subheading'])   ? $cta['subheading']   : '';
+      $cta_text         = !empty($cta['text'])         ? $cta['text']         : 'Tell us about your project and we&rsquo;ll show you how Stretch can help.';
+      $cta_button_label = !empty($cta['button_label']) ? $cta['button_label'] : 'Start a Project';
+      $cta_button_url   = !empty($cta['button_url'])   ? $cta['button_url']   : '/contact-stretch-creative/';
+      $cta_secondary    = array_key_exists('secondary', $cta) ? $cta['secondary'] : ['label' => 'Learn About Us', 'url' => '/about-stretch-creative/'];
+      // Allow the heading to highlight the last 2 words; if user-supplied, render as-is.
+      $cta_heading_html = !empty($cta['heading']) ? esc_html($cta_heading) : 'Ready to <span class="svc-gradient-text">Get Started</span>?';
+    ?>
+    <h2 class="svc-reveal"><?php echo $cta_heading_html; ?></h2>
+    <?php if ($cta_subheading) : ?>
+      <p class="svc-cta-sub svc-reveal svc-delay-1"><?php echo esc_html($cta_subheading); ?></p>
+    <?php endif; ?>
+    <p class="svc-reveal svc-delay-1"><?php echo wp_kses_post($cta_text); ?></p>
     <div class="svc-cta-buttons svc-reveal svc-delay-2">
-      <a href="/contact-stretch-creative/" class="svc-cta-btn-primary">Start a Project &rarr;</a>
-      <a href="/about-stretch-creative/" class="svc-cta-btn-outline">Learn About Us</a>
+      <a href="<?php echo esc_url($cta_button_url); ?>" class="svc-cta-btn-primary"><?php echo esc_html($cta_button_label); ?> &rarr;</a>
+      <?php if (!empty($cta_secondary) && !empty($cta_secondary['label'])) : ?>
+        <a href="<?php echo esc_url($cta_secondary['url']); ?>" class="svc-cta-btn-outline"><?php echo esc_html($cta_secondary['label']); ?></a>
+      <?php endif; ?>
     </div>
   </div>
 </section>

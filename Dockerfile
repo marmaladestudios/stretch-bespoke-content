@@ -23,6 +23,7 @@ COPY setup-images.php /opt/setup-images.php
 COPY setup-logos.php /opt/setup-logos.php
 COPY setup-team-photos.php /opt/setup-team-photos.php
 COPY setup-services.php /opt/setup-services.php
+COPY content-fixes.php /opt/content-fixes.php
 
 # Ensure MySQL directories exist
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld

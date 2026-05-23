@@ -562,6 +562,8 @@ $counts = [
       cards.forEach(function(card) {
         if (filter === 'all' || card.dataset.category === filter) {
           card.classList.remove('hidden');
+          // Ensure the card is rendered even if it never hit the reveal threshold
+          card.classList.add('visible');
         } else {
           card.classList.add('hidden');
         }

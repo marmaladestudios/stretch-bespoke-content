@@ -300,23 +300,30 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .hub-toc {
   position: fixed;
-  left: max(20px, calc((100vw - 780px) / 2 - 260px));
+  left: max(20px, calc((100vw - 780px) / 2 - 280px));
   top: 160px;
-  width: 200px;
+  width: 220px;
   max-height: calc(100vh - 200px);
   overflow-y: auto;
   scrollbar-width: none;
   z-index: 50;
   opacity: 0;
   transition: opacity 0.3s;
+  background: #fff;
+  border: 1px solid rgba(37,44,58,0.08);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(37,44,58,0.06);
+  padding: 20px 18px;
 }
 .hub-toc::-webkit-scrollbar { display: none; }
 .hub-toc.visible { opacity: 1; }
 .admin-bar .hub-toc { top: 192px; }
 .hub-toc-label {
   font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 2px; color: #bbb;
-  margin-bottom: 16px;
+  text-transform: uppercase; letter-spacing: 2px; color: #8a8f9c;
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(37,44,58,0.08);
 }
 .hub-toc-list {
   list-style: none; padding: 0; margin: 0;
@@ -474,7 +481,13 @@ html, body { overflow-x: hidden; }
 .hub-pillar-article {
   max-width: 780px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 64px;
+}
+@media (max-width: 960px) {
+  .hub-pillar-article { padding: 0 40px; }
+}
+@media (max-width: 768px) {
+  .hub-pillar-article { padding: 0 24px; }
 }
 .hub-intro {
   font-family: 'Assistant', sans-serif;

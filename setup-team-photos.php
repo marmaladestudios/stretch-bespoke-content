@@ -21,19 +21,21 @@ function import_photo($url, $name) {
     return $id;
 }
 
+// Roster: [name, title, photo URL or '' for placeholder]
+// Order matters — this is the display order on /the-team/
 $team = [
-    ['Chris Reid', 'CEO', 'https://stretchcreative.co/wp-content/uploads/2023/09/Chris.jpeg'],
+    ['Jesse Galvon Reid', 'CEO', 'https://stretchcreative.co/wp-content/uploads/2020/09/Untitled-design-18-e1641438108530.png'],
+    ['Chris Reid', 'CGO', 'https://stretchcreative.co/wp-content/uploads/2023/09/Chris.jpeg'],
     ['Kelsi Carrell', 'Head of Operations', 'https://stretchcreative.co/wp-content/uploads/2020/11/Kelsi-e1641439041685.jpeg'],
-    ['Jesse Galvon Reid', 'CPO – Chief People Officer', 'https://stretchcreative.co/wp-content/uploads/2020/09/Untitled-design-18-e1641438108530.png'],
     ['Kristen Bailey', 'Editor-In-Chief', 'https://stretchcreative.co/wp-content/uploads/2020/09/kristen0.png'],
+    ['Kristyn Pacione', 'Client Services Manager', 'https://stretchcreative.co/wp-content/uploads/2023/09/KP.jpeg'],
+    ['Cole Vineyard', 'SEO & Marketing Manager', ''],
+    ['Diane', 'Business Development Manager', ''],
     ['Josh Wong', 'Director of Video Content', 'https://stretchcreative.co/wp-content/uploads/2023/10/Josh-Wong-scaled.jpg'],
     ['Jeanine Gordon', 'Managing Editor', 'https://stretchcreative.co/wp-content/uploads/2023/09/Jeanine.jpeg'],
-    ['Fiona Ferguson', 'Community & Recruitment Coordinator', 'https://stretchcreative.co/wp-content/uploads/2023/01/Fiona.jpeg'],
-    ['Kristyn Pacione', 'Client Services', 'https://stretchcreative.co/wp-content/uploads/2023/09/KP.jpeg'],
     ['MacKenzie Sanford', 'Editor + Resource Coordinator', 'https://stretchcreative.co/wp-content/uploads/2023/01/Mack.jpeg'],
+    ['Nicole', 'Production Coordinator', ''],
     ['Jessica DeWolf', 'Lead Editor', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-22-e1641438472628.png'],
-    ['Leslie Jeffries', 'Senior Copywriter', 'https://stretchcreative.co/wp-content/uploads/2020/09/Leslie-Jeffries.jpeg'],
-    ['Jodi Noblett', 'Copywriter', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-33-e1641438356563.png'],
     ['Chelsey Moore', 'Copywriter', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-31-e1641438382819.png'],
     ['Lauren Gargiulo', 'Copywriter', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-28-e1641438395903.png'],
     ['Gillian Beckett', 'Copywriter', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-27-e1641438408682.png'],
@@ -55,10 +57,18 @@ WP_CLI::log("=== Importing team photos ===\n");
 
 $photo_map = [];
 foreach ($team as $member) {
-    $id = import_photo($member[2], $member[0]);
-    if ($id) {
-        $photo_map[] = ['name' => $member[0], 'title' => $member[1], 'photo_id' => $id, 'url' => wp_get_attachment_url($id)];
+    if (!empty($member[2])) {
+        $id = import_photo($member[2], $member[0]);
+        if ($id) {
+            $photo_map[] = ['name' => $member[0], 'title' => $member[1], 'photo_id' => $id, 'url' => wp_get_attachment_url($id)];
+            continue;
+        }
+        WP_CLI::warning("Photo failed for {$member[0]} — adding without photo.");
     }
+    // No photo URL or sideload failed — record member with empty photo so the
+    // template renders the initials-on-color fallback avatar.
+    $photo_map[] = ['name' => $member[0], 'title' => $member[1], 'photo_id' => 0, 'url' => ''];
+    WP_CLI::log("  ○ {$member[0]} (no photo)");
 }
 
 // Save as option for the team page template to use

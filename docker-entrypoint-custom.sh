@@ -93,6 +93,31 @@ cp -f /opt/setup-content.php /var/www/html/setup-content.php 2>/dev/null || true
 cp -f /opt/setup-images.php /var/www/html/setup-images.php 2>/dev/null || true
 cp -f /opt/setup-logos.php /var/www/html/setup-logos.php 2>/dev/null || true
 cp -f /opt/setup-team-photos.php /var/www/html/setup-team-photos.php 2>/dev/null || true
+cp -f /opt/setup-services.php /var/www/html/setup-services.php 2>/dev/null || true
+cp -f /opt/content-fixes.php /var/www/html/content-fixes.php 2>/dev/null || true
+
+# Wait for WordPress to be installed (wp-cli core is-installed will succeed once
+# wp-config.php exists AND the install has been completed via the WP installer).
+echo "Waiting for WordPress core to be installed before running idempotent setup..."
+for i in $(seq 1 60); do
+    if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
+        echo "WordPress is installed."
+        break
+    fi
+    sleep 2
+done
+
+# Run idempotent setup scripts. These all check current state before mutating,
+# so re-running on every container start is safe.
+if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
+    echo "Running idempotent setup scripts..."
+    wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-services.php   2>&1 || echo "  ! setup-services failed (continuing)"
+    wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-team-photos.php 2>&1 || echo "  ! setup-team-photos failed (continuing)"
+    wp --allow-root --path=/var/www/html eval-file /var/www/html/content-fixes.php    2>&1 || echo "  ! content-fixes failed (continuing)"
+    echo "Idempotent setup complete."
+else
+    echo "WordPress not installed yet — skipping idempotent setup. Run scripts manually after install."
+fi
 
 echo "Setup complete. Waiting for Apache..."
 
