@@ -189,57 +189,101 @@ function stretch_section_classes() {
 
 /**
  * Curated portfolio items keyed for filtering.
- * Single source of truth used by /our-work/ and the inline
- * "Selected Work" strip on service sub-pages.
+ *
+ * Items are declared with their source `file` name. At render time we resolve
+ * each file to a real WP attachment ID (looked up by source filename in the
+ * uploads dir) so the same array works across local + Render environments
+ * regardless of what attachment ID was assigned when the image was sideloaded.
+ *
+ * Used by /our-work/ and the inline "Selected Work" strip on service pages.
  */
-function stretch_get_portfolio() {
+function stretch_portfolio_definitions() {
     return [
-        // Writing
-        ['id' => 2939, 'client' => 'Paperless Post',     'category' => 'writing', 'subcat' => 'Blog Article'],
-        ['id' => 2940, 'client' => 'Etsy',                'category' => 'writing', 'subcat' => 'Product Listing Pages'],
-        ['id' => 2941, 'client' => 'Walgreens',           'category' => 'writing', 'subcat' => 'Expert-Written Content'],
-        ['id' => 2942, 'client' => 'Grove Co',            'category' => 'writing', 'subcat' => 'User-Generated Content'],
-        ['id' => 2943, 'client' => 'Grove Collaborative', 'category' => 'writing', 'subcat' => 'User-Generated Content'],
-        ['id' => 2944, 'client' => 'Brixton × Coors',     'category' => 'writing', 'subcat' => 'Email Marketing'],
-        ['id' => 2945, 'client' => 'Reef',                'category' => 'writing', 'subcat' => 'Social Media'],
-        ['id' => 2946, 'client' => 'Reef',                'category' => 'writing', 'subcat' => 'Social Media'],
+        // key => [file, client, category, subcat, vimeo?]
+        'paperless-post' => ['file' => 'img-011-008.png', 'client' => 'Paperless Post',     'category' => 'writing', 'subcat' => 'Blog Article'],
+        'etsy'           => ['file' => 'img-012-010.png', 'client' => 'Etsy',                'category' => 'writing', 'subcat' => 'Product Listing Pages'],
+        'walgreens'      => ['file' => 'img-012-011.png', 'client' => 'Walgreens',           'category' => 'writing', 'subcat' => 'Expert-Written Content'],
+        'grove-co'       => ['file' => 'img-013-014.jpg', 'client' => 'Grove Co',            'category' => 'writing', 'subcat' => 'User-Generated Content'],
+        'grove-collab'   => ['file' => 'img-014-018.jpg', 'client' => 'Grove Collaborative', 'category' => 'writing', 'subcat' => 'User-Generated Content'],
+        'brixton-coors'  => ['file' => 'img-014-019.png', 'client' => 'Brixton × Coors',     'category' => 'writing', 'subcat' => 'Email Marketing'],
+        'reef-aerial'    => ['file' => 'img-014-017.jpg', 'client' => 'Reef',                'category' => 'writing', 'subcat' => 'Social Media'],
+        'reef-barrel'    => ['file' => 'img-015-023.jpg', 'client' => 'Reef',                'category' => 'writing', 'subcat' => 'Social Media'],
 
-        // Graphic Design
-        ['id' => 2949, 'client' => 'Intuit QuickBooks',   'category' => 'design',  'subcat' => 'Infographic'],
-        ['id' => 2950, 'client' => 'Remitly',             'category' => 'design',  'subcat' => 'Infographic'],
-
-        // Video & Photography
-        ['id' => 2947, 'client' => 'Meyer\'s Clean Day',  'category' => 'video',   'subcat' => 'Product Photography'],
-        ['id' => 2948, 'client' => 'Meyer\'s Clean Day',  'category' => 'video',   'subcat' => 'Lifestyle Photography'],
-        ['id' => 2951, 'client' => 'WeWork',              'category' => 'video',   'subcat' => 'Lifestyle Photography'],
-        ['id' => 2952, 'client' => 'Vicis',               'category' => 'video',   'subcat' => 'Brand Story',      'vimeo' => '900872814'],
-        ['id' => 2953, 'client' => 'Open Road',           'category' => 'video',   'subcat' => 'Corporate Video',  'vimeo' => '875315890'],
-        ['id' => 2954, 'client' => 'Family Flowers',      'category' => 'video',   'subcat' => 'Documentary',      'vimeo' => '875333898'],
-        ['id' => 2955, 'client' => 'NHL',                 'category' => 'video',   'subcat' => 'TV Advertisement', 'vimeo' => '875337016'],
-        ['id' => 2956, 'client' => 'Monster Energy',      'category' => 'video',   'subcat' => 'Social Media Ad',  'vimeo' => '875314882'],
+        'meyers-product' => ['file' => 'img-019-026.jpg', 'client' => "Meyer's Clean Day",   'category' => 'video',   'subcat' => 'Product Photography'],
+        'meyers-life'    => ['file' => 'img-020-027.jpg', 'client' => "Meyer's Clean Day",   'category' => 'video',   'subcat' => 'Lifestyle Photography'],
+        'quickbooks'     => ['file' => 'img-021-028.jpg', 'client' => 'Intuit QuickBooks',   'category' => 'design',  'subcat' => 'Infographic'],
+        'remitly'        => ['file' => 'img-013-015.jpg', 'client' => 'Remitly',             'category' => 'design',  'subcat' => 'Infographic'],
+        'wework'         => ['file' => 'img-021-030.png', 'client' => 'WeWork',              'category' => 'video',   'subcat' => 'Lifestyle Photography'],
+        'vicis'          => ['file' => 'img-023-031.jpg', 'client' => 'Vicis',               'category' => 'video',   'subcat' => 'Brand Story',      'vimeo' => '900872814'],
+        'open-road'      => ['file' => 'img-024-032.jpg', 'client' => 'Open Road',           'category' => 'video',   'subcat' => 'Corporate Video',  'vimeo' => '875315890'],
+        'family-flowers' => ['file' => 'img-024-033.jpg', 'client' => 'Family Flowers',      'category' => 'video',   'subcat' => 'Documentary',      'vimeo' => '875333898'],
+        'nhl'            => ['file' => 'img-025-034.jpg', 'client' => 'NHL',                 'category' => 'video',   'subcat' => 'TV Advertisement', 'vimeo' => '875337016'],
+        'monster'        => ['file' => 'img-025-035.jpg', 'client' => 'Monster Energy',      'category' => 'video',   'subcat' => 'Social Media Ad',  'vimeo' => '875314882'],
     ];
 }
 
 /**
- * Map a service-page slug to a list of portfolio attachment IDs
- * to feature in the inline "Selected Work" strip. Empty array hides the strip.
+ * Look up an attachment ID by its source filename (matches the wp-content/uploads
+ * file the attachment points at). Returns 0 if not found.
+ */
+function stretch_attachment_id_by_filename($filename) {
+    static $cache = [];
+    if (isset($cache[$filename])) return $cache[$filename];
+
+    global $wpdb;
+    $base = pathinfo($filename, PATHINFO_FILENAME);
+    $row  = $wpdb->get_var($wpdb->prepare(
+        "SELECT post_id FROM {$wpdb->postmeta}
+         WHERE meta_key = '_wp_attached_file'
+           AND (meta_value LIKE %s OR meta_value LIKE %s)
+         ORDER BY post_id DESC LIMIT 1",
+        '%/' . $wpdb->esc_like($filename),
+        '%/' . $wpdb->esc_like($base) . '%'
+    ));
+    $cache[$filename] = $row ? (int) $row : 0;
+    return $cache[$filename];
+}
+
+/**
+ * Returns the portfolio as an ordered list of items, each with a resolved `id`.
+ * Items whose images haven't been sideloaded yet are dropped silently — the
+ * filter-button counts will reflect what's actually renderable.
+ */
+function stretch_get_portfolio() {
+    static $cache = null;
+    if ($cache !== null) return $cache;
+
+    $cache = [];
+    foreach (stretch_portfolio_definitions() as $key => $item) {
+        $id = stretch_attachment_id_by_filename($item['file']);
+        if (!$id) continue;
+        $item['id']  = $id;
+        $item['key'] = $key;
+        $cache[]     = $item;
+    }
+    return $cache;
+}
+
+/**
+ * Map a service-page slug to a list of portfolio definition keys to feature
+ * in the inline "Selected Work" strip. Empty array hides the strip.
  */
 function stretch_get_portfolio_for_service($slug) {
     $map = [
-        'content-writing-at-any-scale'  => [2939, 2940, 2941, 2942, 2944, 2945],
-        'graphic_design_services'       => [2949, 2950],
-        'video-content-services'        => [2952, 2947, 2948, 2953, 2956, 2955],
-        'paid-advertising'              => [2956, 2955],
+        'content-writing-at-any-scale' => ['paperless-post', 'etsy', 'walgreens', 'grove-co', 'brixton-coors', 'reef-aerial'],
+        'graphic_design_services'      => ['quickbooks', 'remitly'],
+        'video-content-services'       => ['vicis', 'meyers-product', 'meyers-life', 'open-road', 'monster', 'nhl'],
+        'paid-advertising'             => ['monster', 'nhl'],
         // SEO + Content Strategy left empty — strip hides automatically
     ];
     if (empty($map[$slug])) return [];
-    $ids = $map[$slug];
-    $all = stretch_get_portfolio();
-    $by_id = [];
-    foreach ($all as $item) $by_id[$item['id']] = $item;
+    $by_key = [];
+    foreach (stretch_get_portfolio() as $item) {
+        if (!empty($item['key'])) $by_key[$item['key']] = $item;
+    }
     $out = [];
-    foreach ($ids as $id) {
-        if (isset($by_id[$id])) $out[] = $by_id[$id];
+    foreach ($map[$slug] as $key) {
+        if (isset($by_key[$key])) $out[] = $by_key[$key];
     }
     return $out;
 }

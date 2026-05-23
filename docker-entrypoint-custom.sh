@@ -94,6 +94,7 @@ cp -f /opt/setup-images.php /var/www/html/setup-images.php 2>/dev/null || true
 cp -f /opt/setup-logos.php /var/www/html/setup-logos.php 2>/dev/null || true
 cp -f /opt/setup-team-photos.php /var/www/html/setup-team-photos.php 2>/dev/null || true
 cp -f /opt/setup-services.php /var/www/html/setup-services.php 2>/dev/null || true
+cp -f /opt/setup-portfolio.php /var/www/html/setup-portfolio.php 2>/dev/null || true
 cp -f /opt/content-fixes.php /var/www/html/content-fixes.php 2>/dev/null || true
 
 # Wait for WordPress to be installed (wp-cli core is-installed will succeed once
@@ -113,6 +114,7 @@ if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
     echo "Running idempotent setup scripts..."
     wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-services.php   2>&1 || echo "  ! setup-services failed (continuing)"
     wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-team-photos.php 2>&1 || echo "  ! setup-team-photos failed (continuing)"
+    wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-portfolio.php  2>&1 || echo "  ! setup-portfolio failed (continuing)"
     wp --allow-root --path=/var/www/html eval-file /var/www/html/content-fixes.php    2>&1 || echo "  ! content-fixes failed (continuing)"
     echo "Idempotent setup complete."
 else
