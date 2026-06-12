@@ -7,52 +7,69 @@
 
 ## The idea in one line
 
-Instead of building a separate calculator for every cost guide, we build **one cost engine** and let each level of the hub-and-spoke tree show a different view of it. That's what makes this feel bespoke instead of a calculator slapped onto every page.
+Instead of building a separate calculator for every cost guide, we build **one app**. A version of that same app sits on each page, and which "form" it takes depends on where the page lives in the hub-and-spoke tree.
 
 ## Why this approach
 
-The three structures the writer laid out — spokes, sub-spokes, and the city pages — are really all the same hierarchy. If we treat them that way, the hub estimate becomes the sum of its spokes, which means every tool naturally links to its parent and its children.
+The three structures the writer laid out — spokes, sub-spokes, and the city pages — are really all the same hierarchy. If we treat them that way, the hub estimate becomes the sum of its spokes, which means every version of the app naturally links to its parent and its children.
 
 We'd get the internal-linking structure we want almost for free, and the whole library would feel like one connected product instead of a pile of one-off pages.
 
-## How it maps to the tree
+## One app, three forms, one shared ending
 
-| Level | Page example | What the tool does |
+There aren't four separate tools. There's **one app** that does two things on every page:
+
+1. Helps the visitor land on a cost number
+2. Hands them off to get real quotes from local pros
+
+The *first* part changes shape depending on the page (that's the three forms below). The *second* part is identical everywhere (that's the shared ending).
+
+### The three forms of the app
+
+| Form | Where it lives | What it does |
 |---|---|---|
-| **Hub** | Bathroom Remodel Cost | "Build Your Bathroom" — toggle the pieces (shower, tub, vanity, flooring) and watch the total build |
-| **Spoke** | Shower Remodel Cost | The same tool, zoomed into one component |
-| **Sub-spoke** | Walk-in Shower Cost | Side-by-side comparison of the specific variants |
-| **City** | Bathroom Remodel Cost, Seattle | The same engine, re-priced by location |
+| **Assembler** | **Hub** (e.g. Bathroom Remodel Cost) | Check off the parts of your project and watch the total build |
+| **Component view** | **Spoke** (e.g. Shower Remodel Cost) | The same assembler, scoped to one component |
+| **Comparison** | **Sub-spoke** (e.g. Walk-in Shower Cost) | Two close-but-different options side by side |
 
-## What each level actually does
+And one layer that sits on top of all of them:
 
-**Hub — the centerpiece.** Someone toggles their components and watches the total assemble, and each line item links down to its spoke ("customize your shower →"). It answers "what's my whole project going to cost" and feeds link equity to every spoke at the same time.
+| Layer | Where it applies | What it does |
+|---|---|---|
+| **Local re-pricer** | **City pages** | A "change location" control that re-prices everything on the page for that city |
 
-**Spoke — the component deep-dive.** The same engine, focused on one component, with a link back up to add it to the full bathroom and links down to the sub-spokes.
+### The shared ending (every form, every page)
 
-**Sub-spoke — the decision.** This is where we settle the actual choice the person is making: walk-in vs. tub-to-shower conversion, glass door, shower pan, accessibility, and so on. It's the moment where "convert tub to shower cost" and "walk-in shower cost" need to be pulled apart.
+Every version of the app finishes the same way: **the estimate → "get matched with local pros for real quotes."**
 
-**City pages — the big unlock.** One location dataset re-prices the entire tree, so picking Seattle updates the hub, every spoke, and every sub-spoke at once. That's how we scale to hundreds of city pages from a single build instead of writing each one by hand — which lines up perfectly with the local cost guide push already underway.
+This is *not* a second app or an extra widget. It's the final step built into the one app — the same handoff button no matter which page you're on.
 
-## The interactive pieces, by priority
+**Important on funnel stage:** we deliberately do *not* build an "is my quote fair?" checker. That targets people who already have a quote in hand — which usually means they've already found their pro. Angi wants the visitor *before* they have any quotes. So the app gives them the ballpark number they came for, and the very next step is getting real quotes through Angi — which is the stage Angi actually monetizes.
 
-1. **"Is my quote fair?" check** — someone enters the quote they got and sees where it lands vs. the local range. Highest-intent moment there is, and almost nobody builds it. Works at every level.
-2. **Component assembler** — at the hub.
-3. **Variant comparison** — at the sub-spoke level.
-4. **Local re-pricer** — for the city pages.
+## How each form behaves, with examples
 
-Lighter modules we can sprinkle in:
+**Assembler (hub).** On "Bathroom Remodel Cost," you toggle on new shower + vanity + tile floor + toilet → running total lands around $31k. Each line links down to its spoke ("Customize your shower →"). Ends with: *"Your remodel looks like ~$28k–$34k. Get exact quotes from bathroom pros near you →"*
 
-- A cost breakdown showing where the money actually goes
-- A good / better / best slider
-- A financing comparison
-- A "hidden costs people forget" list
+**Component view (spoke).** On "Shower Remodel Cost," the same assembler is zoomed into one component — shower type, size, tile, glass, fixtures. Links back up ("add this to your full bathroom") and down to the sub-spokes. Ends with the same get-matched handoff.
+
+**Comparison (sub-spoke).** On "Walk-in Shower Cost," it shows walk-in shower (~$8k) vs. tub-to-shower conversion (~$5k) side by side — cost, timeline, resale impact, accessibility. Ends with the same get-matched handoff.
+
+**Local re-pricer (city).** On "Bathroom Remodel Cost — Seattle," picking Seattle bumps the national ~$31k to the local ~$38k, and every spoke/sub-spoke number updates with it. One location dataset powers every city page.
+
+## Lighter modules to sprinkle in
+
+Smaller supporting elements that drop into the hub and spoke forms where useful:
+
+- **Cost breakdown** — where the money actually goes (labor vs. materials vs. permits vs. design)
+- **Good / better / best slider** — drag from budget to premium and watch the price move
+- **Financing comparison** — cash vs. loan vs. HELOC, with monthly payment for each
+- **"Hidden costs people forget" list** — permits, dumpster rental, surprises behind the wall
 
 ## Suggested rollout
 
-1. Build the engine and data model once, around a single tree. **Bathroom Remodel Cost is a great pilot** — the writer already mapped out the full spoke / sub-spoke / city structure.
-2. Ship the three views (hub assembler, spoke deep-dive, sub-spoke comparer).
-3. Add the location layer for instant city-page scale.
-4. Wrap the whole thing with the "is my quote fair?" hook up top and a "find a vetted local pro" CTA at the bottom.
+1. Build the app and its data model once, around a single tree. **Bathroom Remodel Cost is a great pilot** — the writer already mapped out the full spoke / sub-spoke / city structure.
+2. Ship the three forms (assembler, component view, comparison).
+3. Add the local re-pricer layer for instant city-page scale.
+4. The get-matched handoff is baked into every form from day one.
 
-Build it once, and it templates across every cost guide tree Angi owns.
+Build the app once, and it templates across every cost guide tree Angi owns.
