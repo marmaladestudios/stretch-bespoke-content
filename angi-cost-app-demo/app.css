@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Demo-page styles — the article shell + the assembler app.
+   Builds on the Angi design tokens in styles.css.
+   ========================================================================== */
+
+.angi-wide { max-width: var(--wide-width); margin: 0 auto; padding: 0 var(--sp-3); }
+
+/* ---- Top nav ---- */
+.site-nav { border-bottom: 1px solid var(--angi-border); background: #fff; }
+.site-nav__inner { display: flex; align-items: center; gap: var(--sp-4); height: 64px; }
+.site-nav__logo { display: flex; align-items: center; gap: var(--sp-2); font-weight: var(--fw-bold);
+  font-size: 1.25rem; color: var(--angi-text); }
+.site-nav__logo:hover { text-decoration: none; }
+.site-nav__links { display: flex; gap: var(--sp-4); margin-left: var(--sp-3); }
+.site-nav__links a { color: var(--angi-text); font-weight: var(--fw-medium); }
+.site-nav__inner > .angi-btn { margin-left: auto; }
+.angi-btn--sm { padding: 9px 16px; font-size: 0.9375rem; }
+
+/* ---- Hero ---- */
+.hero { padding: var(--sp-6) 0; }
+.hero__crumbs { font-size: var(--fs-small); opacity: 0.85; margin-bottom: var(--sp-3); }
+.hero h1 { max-width: 16ch; }
+.hero__dek { font-size: 1.1875rem; max-width: 60ch; opacity: 0.95; }
+.hero__byline { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-small);
+  opacity: 0.9; margin-top: var(--sp-4); }
+.hero__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--angi-mint);
+  display: inline-block; }
+
+/* ---- Article body ---- */
+.article { padding: var(--sp-6) var(--sp-3) var(--sp-7); }
+
+/* ==========================================================================
+   The assembler app
+   ========================================================================== */
+.app {
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  margin: var(--sp-6) 0;
+  background: #fff;
+  box-shadow: var(--shadow-md);
+}
+.app__head { margin-bottom: var(--sp-4); }
+.app__head h2 { margin-top: var(--sp-1); }
+.app__sub { color: var(--angi-text-muted); margin: 0; }
+
+.app__location { display: flex; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.app__location label { font-weight: var(--fw-medium); }
+.app__location select {
+  font-family: inherit; font-size: var(--fs-body); padding: 8px 12px;
+  border: 1px solid var(--angi-border); border-radius: var(--radius-sm); background: #fff;
+}
+
+/* component rows */
+.app__components { display: flex; flex-direction: column; gap: var(--sp-2); }
+.cmp {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3); border: 1px solid var(--angi-border); border-radius: var(--radius-sm);
+}
+.cmp--on { border-color: var(--angi-teal); background: var(--angi-bg-mint); }
+.cmp__check { width: 20px; height: 20px; accent-color: var(--angi-teal); flex: none; }
+.cmp__name { font-weight: var(--fw-medium); flex: 1; }
+.cmp__tier {
+  font-family: inherit; font-size: 0.9375rem; padding: 6px 10px;
+  border: 1px solid var(--angi-border); border-radius: var(--radius-sm); background: #fff;
+}
+.cmp__price { width: 130px; text-align: right; color: var(--angi-text-muted); font-size: 0.9375rem; }
+.cmp[aria-disabled="true"] .cmp__tier,
+.cmp[aria-disabled="true"] .cmp__price { opacity: 0.4; }
+
+/* live estimate */
+.app__estimate {
+  margin: var(--sp-4) 0; padding: var(--sp-4);
+  background: var(--angi-teal); color: #fff; border-radius: var(--radius);
+}
+.app__estimate-label { margin: 0; opacity: 0.85; font-size: var(--fs-small);
+  text-transform: uppercase; letter-spacing: 0.08em; }
+.app__estimate-total { margin: 4px 0; font-size: 2.5rem; font-weight: var(--fw-bold); line-height: 1; }
+.app__estimate-note { margin: 0; opacity: 0.8; font-size: var(--fs-small); }
+
+.app__breakdown { margin-top: 0; }
+.app__breakdown tbody:empty::after { content: ""; }
+
+.app__cta { margin-bottom: 0; }
+
+/* ==========================================================================
+   Modal (email gate)
+   ========================================================================== */
+.modal {
+  position: fixed; inset: 0; background: rgba(40,40,39,0.55);
+  display: flex; align-items: center; justify-content: center; padding: var(--sp-3); z-index: 100;
+}
+.modal[hidden] { display: none; }
+.modal__box {
+  background: #fff; border-radius: var(--radius); padding: var(--sp-5);
+  max-width: 440px; width: 100%; position: relative; box-shadow: var(--shadow-md);
+}
+.modal__box h3 { margin-top: var(--sp-1); }
+.modal__close {
+  position: absolute; top: 12px; right: 16px; border: none; background: none;
+  font-size: 1.75rem; line-height: 1; cursor: pointer; color: var(--angi-text-muted);
+}
+#briefForm { margin: var(--sp-4) 0 var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-3); }
+#briefForm input {
+  font-family: inherit; font-size: var(--fs-body); padding: 12px 14px;
+  border: 1px solid var(--angi-border); border-radius: var(--radius-sm);
+}
+
+/* ---- Footer ---- */
+.footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: var(--sp-4); }
+.footer__grid h4 { margin: 0 0 var(--sp-2); font-size: 1rem; }
+.footer__grid a { display: block; margin-bottom: var(--sp-1); font-size: 0.9375rem; }
+.footer__tag { opacity: 0.8; font-size: 0.9375rem; }
+.footer__legal { opacity: 0.6; font-size: var(--fs-small); margin-top: var(--sp-5); }
+
+@media (max-width: 720px) {
+  .site-nav__links { display: none; }
+  .cmp { flex-wrap: wrap; }
+  .cmp__price { width: auto; margin-left: auto; }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-angi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Much Does a Bathroom Remodel Cost? | Angi</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- ===== Top nav ===== -->
+  <header class="site-nav">
+    <div class="site-nav__inner angi-wide">
+      <a class="site-nav__logo" href="#">
+        <img src="https://media.angi.com/s3fs-public/angi-circle-logo.svg" alt="Angi" width="32" height="32">
+        <span>Angi</span>
+      </a>
+      <nav class="site-nav__links">
+        <a href="#">Home</a>
+        <a href="#">Reviews</a>
+        <a href="#">Cost Guides</a>
+        <a href="#">Articles</a>
+      </nav>
+      <a class="angi-btn angi-btn--sm" href="#app">Get a quote</a>
+    </div>
+  </header>
+
+  <!-- ===== Hero band ===== -->
+  <section class="angi-band hero">
+    <div class="angi-content">
+      <p class="hero__crumbs">Articles &nbsp;›&nbsp; Bathroom Remodel &nbsp;›&nbsp; Cost</p>
+      <h1>How Much Does a Bathroom Remodel Cost in 2026?</h1>
+      <p class="hero__dek">The average bathroom remodel runs <strong>$6,600&ndash;$16,800</strong>, but your
+        number depends on size, finishes, and where you live. Build your estimate below.</p>
+      <div class="hero__byline">
+        <span class="hero__avatar"></span>
+        <span>Written by the Angi Editorial Team &nbsp;•&nbsp; Updated June 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="angi-content article">
+
+    <!-- ===== Intro ===== -->
+    <p>A bathroom remodel is one of the highest-return projects you can take on &mdash; but "how much
+      does it cost?" doesn't have a single answer. The price swings based on the room's size, the
+      fixtures and finishes you choose, and your local labor rates.</p>
+    <p>Instead of guessing from a national average, use the tool below to assemble <em>your</em>
+      bathroom and see a realistic range. When you're done, you can download a project brief to hand
+      to contractors so the quotes you get back are accurate and easy to compare.</p>
+
+    <!-- =========================================================
+         THE APP — "Build Your Bathroom Remodel" assembler
+         ========================================================= -->
+    <section id="app" class="app">
+      <div class="app__head">
+        <p class="angi-eyebrow">Interactive cost estimator</p>
+        <h2>Build your bathroom remodel</h2>
+        <p class="app__sub">Toggle what's in your project and pick a quality tier. Your estimate
+          updates live.</p>
+      </div>
+
+      <!-- Location re-pricer -->
+      <div class="app__location">
+        <label for="loc">Pricing for:</label>
+        <select id="loc">
+          <option value="1.00">National average</option>
+          <option value="1.18">Seattle, WA</option>
+          <option value="1.32">New York, NY</option>
+          <option value="0.95">Austin, TX</option>
+          <option value="0.88">Cleveland, OH</option>
+        </select>
+      </div>
+
+      <!-- Component list (rendered by app.js) -->
+      <div id="components" class="app__components"></div>
+
+      <!-- Live estimate -->
+      <div class="app__estimate">
+        <div>
+          <p class="app__estimate-label">Your estimated total</p>
+          <p id="total" class="app__estimate-total">$0</p>
+          <p class="app__estimate-note">Ballpark range &mdash; real quotes will vary by contractor.</p>
+        </div>
+      </div>
+
+      <!-- Cost breakdown -->
+      <table class="angi-table app__breakdown">
+        <thead>
+          <tr><th>Item</th><th>Tier</th><th style="text-align:right">Estimated range</th></tr>
+        </thead>
+        <tbody id="breakdown"></tbody>
+      </table>
+
+      <!-- Shared ending: get matched + download brief -->
+      <div class="angi-cta-card app__cta">
+        <div>
+          <p class="angi-cta-card__text" style="margin-bottom:4px;font-size:1.125rem;">Ready for real numbers?</p>
+          <p style="margin:0;color:var(--angi-text-muted);">Download your project brief and we'll match
+            you with vetted local pros who can quote from it.</p>
+        </div>
+        <button id="getBrief" class="angi-btn">Get my project brief &rarr;</button>
+      </div>
+    </section>
+
+    <!-- ===== Rest of article (static) ===== -->
+    <h2>What drives the cost of a bathroom remodel?</h2>
+    <p>Three factors move the needle most: the <strong>scope</strong> (a cosmetic refresh vs. moving
+      plumbing), the <strong>finishes</strong> you choose, and your <strong>location</strong>. Labor
+      alone typically accounts for 40&ndash;65% of the total.</p>
+
+    <div class="angi-callout">
+      <strong>Tip:</strong> Moving plumbing fixtures (relocating a toilet or shower) is one of the
+      biggest hidden cost drivers. Keeping fixtures in their existing spots can save thousands.
+    </div>
+
+    <h2>Average bathroom remodel cost by size</h2>
+    <table class="angi-table">
+      <thead>
+        <tr><th>Bathroom size</th><th>Typical range</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Half bath</td><td>$3,000 &ndash; $7,000</td></tr>
+        <tr><td>Full bath (5&times;8)</td><td>$7,000 &ndash; $15,000</td></tr>
+        <tr><td>Primary / large bath</td><td>$15,000 &ndash; $35,000+</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Related -->
+    <h2>Related cost guides</h2>
+    <div class="angi-card-grid">
+      <a class="angi-card" href="#">
+        <div class="angi-card__body">
+          <p class="angi-eyebrow">Shower</p>
+          <p class="angi-card__title">How much does a walk-in shower cost?</p>
+        </div>
+      </a>
+      <a class="angi-card" href="#">
+        <div class="angi-card__body">
+          <p class="angi-eyebrow">Plumbing</p>
+          <p class="angi-card__title">Cost to convert a tub to a shower</p>
+        </div>
+      </a>
+      <a class="angi-card" href="#">
+        <div class="angi-card__body">
+          <p class="angi-eyebrow">Vanity</p>
+          <p class="angi-card__title">Bathroom vanity installation cost</p>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="angi-footer">
+    <div class="angi-wide footer__grid">
+      <div>
+        <img src="https://media.angi.com/s3fs-public/angi-circle-logo.svg" alt="Angi" width="40" height="40">
+        <p class="footer__tag">Home for everything home.</p>
+      </div>
+      <div><h4>Solutions</h4><a href="#">Find a pro</a><a href="#">Cost guides</a><a href="#">Reviews</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a></div>
+      <div><h4>Stay connected</h4><a href="#">App Store</a><a href="#">Google Play</a></div>
+    </div>
+    <p class="footer__legal angi-wide">Demo mockup for concept review &mdash; not affiliated with a live Angi page.</p>
+  </footer>
+
+  <!-- ===== Brief / email-gate modal ===== -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal__box">
+      <button id="modalClose" class="modal__close" aria-label="Close">&times;</button>
+      <p class="angi-eyebrow">Almost there</p>
+      <h3 id="modalTitle">Get your project brief</h3>
+      <p style="color:var(--angi-text-muted)">We'll email you a copy and match you with local pros who can quote from it.</p>
+      <form id="briefForm">
+        <input type="email" id="email" placeholder="you@email.com" required>
+        <button type="submit" class="angi-btn" style="width:100%">Download brief &amp; get matched</button>
+      </form>
+      <p style="font-size:var(--fs-small);color:var(--angi-text-muted);margin-bottom:0">No spam. Demo only &mdash; no email is actually sent.</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
