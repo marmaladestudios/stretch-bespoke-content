@@ -9,8 +9,8 @@
   /* --- Color: brand --- */
   --angi-teal:          #16524C; /* hero, footer, structure */
   --angi-teal-dark:     #0F3D38; /* hover/depth on teal */
-  --angi-coral:         #FF5A3C; /* CTA / action only */
-  --angi-coral-dark:    #E84A2E; /* CTA hover */
+  --angi-coral:         #FF6153; /* CTA / action only — confirmed Angi brand coral */
+  --angi-coral-dark:    #A03027; /* confirmed Angi secondary; used for CTA hover/depth */
   --angi-link:          #1A7A6E; /* inline links, read-more */
 
   /* --- Color: neutrals --- */

@@ -2,7 +2,9 @@
 
 **Goal:** the cost-guide app must look like a native section of an Angi blog article, not a third-party widget bolted on. Same fonts, same teal/coral color logic, same rounded-card styling, same CTA pattern.
 
-> **Note on accuracy:** the hex values and font below are derived from a screenshot of a live Angi article. Before final build, confirm exact brand colors and `font-family` against Angi's live CSS (DevTools → computed `color` / `font-family`). The CSS tokens file (`styles.css`) is the source of truth once those are locked.
+> **Verification status:**
+> - ✅ **Coral `#FF6153` (+ secondary `#A03027`) — confirmed** as Angi's brand colors.
+> - ⚠️ **Deep teal + font — estimated from screenshot, not yet confirmed.** Angi's live site and the public brand-asset aggregators block automated fetching, so these couldn't be pulled programmatically. To lock them, open any Angi article in Chrome, right-click the teal hero → Inspect, and read the computed `background-color` (teal) and `font-family` (body text). Drop the exact values into `styles.css` — they're single-line token changes.
 
 ---
 
@@ -12,8 +14,8 @@
 |---|---|---|
 | Primary deep teal | `#16524C` | Hero banner, footer, brand structure |
 | Teal dark (hover/depth) | `#0F3D38` | Hover states on teal, footer base |
-| CTA coral | `#FF5A3C` | Primary buttons, action only |
-| CTA coral dark (hover) | `#E84A2E` | Button hover |
+| CTA coral | `#FF6153` | Primary buttons, action only — **confirmed Angi brand coral** |
+| CTA coral dark (hover) | `#A03027` | Button hover — **confirmed Angi secondary** |
 | Link teal | `#1A7A6E` | Inline links, "read more" |
 | Text near-black | `#222222` | Body copy, headings |
 | Text muted gray | `#6B6B6B` | Captions, secondary text |
