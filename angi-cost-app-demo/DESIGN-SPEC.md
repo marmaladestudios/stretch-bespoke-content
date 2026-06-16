@@ -2,45 +2,54 @@
 
 **Goal:** the cost-guide app must look like a native section of an Angi blog article, not a third-party widget bolted on. Same fonts, same teal/coral color logic, same rounded-card styling, same CTA pattern.
 
-> **Verification status:**
-> - ✅ **Coral `#FF6153` (+ secondary `#A03027`) — confirmed** as Angi's brand colors.
-> - ⚠️ **Deep teal + font — estimated from screenshot, not yet confirmed.** Angi's live site and the public brand-asset aggregators block automated fetching, so these couldn't be pulled programmatically. To lock them, open any Angi article in Chrome, right-click the teal hero → Inspect, and read the computed `background-color` (teal) and `font-family` (body text). Drop the exact values into `styles.css` — they're single-line token changes.
+> **Verification status: ✅ CONFIRMED.** All values below are pulled directly from Angi's live design system (`theme-angi` / `:root` tokens), not estimated. `styles.css` mirrors them exactly.
 
 ---
 
-## 1. Color palette
+## 1. Color palette (Angi design-system tokens)
 
-| Token | Approx. hex | Role |
-|---|---|---|
-| Primary deep teal | `#16524C` | Hero banner, footer, brand structure |
-| Teal dark (hover/depth) | `#0F3D38` | Hover states on teal, footer base |
-| CTA coral | `#FF6153` | Primary buttons, action only — **confirmed Angi brand coral** |
-| CTA coral dark (hover) | `#A03027` | Button hover — **confirmed Angi secondary** |
-| Link teal | `#1A7A6E` | Inline links, "read more" |
-| Text near-black | `#222222` | Body copy, headings |
-| Text muted gray | `#6B6B6B` | Captions, secondary text |
-| Section gray | `#F5F5F5` | Callout boxes, table stripes |
-| Border gray | `#E2E2E2` | Dividers, table lines, card edges |
-| White | `#FFFFFF` | Page background, cards |
+| Token | Hex | Angi variable | Role |
+|---|---|---|---|
+| Coral | `#fc5647` | `accent-primary` / `bg-strong` | Primary CTAs, action only |
+| Coral pressed | `#d71100` | `momentary-pressed` / `error` | Button pressed/hover-depth |
+| Coral tint | `#ffefea` | `momentary-hover` / `error-bg` | Secondary-button hover bg |
+| Deep teal | `#065c62` | `bg-dark` | Hero banner, footer, structure |
+| Link teal | `#00819e` | `text-link` | Inline links, "read more" |
+| Mint | `#8cf4be` | `accent-secondary` | Accent highlights |
+| Text default | `#282827` | `text-default` | Body copy, headings |
+| Text subtle | `#6d6d6d` | `text-subtle` | Captions, secondary text |
+| Text disabled | `#bcb9b4` | `text-disabled` | Disabled states |
+| BG neutral | `#f5f5f2` | `bg-neutral` | Callouts, table stripes, reviews |
+| BG cream | `#fff4e2` | `bg-light` / `warning-bg` | Warm callout backgrounds |
+| BG mint | `#e8fdf2` | `bg-medium` / `success-bg` | Pale CTA card background |
+| Border | `#dbd9d4` | `bg-outline` | Dividers, table lines, card edges |
+| White | `#ffffff` | `bg-default` | Page background, cards |
+| Success | `#06c778` | `success` | Positive states |
+| Warning | `#ffc020` | `warning` | Caution states |
 
 **The rule that matters:** teal = structure/brand, coral = *action*. Coral appears only on things you click. Don't dilute it.
 
 ## 2. Typography
 
-- **One clean sans-serif throughout** — no serifs anywhere. Closest web-safe stack: `Inter, "Helvetica Neue", Arial, sans-serif`.
-- **H1 (hero):** bold, white, ~32–40px.
-- **H2 (section):** bold, near-black, ~24–28px, generous space above.
-- **H3:** bold, ~20px.
-- **Body:** ~16–18px, regular, `#222`, line-height ~1.6, single readable column.
+- **Font: `National`** (Angi's brand typeface), full stack `National, "Helvetica Neue", Helvetica, Arial, sans-serif`. Loaded in `styles.css` via `@font-face` from Angi's public CDN (regular/400 weight).
+- **Weights (important):** light/regular `400`, medium `500`, **heavy `600`** — Angi tops out at 600, *not* 700. Don't use 700.
+- **H1 (hero):** 600, white, ~36px.
+- **H2 (section):** 600, `#282827`, ~26px, generous space above.
+- **H3:** 600, ~20px.
+- **Body:** ~17px, regular, `#282827`, line-height ~1.6, single readable column.
 - **Eyebrow / category label:** ~12px, uppercase, letter-spaced, coral.
-- **Caption:** ~13px, muted gray.
+- **Caption:** ~13px, `#6d6d6d`.
+
+## 2a. Logo
+
+- Brand mark: `https://media.angi.com/s3fs-public/angi-circle-logo.svg` (Angi `--background-image-brand-logo`).
 
 ## 3. Layout & spacing
 
 - **Single centered content column**, ~720px max-width for readable text.
-- **Full-bleed colored bands** for hero and footer (teal); white body.
+- **Full-bleed colored bands** for hero and footer (teal `#065c62`); white body.
 - Generous vertical rhythm; clear H2 → paragraph spacing.
-- **Rounded corners** ~8px on cards, tables, callout boxes.
+- **Rounded corners:** `4px` on buttons/inputs (`corner-button`/`corner-tight`), `16px` on cards/tables/callouts (`corner-loose`).
 - **Soft, minimal shadows** — content-first, no heavy elevation.
 - Spacing scale: 4 / 8 / 16 / 24 / 32 / 48 / 64 px.
 

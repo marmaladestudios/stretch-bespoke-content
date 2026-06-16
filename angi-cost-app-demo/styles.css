@@ -1,28 +1,48 @@
 /* ==========================================================================
    Angi Cost Guide App — Design Tokens & Base Styles
-   Built to match the Angi blog article look (deep teal + coral).
-   NOTE: hex values + font derived from a screenshot; confirm against
-   Angi's live CSS before final build.
+   Tokens taken DIRECTLY from Angi's live design system (theme-angi).
+   Source of truth — these are the real Angi variables, not estimates.
    ========================================================================== */
 
-:root {
-  /* --- Color: brand --- */
-  --angi-teal:          #16524C; /* hero, footer, structure */
-  --angi-teal-dark:     #0F3D38; /* hover/depth on teal */
-  --angi-coral:         #FF6153; /* CTA / action only — confirmed Angi brand coral */
-  --angi-coral-dark:    #A03027; /* confirmed Angi secondary; used for CTA hover/depth */
-  --angi-link:          #1A7A6E; /* inline links, read-more */
+/* Angi's brand typeface, loaded from their public CDN (regular weight).
+   Medium (500) and Heavy (600) fall back to the National stack / system. */
+@font-face {
+  font-family: "National";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://lpfe-static-assets.angi.com/static/landing-pages-frontend/_next/static/media/national-2-web-regular.d0da2e34.woff2") format("woff2"),
+       url("https://lpfe-static-assets.angi.com/static/landing-pages-frontend/_next/static/media/national-2-web-regular.c486b148.woff") format("woff");
+}
 
-  /* --- Color: neutrals --- */
-  --angi-text:          #222222; /* body + headings */
-  --angi-text-muted:    #6B6B6B; /* captions, secondary */
-  --angi-bg:            #FFFFFF; /* page background */
-  --angi-bg-soft:       #F5F5F5; /* callouts, table stripes */
-  --angi-bg-tint:       #EEF5F4; /* pale-teal CTA card bg */
-  --angi-border:        #E2E2E2; /* dividers, table lines */
+:root {
+  /* --- Color: brand (Angi design-system tokens) --- */
+  --angi-coral:         #fc5647; /* accent-primary / bg-strong — CTA, action only */
+  --angi-coral-pressed: #d71100; /* momentary-pressed / error */
+  --angi-coral-tint:    #ffefea; /* momentary-hover / error-bg */
+  --angi-teal:          #065c62; /* bg-dark — hero, footer, structure */
+  --angi-teal-dark:     #044a4f; /* derived darker teal for hover/depth */
+  --angi-link:          #00819e; /* text-link / durable-activated */
+  --angi-mint:          #8cf4be; /* accent-secondary */
+
+  /* --- Color: neutrals (Angi design-system tokens) --- */
+  --angi-text:          #282827; /* text-default */
+  --angi-text-muted:    #6d6d6d; /* text-subtle */
+  --angi-text-disabled: #bcb9b4; /* text-disabled */
+  --angi-bg:            #ffffff; /* bg-default */
+  --angi-bg-soft:       #f5f5f2; /* bg-neutral — callouts, table stripes, reviews */
+  --angi-bg-cream:      #fff4e2; /* bg-light / warning-bg */
+  --angi-bg-mint:       #e8fdf2; /* bg-medium / success-bg — pale CTA card */
+  --angi-bg-emphasis:   #c0ffe2; /* bg-emphasis */
+  --angi-border:        #dbd9d4; /* bg-outline — dividers, table lines */
+
+  /* --- Status colors --- */
+  --angi-success:       #06c778;
+  --angi-warning:       #ffc020;
+  --angi-error:         #d71100;
 
   /* --- Typography --- */
-  --angi-font: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --angi-font: "National", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --fs-h1:    2.25rem;  /* ~36px hero */
   --fs-h2:    1.625rem; /* ~26px section */
@@ -34,9 +54,10 @@
   --lh-tight: 1.2;
   --lh-body:  1.6;
 
+  /* Angi weights: light/regular 400, medium 500, heavy 600 (no 700) */
   --fw-regular: 400;
   --fw-medium:  500;
-  --fw-bold:    700;
+  --fw-bold:    600;
 
   /* --- Spacing scale --- */
   --sp-1: 4px;
@@ -47,9 +68,9 @@
   --sp-6: 48px;
   --sp-7: 64px;
 
-  /* --- Shape --- */
-  --radius:    8px;
-  --radius-sm: 4px;
+  /* --- Shape (Angi: corner-button/tight 4px, corner-loose 16px) --- */
+  --radius:    16px; /* corner-loose — cards, tables, callouts */
+  --radius-sm: 4px;  /* corner-button/tight — buttons, inputs */
   --shadow:    0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
 
@@ -138,7 +159,7 @@ a:hover { text-decoration: underline; }
   cursor: pointer;
   transition: background 0.15s ease;
 }
-.angi-btn:hover { background: var(--angi-coral-dark); text-decoration: none; }
+.angi-btn:hover { background: var(--angi-coral-pressed); text-decoration: none; }
 
 .angi-btn--teal { background: var(--angi-teal); }
 .angi-btn--teal:hover { background: var(--angi-teal-dark); }
@@ -147,7 +168,7 @@ a:hover { text-decoration: underline; }
    Inline "Get a pro" CTA card  (the get-matched handoff pattern)
    -------------------------------------------------------------------------- */
 .angi-cta-card {
-  background: var(--angi-bg-tint);
+  background: var(--angi-bg-mint);
   border: 1px solid var(--angi-border);
   border-radius: var(--radius);
   padding: var(--sp-4);
