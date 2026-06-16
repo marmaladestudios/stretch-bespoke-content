@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-angi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Much Does a Bathroom Remodel Cost? | Angi</title>
+  <style>
+/* ==========================================================================
+   Angi Cost Guide App — Design Tokens & Base Styles
+   Tokens taken DIRECTLY from Angi's live design system (theme-angi).
+   Source of truth — these are the real Angi variables, not estimates.
+   ========================================================================== */
+
+/* Angi's brand typeface, loaded from their public CDN (regular weight).
+   Medium (500) and Heavy (600) fall back to the National stack / system. */
+@font-face {
+  font-family: "National";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://lpfe-static-assets.angi.com/static/landing-pages-frontend/_next/static/media/national-2-web-regular.d0da2e34.woff2") format("woff2"),
+       url("https://lpfe-static-assets.angi.com/static/landing-pages-frontend/_next/static/media/national-2-web-regular.c486b148.woff") format("woff");
+}
+
+:root {
+  /* --- Color: brand (Angi design-system tokens) --- */
+  --angi-coral:         #fc5647; /* accent-primary / bg-strong — CTA, action only */
+  --angi-coral-pressed: #d71100; /* momentary-pressed / error */
+  --angi-coral-tint:    #ffefea; /* momentary-hover / error-bg */
+  --angi-teal:          #065c62; /* bg-dark — hero, footer, structure */
+  --angi-teal-dark:     #044a4f; /* derived darker teal for hover/depth */
+  --angi-link:          #00819e; /* text-link / durable-activated */
+  --angi-mint:          #8cf4be; /* accent-secondary */
+
+  /* --- Color: neutrals (Angi design-system tokens) --- */
+  --angi-text:          #282827; /* text-default */
+  --angi-text-muted:    #6d6d6d; /* text-subtle */
+  --angi-text-disabled: #bcb9b4; /* text-disabled */
+  --angi-bg:            #ffffff; /* bg-default */
+  --angi-bg-soft:       #f5f5f2; /* bg-neutral — callouts, table stripes, reviews */
+  --angi-bg-cream:      #fff4e2; /* bg-light / warning-bg */
+  --angi-bg-mint:       #e8fdf2; /* bg-medium / success-bg — pale CTA card */
+  --angi-bg-emphasis:   #c0ffe2; /* bg-emphasis */
+  --angi-border:        #dbd9d4; /* bg-outline — dividers, table lines */
+
+  /* --- Status colors --- */
+  --angi-success:       #06c778;
+  --angi-warning:       #ffc020;
+  --angi-error:         #d71100;
+
+  /* --- Typography --- */
+  --angi-font: "National", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --fs-h1:    2.25rem;  /* ~36px hero */
+  --fs-h2:    1.625rem; /* ~26px section */
+  --fs-h3:    1.25rem;  /* ~20px */
+  --fs-body:  1.0625rem;/* ~17px */
+  --fs-small: 0.8125rem;/* ~13px caption */
+  --fs-eyebrow: 0.75rem;/* ~12px label */
+
+  --lh-tight: 1.2;
+  --lh-body:  1.6;
+
+  /* Angi weights: light/regular 400, medium 500, heavy 600 (no 700) */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    600;
+
+  /* --- Spacing scale --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 48px;
+  --sp-7: 64px;
+
+  /* --- Shape (Angi: corner-button/tight 4px, corner-loose 16px) --- */
+  --radius:    16px; /* corner-loose — cards, tables, callouts */
+  --radius-sm: 4px;  /* corner-button/tight — buttons, inputs */
+  --shadow:    0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  /* --- Layout --- */
+  --content-width: 720px;
+  --wide-width:    1040px;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--angi-font);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--angi-text);
+  background: var(--angi-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-bold);
+  color: var(--angi-text);
+  margin: 0 0 var(--sp-3);
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); margin-top: var(--sp-6); }
+h3 { font-size: var(--fs-h3); margin-top: var(--sp-4); }
+
+p { margin: 0 0 var(--sp-3); }
+
+a {
+  color: var(--angi-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+.angi-content {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--sp-3);
+}
+
+.angi-band {            /* full-bleed colored band (hero/footer) */
+  background: var(--angi-teal);
+  color: #fff;
+}
+.angi-band h1,
+.angi-band h2,
+.angi-band h3 { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Eyebrow / category label
+   -------------------------------------------------------------------------- */
+.angi-eyebrow {
+  font-size: var(--fs-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--fw-bold);
+  color: var(--angi-coral);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — coral = action
+   -------------------------------------------------------------------------- */
+.angi-btn {
+  display: inline-block;
+  background: var(--angi-coral);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.angi-btn:hover { background: var(--angi-coral-pressed); text-decoration: none; }
+
+.angi-btn--teal { background: var(--angi-teal); }
+.angi-btn--teal:hover { background: var(--angi-teal-dark); }
+
+/* --------------------------------------------------------------------------
+   Inline "Get a pro" CTA card  (the get-matched handoff pattern)
+   -------------------------------------------------------------------------- */
+.angi-cta-card {
+  background: var(--angi-bg-mint);
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin: var(--sp-5) 0;
+}
+.angi-cta-card__text { font-weight: var(--fw-medium); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   Cost table — header + zebra striping
+   -------------------------------------------------------------------------- */
+.angi-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: var(--sp-4) 0;
+  font-size: var(--fs-body);
+}
+.angi-table thead th {
+  background: var(--angi-teal);
+  color: #fff;
+  text-align: left;
+  font-weight: var(--fw-bold);
+  padding: var(--sp-3);
+}
+.angi-table td {
+  padding: var(--sp-3);
+  border-top: 1px solid var(--angi-border);
+}
+.angi-table tbody tr:nth-child(even) { background: var(--angi-bg-soft); }
+
+/* --------------------------------------------------------------------------
+   Callout / checklist block
+   -------------------------------------------------------------------------- */
+.angi-callout {
+  background: var(--angi-bg-soft);
+  border: 1px solid var(--angi-border);
+  border-left: 4px solid var(--angi-coral);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  margin: var(--sp-4) 0;
+}
+
+/* --------------------------------------------------------------------------
+   Image + caption
+   -------------------------------------------------------------------------- */
+.angi-figure { margin: var(--sp-4) 0; }
+.angi-figure img { width: 100%; border-radius: var(--radius); display: block; }
+.angi-figure figcaption {
+  font-size: var(--fs-small);
+  color: var(--angi-text-muted);
+  margin-top: var(--sp-2);
+}
+
+/* --------------------------------------------------------------------------
+   Related-articles grid
+   -------------------------------------------------------------------------- */
+.angi-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin: var(--sp-5) 0;
+}
+.angi-card {
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+}
+.angi-card img { width: 100%; display: block; }
+.angi-card__body { padding: var(--sp-3); }
+.angi-card__title { font-weight: var(--fw-bold); margin: var(--sp-1) 0 0; }
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.angi-footer {
+  background: var(--angi-teal-dark);
+  color: #fff;
+  padding: var(--sp-7) 0;
+}
+.angi-footer a { color: #fff; opacity: 0.85; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  :root { --fs-h1: 1.75rem; --fs-h2: 1.375rem; }
+  .angi-card-grid { grid-template-columns: 1fr; }
+  .angi-cta-card { flex-direction: column; align-items: flex-start; }
+}
+
+/* ==========================================================================
+   Demo-page styles — the article shell + the assembler app.
+   Builds on the Angi design tokens in styles.css.
+   ========================================================================== */
+
+.angi-wide { max-width: var(--wide-width); margin: 0 auto; padding: 0 var(--sp-3); }
+
+/* ---- Top nav ---- */
+.site-nav { border-bottom: 1px solid var(--angi-border); background: #fff; }
+.site-nav__inner { display: flex; align-items: center; gap: var(--sp-4); height: 64px; }
+.site-nav__logo { display: flex; align-items: center; gap: var(--sp-2); font-weight: var(--fw-bold);
+  font-size: 1.25rem; color: var(--angi-text); }
+.site-nav__logo:hover { text-decoration: none; }
+.site-nav__links { display: flex; gap: var(--sp-4); margin-left: var(--sp-3); }
+.site-nav__links a { color: var(--angi-text); font-weight: var(--fw-medium); }
+.site-nav__inner > .angi-btn { margin-left: auto; }
+.angi-btn--sm { padding: 9px 16px; font-size: 0.9375rem; }
+
+/* ---- Hero ---- */
+.hero { padding: var(--sp-6) 0; }
+.hero__crumbs { font-size: var(--fs-small); opacity: 0.85; margin-bottom: var(--sp-3); }
+.hero h1 { max-width: 16ch; }
+.hero__dek { font-size: 1.1875rem; max-width: 60ch; opacity: 0.95; }
+.hero__byline { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-small);
+  opacity: 0.9; margin-top: var(--sp-4); }
+.hero__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--angi-mint);
+  display: inline-block; }
+
+/* ---- Article body ---- */
+.article { padding: var(--sp-6) var(--sp-3) var(--sp-7); }
+
+/* ==========================================================================
+   The assembler app
+   ========================================================================== */
+.app {
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  margin: var(--sp-6) 0;
+  background: #fff;
+  box-shadow: var(--shadow-md);
+}
+.app__head { margin-bottom: var(--sp-4); }
+.app__head h2 { margin-top: var(--sp-1); }
+.app__sub { color: var(--angi-text-muted); margin: 0; }
+
+.app__location { display: flex; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.app__location label { font-weight: var(--fw-medium); }
+.app__location select {
+  font-family: inherit; font-size: var(--fs-body); padding: 8px 12px;
+  border: 1px solid var(--angi-border); border-radius: var(--radius-sm); background: #fff;
+}
+
+/* component rows */
+.app__components { display: flex; flex-direction: column; gap: var(--sp-2); }
+.cmp {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3); border: 1px solid var(--angi-border); border-radius: var(--radius-sm);
+}
+.cmp--on { border-color: var(--angi-teal); background: var(--angi-bg-mint); }
+.cmp__check { width: 20px; height: 20px; accent-color: var(--angi-teal); flex: none; }
+.cmp__name { font-weight: var(--fw-medium); flex: 1; }
+.cmp__tier {
+  font-family: inherit; font-size: 0.9375rem; padding: 6px 10px;
+  border: 1px solid var(--angi-border); border-radius: var(--radius-sm); background: #fff;
+}
+.cmp__price { width: 130px; text-align: right; color: var(--angi-text-muted); font-size: 0.9375rem; }
+.cmp[aria-disabled="true"] .cmp__tier,
+.cmp[aria-disabled="true"] .cmp__price { opacity: 0.4; }
+
+/* live estimate */
+.app__estimate {
+  margin: var(--sp-4) 0; padding: var(--sp-4);
+  background: var(--angi-teal); color: #fff; border-radius: var(--radius);
+}
+.app__estimate-label { margin: 0; opacity: 0.85; font-size: var(--fs-small);
+  text-transform: uppercase; letter-spacing: 0.08em; }
+.app__estimate-total { margin: 4px 0; font-size: 2.5rem; font-weight: var(--fw-bold); line-height: 1; }
+.app__estimate-note { margin: 0; opacity: 0.8; font-size: var(--fs-small); }
+
+.app__breakdown { margin-top: 0; }
+.app__breakdown tbody:empty::after { content: ""; }
+
+.app__cta { margin-bottom: 0; }
+
+/* ==========================================================================
+   Modal (email gate)
+   ========================================================================== */
+.modal {
+  position: fixed; inset: 0; background: rgba(40,40,39,0.55);
+  display: flex; align-items: center; justify-content: center; padding: var(--sp-3); z-index: 100;
+}
+.modal[hidden] { display: none; }
+.modal__box {
+  background: #fff; border-radius: var(--radius); padding: var(--sp-5);
+  max-width: 440px; width: 100%; position: relative; box-shadow: var(--shadow-md);
+}
+.modal__box h3 { margin-top: var(--sp-1); }
+.modal__close {
+  position: absolute; top: 12px; right: 16px; border: none; background: none;
+  font-size: 1.75rem; line-height: 1; cursor: pointer; color: var(--angi-text-muted);
+}
+#briefForm { margin: var(--sp-4) 0 var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-3); }
+#briefForm input {
+  font-family: inherit; font-size: var(--fs-body); padding: 12px 14px;
+  border: 1px solid var(--angi-border); border-radius: var(--radius-sm);
+}
+
+/* ---- Footer ---- */
+.footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: var(--sp-4); }
+.footer__grid h4 { margin: 0 0 var(--sp-2); font-size: 1rem; }
+.footer__grid a { display: block; margin-bottom: var(--sp-1); font-size: 0.9375rem; }
+.footer__tag { opacity: 0.8; font-size: 0.9375rem; }
+.footer__legal { opacity: 0.6; font-size: var(--fs-small); margin-top: var(--sp-5); }
+
+@media (max-width: 720px) {
+  .site-nav__links { display: none; }
+  .cmp { flex-wrap: wrap; }
+  .cmp__price { width: auto; margin-left: auto; }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- ===== Top nav ===== -->
+  <header class="site-nav">
+    <div class="site-nav__inner angi-wide">
+      <a class="site-nav__logo" href="#">
+        <img src="https://media.angi.com/s3fs-public/angi-circle-logo.svg" alt="Angi" width="32" height="32">
+        <span>Angi</span>
+      </a>
+      <nav class="site-nav__links">
+        <a href="#">Home</a>
+        <a href="#">Reviews</a>
+        <a href="#">Cost Guides</a>
+        <a href="#">Articles</a>
+      </nav>
+      <a class="angi-btn angi-btn--sm" href="#app">Get a quote</a>
+    </div>
+  </header>
+
+  <!-- ===== Hero band ===== -->
+  <section class="angi-band hero">
+    <div class="angi-content">
+      <p class="hero__crumbs">Articles &nbsp;›&nbsp; Bathroom Remodel &nbsp;›&nbsp; Cost</p>
+      <h1>How Much Does a Bathroom Remodel Cost in 2026?</h1>
+      <p class="hero__dek">The average bathroom remodel runs <strong>$6,600&ndash;$16,800</strong>, but your
+        number depends on size, finishes, and where you live. Build your estimate below.</p>
+      <div class="hero__byline">
+        <span class="hero__avatar"></span>
+        <span>Written by the Angi Editorial Team &nbsp;•&nbsp; Updated June 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="angi-content article">
+
+    <!-- ===== Intro ===== -->
+    <p>A bathroom remodel is one of the highest-return projects you can take on &mdash; but "how much
+      does it cost?" doesn't have a single answer. The price swings based on the room's size, the
+      fixtures and finishes you choose, and your local labor rates.</p>
+    <p>Instead of guessing from a national average, use the tool below to assemble <em>your</em>
+      bathroom and see a realistic range. When you're done, you can download a project brief to hand
+      to contractors so the quotes you get back are accurate and easy to compare.</p>
+
+    <!-- =========================================================
+         THE APP — "Build Your Bathroom Remodel" assembler
+         ========================================================= -->
+    <section id="app" class="app">
+      <div class="app__head">
+        <p class="angi-eyebrow">Interactive cost estimator</p>
+        <h2>Build your bathroom remodel</h2>
+        <p class="app__sub">Toggle what's in your project and pick a quality tier. Your estimate
+          updates live.</p>
+      </div>
+
+      <!-- Location re-pricer -->
+      <div class="app__location">
+        <label for="loc">Pricing for:</label>
+        <select id="loc">
+          <option value="1.00">National average</option>
+          <option value="1.18">Seattle, WA</option>
+          <option value="1.32">New York, NY</option>
+          <option value="0.95">Austin, TX</option>
+          <option value="0.88">Cleveland, OH</option>
+        </select>
+      </div>
+
+      <!-- Component list (rendered by app.js) -->
+      <div id="components" class="app__components"></div>
+
+      <!-- Live estimate -->
+      <div class="app__estimate">
+        <div>
+          <p class="app__estimate-label">Your estimated total</p>
+          <p id="total" class="app__estimate-total">$0</p>
+          <p class="app__estimate-note">Ballpark range &mdash; real quotes will vary by contractor.</p>
+        </div>
+      </div>
+
+      <!-- Cost breakdown -->
+      <table class="angi-table app__breakdown">
+        <thead>
+          <tr><th>Item</th><th>Tier</th><th style="text-align:right">Estimated range</th></tr>
+        </thead>
+        <tbody id="breakdown"></tbody>
+      </table>
+
+      <!-- Shared ending: get matched + download brief -->
+      <div class="angi-cta-card app__cta">
+        <div>
+          <p class="angi-cta-card__text" style="margin-bottom:4px;font-size:1.125rem;">Ready for real numbers?</p>
+          <p style="margin:0;color:var(--angi-text-muted);">Download your project brief and we'll match
+            you with vetted local pros who can quote from it.</p>
+        </div>
+        <button id="getBrief" class="angi-btn">Get my project brief &rarr;</button>
+      </div>
+    </section>
+
+    <!-- ===== Rest of article (static) ===== -->
+    <h2>What drives the cost of a bathroom remodel?</h2>
+    <p>Three factors move the needle most: the <strong>scope</strong> (a cosmetic refresh vs. moving
+      plumbing), the <strong>finishes</strong> you choose, and your <strong>location</strong>. Labor
+      alone typically accounts for 40&ndash;65% of the total.</p>
+
+    <div class="angi-callout">
+      <strong>Tip:</strong> Moving plumbing fixtures (relocating a toilet or shower) is one of the
+      biggest hidden cost drivers. Keeping fixtures in their existing spots can save thousands.
+    </div>
+
+    <h2>Average bathroom remodel cost by size</h2>
+    <table class="angi-table">
+      <thead>
+        <tr><th>Bathroom size</th><th>Typical range</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Half bath</td><td>$3,000 &ndash; $7,000</td></tr>
+        <tr><td>Full bath (5&times;8)</td><td>$7,000 &ndash; $15,000</td></tr>
+        <tr><td>Primary / large bath</td><td>$15,000 &ndash; $35,000+</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Related -->
+    <h2>Related cost guides</h2>
+    <div class="angi-card-grid">
+      <a class="angi-card" href="#">
+        <div class="angi-card__body">
+          <p class="angi-eyebrow">Shower</p>
+          <p class="angi-card__title">How much does a walk-in shower cost?</p>
+        </div>
+      </a>
+      <a class="angi-card" href="#">
+        <div class="angi-card__body">
+          <p class="angi-eyebrow">Plumbing</p>
+          <p class="angi-card__title">Cost to convert a tub to a shower</p>
+        </div>
+      </a>
+      <a class="angi-card" href="#">
+        <div class="angi-card__body">
+          <p class="angi-eyebrow">Vanity</p>
+          <p class="angi-card__title">Bathroom vanity installation cost</p>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="angi-footer">
+    <div class="angi-wide footer__grid">
+      <div>
+        <img src="https://media.angi.com/s3fs-public/angi-circle-logo.svg" alt="Angi" width="40" height="40">
+        <p class="footer__tag">Home for everything home.</p>
+      </div>
+      <div><h4>Solutions</h4><a href="#">Find a pro</a><a href="#">Cost guides</a><a href="#">Reviews</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a></div>
+      <div><h4>Stay connected</h4><a href="#">App Store</a><a href="#">Google Play</a></div>
+    </div>
+    <p class="footer__legal angi-wide">Demo mockup for concept review &mdash; not affiliated with a live Angi page.</p>
+  </footer>
+
+  <!-- ===== Brief / email-gate modal ===== -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal__box">
+      <button id="modalClose" class="modal__close" aria-label="Close">&times;</button>
+      <p class="angi-eyebrow">Almost there</p>
+      <h3 id="modalTitle">Get your project brief</h3>
+      <p style="color:var(--angi-text-muted)">We'll email you a copy and match you with local pros who can quote from it.</p>
+      <form id="briefForm">
+        <input type="email" id="email" placeholder="you@email.com" required>
+        <button type="submit" class="angi-btn" style="width:100%">Download brief &amp; get matched</button>
+      </form>
+      <p style="font-size:var(--fs-small);color:var(--angi-text-muted);margin-bottom:0">No spam. Demo only &mdash; no email is actually sent.</p>
+    </div>
+  </div>
+
+  <script>
+/* =========================================================================
+   "Build Your Bathroom Remodel" assembler — demo logic.
+   Plain vanilla JS, no dependencies. Numbers are illustrative.
+   ========================================================================= */
+
+// Each component carries good/better/best ranges (national, install included).
+const COMPONENTS = [
+  { id: 'shower',  name: 'Shower / tub',        on: true,
+    tiers: { Good: [3000, 4500],  Better: [5000, 7500],  Best: [9000, 14000] } },
+  { id: 'vanity',  name: 'Vanity & sink',       on: true,
+    tiers: { Good: [800, 1500],   Better: [1800, 3000],  Best: [3500, 6000] } },
+  { id: 'tile',    name: 'Tile & walls',        on: true,
+    tiers: { Good: [1000, 2000],  Better: [2500, 4500],  Best: [5000, 9000] } },
+  { id: 'floor',   name: 'Flooring',            on: true,
+    tiers: { Good: [600, 1200],   Better: [1500, 2800],  Best: [3000, 5500] } },
+  { id: 'toilet',  name: 'Toilet',              on: true,
+    tiers: { Good: [250, 450],    Better: [500, 900],    Best: [1000, 1800] } },
+  { id: 'light',   name: 'Lighting & electrical', on: false,
+    tiers: { Good: [400, 800],    Better: [1000, 1800],  Best: [2200, 4000] } },
+  { id: 'plumb',   name: 'Move plumbing',       on: false,
+    tiers: { Good: [1000, 1800],  Better: [2500, 4000],  Best: [5000, 8000] } },
+];
+
+const TIER_NAMES = ['Good', 'Better', 'Best'];
+
+// --- state ---
+const state = COMPONENTS.map(c => ({ ...c, tier: 'Better' }));
+let multiplier = 1.0;
+
+// --- helpers ---
+const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+const $ = sel => document.querySelector(sel);
+
+// --- render component rows ---
+function renderComponents() {
+  const wrap = $('#components');
+  wrap.innerHTML = '';
+  state.forEach((c, i) => {
+    const row = document.createElement('label');
+    row.className = 'cmp' + (c.on ? ' cmp--on' : '');
+    row.setAttribute('aria-disabled', String(!c.on));
+
+    const [lo, hi] = c.tiers[c.tier];
+    row.innerHTML = `
+      <input type="checkbox" class="cmp__check" ${c.on ? 'checked' : ''} data-i="${i}">
+      <span class="cmp__name">${c.name}</span>
+      <select class="cmp__tier" data-i="${i}" ${c.on ? '' : 'disabled'}>
+        ${TIER_NAMES.map(t => `<option ${t === c.tier ? 'selected' : ''}>${t}</option>`).join('')}
+      </select>
+      <span class="cmp__price">${c.on ? fmt(lo * multiplier) + '–' + fmt(hi * multiplier) : '—'}</span>`;
+    wrap.appendChild(row);
+  });
+}
+
+// --- recompute totals + breakdown ---
+function recompute() {
+  let lo = 0, hi = 0;
+  const rows = [];
+  state.forEach(c => {
+    if (!c.on) return;
+    const [l, h] = c.tiers[c.tier];
+    lo += l * multiplier;
+    hi += h * multiplier;
+    rows.push({ name: c.name, tier: c.tier, lo: l * multiplier, hi: h * multiplier });
+  });
+
+  $('#total').textContent = rows.length ? fmt(lo) + ' – ' + fmt(hi) : '$0';
+
+  $('#breakdown').innerHTML = rows.map(r =>
+    `<tr><td>${r.name}</td><td>${r.tier}</td>
+     <td style="text-align:right">${fmt(r.lo)} – ${fmt(r.hi)}</td></tr>`
+  ).join('') || `<tr><td colspan="3" style="color:var(--angi-text-muted)">Select at least one item.</td></tr>`;
+
+  return { lo, hi, rows };
+}
+
+// --- events ---
+document.addEventListener('change', e => {
+  const i = e.target.dataset.i;
+  if (i === undefined) {
+    if (e.target.id === 'loc') { multiplier = parseFloat(e.target.value); renderComponents(); recompute(); }
+    return;
+  }
+  if (e.target.classList.contains('cmp__check')) state[i].on = e.target.checked;
+  if (e.target.classList.contains('cmp__tier'))  state[i].tier = e.target.value;
+  renderComponents();
+  recompute();
+});
+
+// =========================================================================
+//  Email gate + downloadable project brief
+// =========================================================================
+const modal = $('#modal');
+$('#getBrief').addEventListener('click', () => { modal.hidden = false; });
+$('#modalClose').addEventListener('click', () => { modal.hidden = true; });
+modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
+
+$('#briefForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const { lo, hi, rows } = recompute();
+  const locName = $('#loc').selectedOptions[0].textContent;
+  downloadBrief(rows, lo, hi, locName, $('#email').value);
+  $('#modalTitle').textContent = 'Your brief is downloading ✓';
+  $('#briefForm').innerHTML =
+    '<p style="margin:0">Thanks! We\'ve matched you with <strong>3 local pros</strong> who can quote from your brief. ' +
+    '(Demo — no real matching happens.)</p>';
+});
+
+function downloadBrief(rows, lo, hi, locName, email) {
+  const line = '—'.repeat(48);
+  let txt = '';
+  txt += 'BATHROOM REMODEL — PROJECT BRIEF\n';
+  txt += 'Prepared with Angi  •  ' + new Date().toLocaleDateString() + '\n';
+  txt += line + '\n\n';
+  txt += 'Location:        ' + locName + '\n';
+  txt += 'Prepared for:    ' + (email || 'homeowner') + '\n';
+  txt += 'Estimated range: ' + fmt(lo) + ' – ' + fmt(hi) + '\n\n';
+  txt += 'SCOPE OF WORK\n' + line + '\n';
+  rows.forEach(r => {
+    txt += '• ' + r.name.padEnd(24) + '[' + r.tier + ']  '
+        + fmt(r.lo) + ' – ' + fmt(r.hi) + '\n';
+  });
+  txt += '\nNOTES FOR CONTRACTOR\n' + line + '\n';
+  txt += '- This is a homeowner-generated estimate; please provide a firm quote.\n';
+  txt += '- Please itemize labor vs. materials.\n';
+  txt += '- Confirm license, insurance, and projected timeline.\n';
+  txt += '- Flag any costs not captured above (permits, disposal, surprises).\n';
+
+  const blob = new Blob([txt], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'bathroom-remodel-project-brief.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// --- init ---
+renderComponents();
+recompute();
+
+  </script>
+</body>
+</html>
