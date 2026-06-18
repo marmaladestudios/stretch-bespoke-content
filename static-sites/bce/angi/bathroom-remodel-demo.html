@@ -860,12 +860,16 @@ img {
 
 .builder-module-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
   padding: 22px 24px;
   border-bottom: 1px solid var(--tool-line);
   background: #fff;
+}
+
+.builder-module-intro {
+  min-width: 0;
 }
 
 .builder-module-top h2 {
@@ -884,6 +888,7 @@ img {
 }
 
 .module-view-tabs {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -1105,7 +1110,7 @@ img {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 12px;
+  margin: 12px 0 0;
 }
 
 .location-picker {
@@ -1204,6 +1209,8 @@ img {
 }
 
 .canvas-wrap {
+  display: flex;
+  justify-content: center;
   padding: 10px;
   border-radius: var(--radius-card);
   background: #f8fbf9;
@@ -1212,8 +1219,13 @@ img {
 .plan-canvas {
   --grid-x: 10%;
   --grid-y: 12.5%;
+  --canvas-aspect: 10 / 8;
+  --canvas-width: 100%;
   position: relative;
-  min-height: 520px;
+  width: var(--canvas-width);
+  min-height: 260px;
+  max-height: 760px;
+  aspect-ratio: var(--canvas-aspect);
   overflow: hidden;
   border: 2px solid #c6e3da;
   border-radius: var(--radius-card);
@@ -1238,12 +1250,21 @@ img {
 
 .canvas-measure {
   position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
   color: rgba(91, 126, 117, 0.68);
   font-size: 11px;
   font-weight: 600;
+}
+
+.canvas-measure--height {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.canvas-measure--width {
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
 }
 
 .placed-items {
@@ -1901,16 +1922,46 @@ img {
   font-weight: 600;
 }
 
-.quote-button {
+.quote-button,
+.download-button {
   min-height: 48px;
   padding: 12px 15px;
   border: 0;
   border-radius: var(--radius-tight);
-  background: var(--coral);
-  color: #fff;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+}
+
+.quote-button {
+  background: var(--coral);
+  color: #fff;
+}
+
+.download-button {
+  border: 1px solid #cde3dd;
+  background: #fff;
+  color: var(--teal);
+}
+
+.download-button--on-dark {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.quote-button:disabled,
+.quote-button[aria-disabled="true"] {
+  background: #d9ddd9;
+  color: #777b76;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.estimate-bar__actions,
+.estimate-screen__actions {
+  display: grid;
+  gap: 8px;
 }
 
 .module-view[hidden] {
@@ -1965,6 +2016,11 @@ img {
 }
 
 .estimate-screen .quote-button {
+  width: auto;
+  min-width: 220px;
+}
+
+.estimate-screen .download-button {
   width: auto;
   min-width: 220px;
 }
@@ -2155,13 +2211,36 @@ img {
 
 .guide-spotlight {
   display: grid;
-  gap: 4px;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
   margin: 0 0 14px;
   padding: 12px;
   border-radius: var(--radius-card);
   background: #fff7f5;
   color: inherit;
   text-decoration: none;
+}
+
+.guide-spotlight__thumb {
+  display: block;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: var(--radius-tight);
+  background: #f3faf7;
+}
+
+.guide-spotlight__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide-spotlight__body {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
 }
 
 .guide-spotlight__kicker {
@@ -2179,7 +2258,7 @@ img {
   line-height: 1.22;
 }
 
-.guide-spotlight span:last-child {
+.guide-spotlight__body span:last-child {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.35;
@@ -2534,6 +2613,35 @@ img {
   line-height: 1.45;
 }
 
+.lead-form {
+  display: grid;
+  gap: 12px;
+}
+
+.lead-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lead-form input {
+  min-height: 42px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+.lead-form input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(6, 92, 98, 0.12);
+}
+
 .modal-close {
   position: absolute;
   top: 14px;
@@ -2655,6 +2763,7 @@ img {
   }
 
   .estimate-screen .quote-button,
+  .estimate-screen .download-button,
   .pro-handoff__form {
     width: 100%;
   }
@@ -2749,7 +2858,8 @@ img {
   }
 
   .plan-canvas {
-    min-height: 430px;
+    min-height: 260px;
+    max-height: 680px;
   }
 
   .room-control,
@@ -2954,9 +3064,24 @@ img {
 
       <div class="builder-module">
         <div class="builder-module-top">
-          <div>
+          <div class="builder-module-intro">
             <h2>Bathroom remodel planner</h2>
             <p>Drag fixtures, adjust dimensions, and compare cost ranges.</p>
+            <div class="plan-toolbar">
+              <div class="location-picker">
+                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="pin-icon"><svg><use href="#ic-pin"></use></svg></span>
+                  <span id="locationLabel">United States</span>
+                  <span class="chevron">v</span>
+                </button>
+                <div id="locationMenu" class="location-menu" hidden></div>
+              </div>
+              <button id="locateButton" class="locate-button" type="button">
+                <span class="pin-icon"><svg><use href="#ic-target"></use></svg></span>
+                Locate me
+              </button>
+              <p id="locationNote" class="location-note">Showing national-average pricing. Pick a metro for local labor and material rates.</p>
+            </div>
           </div>
           <div class="module-view-tabs" aria-label="Planner views">
             <button type="button" class="is-active" data-action="view" data-view="plan">Plan</button>
@@ -2987,25 +3112,10 @@ img {
               </div>
             </div>
 
-            <div class="plan-toolbar">
-              <div class="location-picker">
-                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false">
-                  <span class="pin-icon"><svg><use href="#ic-pin"></use></svg></span>
-                  <span id="locationLabel">United States</span>
-                  <span class="chevron">v</span>
-                </button>
-                <div id="locationMenu" class="location-menu" hidden></div>
-              </div>
-              <button id="locateButton" class="locate-button" type="button">
-                <span class="pin-icon"><svg><use href="#ic-target"></use></svg></span>
-                Locate me
-              </button>
-              <p id="locationNote" class="location-note">Showing national-average pricing. Pick a metro for local labor and material rates.</p>
-            </div>
-
             <div class="canvas-wrap">
               <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas">
                 <span id="canvasHeightLabel" class="canvas-measure canvas-measure--height">8 ft</span>
+                <span id="canvasWidthLabel" class="canvas-measure canvas-measure--width">10 ft</span>
                 <div id="placedItems" class="placed-items"></div>
                 <div id="emptyCanvas" class="empty-canvas">
                   <div class="empty-icon"><svg><use href="#ic-shower"></use></svg></div>
@@ -3027,7 +3137,10 @@ img {
               <h2 id="estimateViewTitle">Project estimate breakdown</h2>
               <p id="estimateViewIntro">See how your selected fixtures, finishes, room size, and location affect the current project range.</p>
             </div>
-            <button id="estimateQuoteButton" class="quote-button" type="button">Get quotes for this estimate</button>
+            <div class="estimate-screen__actions">
+              <button id="estimateQuoteButton" class="quote-button" type="button" disabled aria-disabled="true">Get quotes for this estimate</button>
+              <button id="estimateDownloadButton" class="download-button" type="button">Download PDF</button>
+            </div>
           </div>
           <div class="estimate-layout">
             <section class="estimate-breakdown-card" aria-labelledby="estimateBreakdownTitle">
@@ -3062,7 +3175,10 @@ img {
             <strong id="placedCount">0 items on your plan</strong>
             <span id="estimateNote">Showing national-average pricing. Pick a metro for local labor and material rates.</span>
           </div>
-          <button id="quoteButton" class="quote-button" type="button">Get local quotes for this plan</button>
+          <div class="estimate-bar__actions">
+            <button id="quoteButton" class="quote-button" type="button">Get local quotes for this plan</button>
+            <button id="downloadPlanButton" class="download-button download-button--on-dark" type="button">Download plan PDF</button>
+          </div>
         </section>
 
         <section class="recommendation-band" aria-labelledby="recommendedGuidesTitle">
@@ -3235,9 +3351,19 @@ img {
     <div class="modal-box">
       <button id="modalClose" type="button" class="modal-close" aria-label="Close">&times;</button>
       <p class="builder-eyebrow"><span></span> Project brief</p>
-      <h2>Your brief is ready</h2>
+      <h2>Download your plan PDF</h2>
       <p id="briefSummary">Add fixtures to generate a contractor-ready scope.</p>
-      <button id="downloadBrief" type="button" class="quote-button">Download brief</button>
+      <form id="downloadLeadForm" class="lead-form">
+        <label for="leadName">
+          Name
+          <input id="leadName" name="name" type="text" autocomplete="name" required>
+        </label>
+        <label for="leadEmail">
+          Email
+          <input id="leadEmail" name="email" type="email" autocomplete="email" required>
+        </label>
+        <button id="downloadBrief" type="submit" class="quote-button">Download PDF</button>
+      </form>
     </div>
   </div>
 
@@ -3660,15 +3786,31 @@ function isInsideCanvas(clientX, clientY) {
   return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
 }
 
-function updateCanvasGrid() {
+function applyCanvasMetrics(roomW, roomH) {
   const canvas = $('#planCanvas');
-  canvas.style.setProperty('--grid-x', `${100 / state.roomW}%`);
-  canvas.style.setProperty('--grid-y', `${100 / state.roomH}%`);
-  canvas.style.setProperty('--grid-x-half', `${50 / state.roomW}%`);
-  canvas.style.setProperty('--grid-y-half', `${50 / state.roomH}%`);
-  canvas.style.setProperty('--room-w', state.roomW);
-  canvas.style.setProperty('--room-h', state.roomH);
-  $('#canvasHeightLabel').textContent = `${fmtNum(state.roomH)} ft`;
+  const ratio = roomW / roomH;
+  const canvasWidth = ratio >= 1 ? 100 : clamp(ratio * 116, 54, 88);
+  canvas.style.setProperty('--grid-x', `${100 / roomW}%`);
+  canvas.style.setProperty('--grid-y', `${100 / roomH}%`);
+  canvas.style.setProperty('--grid-x-half', `${50 / roomW}%`);
+  canvas.style.setProperty('--grid-y-half', `${50 / roomH}%`);
+  canvas.style.setProperty('--room-w', roomW);
+  canvas.style.setProperty('--room-h', roomH);
+  canvas.style.setProperty('--canvas-aspect', `${roomW} / ${roomH}`);
+  canvas.style.setProperty('--canvas-width', `${canvasWidth}%`);
+  $('#canvasWidthLabel').textContent = `${fmtNum(roomW)} ft`;
+  $('#canvasHeightLabel').textContent = `${fmtNum(roomH)} ft`;
+}
+
+function updateCanvasGrid() {
+  applyCanvasMetrics(state.roomW, state.roomH);
+}
+
+function previewRoomDimensions() {
+  const roomW = parseFloat($('#roomWidth').value);
+  const roomH = parseFloat($('#roomHeight').value);
+  if (Number.isNaN(roomW) || Number.isNaN(roomH)) return;
+  applyCanvasMetrics(clamp(snap(roomW, 0.5), 4, 40), clamp(snap(roomH, 0.5), 4, 40));
 }
 
 function renderPalette() {
@@ -4003,9 +4145,12 @@ function renderInspector() {
       <p class="selected-range"><span>This item</span><strong>${rangeText(lo, hi)}</strong></p>
 
       <a class="guide-spotlight" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
-        <span class="guide-spotlight__kicker">Recommended guide</span>
-        <strong>${escapeHtml(spotlight.title)}</strong>
-        <span>${escapeHtml(spotlight.reason)}</span>
+        <span class="guide-spotlight__thumb"><img src="${spotlight.image}" alt=""></span>
+        <span class="guide-spotlight__body">
+          <span class="guide-spotlight__kicker">Recommended guide</span>
+          <strong>${escapeHtml(spotlight.title)}</strong>
+          <span>${escapeHtml(spotlight.reason)}</span>
+        </span>
       </a>
 
       <section class="inspector-section inspector-section--compact inspector-section--finish">
@@ -4081,9 +4226,12 @@ function setItemDimension(id, axis, value) {
   renderAll();
 }
 
-function setRoomDimension(axis, value) {
-  if (Number.isNaN(value)) return;
-  state[axis] = clamp(snap(value, 0.5), 4, 40);
+function commitRoomDimensions() {
+  const roomW = parseFloat($('#roomWidth').value);
+  const roomH = parseFloat($('#roomHeight').value);
+  if (Number.isNaN(roomW) || Number.isNaN(roomH)) return;
+  state.roomW = clamp(snap(roomW, 0.5), 4, 40);
+  state.roomH = clamp(snap(roomH, 0.5), 4, 40);
   state.placed.forEach(clampItem);
   renderAll();
 }
@@ -4295,19 +4443,26 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('change', e => {
-  if (e.target.id === 'roomWidth') {
-    setRoomDimension('roomW', parseFloat(e.target.value));
-  }
-  if (e.target.id === 'roomHeight') {
-    setRoomDimension('roomH', parseFloat(e.target.value));
+  if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+    commitRoomDimensions();
+    return;
   }
   if (e.target.dataset.action === 'dim-input') {
     setItemDimension(e.target.dataset.id, e.target.dataset.axis, parseFloat(e.target.value));
   }
 });
 
+document.addEventListener('input', e => {
+  if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+    previewRoomDimensions();
+  }
+});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.target.matches('input')) {
+    if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+      commitRoomDimensions();
+    }
     e.target.blur();
   }
 });
@@ -4330,17 +4485,19 @@ $('#locateButton').addEventListener('click', () => {
   renderAll();
 });
 
-function openQuoteModal() {
+function openDownloadModal() {
   const [lo, hi] = estimateRange();
   const modal = $('#briefModal');
   $('#briefSummary').textContent = state.placed.length
-    ? `${state.placed.length} scoped item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom near ${locationLabel()}. Estimated range: ${rangeText(lo, hi)}. Share this brief with local pros for tighter quotes.`
-    : 'Add fixtures to generate a contractor-ready scope.';
+    ? `${state.placed.length} scoped item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom near ${locationLabel()}. Estimated range: ${rangeText(lo, hi)}. Enter your info to download the PDF.`
+    : 'Add fixtures to generate a contractor-ready PDF.';
   modal.hidden = false;
+  $('#leadName').focus();
 }
 
-$('#quoteButton').addEventListener('click', openQuoteModal);
-$('#estimateQuoteButton').addEventListener('click', openQuoteModal);
+$('#quoteButton').addEventListener('click', openDownloadModal);
+$('#downloadPlanButton').addEventListener('click', openDownloadModal);
+$('#estimateDownloadButton').addEventListener('click', openDownloadModal);
 
 $('#modalClose').addEventListener('click', () => {
   $('#briefModal').hidden = true;
@@ -4350,11 +4507,12 @@ $('#briefModal').addEventListener('click', e => {
   if (e.target.id === 'briefModal') $('#briefModal').hidden = true;
 });
 
-$('#downloadBrief').addEventListener('click', () => {
+function planPdfLines(lead) {
   const [lo, hi] = estimateRange();
-  const lines = [
+  return [
     'BATHROOM REMODEL PROJECT BRIEF',
     'Prepared with Angi',
+    `Prepared for: ${lead.name} (${lead.email})`,
     '',
     `Room: ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft (${fmtNum(state.roomW * state.roomH)} sq ft)`,
     `Location: ${locationLabel()}`,
@@ -4367,13 +4525,134 @@ $('#downloadBrief').addEventListener('click', () => {
       const addonLabels = c.addons.filter(addon => item.addons[addon.key]).map(addon => addon.label);
       return `- ${item.name}: ${fmtNum(item.w)} x ${fmtNum(item.h)} ft, ${TIER_LABEL[item.tier]} tier, ${rangeText(itemLo, itemHi)}${addonLabels.length ? `, add-ons: ${addonLabels.join(', ')}` : ''}`;
     }),
+    '',
+    'RECOMMENDED GUIDES',
+    ...recommendationItems(3).map(article => `- ${article.title}`),
+    '',
+    'NEXT STEP',
+    'Share this scope with local pros so each estimate starts from the same project details.',
   ];
-  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+}
+
+function wrapPdfText(text, maxChars = 78) {
+  const words = String(text).replace(/\s+/g, ' ').trim().split(' ');
+  const lines = [];
+  let line = '';
+  words.forEach(word => {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > maxChars && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  });
+  if (line) lines.push(line);
+  return lines.length ? lines : [''];
+}
+
+function escapePdfText(text) {
+  return String(text)
+    .replace(/[^\x20-\x7E]/g, '-')
+    .replace(/\\/g, '\\\\')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)');
+}
+
+function createPlanPdfBlob(lead) {
+  const pageWidth = 612;
+  const pageHeight = 792;
+  const margin = 48;
+  const pages = [];
+  let y = pageHeight - margin;
+  let stream = '';
+
+  function newPage() {
+    if (stream) pages.push(stream);
+    stream = '';
+    y = pageHeight - margin;
+  }
+
+  function addLine(text = '', options = {}) {
+    const size = options.size || 11;
+    const font = options.bold ? 'F2' : 'F1';
+    const leading = options.leading || Math.round(size * 1.45);
+    const maxChars = options.maxChars || (size >= 16 ? 44 : 78);
+    const wrapped = text ? wrapPdfText(text, maxChars) : [''];
+    wrapped.forEach(line => {
+      if (y < margin + leading) newPage();
+      stream += `BT /${font} ${size} Tf ${margin} ${y} Td (${escapePdfText(line)}) Tj ET\n`;
+      y -= leading;
+    });
+  }
+
+  planPdfLines(lead).forEach((line, index) => {
+    if (index === 0) {
+      addLine(line, { size: 20, bold: true, leading: 28, maxChars: 42 });
+      return;
+    }
+    if (line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
+      addLine('');
+      addLine(line, { size: 13, bold: true, leading: 18, maxChars: 60 });
+      return;
+    }
+    addLine(line);
+  });
+  if (stream) pages.push(stream);
+
+  const objects = [];
+  const addObject = content => {
+    objects.push(content);
+    return objects.length;
+  };
+  addObject('<< /Type /Catalog /Pages 2 0 R >>');
+  const pagesObjectIndex = addObject('');
+  addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+  addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>');
+  const pageRefs = [];
+  pages.forEach(content => {
+    const contentObject = addObject(`<< /Length ${content.length} >>\nstream\n${content}endstream`);
+    const pageObject = addObject(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentObject} 0 R >>`);
+    pageRefs.push(`${pageObject} 0 R`);
+  });
+  objects[pagesObjectIndex - 1] = `<< /Type /Pages /Kids [${pageRefs.join(' ')}] /Count ${pageRefs.length} >>`;
+
+  let pdf = '%PDF-1.4\n';
+  const offsets = [0];
+  objects.forEach((object, index) => {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  });
+  const xrefOffset = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach(offset => {
+    pdf += `${String(offset).padStart(10, '0')} 00000 n \n`;
+  });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+  return new Blob([pdf], { type: 'application/pdf' });
+}
+
+function downloadPlanPdf(lead) {
+  const blob = createPlanPdfBlob(lead);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'bathroom-remodel-project-brief.txt';
+  a.download = 'bathroom-remodel-project-brief.pdf';
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  window.setTimeout(() => {
+    URL.revokeObjectURL(a.href);
+    a.remove();
+  }, 1000);
+}
+
+$('#downloadLeadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!e.currentTarget.reportValidity()) return;
+  downloadPlanPdf({
+    name: $('#leadName').value.trim(),
+    email: $('#leadEmail').value.trim(),
+  });
+  $('#briefModal').hidden = true;
 });
 
 renderAll();

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How Much Does a Bathroom Remodel Cost? | Angi</title>
-  <link rel="stylesheet" href="./styles.css?v=20260618-clean-controls">
-  <link rel="stylesheet" href="./app.css?v=20260618-clean-controls">
+  <link rel="stylesheet" href="./styles.css?v=20260618-pdf-aspect">
+  <link rel="stylesheet" href="./app.css?v=20260618-pdf-aspect">
 </head>
 <body>
   <svg aria-hidden="true" class="icon-sprite">
@@ -143,9 +143,24 @@
 
       <div class="builder-module">
         <div class="builder-module-top">
-          <div>
+          <div class="builder-module-intro">
             <h2>Bathroom remodel planner</h2>
             <p>Drag fixtures, adjust dimensions, and compare cost ranges.</p>
+            <div class="plan-toolbar">
+              <div class="location-picker">
+                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="pin-icon"><svg><use href="#ic-pin"></use></svg></span>
+                  <span id="locationLabel">United States</span>
+                  <span class="chevron">v</span>
+                </button>
+                <div id="locationMenu" class="location-menu" hidden></div>
+              </div>
+              <button id="locateButton" class="locate-button" type="button">
+                <span class="pin-icon"><svg><use href="#ic-target"></use></svg></span>
+                Locate me
+              </button>
+              <p id="locationNote" class="location-note">Showing national-average pricing. Pick a metro for local labor and material rates.</p>
+            </div>
           </div>
           <div class="module-view-tabs" aria-label="Planner views">
             <button type="button" class="is-active" data-action="view" data-view="plan">Plan</button>
@@ -176,25 +191,10 @@
               </div>
             </div>
 
-            <div class="plan-toolbar">
-              <div class="location-picker">
-                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false">
-                  <span class="pin-icon"><svg><use href="#ic-pin"></use></svg></span>
-                  <span id="locationLabel">United States</span>
-                  <span class="chevron">v</span>
-                </button>
-                <div id="locationMenu" class="location-menu" hidden></div>
-              </div>
-              <button id="locateButton" class="locate-button" type="button">
-                <span class="pin-icon"><svg><use href="#ic-target"></use></svg></span>
-                Locate me
-              </button>
-              <p id="locationNote" class="location-note">Showing national-average pricing. Pick a metro for local labor and material rates.</p>
-            </div>
-
             <div class="canvas-wrap">
               <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas">
                 <span id="canvasHeightLabel" class="canvas-measure canvas-measure--height">8 ft</span>
+                <span id="canvasWidthLabel" class="canvas-measure canvas-measure--width">10 ft</span>
                 <div id="placedItems" class="placed-items"></div>
                 <div id="emptyCanvas" class="empty-canvas">
                   <div class="empty-icon"><svg><use href="#ic-shower"></use></svg></div>
@@ -216,7 +216,10 @@
               <h2 id="estimateViewTitle">Project estimate breakdown</h2>
               <p id="estimateViewIntro">See how your selected fixtures, finishes, room size, and location affect the current project range.</p>
             </div>
-            <button id="estimateQuoteButton" class="quote-button" type="button">Get quotes for this estimate</button>
+            <div class="estimate-screen__actions">
+              <button id="estimateQuoteButton" class="quote-button" type="button" disabled aria-disabled="true">Get quotes for this estimate</button>
+              <button id="estimateDownloadButton" class="download-button" type="button">Download PDF</button>
+            </div>
           </div>
           <div class="estimate-layout">
             <section class="estimate-breakdown-card" aria-labelledby="estimateBreakdownTitle">
@@ -251,7 +254,10 @@
             <strong id="placedCount">0 items on your plan</strong>
             <span id="estimateNote">Showing national-average pricing. Pick a metro for local labor and material rates.</span>
           </div>
-          <button id="quoteButton" class="quote-button" type="button">Get local quotes for this plan</button>
+          <div class="estimate-bar__actions">
+            <button id="quoteButton" class="quote-button" type="button">Get local quotes for this plan</button>
+            <button id="downloadPlanButton" class="download-button download-button--on-dark" type="button">Download plan PDF</button>
+          </div>
         </section>
 
         <section class="recommendation-band" aria-labelledby="recommendedGuidesTitle">
@@ -424,12 +430,22 @@
     <div class="modal-box">
       <button id="modalClose" type="button" class="modal-close" aria-label="Close">&times;</button>
       <p class="builder-eyebrow"><span></span> Project brief</p>
-      <h2>Your brief is ready</h2>
+      <h2>Download your plan PDF</h2>
       <p id="briefSummary">Add fixtures to generate a contractor-ready scope.</p>
-      <button id="downloadBrief" type="button" class="quote-button">Download brief</button>
+      <form id="downloadLeadForm" class="lead-form">
+        <label for="leadName">
+          Name
+          <input id="leadName" name="name" type="text" autocomplete="name" required>
+        </label>
+        <label for="leadEmail">
+          Email
+          <input id="leadEmail" name="email" type="email" autocomplete="email" required>
+        </label>
+        <button id="downloadBrief" type="submit" class="quote-button">Download PDF</button>
+      </form>
     </div>
   </div>
 
-  <script src="./app.js?v=20260618-clean-controls"></script>
+  <script src="./app.js?v=20260618-pdf-aspect"></script>
 </body>
 </html>

@@ -416,15 +416,31 @@ function isInsideCanvas(clientX, clientY) {
   return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
 }
 
-function updateCanvasGrid() {
+function applyCanvasMetrics(roomW, roomH) {
   const canvas = $('#planCanvas');
-  canvas.style.setProperty('--grid-x', `${100 / state.roomW}%`);
-  canvas.style.setProperty('--grid-y', `${100 / state.roomH}%`);
-  canvas.style.setProperty('--grid-x-half', `${50 / state.roomW}%`);
-  canvas.style.setProperty('--grid-y-half', `${50 / state.roomH}%`);
-  canvas.style.setProperty('--room-w', state.roomW);
-  canvas.style.setProperty('--room-h', state.roomH);
-  $('#canvasHeightLabel').textContent = `${fmtNum(state.roomH)} ft`;
+  const ratio = roomW / roomH;
+  const canvasWidth = ratio >= 1 ? 100 : clamp(ratio * 116, 54, 88);
+  canvas.style.setProperty('--grid-x', `${100 / roomW}%`);
+  canvas.style.setProperty('--grid-y', `${100 / roomH}%`);
+  canvas.style.setProperty('--grid-x-half', `${50 / roomW}%`);
+  canvas.style.setProperty('--grid-y-half', `${50 / roomH}%`);
+  canvas.style.setProperty('--room-w', roomW);
+  canvas.style.setProperty('--room-h', roomH);
+  canvas.style.setProperty('--canvas-aspect', `${roomW} / ${roomH}`);
+  canvas.style.setProperty('--canvas-width', `${canvasWidth}%`);
+  $('#canvasWidthLabel').textContent = `${fmtNum(roomW)} ft`;
+  $('#canvasHeightLabel').textContent = `${fmtNum(roomH)} ft`;
+}
+
+function updateCanvasGrid() {
+  applyCanvasMetrics(state.roomW, state.roomH);
+}
+
+function previewRoomDimensions() {
+  const roomW = parseFloat($('#roomWidth').value);
+  const roomH = parseFloat($('#roomHeight').value);
+  if (Number.isNaN(roomW) || Number.isNaN(roomH)) return;
+  applyCanvasMetrics(clamp(snap(roomW, 0.5), 4, 40), clamp(snap(roomH, 0.5), 4, 40));
 }
 
 function renderPalette() {
@@ -759,9 +775,12 @@ function renderInspector() {
       <p class="selected-range"><span>This item</span><strong>${rangeText(lo, hi)}</strong></p>
 
       <a class="guide-spotlight" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
-        <span class="guide-spotlight__kicker">Recommended guide</span>
-        <strong>${escapeHtml(spotlight.title)}</strong>
-        <span>${escapeHtml(spotlight.reason)}</span>
+        <span class="guide-spotlight__thumb"><img src="${spotlight.image}" alt=""></span>
+        <span class="guide-spotlight__body">
+          <span class="guide-spotlight__kicker">Recommended guide</span>
+          <strong>${escapeHtml(spotlight.title)}</strong>
+          <span>${escapeHtml(spotlight.reason)}</span>
+        </span>
       </a>
 
       <section class="inspector-section inspector-section--compact inspector-section--finish">
@@ -837,9 +856,12 @@ function setItemDimension(id, axis, value) {
   renderAll();
 }
 
-function setRoomDimension(axis, value) {
-  if (Number.isNaN(value)) return;
-  state[axis] = clamp(snap(value, 0.5), 4, 40);
+function commitRoomDimensions() {
+  const roomW = parseFloat($('#roomWidth').value);
+  const roomH = parseFloat($('#roomHeight').value);
+  if (Number.isNaN(roomW) || Number.isNaN(roomH)) return;
+  state.roomW = clamp(snap(roomW, 0.5), 4, 40);
+  state.roomH = clamp(snap(roomH, 0.5), 4, 40);
   state.placed.forEach(clampItem);
   renderAll();
 }
@@ -1051,19 +1073,26 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('change', e => {
-  if (e.target.id === 'roomWidth') {
-    setRoomDimension('roomW', parseFloat(e.target.value));
-  }
-  if (e.target.id === 'roomHeight') {
-    setRoomDimension('roomH', parseFloat(e.target.value));
+  if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+    commitRoomDimensions();
+    return;
   }
   if (e.target.dataset.action === 'dim-input') {
     setItemDimension(e.target.dataset.id, e.target.dataset.axis, parseFloat(e.target.value));
   }
 });
 
+document.addEventListener('input', e => {
+  if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+    previewRoomDimensions();
+  }
+});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.target.matches('input')) {
+    if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+      commitRoomDimensions();
+    }
     e.target.blur();
   }
 });
@@ -1086,17 +1115,19 @@ $('#locateButton').addEventListener('click', () => {
   renderAll();
 });
 
-function openQuoteModal() {
+function openDownloadModal() {
   const [lo, hi] = estimateRange();
   const modal = $('#briefModal');
   $('#briefSummary').textContent = state.placed.length
-    ? `${state.placed.length} scoped item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom near ${locationLabel()}. Estimated range: ${rangeText(lo, hi)}. Share this brief with local pros for tighter quotes.`
-    : 'Add fixtures to generate a contractor-ready scope.';
+    ? `${state.placed.length} scoped item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom near ${locationLabel()}. Estimated range: ${rangeText(lo, hi)}. Enter your info to download the PDF.`
+    : 'Add fixtures to generate a contractor-ready PDF.';
   modal.hidden = false;
+  $('#leadName').focus();
 }
 
-$('#quoteButton').addEventListener('click', openQuoteModal);
-$('#estimateQuoteButton').addEventListener('click', openQuoteModal);
+$('#quoteButton').addEventListener('click', openDownloadModal);
+$('#downloadPlanButton').addEventListener('click', openDownloadModal);
+$('#estimateDownloadButton').addEventListener('click', openDownloadModal);
 
 $('#modalClose').addEventListener('click', () => {
   $('#briefModal').hidden = true;
@@ -1106,11 +1137,12 @@ $('#briefModal').addEventListener('click', e => {
   if (e.target.id === 'briefModal') $('#briefModal').hidden = true;
 });
 
-$('#downloadBrief').addEventListener('click', () => {
+function planPdfLines(lead) {
   const [lo, hi] = estimateRange();
-  const lines = [
+  return [
     'BATHROOM REMODEL PROJECT BRIEF',
     'Prepared with Angi',
+    `Prepared for: ${lead.name} (${lead.email})`,
     '',
     `Room: ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft (${fmtNum(state.roomW * state.roomH)} sq ft)`,
     `Location: ${locationLabel()}`,
@@ -1123,13 +1155,134 @@ $('#downloadBrief').addEventListener('click', () => {
       const addonLabels = c.addons.filter(addon => item.addons[addon.key]).map(addon => addon.label);
       return `- ${item.name}: ${fmtNum(item.w)} x ${fmtNum(item.h)} ft, ${TIER_LABEL[item.tier]} tier, ${rangeText(itemLo, itemHi)}${addonLabels.length ? `, add-ons: ${addonLabels.join(', ')}` : ''}`;
     }),
+    '',
+    'RECOMMENDED GUIDES',
+    ...recommendationItems(3).map(article => `- ${article.title}`),
+    '',
+    'NEXT STEP',
+    'Share this scope with local pros so each estimate starts from the same project details.',
   ];
-  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+}
+
+function wrapPdfText(text, maxChars = 78) {
+  const words = String(text).replace(/\s+/g, ' ').trim().split(' ');
+  const lines = [];
+  let line = '';
+  words.forEach(word => {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > maxChars && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  });
+  if (line) lines.push(line);
+  return lines.length ? lines : [''];
+}
+
+function escapePdfText(text) {
+  return String(text)
+    .replace(/[^\x20-\x7E]/g, '-')
+    .replace(/\\/g, '\\\\')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)');
+}
+
+function createPlanPdfBlob(lead) {
+  const pageWidth = 612;
+  const pageHeight = 792;
+  const margin = 48;
+  const pages = [];
+  let y = pageHeight - margin;
+  let stream = '';
+
+  function newPage() {
+    if (stream) pages.push(stream);
+    stream = '';
+    y = pageHeight - margin;
+  }
+
+  function addLine(text = '', options = {}) {
+    const size = options.size || 11;
+    const font = options.bold ? 'F2' : 'F1';
+    const leading = options.leading || Math.round(size * 1.45);
+    const maxChars = options.maxChars || (size >= 16 ? 44 : 78);
+    const wrapped = text ? wrapPdfText(text, maxChars) : [''];
+    wrapped.forEach(line => {
+      if (y < margin + leading) newPage();
+      stream += `BT /${font} ${size} Tf ${margin} ${y} Td (${escapePdfText(line)}) Tj ET\n`;
+      y -= leading;
+    });
+  }
+
+  planPdfLines(lead).forEach((line, index) => {
+    if (index === 0) {
+      addLine(line, { size: 20, bold: true, leading: 28, maxChars: 42 });
+      return;
+    }
+    if (line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
+      addLine('');
+      addLine(line, { size: 13, bold: true, leading: 18, maxChars: 60 });
+      return;
+    }
+    addLine(line);
+  });
+  if (stream) pages.push(stream);
+
+  const objects = [];
+  const addObject = content => {
+    objects.push(content);
+    return objects.length;
+  };
+  addObject('<< /Type /Catalog /Pages 2 0 R >>');
+  const pagesObjectIndex = addObject('');
+  addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+  addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>');
+  const pageRefs = [];
+  pages.forEach(content => {
+    const contentObject = addObject(`<< /Length ${content.length} >>\nstream\n${content}endstream`);
+    const pageObject = addObject(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentObject} 0 R >>`);
+    pageRefs.push(`${pageObject} 0 R`);
+  });
+  objects[pagesObjectIndex - 1] = `<< /Type /Pages /Kids [${pageRefs.join(' ')}] /Count ${pageRefs.length} >>`;
+
+  let pdf = '%PDF-1.4\n';
+  const offsets = [0];
+  objects.forEach((object, index) => {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  });
+  const xrefOffset = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach(offset => {
+    pdf += `${String(offset).padStart(10, '0')} 00000 n \n`;
+  });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+  return new Blob([pdf], { type: 'application/pdf' });
+}
+
+function downloadPlanPdf(lead) {
+  const blob = createPlanPdfBlob(lead);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'bathroom-remodel-project-brief.txt';
+  a.download = 'bathroom-remodel-project-brief.pdf';
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  window.setTimeout(() => {
+    URL.revokeObjectURL(a.href);
+    a.remove();
+  }, 1000);
+}
+
+$('#downloadLeadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!e.currentTarget.reportValidity()) return;
+  downloadPlanPdf({
+    name: $('#leadName').value.trim(),
+    email: $('#leadEmail').value.trim(),
+  });
+  $('#briefModal').hidden = true;
 });
 
 renderAll();
