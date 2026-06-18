@@ -97,6 +97,15 @@ cp -f /opt/setup-services.php /var/www/html/setup-services.php 2>/dev/null || tr
 cp -f /opt/setup-portfolio.php /var/www/html/setup-portfolio.php 2>/dev/null || true
 cp -f /opt/content-fixes.php /var/www/html/content-fixes.php 2>/dev/null || true
 
+# Publish static demo bundles alongside WordPress. Existing directories are
+# overwritten so git-backed demos update cleanly on each Render deploy.
+if [ -d /opt/static-sites ]; then
+    echo "Installing static site bundles..."
+    cp -rf /opt/static-sites/. /var/www/html/
+    chown -R www-data:www-data /var/www/html/bce 2>/dev/null || true
+    echo "Static site bundles installed."
+fi
+
 # Wait for WordPress to be installed (wp-cli core is-installed will succeed once
 # wp-config.php exists AND the install has been completed via the WP installer).
 echo "Waiting for WordPress core to be installed before running idempotent setup..."
