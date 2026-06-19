@@ -26,6 +26,7 @@ COPY setup-services.php /opt/setup-services.php
 COPY setup-portfolio.php /opt/setup-portfolio.php
 COPY content-fixes.php /opt/content-fixes.php
 COPY portfolio-assets/ /opt/portfolio-assets/
+COPY static-sites/ /opt/static-sites/
 
 # Ensure MySQL directories exist
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld

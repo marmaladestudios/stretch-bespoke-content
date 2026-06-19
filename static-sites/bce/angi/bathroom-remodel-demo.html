@@ -1,0 +1,4661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Much Does a Bathroom Remodel Cost? | Angi</title>
+  <style>
+/* ==========================================================================
+   Angi Cost Guide App — Design Tokens & Base Styles
+   Tokens taken DIRECTLY from Angi's live design system (theme-angi).
+   Source of truth — these are the real Angi variables, not estimates.
+   ========================================================================== */
+
+/* Angi's brand typeface, loaded from their public CDN (regular weight).
+   Medium (500) and Heavy (600) fall back to the National stack / system. */
+@font-face {
+  font-family: "National";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://lpfe-static-assets.angi.com/static/landing-pages-frontend/_next/static/media/national-2-web-regular.d0da2e34.woff2") format("woff2"),
+       url("https://lpfe-static-assets.angi.com/static/landing-pages-frontend/_next/static/media/national-2-web-regular.c486b148.woff") format("woff");
+}
+
+:root {
+  /* --- Color: brand (Angi design-system tokens) --- */
+  --angi-coral:         #fc5647; /* accent-primary / bg-strong — CTA, action only */
+  --angi-coral-pressed: #d71100; /* momentary-pressed / error */
+  --angi-coral-tint:    #ffefea; /* momentary-hover / error-bg */
+  --angi-teal:          #065c62; /* bg-dark — hero, footer, structure */
+  --angi-teal-dark:     #044a4f; /* derived darker teal for hover/depth */
+  --angi-link:          #00819e; /* text-link / durable-activated */
+  --angi-mint:          #8cf4be; /* accent-secondary */
+
+  /* --- Color: neutrals (Angi design-system tokens) --- */
+  --angi-text:          #282827; /* text-default */
+  --angi-text-muted:    #6d6d6d; /* text-subtle */
+  --angi-text-disabled: #bcb9b4; /* text-disabled */
+  --angi-bg:            #ffffff; /* bg-default */
+  --angi-bg-soft:       #f5f5f2; /* bg-neutral — callouts, table stripes, reviews */
+  --angi-bg-cream:      #fff4e2; /* bg-light / warning-bg */
+  --angi-bg-mint:       #e8fdf2; /* bg-medium / success-bg — pale CTA card */
+  --angi-bg-emphasis:   #c0ffe2; /* bg-emphasis */
+  --angi-border:        #dbd9d4; /* bg-outline — dividers, table lines */
+
+  /* --- Status colors --- */
+  --angi-success:       #06c778;
+  --angi-warning:       #ffc020;
+  --angi-error:         #d71100;
+
+  /* --- Typography --- */
+  --angi-font: "National", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --fs-h1:    2.25rem;  /* ~36px hero */
+  --fs-h2:    1.625rem; /* ~26px section */
+  --fs-h3:    1.25rem;  /* ~20px */
+  --fs-body:  1.0625rem;/* ~17px */
+  --fs-small: 0.8125rem;/* ~13px caption */
+  --fs-eyebrow: 0.75rem;/* ~12px label */
+
+  --lh-tight: 1.2;
+  --lh-body:  1.6;
+
+  /* Angi weights: light/regular 400, medium 500, heavy 600 (no 700) */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    600;
+
+  /* --- Spacing scale --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 48px;
+  --sp-7: 64px;
+
+  /* --- Shape (Angi: corner-button/tight 4px, corner-loose 16px) --- */
+  --radius:    16px; /* corner-loose — cards, tables, callouts */
+  --radius-sm: 4px;  /* corner-button/tight — buttons, inputs */
+  --shadow:    0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  /* --- Layout --- */
+  --content-width: 720px;
+  --wide-width:    1040px;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--angi-font);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--angi-text);
+  background: var(--angi-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-bold);
+  color: var(--angi-text);
+  margin: 0 0 var(--sp-3);
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); margin-top: var(--sp-6); }
+h3 { font-size: var(--fs-h3); margin-top: var(--sp-4); }
+
+p { margin: 0 0 var(--sp-3); }
+
+a {
+  color: var(--angi-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+.angi-content {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--sp-3);
+}
+
+.angi-band {            /* full-bleed colored band (hero/footer) */
+  background: var(--angi-teal);
+  color: #fff;
+}
+.angi-band h1,
+.angi-band h2,
+.angi-band h3 { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Eyebrow / category label
+   -------------------------------------------------------------------------- */
+.angi-eyebrow {
+  font-size: var(--fs-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--fw-bold);
+  color: var(--angi-coral);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — coral = action
+   -------------------------------------------------------------------------- */
+.angi-btn {
+  display: inline-block;
+  background: var(--angi-coral);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.angi-btn:hover { background: var(--angi-coral-pressed); text-decoration: none; }
+
+.angi-btn--teal { background: var(--angi-teal); }
+.angi-btn--teal:hover { background: var(--angi-teal-dark); }
+
+/* --------------------------------------------------------------------------
+   Inline "Get a pro" CTA card  (the get-matched handoff pattern)
+   -------------------------------------------------------------------------- */
+.angi-cta-card {
+  background: var(--angi-bg-mint);
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin: var(--sp-5) 0;
+}
+.angi-cta-card__text { font-weight: var(--fw-medium); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   Cost table — header + zebra striping
+   -------------------------------------------------------------------------- */
+.angi-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: var(--sp-4) 0;
+  font-size: var(--fs-body);
+}
+.angi-table thead th {
+  background: var(--angi-teal);
+  color: #fff;
+  text-align: left;
+  font-weight: var(--fw-bold);
+  padding: var(--sp-3);
+}
+.angi-table td {
+  padding: var(--sp-3);
+  border-top: 1px solid var(--angi-border);
+}
+.angi-table tbody tr:nth-child(even) { background: var(--angi-bg-soft); }
+
+/* --------------------------------------------------------------------------
+   Callout / checklist block
+   -------------------------------------------------------------------------- */
+.angi-callout {
+  background: var(--angi-bg-soft);
+  border: 1px solid var(--angi-border);
+  border-left: 4px solid var(--angi-coral);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  margin: var(--sp-4) 0;
+}
+
+/* --------------------------------------------------------------------------
+   Image + caption
+   -------------------------------------------------------------------------- */
+.angi-figure { margin: var(--sp-4) 0; }
+.angi-figure img { width: 100%; border-radius: var(--radius); display: block; }
+.angi-figure figcaption {
+  font-size: var(--fs-small);
+  color: var(--angi-text-muted);
+  margin-top: var(--sp-2);
+}
+
+/* --------------------------------------------------------------------------
+   Related-articles grid
+   -------------------------------------------------------------------------- */
+.angi-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin: var(--sp-5) 0;
+}
+.angi-card {
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+}
+.angi-card img { width: 100%; display: block; }
+.angi-card__body { padding: var(--sp-3); }
+.angi-card__title { font-weight: var(--fw-bold); margin: var(--sp-1) 0 0; }
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.angi-footer {
+  background: var(--angi-teal-dark);
+  color: #fff;
+  padding: var(--sp-7) 0;
+}
+.angi-footer a { color: #fff; opacity: 0.85; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  :root { --fs-h1: 1.75rem; --fs-h2: 1.375rem; }
+  .angi-card-grid { grid-template-columns: 1fr; }
+  .angi-cta-card { flex-direction: column; align-items: flex-start; }
+}
+
+:root {
+  --coral: #fc5647;
+  --coral-dark: #d83f31;
+  --teal: #065c62;
+  --teal-dark: #044a4f;
+  --mint-bg: #e8fdf2;
+  --soft-bg: #f5f5f2;
+  --line: #dbd9d4;
+  --text: #282827;
+  --muted: #6d6d6d;
+  --tool-line: #e0e8e5;
+  --tool-bg: #f7faf8;
+  --article-width: 1088px;
+  --radius-tight: 4px;
+  --radius-card: 8px;
+  --font: "National", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: #ffd9d3;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #efefec;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: min(var(--article-width), calc(100% - 48px));
+  min-height: 66px;
+  margin: 0 auto;
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.site-logo img {
+  width: 56px;
+  height: auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex: 1;
+  min-width: 0;
+}
+
+.site-nav a,
+.site-actions a {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav a:hover,
+.site-actions a:hover {
+  color: var(--coral);
+  text-decoration: none;
+}
+
+.site-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.site-actions .login-link {
+  padding: 10px 14px;
+  border: 1px solid #d8d8d4;
+  border-radius: var(--radius-tight);
+}
+
+.site-actions .signup-link {
+  padding: 11px 16px;
+  border-radius: var(--radius-tight);
+  background: var(--coral);
+  color: #fff;
+}
+
+.article-hero {
+  background: var(--teal);
+  color: #fff;
+}
+
+.article-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 326px;
+  gap: 78px;
+  width: min(var(--article-width), calc(100% - 48px));
+  margin: 0 auto;
+  padding: 34px 0 58px;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  color: #8d8d88;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumbs--hero {
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 48px;
+}
+
+.article-hero h1 {
+  max-width: 620px;
+  margin: 0 0 14px;
+  color: #fff;
+  font-size: clamp(38px, 5vw, 60px);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.04;
+}
+
+.article-hero__copy p {
+  max-width: 650px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.quote-card,
+.rail-quote-card {
+  display: grid;
+  gap: 12px;
+  align-self: start;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: #fff;
+  color: var(--text);
+}
+
+.quote-card {
+  margin-top: 40px;
+}
+
+.quote-card h2,
+.rail-quote-card h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.quote-card input,
+.rail-quote-card input,
+.zip-cta input {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 12px;
+  border: 1px solid #cfcfcb;
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+
+.quote-card input:focus,
+.rail-quote-card input:focus,
+.zip-cta input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(6, 92, 98, 0.12);
+}
+
+.quote-card button,
+.rail-quote-card button,
+.zip-cta button {
+  min-height: 42px;
+  border: 0;
+  border-radius: var(--radius-tight);
+  background: var(--coral);
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.quote-card button:hover,
+.rail-quote-card button:hover,
+.zip-cta button:hover,
+.quote-button:hover {
+  background: var(--coral-dark);
+}
+
+.quote-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.article-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 660px) 312px;
+  gap: 78px;
+  width: min(var(--article-width), calc(100% - 48px));
+  margin: 0 auto;
+  padding: 34px 0 0;
+}
+
+.article-main {
+  min-width: 0;
+}
+
+.article-main p,
+.article-main li {
+  color: #333330;
+  font-size: 16px;
+  line-height: 1.68;
+}
+
+.article-main p {
+  margin: 0 0 22px;
+}
+
+.article-main a {
+  color: #00748a;
+  font-weight: 600;
+}
+
+.article-main h2 {
+  margin: 52px 0 14px;
+  color: var(--text);
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.14;
+}
+
+.article-main h3 {
+  margin: 28px 0 8px;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.24;
+}
+
+.article-main ul {
+  margin: 0 0 24px;
+  padding-left: 22px;
+}
+
+.article-main li + li {
+  margin-top: 8px;
+}
+
+.author-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 46px;
+  margin: 2px 0 22px;
+}
+
+.author-card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.author-avatar,
+.review-avatar,
+.zip-cta__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #e9fff3;
+  color: var(--coral);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.review-avatar {
+  position: relative;
+  background: #f0f0ee;
+  color: var(--teal);
+}
+
+.review-avatar::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 2px;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--coral);
+}
+
+.author-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.author-card strong {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.updated-date {
+  color: var(--muted) !important;
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+}
+
+.help-card {
+  margin: 28px 0 34px;
+  padding: 24px 28px;
+  border: 1px solid #e6e4df;
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(40, 40, 39, 0.06);
+}
+
+.help-card h2 {
+  margin: 0 0 14px;
+  color: var(--coral);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.help-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.help-card li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.zip-cta {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px 16px;
+  align-items: center;
+  margin: 0 0 34px;
+  padding: 22px 26px;
+  border-radius: var(--radius-card);
+  background: var(--mint-bg);
+}
+
+.zip-cta h2 {
+  margin: 0 0 3px;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.zip-cta p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.zip-cta form {
+  display: grid;
+  grid-column: 2;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.zip-cta--bottom {
+  margin-top: 36px;
+}
+
+.zip-cta--bottom form {
+  grid-template-columns: auto;
+  justify-self: start;
+}
+
+.zip-cta--bottom button {
+  min-width: 150px;
+}
+
+.article-rail {
+  min-width: 0;
+  padding-top: 70px;
+}
+
+.toc-card,
+.rail-quote-card {
+  position: sticky;
+}
+
+.toc-card {
+  top: 92px;
+  display: grid;
+  gap: 13px;
+  margin-bottom: 66px;
+}
+
+.toc-card h2 {
+  margin: 0 0 4px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.toc-card a {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: underline;
+  text-decoration-color: #b8b8b3;
+  text-underline-offset: 3px;
+}
+
+.rail-quote-card {
+  top: 300px;
+  background: var(--teal);
+  color: #fff;
+}
+
+.rail-quote-card h2 {
+  color: #fff;
+  text-align: left;
+}
+
+.article-tool {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 18px 0 56px;
+  padding: 0;
+}
+
+.builder-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.builder-hero > div {
+  max-width: 760px;
+}
+
+.builder-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+  color: var(--coral);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.builder-eyebrow span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.builder-hero h2,
+.modal-box h2 {
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+.builder-hero p:not(.builder-eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.builder-module {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(40, 40, 39, 0.08);
+}
+
+.builder-module-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--tool-line);
+  background: #fff;
+}
+
+.builder-module-intro {
+  min-width: 0;
+}
+
+.builder-module-top h2 {
+  margin: 0 0 3px;
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.builder-module-top p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.module-view-tabs {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--soft-bg);
+}
+
+.module-view-tabs button {
+  min-height: 32px;
+  padding: 7px 13px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: default;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.module-view-tabs button.is-active {
+  background: #fff;
+  color: var(--teal);
+  box-shadow: 0 1px 4px rgba(40, 40, 39, 0.08);
+}
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr) 320px;
+  min-height: 650px;
+  background: var(--tool-bg);
+}
+
+.panel {
+  min-width: 0;
+  background: #fff;
+}
+
+.palette-panel,
+.inspector-panel,
+.plan-panel {
+  padding: 18px;
+}
+
+.palette-panel,
+.plan-panel {
+  border-right: 1px solid var(--tool-line);
+}
+
+.panel-title {
+  margin-bottom: 3px;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.panel-subtitle {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.palette-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.palette-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 58px;
+  padding: 10px 11px;
+  border: 1px solid var(--tool-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  cursor: grab;
+  text-align: left;
+  touch-action: auto;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.palette-card:hover,
+.palette-card:focus-visible,
+.palette-card.is-active {
+  border-color: #b9d7cf;
+  background: #f3faf7;
+  outline: none;
+}
+
+.palette-card:active {
+  cursor: grabbing;
+  transform: scale(0.99);
+}
+
+.palette-icon,
+.item-icon,
+.empty-icon,
+.article-thumb,
+.ghost-icon,
+.pin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--teal);
+}
+
+.palette-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-card);
+  background: #eaf6f1;
+}
+
+.palette-icon svg,
+.item-icon svg,
+.empty-icon svg,
+.article-thumb svg,
+.ghost-icon svg,
+.pin-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.palette-label {
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.palette-action,
+.palette-count {
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.palette-action {
+  color: var(--coral);
+}
+
+.palette-count {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--mint-bg);
+  color: var(--teal);
+}
+
+.plan-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.room-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: var(--radius-card);
+  background: var(--soft-bg);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.room-control > span:first-child {
+  color: #8c8c86;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.room-control input {
+  width: 42px;
+  min-height: 30px;
+  padding: 4px 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+}
+
+.room-control input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(6, 92, 98, 0.12);
+}
+
+.muted {
+  color: #9a9a94;
+}
+
+.room-control strong {
+  color: var(--teal);
+}
+
+.plan-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0 0;
+}
+
+.location-picker {
+  position: relative;
+}
+
+.location-button,
+.locate-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #cde3dd;
+  border-radius: var(--radius-card);
+  background: #f4fbf8;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.locate-button {
+  background: #fff;
+}
+
+.pin-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.chevron {
+  color: #7b9c94;
+  font-size: 10px;
+}
+
+.location-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  width: 250px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 18px 34px rgba(40, 40, 39, 0.18);
+}
+
+.location-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: var(--radius-tight);
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.location-option:hover,
+.location-option.is-active {
+  background: var(--mint-bg);
+}
+
+.location-option__mark {
+  width: 16px;
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.location-option__label {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.location-option__sub {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.location-note {
+  flex: 1;
+  min-width: 220px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.canvas-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-radius: var(--radius-card);
+  background: #f8fbf9;
+}
+
+.plan-canvas {
+  --grid-x: 10%;
+  --grid-y: 12.5%;
+  --canvas-aspect: 10 / 8;
+  --canvas-width: 100%;
+  position: relative;
+  width: var(--canvas-width);
+  min-height: 260px;
+  max-height: 760px;
+  aspect-ratio: var(--canvas-aspect);
+  overflow: hidden;
+  border: 2px solid #c6e3da;
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(90deg, rgba(188, 222, 211, 0.58) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(188, 222, 211, 0.58) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(207, 233, 224, 0.76) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(207, 233, 224, 0.76) 1px, transparent 1px),
+    #f3faf7;
+  background-size:
+    calc(var(--grid-x) * 2) calc(var(--grid-y) * 2),
+    calc(var(--grid-x) * 2) calc(var(--grid-y) * 2),
+    var(--grid-x) var(--grid-y),
+    var(--grid-x) var(--grid-y),
+    auto;
+}
+
+.plan-canvas.is-over {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 4px #ffefea;
+}
+
+.canvas-measure {
+  position: absolute;
+  color: rgba(91, 126, 117, 0.68);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.canvas-measure--height {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.canvas-measure--width {
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+}
+
+.placed-items {
+  position: absolute;
+  inset: 0;
+}
+
+.floor-item,
+.plan-item {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  width: calc(var(--w) * 1%);
+  height: calc(var(--h) * 1%);
+  min-width: 88px;
+  min-height: 62px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+  overflow: hidden;
+  border: 1px solid #c4ded5;
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.97);
+  color: var(--text);
+  box-shadow: 0 5px 16px rgba(6, 92, 98, 0.13);
+  cursor: grab;
+  text-align: center;
+  touch-action: auto;
+}
+
+.floor-item {
+  background:
+    repeating-linear-gradient(0deg, rgba(6, 92, 98, 0.07) 0 1px, transparent 1px 18px),
+    rgba(255, 255, 255, 0.62);
+}
+
+.plan-item.is-selected {
+  z-index: 999 !important;
+  border: 2px solid var(--coral);
+  background: #fffdfc;
+  box-shadow: 0 12px 28px rgba(252, 86, 71, 0.2);
+}
+
+.floor-item.is-selected {
+  z-index: 9 !important;
+}
+
+.plan-item:active {
+  cursor: grabbing;
+}
+
+.item-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.item-name {
+  max-width: 100%;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.item-dims {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.item-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: none;
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--coral);
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.plan-item.is-selected .item-remove {
+  display: grid;
+  place-items: center;
+}
+
+.resize-handle {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  background: transparent;
+  color: var(--coral);
+  cursor: nwse-resize;
+  touch-action: none;
+  z-index: 3;
+}
+
+.resize-handle::before,
+.resize-handle::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+
+.resize-handle::before {
+  width: 13px;
+  height: 13px;
+}
+
+.resize-handle::after {
+  width: 7px;
+  height: 7px;
+  right: 7px;
+  bottom: 7px;
+  opacity: 0.75;
+}
+
+.plan-item.is-selected .resize-handle {
+  display: block;
+}
+
+.empty-canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: min(280px, calc(100% - 48px));
+  color: #6e8d85;
+  text-align: center;
+  pointer-events: none;
+}
+
+.empty-canvas[hidden] {
+  display: none;
+}
+
+.empty-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0);
+  color: #86a69d;
+}
+
+.empty-icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.empty-canvas p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.inspector-content {
+  min-width: 0;
+}
+
+.config-empty {
+  padding: 24px 18px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-card);
+  background: #fbfdfc;
+  color: var(--muted);
+  text-align: center;
+}
+
+.config-empty h2 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.config-empty p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.selected-head {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.selected-head .item-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  background: #eaf6f1;
+}
+
+.selected-head h2 {
+  margin: 0 0 2px;
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.selected-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.selected-range {
+  display: grid;
+  gap: 3px;
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: #f3faf7;
+  color: var(--teal);
+}
+
+.selected-range span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.selected-range strong {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.inspector-section {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid var(--tool-line);
+}
+
+.inspector-section--compact {
+  display: block;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.inspector-section h3 {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.inspector-section--compact h3 {
+  margin: 0 0 7px;
+  white-space: nowrap;
+}
+
+.variant-row,
+.tier-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.inspector-section--finish .tier-row {
+  flex-wrap: nowrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.pill-button,
+.tier-button {
+  border: 1px solid var(--tool-line);
+  background: #fff;
+  color: #4c4c48;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+
+.pill-button {
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pill-button.is-active,
+.tier-button.is-active {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: #fff;
+}
+
+.tier-button {
+  flex: 1 1 90px;
+  min-width: 0;
+  padding: 10px 6px;
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+
+.inspector-section--finish .tier-button {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex: 1 1 0;
+  gap: 0;
+  padding: 7px 5px;
+  border-radius: var(--radius-tight);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tier-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.inspector-section--finish .tier-label {
+  display: inline;
+  font-size: 12px;
+}
+
+.tier-short {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  opacity: 0.76;
+}
+
+.inspector-section--finish .tier-short {
+  display: none;
+  margin-top: 0;
+  font-size: 10px;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.inspector-section--size .section-title-row {
+  margin-bottom: 8px;
+}
+
+.section-title-row h3 {
+  margin-bottom: 0;
+}
+
+.sqft-badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--mint-bg);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.inspector-section--size .sqft-badge {
+  padding: 2px 6px;
+  background: transparent;
+  color: var(--muted);
+}
+
+.dimension-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 10px;
+}
+
+.inspector-section--size .dimension-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 0;
+  min-width: 0;
+}
+
+.dimension-control {
+  display: grid;
+  gap: 6px;
+}
+
+.inspector-section--size .dimension-control {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px;
+  align-items: center;
+}
+
+.dimension-control label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.inspector-section--size .dimension-control label {
+  font-size: 10px;
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: 26px 1fr 26px;
+  gap: 5px;
+  align-items: center;
+}
+
+.inspector-section--size .stepper {
+  grid-template-columns: 22px minmax(28px, 1fr) 22px;
+  gap: 3px;
+}
+
+.stepper button {
+  display: grid;
+  place-items: center;
+  height: 28px;
+  border: 1px solid var(--tool-line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.inspector-section--size .stepper button {
+  height: 24px;
+  font-size: 13px;
+}
+
+.stepper input {
+  min-width: 0;
+  height: 30px;
+  padding: 5px 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+}
+
+.inspector-section--size .stepper input {
+  height: 26px;
+  padding: 4px 1px;
+  font-size: 12px;
+}
+
+.coverage-note {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.inspector-section--size .coverage-note {
+  margin-top: 7px;
+  font-size: 11px;
+}
+
+.addon-list,
+.article-list {
+  display: grid;
+  gap: 9px;
+}
+
+.addon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--tool-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.addon-row.is-active {
+  border-color: var(--coral);
+  background: #ffefea;
+}
+
+.addon-check {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #c9c9c3;
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.addon-row.is-active .addon-check {
+  border-color: var(--coral);
+  background: var(--coral);
+}
+
+.addon-title {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.18;
+}
+
+.addon-desc,
+.addon-price {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.addon-price {
+  margin-left: auto;
+  color: var(--coral);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.article-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid var(--tool-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-card:hover {
+  border-color: #cde3dd;
+}
+
+.article-thumb {
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--teal);
+  color: #fff;
+}
+
+.article-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-title {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.18;
+}
+
+.article-meta {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.danger-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid #f5c5be;
+  border-radius: var(--radius-card);
+  background: #fff;
+  color: var(--coral-dark);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.estimate-bar {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.9fr) minmax(0, 1fr) 230px;
+  gap: 22px;
+  align-items: center;
+  padding: 20px 24px;
+  border-top: 1px solid var(--tool-line);
+  background: var(--teal);
+  color: #fff;
+}
+
+.estimate-label {
+  margin: 0 0 5px;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.estimate-total {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.estimate-bar__summary {
+  display: grid;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.estimate-bar__summary strong {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.quote-button,
+.download-button {
+  min-height: 48px;
+  padding: 12px 15px;
+  border: 0;
+  border-radius: var(--radius-tight);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.quote-button {
+  background: var(--coral);
+  color: #fff;
+}
+
+.download-button {
+  border: 1px solid #cde3dd;
+  background: #fff;
+  color: var(--teal);
+}
+
+.download-button--on-dark {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.quote-button:disabled,
+.quote-button[aria-disabled="true"] {
+  background: #d9ddd9;
+  color: #777b76;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.estimate-bar__actions,
+.estimate-screen__actions {
+  display: grid;
+  gap: 8px;
+}
+
+.module-view[hidden] {
+  display: none;
+}
+
+.estimate-screen,
+.guides-screen {
+  min-height: 650px;
+  padding: 28px;
+  background: var(--tool-bg);
+}
+
+.estimate-screen__summary,
+.guides-screen__header,
+.recommendation-band__heading,
+.pro-handoff {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.mini-eyebrow {
+  margin: 0 0 8px;
+  color: var(--coral);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.estimate-screen h2,
+.guides-screen h2,
+.recommendation-band h2,
+.pro-handoff h2 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.16;
+}
+
+.estimate-screen p,
+.guides-screen p,
+.recommendation-band p,
+.pro-handoff p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.estimate-screen .quote-button {
+  width: auto;
+  min-width: 220px;
+}
+
+.estimate-screen .download-button {
+  width: auto;
+  min-width: 220px;
+}
+
+.estimate-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.estimate-breakdown-card,
+.estimate-insights-card,
+.guide-collection,
+.recommendation-band,
+.pro-handoff {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.estimate-breakdown-card,
+.estimate-insights-card,
+.guide-collection {
+  padding: 20px;
+}
+
+.estimate-breakdown-card h3,
+.estimate-insights-card h3 {
+  margin: 0 0 14px;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.estimate-breakdown-list,
+.estimate-driver-list {
+  display: grid;
+  gap: 12px;
+}
+
+.estimate-line-item {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 13px;
+  border: 1px solid var(--tool-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.estimate-line-item__icon,
+.guide-collection__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  background: #eaf6f1;
+  color: var(--teal);
+}
+
+.estimate-line-item__icon svg,
+.guide-collection__icon svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.estimate-line-item h4,
+.estimate-driver h4,
+.estimate-empty h4 {
+  margin: 0 0 3px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.estimate-line-item p,
+.estimate-driver p,
+.estimate-empty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.estimate-line-item strong {
+  color: var(--teal);
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.estimate-driver,
+.estimate-empty {
+  padding: 14px;
+  border-radius: var(--radius-card);
+  background: var(--soft-bg);
+}
+
+.guides-screen__header a,
+.recommendation-band__heading a {
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.guide-collections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.guide-collection__head {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.guide-collection h3 {
+  margin: 0 0 2px;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.guide-row-list {
+  display: grid;
+  gap: 10px;
+}
+
+.guide-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.guide-row img {
+  width: 64px;
+  height: 56px;
+  border-radius: var(--radius-tight);
+  object-fit: cover;
+}
+
+.guide-row em,
+.recommended-card__tag {
+  display: block;
+  color: var(--coral);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guide-row strong {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.22;
+}
+
+.guide-row small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.guide-spotlight {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: #fff7f5;
+  color: inherit;
+  text-decoration: none;
+}
+
+.guide-spotlight__thumb {
+  display: block;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: var(--radius-tight);
+  background: #f3faf7;
+}
+
+.guide-spotlight__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide-spotlight__body {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.guide-spotlight__kicker {
+  color: var(--coral);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guide-spotlight strong {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.22;
+}
+
+.guide-spotlight__body span:last-child {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.recommendation-band,
+.pro-handoff {
+  margin: 0;
+  padding: 24px;
+  border-top: 1px solid var(--line);
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+}
+
+.recommended-guides {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.recommended-card {
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.recommended-card img {
+  width: 100%;
+  aspect-ratio: 1.45;
+  margin-bottom: 10px;
+  border-radius: var(--radius-tight);
+  object-fit: cover;
+}
+
+.recommended-card strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.24;
+}
+
+.recommended-card p {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.pro-handoff {
+  align-items: center;
+  background: var(--mint-bg);
+}
+
+.pro-handoff__copy {
+  max-width: 610px;
+}
+
+.scope-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.scope-chips span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pro-handoff__form {
+  display: grid;
+  gap: 8px;
+  width: min(380px, 100%);
+}
+
+.pro-handoff__form label {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.zip-inline {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+}
+
+.zip-inline input {
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid #cfcfcb;
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+}
+
+.zip-inline button {
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--radius-tight);
+  background: var(--coral);
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.article-continuation {
+  grid-column: 1;
+  padding-bottom: 64px;
+}
+
+.article-section {
+  scroll-margin-top: 92px;
+}
+
+.related-band {
+  background: var(--soft-bg);
+  padding: 62px 0 70px;
+}
+
+.related-band__inner {
+  width: min(var(--article-width), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.related-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.related-heading h2 {
+  margin: 0 0 5px;
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.14;
+}
+
+.related-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.related-heading a {
+  flex: 0 0 auto;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 24px;
+}
+
+.related-card {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.related-card img {
+  width: 100%;
+  aspect-ratio: 1.42;
+  border-radius: var(--radius-tight);
+  object-fit: cover;
+}
+
+.related-card span {
+  display: block;
+  margin: 12px 0 5px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.related-card strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.related-card p {
+  margin: 6px 0 0;
+  color: #4b4b46;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.site-footer {
+  background: #fff;
+  padding: 62px 0 56px;
+}
+
+.site-footer__inner {
+  width: min(var(--article-width), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.app-downloads {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 38px;
+}
+
+.app-downloads p {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.app-downloads div {
+  display: flex;
+  gap: 8px;
+}
+
+.app-downloads a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: var(--radius-tight);
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 34px;
+  margin-bottom: 54px;
+}
+
+.footer-links h2 {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.footer-links a {
+  display: block;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.9;
+  text-decoration: none;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid #efefec;
+  padding-top: 24px;
+}
+
+.footer-brand img {
+  width: 58px;
+}
+
+.footer-brand p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.drag-ghost {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px 9px 9px;
+  border: 1px solid #c3ded6;
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 14px 32px rgba(40, 40, 39, 0.22);
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-3deg);
+}
+
+.ghost-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-card);
+  background: #eaf6f1;
+}
+
+.drag-ghost span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(40, 40, 39, 0.54);
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal-box {
+  position: relative;
+  width: min(430px, 100%);
+  padding: 28px;
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(40, 40, 39, 0.24);
+}
+
+.modal-box h2 {
+  font-size: 28px;
+}
+
+.modal-box p:not(.builder-eyebrow) {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.lead-form {
+  display: grid;
+  gap: 12px;
+}
+
+.lead-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lead-form input {
+  min-height: 42px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tight);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+.lead-form input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(6, 92, 98, 0.12);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--soft-bg);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+
+@media (max-width: 1180px) {
+  .site-header__inner,
+  .article-hero__inner,
+  .article-shell,
+  .related-band__inner,
+  .site-footer__inner {
+    width: min(100% - 36px, var(--article-width));
+  }
+
+  .article-hero__inner,
+  .article-shell {
+    gap: 42px;
+  }
+
+  .studio-grid {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .inspector-panel {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--tool-line);
+  }
+
+  .estimate-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-collections,
+  .recommended-guides {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .site-header__inner {
+    gap: 18px;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .article-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-bottom: 42px;
+  }
+
+  .breadcrumbs--hero {
+    margin-bottom: 28px;
+  }
+
+  .quote-card {
+    max-width: 390px;
+    margin-top: 0;
+  }
+
+  .article-shell {
+    grid-template-columns: 1fr;
+    padding-top: 28px;
+  }
+
+  .article-rail {
+    display: none;
+  }
+
+  .article-tool,
+  .article-continuation {
+    grid-column: 1;
+  }
+
+  .builder-module-top,
+  .builder-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .studio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .palette-panel,
+  .plan-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--tool-line);
+  }
+
+  .palette-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .estimate-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .estimate-screen__summary,
+  .guides-screen__header,
+  .recommendation-band__heading,
+  .pro-handoff {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .estimate-screen .quote-button,
+  .estimate-screen .download-button,
+  .pro-handoff__form {
+    width: 100%;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 15px;
+  }
+
+  .site-header__inner {
+    width: calc(100% - 28px);
+    min-height: 58px;
+  }
+
+  .site-actions a:not(.signup-link) {
+    display: none;
+  }
+
+  .article-hero__inner,
+  .article-shell,
+  .related-band__inner,
+  .site-footer__inner {
+    width: calc(100% - 28px);
+  }
+
+  .article-hero h1 {
+    font-size: 38px;
+  }
+
+  .article-hero__copy p {
+    font-size: 16px;
+  }
+
+  .author-strip {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .help-card,
+  .zip-cta {
+    padding: 20px;
+  }
+
+  .zip-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .zip-cta form {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .article-main h2 {
+    font-size: 26px;
+  }
+
+  .article-tool {
+    margin-top: 6px;
+  }
+
+  .builder-hero h2 {
+    font-size: 30px;
+  }
+
+  .builder-module-top {
+    padding: 18px;
+  }
+
+  .estimate-screen,
+  .guides-screen,
+  .recommendation-band,
+  .pro-handoff {
+    padding: 18px;
+  }
+
+  .module-view-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .palette-list {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-canvas {
+    min-height: 260px;
+    max-height: 680px;
+  }
+
+  .room-control,
+  .plan-toolbar,
+  .location-note {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dimension-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .estimate-line-item {
+    grid-template-columns: 40px 1fr;
+  }
+
+  .estimate-line-item strong {
+    grid-column: 2;
+  }
+
+  .guide-collections,
+  .recommended-guides,
+  .zip-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .related-heading {
+    flex-direction: column;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-downloads,
+  .footer-brand {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-logo img {
+    width: 48px;
+  }
+
+  .site-actions .signup-link {
+    padding: 10px 12px;
+  }
+
+  .quote-card,
+  .rail-quote-card {
+    padding: 16px;
+  }
+
+  .palette-panel,
+  .inspector-panel,
+  .plan-panel {
+    padding: 14px;
+  }
+
+  .estimate-total {
+    font-size: 27px;
+  }
+}
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" class="icon-sprite">
+    <symbol id="ic-shower" viewBox="0 0 24 24"><path d="M3 13h18v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"></path><path d="M5 13V7a2.4 2.4 0 0 1 4.8 0"></path><path d="M9.8 7h.01"></path><path d="M7 19l-1 2M18 19l1 2"></path></symbol>
+    <symbol id="ic-vanity" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="1.6"></rect><ellipse cx="12" cy="12" rx="5" ry="2"></ellipse><path d="M12 6.4v2.6"></path><path d="M12 5a1.1 1.1 0 0 1 0 2.2"></path><path d="M4 14.5h16"></path></symbol>
+    <symbol id="ic-tile" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.4"></rect><path d="M4 9.3h16M4 14.6h16M9.3 4v16M14.6 4v16"></path></symbol>
+    <symbol id="ic-floor" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="1.4"></rect><path d="M3.5 10h17M3.5 14h17M9 5.5v4.5M15 10v4M9 14v4.5"></path></symbol>
+    <symbol id="ic-toilet" viewBox="0 0 24 24"><rect x="7.5" y="3.5" width="9" height="3.6" rx="1"></rect><path d="M7 7.1h10v1.1a5 5 0 0 1-2.7 4.4L13.6 17h-3.2l-.7-4.4A5 5 0 0 1 7 8.2z"></path><path d="M9.8 17h4.4l-.4 3.5H10.2z"></path></symbol>
+    <symbol id="ic-light" viewBox="0 0 24 24"><circle cx="12" cy="9.5" r="4.2"></circle><path d="M12 1.8v1.8M3.7 9.5H1.9M22.1 9.5h-1.8M5.9 3.4l1.3 1.3M18.1 3.4l-1.3 1.3"></path><path d="M9.8 16.6h4.4M10.6 19.8h2.8"></path></symbol>
+    <symbol id="ic-plumbing" viewBox="0 0 24 24"><rect x="3" y="9.5" width="6" height="5" rx="1"></rect><rect x="15" y="9.5" width="6" height="5" rx="1"></rect><path d="M9 12h2.4a1.6 1.6 0 0 0 1.6-1.6V6.5a2 2 0 0 1 2-2"></path><path d="M13 13.6v3.9a2 2 0 0 1-2 2H8"></path></symbol>
+    <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"></path><circle cx="12" cy="10" r="2.4"></circle></symbol>
+    <symbol id="ic-target" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle></symbol>
+  </svg>
+
+  <header class="site-header" aria-label="Angi">
+    <div class="site-header__inner">
+      <a class="site-logo" href="https://www.angi.com/" aria-label="Angi home">
+        <img src="./assets/angi-logo-orange.svg" alt="Angi">
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="https://www.angi.com/home-interior/">Interior</a>
+        <a href="https://www.angi.com/home-exterior/">Exterior</a>
+        <a href="https://www.angi.com/lawn-garden/">Lawn &amp; Garden</a>
+        <a href="https://www.angi.com/articles/">More</a>
+        <a href="https://www.angi.com/articles/">Articles &amp; Advice</a>
+      </nav>
+      <div class="site-actions">
+        <a href="https://www.angi.com/companylist/">Find Pros</a>
+        <a href="https://signup.angi.com/pro">Join as a Pro</a>
+        <a class="login-link" href="https://www.angi.com/login">Log In</a>
+        <a class="signup-link" href="https://www.angi.com/signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="article-hero">
+    <div class="article-hero__inner">
+      <div class="article-hero__copy">
+        <nav class="breadcrumbs breadcrumbs--hero" aria-label="Breadcrumb">
+          <a href="https://www.angi.com/">Solution Center</a>
+          <span>/</span>
+          <a href="https://www.angi.com/remodeling/">Remodeling</a>
+          <span>/</span>
+          <span>Bathroom Remodel Cost</span>
+        </nav>
+        <h1>How Much Does a Bathroom Remodel Cost?</h1>
+        <p>Build a bathroom scope, see helpful guides for the work you choose, and turn your plan into local remodeling quotes.</p>
+      </div>
+      <form class="quote-card" action="https://www.angi.com/companylist/" aria-label="Get bathroom remodel quotes">
+        <h2>Get local quotes for your bathroom plan</h2>
+        <label>
+          <span class="sr-only">ZIP code</span>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter your ZIP">
+        </label>
+        <button type="submit">Request Project Quotes</button>
+        <p>No obligation - 100% free</p>
+      </form>
+    </div>
+  </section>
+
+  <main class="article-shell">
+    <article class="article-main">
+      <section class="author-strip" aria-label="Article information">
+        <div class="author-card">
+          <span class="author-avatar">A</span>
+          <div>
+            <span>Written by</span>
+            <strong>Angi editors</strong>
+          </div>
+        </div>
+        <div class="author-card">
+          <span class="review-avatar">R</span>
+          <div>
+            <span>Reviewed by</span>
+            <strong>Ryan Noonan</strong>
+          </div>
+        </div>
+      </section>
+
+      <p class="updated-date">Updated June 18, 2026</p>
+
+      <section class="help-card">
+        <h2>Need Help With a Bathroom Remodel? Connect With a Pro</h2>
+        <ul>
+          <li>Bathroom remodels combine fixtures, finishes, plumbing, electrical, waterproofing, and local labor costs.</li>
+          <li>Expect broad ranges until a local pro confirms the room condition, layout changes, and material quantities.</li>
+          <li>Use the planner below to organize your scope before requesting project quotes.</li>
+        </ul>
+      </section>
+
+      <section class="zip-cta">
+        <div class="zip-cta__icon">A</div>
+        <div>
+          <h2>Get quotes from up to 3 pros!</h2>
+          <p>Enter a zip below and get matched to top-rated pros near you.</p>
+        </div>
+        <form action="https://www.angi.com/companylist/">
+          <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
+          <button type="submit">Find Local Pros</button>
+        </form>
+      </section>
+
+      <p>This article brings Angi cost-guide context together with an interactive planning tool. Add fixtures, adjust dimensions, choose finishes, and see how each decision changes the project range.</p>
+      <p>Bathroom remodel costs vary by room size, fixture quality, local labor rates, and whether plumbing or electrical systems need to move. A finished quote should also account for demolition, waterproofing, permits, and any repairs uncovered during the project.</p>
+
+      <section id="cost-estimator" class="article-section">
+        <h2>Bathroom remodel cost estimator</h2>
+        <p>Start with the default room, then drag components into place. The estimate updates as you size each item, choose a finish level, add options, or switch metro pricing.</p>
+      </section>
+    </article>
+
+    <aside class="article-rail" aria-label="Article sidebar">
+      <nav class="toc-card" aria-label="In this article">
+        <h2>In this article</h2>
+        <a href="#cost-estimator">Bathroom remodel cost estimator</a>
+        <a href="#cost-factors">Cost factors</a>
+        <a href="#before-hiring">Before hiring a remodeling pro</a>
+        <a href="#questions">Questions to ask</a>
+      </nav>
+      <form class="rail-quote-card" action="https://www.angi.com/companylist/" aria-label="Request project quotes">
+        <h2>Need a quote for your project? Connect with local pros for free</h2>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
+        <button type="submit">Request quotes</button>
+      </form>
+    </aside>
+
+    <section id="app" class="builder-app article-tool" aria-live="polite">
+      <header class="builder-hero">
+        <div>
+          <p class="builder-eyebrow"><span></span> Interactive cost estimator</p>
+          <h2>Build your bathroom remodel</h2>
+          <p>Drop in fixtures, size them on the plan, and pick finishes. Add the same component more than once, like tile for your floor, shower, and backsplash.</p>
+        </div>
+      </header>
+
+      <div class="builder-module">
+        <div class="builder-module-top">
+          <div class="builder-module-intro">
+            <h2>Bathroom remodel planner</h2>
+            <p>Drag fixtures, adjust dimensions, and compare cost ranges.</p>
+            <div class="plan-toolbar">
+              <div class="location-picker">
+                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="pin-icon"><svg><use href="#ic-pin"></use></svg></span>
+                  <span id="locationLabel">United States</span>
+                  <span class="chevron">v</span>
+                </button>
+                <div id="locationMenu" class="location-menu" hidden></div>
+              </div>
+              <button id="locateButton" class="locate-button" type="button">
+                <span class="pin-icon"><svg><use href="#ic-target"></use></svg></span>
+                Locate me
+              </button>
+              <p id="locationNote" class="location-note">Showing national-average pricing. Pick a metro for local labor and material rates.</p>
+            </div>
+          </div>
+          <div class="module-view-tabs" aria-label="Planner views">
+            <button type="button" class="is-active" data-action="view" data-view="plan">Plan</button>
+            <button type="button" data-action="view" data-view="estimate">Estimate</button>
+            <button type="button" data-action="view" data-view="guides">Guides</button>
+          </div>
+        </div>
+
+        <section id="planView" class="studio-grid module-view module-view--plan is-active" aria-label="Bathroom builder">
+          <aside class="panel palette-panel" aria-labelledby="paletteTitle">
+            <div class="panel-title" id="paletteTitle">Components</div>
+            <p class="panel-subtitle">Drag onto your plan - add as many as you need</p>
+            <div id="componentPalette" class="palette-list"></div>
+          </aside>
+
+          <section class="panel plan-panel" aria-labelledby="planTitle">
+            <div class="plan-head">
+              <div>
+                <div class="panel-title" id="planTitle">Your bathroom plan</div>
+                <p class="panel-subtitle">Drag to move - pull the corner to resize - items can overlap</p>
+              </div>
+              <div class="room-control" aria-label="Room dimensions">
+                <span>Room</span>
+                <input id="roomWidth" inputmode="decimal" aria-label="Room width in feet">
+                <span class="muted">&times;</span>
+                <input id="roomHeight" inputmode="decimal" aria-label="Room length in feet">
+                <span>ft - <strong id="roomSqft">80</strong> sq ft</span>
+              </div>
+            </div>
+
+            <div class="canvas-wrap">
+              <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas">
+                <span id="canvasHeightLabel" class="canvas-measure canvas-measure--height">8 ft</span>
+                <span id="canvasWidthLabel" class="canvas-measure canvas-measure--width">10 ft</span>
+                <div id="placedItems" class="placed-items"></div>
+                <div id="emptyCanvas" class="empty-canvas">
+                  <div class="empty-icon"><svg><use href="#ic-shower"></use></svg></div>
+                  <p>Drag components here to start a plan.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="panel inspector-panel" aria-labelledby="estimateTitle">
+            <div id="inspectorContent" class="inspector-content"></div>
+          </aside>
+        </section>
+
+        <section id="estimateView" class="module-view estimate-screen" aria-labelledby="estimateViewTitle" hidden>
+          <div class="estimate-screen__summary">
+            <div>
+              <p class="mini-eyebrow">Estimate</p>
+              <h2 id="estimateViewTitle">Project estimate breakdown</h2>
+              <p id="estimateViewIntro">See how your selected fixtures, finishes, room size, and location affect the current project range.</p>
+            </div>
+            <div class="estimate-screen__actions">
+              <button id="estimateQuoteButton" class="quote-button" type="button" disabled aria-disabled="true">Get quotes for this estimate</button>
+              <button id="estimateDownloadButton" class="download-button" type="button">Download PDF</button>
+            </div>
+          </div>
+          <div class="estimate-layout">
+            <section class="estimate-breakdown-card" aria-labelledby="estimateBreakdownTitle">
+              <h3 id="estimateBreakdownTitle">Scope items</h3>
+              <div id="estimateBreakdown" class="estimate-breakdown-list"></div>
+            </section>
+            <aside class="estimate-insights-card" aria-labelledby="estimateInsightsTitle">
+              <h3 id="estimateInsightsTitle">Cost drivers to review</h3>
+              <div id="estimateDrivers" class="estimate-driver-list"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="guidesView" class="module-view guides-screen" aria-labelledby="guidesViewTitle" hidden>
+          <div class="guides-screen__header">
+            <div>
+              <p class="mini-eyebrow">Guides</p>
+              <h2 id="guidesViewTitle">Content matched to your remodel</h2>
+              <p id="guidesViewIntro">These guides update based on the components currently in your plan.</p>
+            </div>
+            <a href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">Browse all bathroom guides</a>
+          </div>
+          <div id="guideCollections" class="guide-collections"></div>
+        </section>
+
+        <section class="estimate-bar" aria-labelledby="estimateTitle">
+          <div class="estimate-bar__price">
+            <p class="estimate-label" id="estimateTitle">Estimated project cost - <span id="estimateLocation">United States</span></p>
+            <div id="estimateTotal" class="estimate-total">Add fixtures to start</div>
+          </div>
+          <div class="estimate-bar__summary">
+            <strong id="placedCount">0 items on your plan</strong>
+            <span id="estimateNote">Showing national-average pricing. Pick a metro for local labor and material rates.</span>
+          </div>
+          <div class="estimate-bar__actions">
+            <button id="quoteButton" class="quote-button" type="button">Get local quotes for this plan</button>
+            <button id="downloadPlanButton" class="download-button download-button--on-dark" type="button">Download plan PDF</button>
+          </div>
+        </section>
+
+        <section class="recommendation-band" aria-labelledby="recommendedGuidesTitle">
+          <div class="recommendation-band__heading">
+            <div>
+              <p class="mini-eyebrow">Recommended content</p>
+              <h2 id="recommendedGuidesTitle">Recommended for your remodel</h2>
+              <p id="recommendationIntro">Guides update as you add fixtures, finishes, and scope to your bathroom plan.</p>
+            </div>
+            <a href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">View bathroom guides</a>
+          </div>
+          <div id="recommendedGuides" class="recommended-guides"></div>
+        </section>
+
+        <section class="pro-handoff" aria-labelledby="proHandoffTitle">
+          <div class="pro-handoff__copy">
+            <p class="mini-eyebrow">Next step</p>
+            <h2 id="proHandoffTitle">Get local quotes for this bathroom plan</h2>
+            <p id="proHandoffCopy">Share your scoped bathroom plan with local pros so they can price the same project, not a vague wish list.</p>
+            <div id="scopeChips" class="scope-chips" aria-label="Project scope summary"></div>
+          </div>
+          <form id="proQuoteForm" class="pro-handoff__form" action="https://www.angi.com/companylist/">
+            <label for="quoteZip">Where is the project?</label>
+            <div class="zip-inline">
+              <input id="quoteZip" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
+              <button id="proQuoteButton" type="submit">Find bathroom remodelers</button>
+            </div>
+            <p>No obligation - 100% free</p>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <article class="article-main article-continuation">
+      <section id="cost-factors" class="article-section">
+        <h2>What impacts bathroom remodel costs?</h2>
+        <p>Fixture choices, room size, finish level, and local labor rates usually move the estimate the most. Layout changes can add plumbing and electrical work, while tile, glass, stone, and custom storage raise material and labor totals.</p>
+        <ul>
+          <li><strong>Room size:</strong> Larger rooms need more flooring, wall finish, lighting, and labor time.</li>
+          <li><strong>Finish level:</strong> Stock vanities and ceramic tile price differently than custom cabinetry, stone, and glass.</li>
+          <li><strong>System changes:</strong> Moving drains, supply lines, fans, outlets, or lighting can change the budget quickly.</li>
+          <li><strong>Local rates:</strong> Metro labor and material pricing can sit above or below national averages.</li>
+        </ul>
+      </section>
+
+      <section id="before-hiring" class="article-section">
+        <h2>What to know before hiring a bathroom remodeling pro</h2>
+        <p>Before reaching out, document the current room, list must-haves, and decide which items are flexible. A clear scope helps pros compare the same project instead of guessing from a loose wish list.</p>
+        <h3>1. Confirm your project scope</h3>
+        <p>Decide whether the project is a cosmetic update, a pull-and-replace remodel, or a layout change. The more plumbing and electrical systems move, the more specialized work your quote may include.</p>
+        <h3>2. Compare detailed estimates</h3>
+        <p>Ask each pro to separate labor, fixtures, tile, permits, demolition, disposal, and allowances. That makes it easier to understand why estimates differ.</p>
+      </section>
+
+      <section id="questions" class="article-section">
+        <h2>Questions to ask a bathroom remodeling pro</h2>
+        <ul>
+          <li>Are you licensed and insured for plumbing, electrical, and remodeling work in my area?</li>
+          <li>Who handles permits, inspections, waterproofing, and cleanup?</li>
+          <li>What materials are included in the estimate, and which are allowances?</li>
+          <li>How do you handle hidden damage or scope changes after demolition?</li>
+          <li>Will you provide a written timeline, payment schedule, and warranty details?</li>
+        </ul>
+      </section>
+
+      <section class="zip-cta zip-cta--bottom">
+        <div class="zip-cta__icon">A</div>
+        <div>
+          <h2>Need professional help with your project?</h2>
+          <p>Get quotes from top-rated pros.</p>
+        </div>
+        <form action="https://www.angi.com/companylist/">
+          <button type="submit">Find Local Pros</button>
+        </form>
+      </section>
+    </article>
+  </main>
+
+  <section class="related-band" aria-labelledby="relatedTitle">
+    <div class="related-band__inner">
+      <div class="related-heading">
+        <div>
+          <h2 id="relatedTitle">The homeowners guide to bathroom remodeling</h2>
+          <p>From average costs to expert advice, get all the answers you need for your next project.</p>
+        </div>
+        <a href="https://www.angi.com/articles/">See all articles</a>
+      </div>
+      <div class="related-grid">
+        <a class="related-card" href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">
+          <img src="./assets/interior-small-bathroom.jpg" alt="Small bathroom with modern fixtures">
+          <span>May 28, 2026</span>
+          <strong>How Much Does It Cost to Remodel a Small Bathroom?</strong>
+          <p>Compare small-bath remodel ranges and where budgets usually go.</p>
+        </a>
+        <a class="related-card" href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">
+          <img src="./assets/bathroom-double-vanity-bathtub-shower.jpg" alt="Bathroom with double vanity and bathtub">
+          <span>May 22, 2026</span>
+          <strong>Bathroom Remodel Ideas That Balance Form and Function</strong>
+          <p>See what to prioritize when you want a more useful bathroom.</p>
+        </a>
+        <a class="related-card" href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">
+          <img src="./assets/modern-small-bathroom-rain-shower.jpg" alt="Modern shower with white tile">
+          <span>May 18, 2026</span>
+          <strong>How Much Does a Shower Remodel Cost?</strong>
+          <p>Learn how tile, glass, plumbing, and fixtures shape the final price.</p>
+        </a>
+        <a class="related-card" href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">
+          <img src="./assets/white-bathroom.jpg" alt="Bright white bathroom">
+          <span>May 10, 2026</span>
+          <strong>What to Know Before You Replace Bathroom Tile</strong>
+          <p>Understand substrate, waterproofing, labor, and tile selection.</p>
+        </a>
+        <a class="related-card" href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">
+          <img src="./assets/family-bathroom.jpg" alt="Family bathroom sink and vanity">
+          <span>April 29, 2026</span>
+          <strong>Who to Hire for a Bathroom Remodel</strong>
+          <p>Find out which pros to call for fixtures, tile, plumbing, and electrical work.</p>
+        </a>
+        <a class="related-card" href="https://www.angi.com/remodeling/bathroom-remodeling" target="_blank" rel="noreferrer">
+          <img src="./assets/budget-friendly-small-bathroom-ideas.jpg" alt="Person sitting in a bathroom">
+          <span>April 18, 2026</span>
+          <strong>Budget-Friendly Small Bathroom Ideas</strong>
+          <p>Make a compact bathroom feel more practical without overspending.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="app-downloads">
+        <p>Download the app</p>
+        <div>
+          <a href="https://www.apple.com/app-store/">App Store</a>
+          <a href="https://play.google.com/store">Google Play</a>
+        </div>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <div>
+          <h2>Homeowner services</h2>
+          <a href="https://www.angi.com/companylist/">Find local businesses</a>
+          <a href="https://www.angi.com/articles/">Services near me</a>
+        </div>
+        <div>
+          <h2>For service pros</h2>
+          <a href="https://signup.angi.com/pro">Register your business</a>
+          <a href="https://www.angi.com/business-center/">Business center</a>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <a href="https://www.angi.com/articles/">Solution center</a>
+          <a href="https://www.angi.com/articles/project-cost-center.htm">Project cost center</a>
+          <a href="https://www.angi.com/faq.htm">FAQs</a>
+        </div>
+        <div>
+          <h2>About us</h2>
+          <a href="https://www.angi.com/about-us.htm">How it works</a>
+          <a href="https://www.angi.com/contact-us.htm">Contact us</a>
+          <a href="https://www.angi.com/privacy.htm">Privacy</a>
+        </div>
+      </nav>
+      <div class="footer-brand">
+        <img src="./assets/angi-logo-orange.svg" alt="Angi">
+        <p>Terms of Use | Privacy Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="briefModal" class="modal" hidden>
+    <div class="modal-box">
+      <button id="modalClose" type="button" class="modal-close" aria-label="Close">&times;</button>
+      <p class="builder-eyebrow"><span></span> Project brief</p>
+      <h2>Download your plan PDF</h2>
+      <p id="briefSummary">Add fixtures to generate a contractor-ready scope.</p>
+      <form id="downloadLeadForm" class="lead-form">
+        <label for="leadName">
+          Name
+          <input id="leadName" name="name" type="text" autocomplete="name" required>
+        </label>
+        <label for="leadEmail">
+          Email
+          <input id="leadEmail" name="email" type="email" autocomplete="email" required>
+        </label>
+        <button id="downloadBrief" type="submit" class="quote-button">Download PDF</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+/* =========================================================================
+   Bathroom Builder
+   Vanilla JS implementation of the new studio-style UX prototype.
+   ========================================================================= */
+
+const ANGI_BATHROOM_HUB = 'https://www.angi.com/remodeling/bathroom-remodeling';
+
+const COMPONENTS = {
+  shower: {
+    label: 'Shower / tub',
+    iconKey: 'shower',
+    blurb: 'Tub, walk-in, or combo',
+    size: { w: 3, h: 3 },
+    variants: ['Tub / shower combo', 'Walk-in shower', 'Freestanding tub'],
+    tiers: { good: [2200, 3800], better: [4200, 7500], best: [8500, 14000] },
+    addons: [
+      { key: 'glass', label: 'Glass door', desc: 'Frameless enclosure', lo: 900, hi: 2400 },
+      { key: 'surround', label: 'Tile surround', desc: 'Wall tile beyond base', lo: 1600, hi: 4500 },
+      { key: 'spray', label: 'Body sprays', desc: 'Extra shower controls', lo: 350, hi: 1200 },
+    ],
+    articles: [
+      { title: 'Shower vs. Bathtub: Which Is Right for Your Bathroom?', meta: 'Stephanie Mickelson - Apr 05, 2026', tag: 'Guide', image: './assets/modern-small-bathroom-rain-shower.jpg' },
+      { title: 'Does a House Really Need a Bathtub?', meta: 'Lauren Bongard - May 03, 2026', tag: 'Guide', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
+      { title: 'How Much Does a Wet Room Cost? [2026 Data]', meta: 'Mariel Loveland - May 02, 2026', tag: 'Cost', image: './assets/interior-small-bathroom.jpg' },
+    ],
+  },
+  vanity: {
+    label: 'Vanity & sink',
+    iconKey: 'vanity',
+    blurb: 'Cabinet, top, and basin',
+    size: { w: 4, h: 2 },
+    variants: ['Single vanity', 'Double vanity', 'Floating vanity'],
+    tiers: { good: [600, 1400], better: [1600, 3200], best: [3600, 7000] },
+    addons: [
+      { key: 'double', label: 'Double sink', desc: 'Two basins', lo: 800, hi: 2200 },
+      { key: 'stone', label: 'Stone countertop', desc: 'Quartz or granite', lo: 500, hi: 1800 },
+    ],
+    articles: [
+      { title: '7 Types of Bathroom Countertop Materials to Upgrade Your Space', meta: 'Mizuki Hisaka - May 02, 2026', tag: 'Materials', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
+      { title: 'How to Measure for a Bathroom Mirror', meta: 'Allie Ogletree - May 03, 2026', tag: 'Guide', image: './assets/white-bathroom.jpg' },
+      { title: 'How Much Do Bathroom Cabinets Cost? [2026 Data]', meta: 'Deirdre Sullivan - May 03, 2026', tag: 'Cost', image: './assets/interior-small-bathroom.jpg' },
+    ],
+  },
+  tile: {
+    label: 'Tile & walls',
+    iconKey: 'tile',
+    blurb: 'Tile and waterproofing',
+    size: { w: 3, h: 2 },
+    variants: ['Shower surround', 'Floor tile', 'Backsplash', 'Accent wall'],
+    tiers: { good: [1200, 2600], better: [2900, 5200], best: [5600, 11000] },
+    addons: [
+      { key: 'accent', label: 'Accent band', desc: 'Feature tile inlay', lo: 400, hi: 1500 },
+      { key: 'niche', label: 'Tiled niche', desc: 'Recessed shelf', lo: 200, hi: 650 },
+    ],
+    articles: [
+      { title: '8 Smart Ways to Update Bathroom Tile Without Replacing It', meta: 'Heather Ayer - May 03, 2026', tag: 'Guide', image: './assets/white-bathroom.jpg' },
+      { title: 'Pros and Cons of Penny Tile for a Bathroom Remodel', meta: 'Paige Bennett - May 03, 2026', tag: 'Materials', image: './assets/interior-small-bathroom.jpg' },
+      { title: '30 Small Bathroom Remodel Ideas to Make It Feel Spacious', meta: 'Mariel Loveland - May 5, 2026', tag: 'Guide', image: './assets/modern-small-bathroom-rain-shower.jpg' },
+    ],
+  },
+  floor: {
+    label: 'Flooring',
+    iconKey: 'floor',
+    blurb: 'Tile, vinyl, or stone floor',
+    size: { w: 4, h: 4 },
+    variants: ['Main floor', 'Shower pan'],
+    tiers: { good: [600, 1500], better: [1700, 3200], best: [3500, 7000] },
+    addons: [
+      { key: 'heated', label: 'Heated floor', desc: 'In-floor warming', lo: 900, hi: 2600 },
+    ],
+    articles: [
+      { title: 'Small Bathroom Dimensions: How to Fit Style and Function Into Every Square Foot', meta: 'Lauren Bongard - May 03, 2026', tag: 'Guide', image: './assets/budget-friendly-small-bathroom-ideas.jpg' },
+      { title: 'How Much Does It Cost to Remodel a Small Bathroom? [2026 Data]', meta: 'Samantha Hawrylack - May 02, 2026', tag: 'Cost', image: './assets/interior-small-bathroom.jpg' },
+      { title: 'What Is a Wet Room Bathroom?', meta: 'C.E. Larusso - May 02, 2026', tag: 'Guide', image: './assets/modern-small-bathroom-rain-shower.jpg' },
+    ],
+  },
+  toilet: {
+    label: 'Toilet',
+    iconKey: 'toilet',
+    blurb: 'Standard or comfort height',
+    size: { w: 1.5, h: 2.5 },
+    variants: ['Standard', 'Wall-hung', 'Smart toilet'],
+    tiers: { good: [250, 600], better: [700, 1400], best: [1700, 3800] },
+    addons: [
+      { key: 'bidet', label: 'Bidet seat', desc: 'Smart washlet', lo: 400, hi: 1200 },
+    ],
+    articles: [
+      { title: '12 Types of Toilets to Upgrade to in Your Bathroom Remodel', meta: 'Samantha Hawrylack - May 5, 2026', tag: 'Guide', image: './assets/interior-small-bathroom.jpg' },
+      { title: '8 Smart Toilet Seats to Elevate Your Bathroom', meta: 'Allie Ogletree - May 02, 2026', tag: 'Guide', image: './assets/family-bathroom.jpg' },
+      { title: '10 Tech Bathroom Features You Didn\'t Know You Needed', meta: 'Paige Bennett - Mar 06, 2026', tag: 'Guide', image: './assets/budget-friendly-small-bathroom-ideas.jpg' },
+    ],
+  },
+  lighting: {
+    label: 'Lighting & electrical',
+    iconKey: 'light',
+    blurb: 'Fixtures, outlets, and wiring',
+    size: { w: 1.5, h: 1.5 },
+    variants: ['Vanity lights', 'Recessed cans', 'Ceiling fixture'],
+    tiers: { good: [450, 1100], better: [1200, 2600], best: [2900, 5500] },
+    addons: [
+      { key: 'recessed', label: 'Recessed lights', desc: 'Can lighting', lo: 400, hi: 1400 },
+      { key: 'fan', label: 'Exhaust fan', desc: 'Quiet vent fan', lo: 250, hi: 700 },
+    ],
+    articles: [
+      { title: '20 Spa Bathroom Ideas That Boost Enjoyment and Home Value', meta: 'Deirdre Sullivan - May 02, 2026', tag: 'Guide', image: './assets/modern-small-bathroom-rain-shower.jpg' },
+      { title: '31 Chic Modern Bathroom Ideas to Inspire Your Remodel', meta: 'Mariel Loveland - May 02, 2026', tag: 'Guide', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
+      { title: 'Bathroom Remodeling Trends That Are Here to Stay', meta: 'Stacey Marcus - May 02, 2026', tag: 'Guide', image: './assets/white-bathroom.jpg' },
+    ],
+  },
+  plumbing: {
+    label: 'Move plumbing',
+    iconKey: 'plumbing',
+    blurb: 'Relocate supply and drains',
+    size: { w: 2, h: 2 },
+    variants: ['Relocate drain', 'Move supply lines', 'Add new line'],
+    tiers: { good: [800, 1800], better: [1800, 4500], best: [4500, 9000] },
+    addons: [],
+    articles: [
+      { title: '12 Important Questions to Ask Bathroom Remodeling Contractors', meta: 'Stephanie Mickelson - Apr 09, 2026', tag: 'Guide', image: './assets/family-bathroom.jpg' },
+      { title: 'Who to Hire for a Bathroom Remodel Project', meta: 'Gemma Johnstone - May 5, 2026', tag: 'Guide', image: './assets/budget-friendly-small-bathroom-ideas.jpg' },
+      { title: 'How Long Does a Bathroom Remodel Take?', meta: 'Becca Lewis - May 02, 2026', tag: 'Guide', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
+    ],
+  },
+};
+
+const ORDER = ['shower', 'vanity', 'tile', 'floor', 'toilet', 'lighting', 'plumbing'];
+const TIER_LABEL = { good: 'Good', better: 'Better', best: 'Best' };
+const TIER_SHORT = { good: 'Budget', better: 'Mid-range', best: 'High-end' };
+const DEFAULT_POS = {
+  shower: { x: 0.26, y: 0.34 },
+  vanity: { x: 0.72, y: 0.30 },
+  tile: { x: 0.50, y: 0.18 },
+  floor: { x: 0.50, y: 0.74 },
+  toilet: { x: 0.82, y: 0.72 },
+  lighting: { x: 0.26, y: 0.72 },
+  plumbing: { x: 0.52, y: 0.50 },
+};
+
+const LOCATIONS = [
+  { key: 'national', label: 'United States', st: '', mult: 1.00 },
+  { key: 'seattle', label: 'Seattle', st: 'WA', mult: 1.18 },
+  { key: 'la', label: 'Los Angeles', st: 'CA', mult: 1.22 },
+  { key: 'phoenix', label: 'Phoenix', st: 'AZ', mult: 0.98 },
+  { key: 'denver', label: 'Denver', st: 'CO', mult: 1.06 },
+  { key: 'austin', label: 'Austin', st: 'TX', mult: 1.02 },
+  { key: 'chicago', label: 'Chicago', st: 'IL', mult: 1.08 },
+  { key: 'atlanta', label: 'Atlanta', st: 'GA', mult: 0.96 },
+  { key: 'miami', label: 'Miami', st: 'FL', mult: 1.05 },
+  { key: 'ny', label: 'New York', st: 'NY', mult: 1.35 },
+];
+
+const DEFAULT_RECOMMENDATIONS = [
+  {
+    title: 'How Much Does It Cost to Remodel a Small Bathroom? [2026 Data]',
+    meta: 'Cost guide',
+    tag: 'Cost',
+    image: './assets/interior-small-bathroom.jpg',
+    reason: 'Get a baseline before you compare local quotes.',
+  },
+  {
+    title: 'Who to Hire for a Bathroom Remodel Project',
+    meta: 'Hiring guide',
+    tag: 'Guide',
+    image: './assets/family-bathroom.jpg',
+    reason: 'Understand which pros handle each part of the scope.',
+  },
+  {
+    title: '12 Important Questions to Ask Bathroom Remodeling Contractors',
+    meta: 'Pro checklist',
+    tag: 'Checklist',
+    image: './assets/budget-friendly-small-bathroom-ideas.jpg',
+    reason: 'Use these questions when you request project quotes.',
+  },
+];
+
+const state = {
+  roomW: 10,
+  roomH: 8,
+  placed: [{
+    id: 1,
+    type: 'shower',
+    name: 'Tub / shower combo',
+    nx: DEFAULT_POS.shower.x,
+    ny: DEFAULT_POS.shower.y,
+    w: 3,
+    h: 3,
+    tier: 'better',
+    addons: {},
+  }],
+  selectedId: 1,
+  location: 'national',
+  locOpen: false,
+  view: 'plan',
+};
+
+let uid = 2;
+let drag = null;
+
+const $ = selector => document.querySelector(selector);
+const fmtMoney = n => '$' + Math.round(n).toLocaleString('en-US');
+const fmtNum = n => Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100);
+const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+const snap = (n, step = 0.25) => Math.round(n / step) * step;
+
+function iconSvg(iconKey) {
+  return `<svg aria-hidden="true"><use href="#ic-${iconKey}"></use></svg>`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function currentLocation() {
+  return LOCATIONS.find(loc => loc.key === state.location) || LOCATIONS[0];
+}
+
+function locationLabel(loc = currentLocation()) {
+  return loc.key === 'national' ? 'United States' : `${loc.label}, ${loc.st}`;
+}
+
+function locationNote(loc = currentLocation()) {
+  if (loc.key === 'national') {
+    return 'Showing national-average pricing. Pick a metro to see local labor rates and pro matching prompts.';
+  }
+  const pct = Math.round(Math.abs(loc.mult - 1) * 100);
+  return `Costs in ${loc.label} run about ${pct}% ${loc.mult >= 1 ? 'above' : 'below'} the national average.`;
+}
+
+function isAreaDriven(type) {
+  return type === 'tile' || type === 'floor';
+}
+
+function sizeMultiplier(item) {
+  if (!isAreaDriven(item.type)) return 1;
+  const base = COMPONENTS[item.type].size;
+  return Math.max(0.2, (item.w * item.h) / (base.w * base.h));
+}
+
+function baseRange(item) {
+  const c = COMPONENTS[item.type];
+  const tier = c.tiers[item.tier];
+  const sizeMult = sizeMultiplier(item);
+  return [tier[0] * sizeMult, tier[1] * sizeMult];
+}
+
+function itemRange(item, withLocation = true) {
+  const c = COMPONENTS[item.type];
+  const mult = withLocation ? currentLocation().mult : 1;
+  const range = baseRange(item);
+  c.addons.forEach(addon => {
+    if (item.addons[addon.key]) {
+      range[0] += addon.lo;
+      range[1] += addon.hi;
+    }
+  });
+  return [range[0] * mult, range[1] * mult];
+}
+
+function estimateRange() {
+  return state.placed.reduce((sum, item) => {
+    const [lo, hi] = itemRange(item);
+    return [sum[0] + lo, sum[1] + hi];
+  }, [0, 0]);
+}
+
+function rangeText(lo, hi) {
+  return `${fmtMoney(lo)}–${fmtMoney(hi)}`;
+}
+
+function componentCount(type) {
+  return state.placed.filter(item => item.type === type).length;
+}
+
+function placedTypes() {
+  return [...new Set(state.placed.map(item => item.type))];
+}
+
+function selectedItem() {
+  return state.placed.find(item => item.id === state.selectedId) || null;
+}
+
+function projectScopeLabel() {
+  const count = state.placed.length;
+  if (!count) return 'your bathroom plan';
+  const labels = placedTypes().map(type => COMPONENTS[type].label.toLowerCase());
+  if (labels.length === 1) return labels[0];
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
+  return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`;
+}
+
+function recommendationItems(limit = 4) {
+  const selected = selectedItem();
+  const orderedTypes = [
+    ...(selected ? [selected.type] : []),
+    ...placedTypes(),
+    ...ORDER,
+  ];
+  const seenTypes = [...new Set(orderedTypes)];
+  const seenTitles = new Set();
+  const items = [];
+
+  seenTypes.forEach(type => {
+    const component = COMPONENTS[type];
+    if (!component) return;
+    component.articles.forEach((article, index) => {
+      if (seenTitles.has(article.title) || items.length >= limit) return;
+      seenTitles.add(article.title);
+      items.push({
+        ...article,
+        reason: index === 0
+          ? `Recommended because your plan includes ${component.label.toLowerCase()}.`
+          : `Helpful background for ${component.label.toLowerCase()} decisions.`,
+      });
+    });
+  });
+
+  DEFAULT_RECOMMENDATIONS.forEach(article => {
+    if (seenTitles.has(article.title) || items.length >= limit) return;
+    seenTitles.add(article.title);
+    items.push(article);
+  });
+
+  return items;
+}
+
+function primaryRecommendation() {
+  return recommendationItems(1)[0] || DEFAULT_RECOMMENDATIONS[0];
+}
+
+function scopeItemsText() {
+  const count = state.placed.length;
+  return `${count} scoped item${count === 1 ? '' : 's'}`;
+}
+
+function nextName(type) {
+  const c = COMPONENTS[type];
+  if (!c.variants.length) return c.label;
+  const used = state.placed.filter(item => item.type === type).map(item => item.name);
+  return c.variants.find(variant => !used.includes(variant)) || c.variants[0];
+}
+
+function clampItem(item) {
+  item.w = clamp(item.w, 0.5, state.roomW);
+  item.h = clamp(item.h, 0.5, state.roomH);
+  item.nx = clamp(item.nx, (item.w / state.roomW) / 2, 1 - (item.w / state.roomW) / 2);
+  item.ny = clamp(item.ny, (item.h / state.roomH) / 2, 1 - (item.h / state.roomH) / 2);
+  return item;
+}
+
+function createItem(type, nx, ny) {
+  const c = COMPONENTS[type];
+  const item = {
+    id: uid++,
+    type,
+    name: nextName(type),
+    nx,
+    ny,
+    w: c.size.w,
+    h: c.size.h,
+    tier: 'better',
+    addons: {},
+  };
+  return clampItem(item);
+}
+
+function addItem(type, nx, ny) {
+  const fallback = DEFAULT_POS[type] || { x: 0.5, y: 0.5 };
+  const offset = (componentCount(type) % 4) * 0.05;
+  const item = createItem(
+    type,
+    nx ?? clamp(fallback.x + offset, 0.12, 0.88),
+    ny ?? clamp(fallback.y + offset, 0.12, 0.88),
+  );
+  state.placed.push(item);
+  state.selectedId = item.id;
+  renderAll();
+}
+
+function removeItem(id) {
+  state.placed = state.placed.filter(item => item.id !== id);
+  if (state.selectedId === id) {
+    state.selectedId = state.placed.length ? state.placed[state.placed.length - 1].id : null;
+  }
+  renderAll();
+}
+
+function canvasRect() {
+  return $('#planCanvas').getBoundingClientRect();
+}
+
+function pointToNorm(clientX, clientY, item) {
+  const rect = canvasRect();
+  const nx = (clientX - rect.left) / rect.width;
+  const ny = (clientY - rect.top) / rect.height;
+  if (!item) return { nx, ny };
+  return {
+    nx: clamp(nx, (item.w / state.roomW) / 2, 1 - (item.w / state.roomW) / 2),
+    ny: clamp(ny, (item.h / state.roomH) / 2, 1 - (item.h / state.roomH) / 2),
+  };
+}
+
+function snapNormX(nx) {
+  return snap(nx * state.roomW) / state.roomW;
+}
+
+function snapNormY(ny) {
+  return snap(ny * state.roomH) / state.roomH;
+}
+
+function isInsideCanvas(clientX, clientY) {
+  const rect = canvasRect();
+  return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
+}
+
+function applyCanvasMetrics(roomW, roomH) {
+  const canvas = $('#planCanvas');
+  const ratio = roomW / roomH;
+  const canvasWidth = ratio >= 1 ? 100 : clamp(ratio * 116, 54, 88);
+  canvas.style.setProperty('--grid-x', `${100 / roomW}%`);
+  canvas.style.setProperty('--grid-y', `${100 / roomH}%`);
+  canvas.style.setProperty('--grid-x-half', `${50 / roomW}%`);
+  canvas.style.setProperty('--grid-y-half', `${50 / roomH}%`);
+  canvas.style.setProperty('--room-w', roomW);
+  canvas.style.setProperty('--room-h', roomH);
+  canvas.style.setProperty('--canvas-aspect', `${roomW} / ${roomH}`);
+  canvas.style.setProperty('--canvas-width', `${canvasWidth}%`);
+  $('#canvasWidthLabel').textContent = `${fmtNum(roomW)} ft`;
+  $('#canvasHeightLabel').textContent = `${fmtNum(roomH)} ft`;
+}
+
+function updateCanvasGrid() {
+  applyCanvasMetrics(state.roomW, state.roomH);
+}
+
+function previewRoomDimensions() {
+  const roomW = parseFloat($('#roomWidth').value);
+  const roomH = parseFloat($('#roomHeight').value);
+  if (Number.isNaN(roomW) || Number.isNaN(roomH)) return;
+  applyCanvasMetrics(clamp(snap(roomW, 0.5), 4, 40), clamp(snap(roomH, 0.5), 4, 40));
+}
+
+function renderPalette() {
+  $('#componentPalette').innerHTML = ORDER.map(type => {
+    const c = COMPONENTS[type];
+    const count = componentCount(type);
+    const status = count
+      ? `<span class="palette-count">${count > 1 ? `${count} on plan` : 'On plan'}</span>`
+      : '<span class="palette-action">+ Add</span>';
+    return `
+      <button class="palette-card${count ? ' is-active' : ''}" type="button" data-action="palette" data-type="${type}">
+        <span class="palette-icon">${iconSvg(c.iconKey)}</span>
+        <span class="palette-label">${escapeHtml(c.label)}</span>
+        ${status}
+      </button>
+    `;
+  }).join('');
+}
+
+function renderRoomControls() {
+  $('#roomWidth').value = fmtNum(state.roomW);
+  $('#roomHeight').value = fmtNum(state.roomH);
+  $('#roomSqft').textContent = fmtNum(state.roomW * state.roomH);
+  updateCanvasGrid();
+}
+
+function renderLocations() {
+  const loc = currentLocation();
+  $('#locationLabel').textContent = locationLabel(loc);
+  $('#locationNote').textContent = locationNote(loc);
+  $('#locationToggle').setAttribute('aria-expanded', String(state.locOpen));
+  $('#locationMenu').hidden = !state.locOpen;
+  $('#locationMenu').innerHTML = LOCATIONS.map(option => {
+    const pct = Math.round(Math.abs(option.mult - 1) * 100);
+    const sub = option.key === 'national'
+      ? 'National average'
+      : `${option.st} - ${option.mult >= 1 ? '+' : '-'}${pct}% vs national`;
+    return `
+      <button class="location-option${option.key === state.location ? ' is-active' : ''}" type="button" data-action="location" data-location="${option.key}" role="option" aria-selected="${option.key === state.location}">
+        <span class="location-option__mark">${option.key === state.location ? '&#10003;' : ''}</span>
+        <span>
+          <span class="location-option__label">${escapeHtml(option.key === 'national' ? 'United States' : option.label)}</span>
+          <span class="location-option__sub">${escapeHtml(sub)}</span>
+        </span>
+      </button>
+    `;
+  }).join('');
+}
+
+function renderCanvas() {
+  $('#emptyCanvas').hidden = state.placed.length > 0;
+  $('#placedItems').innerHTML = state.placed.map((item, index) => {
+    const c = COMPONENTS[item.type];
+    const selected = item.id === state.selectedId;
+    const wPct = (item.w / state.roomW) * 100;
+    const hPct = (item.h / state.roomH) * 100;
+    const z = item.type === 'floor' ? (selected ? 9 : 2) : (selected ? 999 : 20 + index);
+    return `
+      <article
+        class="plan-item ${item.type === 'floor' ? 'floor-item' : ''}${selected ? ' is-selected' : ''}"
+        data-id="${item.id}"
+        data-type="${item.type}"
+        tabindex="0"
+        style="--x:${item.nx * 100};--y:${item.ny * 100};--w:${wPct};--h:${hPct};z-index:${z}">
+        <span class="item-icon">${iconSvg(c.iconKey)}</span>
+        <span class="item-name">${escapeHtml(item.name)}</span>
+        <span class="item-dims">${fmtNum(item.w)} x ${fmtNum(item.h)} ft</span>
+        <button class="item-remove" type="button" data-action="remove" data-id="${item.id}" aria-label="Remove ${escapeHtml(item.name)}">&times;</button>
+        <button class="resize-handle" type="button" data-action="resize" data-id="${item.id}" aria-label="Resize ${escapeHtml(item.name)}"></button>
+      </article>
+    `;
+  }).join('');
+}
+
+function renderEstimate() {
+  const [lo, hi] = estimateRange();
+  const n = state.placed.length;
+  const loc = currentLocation();
+  $('#estimateTotal').textContent = n ? rangeText(lo, hi) : 'Add fixtures to start';
+  $('#placedCount').textContent = `${n} item${n === 1 ? '' : 's'} on your plan`;
+  $('#estimateLocation').textContent = locationLabel(loc);
+  $('#estimateNote').textContent = locationNote(loc);
+  $('#quoteButton').textContent = n > 2 ? 'Get quotes for this scoped plan' : 'Get local quotes for this plan';
+}
+
+function renderViewTabs() {
+  document.querySelectorAll('[data-action="view"]').forEach(button => {
+    const active = button.dataset.view === state.view;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-selected', String(active));
+  });
+  document.querySelectorAll('.module-view').forEach(view => {
+    const active = view.id === `${state.view}View`;
+    view.hidden = !active;
+    view.classList.toggle('is-active', active);
+  });
+}
+
+function costDriverItems() {
+  const drivers = [];
+  const types = placedTypes();
+  if (types.includes('plumbing')) {
+    drivers.push({
+      title: 'Plumbing changes',
+      text: 'Moving drains or supply lines usually requires a local pro to confirm access, permits, and final labor.',
+    });
+  }
+  if (types.includes('tile') || types.includes('floor')) {
+    drivers.push({
+      title: 'Tile quantity and waterproofing',
+      text: 'Tile area, prep, and waterproofing details can shift both materials and installation time.',
+    });
+  }
+  if (types.includes('shower')) {
+    drivers.push({
+      title: 'Shower enclosure details',
+      text: 'Glass, surrounds, and fixture upgrades are common drivers behind a wider shower estimate.',
+    });
+  }
+  if (types.includes('vanity')) {
+    drivers.push({
+      title: 'Vanity size and countertop',
+      text: 'Double sinks, stone counters, and custom storage can change finish allowances quickly.',
+    });
+  }
+  if (!drivers.length) {
+    drivers.push({
+      title: 'Scope completeness',
+      text: 'Add fixtures, finishes, and any layout changes to make the estimate more useful for local pros.',
+    });
+  }
+  drivers.push({
+    title: 'Local labor rates',
+    text: locationNote(),
+  });
+  return drivers.slice(0, 4);
+}
+
+function renderEstimateScreen() {
+  const breakdown = $('#estimateBreakdown');
+  const drivers = $('#estimateDrivers');
+  const intro = $('#estimateViewIntro');
+  if (!breakdown || !drivers || !intro) return;
+
+  const [lo, hi] = estimateRange();
+  intro.textContent = state.placed.length
+    ? `${scopeItemsText()} in a ${fmtNum(state.roomW * state.roomH)} sq ft bathroom near ${locationLabel()}. Current range: ${rangeText(lo, hi)}.`
+    : 'Add components to generate an itemized project estimate.';
+
+  breakdown.innerHTML = state.placed.length ? state.placed.map(item => {
+    const component = COMPONENTS[item.type];
+    const [itemLo, itemHi] = itemRange(item);
+    const addons = component.addons
+      .filter(addon => item.addons[addon.key])
+      .map(addon => addon.label);
+    return `
+      <article class="estimate-line-item">
+        <span class="estimate-line-item__icon">${iconSvg(component.iconKey)}</span>
+        <div>
+          <h4>${escapeHtml(item.name)}</h4>
+          <p>${escapeHtml(TIER_LABEL[item.tier])} finish - ${fmtNum(item.w)} x ${fmtNum(item.h)} ft${addons.length ? ` - ${escapeHtml(addons.join(', '))}` : ''}</p>
+        </div>
+        <strong>${rangeText(itemLo, itemHi)}</strong>
+      </article>
+    `;
+  }).join('') : `
+    <section class="estimate-empty">
+      <h4>No scope added yet</h4>
+      <p>Add fixtures from the Plan tab to build an itemized estimate.</p>
+    </section>
+  `;
+
+  drivers.innerHTML = costDriverItems().map(driver => `
+    <article class="estimate-driver">
+      <h4>${escapeHtml(driver.title)}</h4>
+      <p>${escapeHtml(driver.text)}</p>
+    </article>
+  `).join('');
+}
+
+function renderRecommendations() {
+  const target = $('#recommendedGuides');
+  const intro = $('#recommendationIntro');
+  if (!target || !intro) return;
+
+  const selected = selectedItem();
+  const loc = currentLocation();
+  const guides = recommendationItems(4);
+  intro.textContent = selected
+    ? `Based on ${selected.name.toLowerCase()} and your current ${locationLabel(loc)} estimate.`
+    : 'Add fixtures to see guides matched to your exact remodel scope.';
+  target.innerHTML = guides.map(article => `
+    <a class="recommended-card" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
+      <img src="${article.image}" alt="">
+      <span class="recommended-card__tag">${escapeHtml(article.tag)}</span>
+      <strong>${escapeHtml(article.title)}</strong>
+      <p>${escapeHtml(article.reason)}</p>
+    </a>
+  `).join('');
+}
+
+function renderGuidesScreen() {
+  const target = $('#guideCollections');
+  const intro = $('#guidesViewIntro');
+  if (!target || !intro) return;
+
+  const types = placedTypes();
+  intro.textContent = types.length
+    ? `Showing guides for ${projectScopeLabel()} in your current plan.`
+    : 'Add components to see guides matched to your remodel scope.';
+
+  const collectionTypes = types.length ? types : ['shower', 'vanity', 'tile'];
+  target.innerHTML = collectionTypes.map(type => {
+    const component = COMPONENTS[type];
+    const articles = component.articles.slice(0, 3).map(article => `
+      <a class="guide-row" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
+        <img src="${article.image}" alt="">
+        <span>
+          <em>${escapeHtml(article.tag)}</em>
+          <strong>${escapeHtml(article.title)}</strong>
+          <small>${escapeHtml(article.meta)}</small>
+        </span>
+      </a>
+    `).join('');
+    return `
+      <section class="guide-collection">
+        <div class="guide-collection__head">
+          <span class="guide-collection__icon">${iconSvg(component.iconKey)}</span>
+          <div>
+            <h3>${escapeHtml(component.label)}</h3>
+            <p>${escapeHtml(component.blurb)}</p>
+          </div>
+        </div>
+        <div class="guide-row-list">${articles}</div>
+      </section>
+    `;
+  }).join('');
+}
+
+function renderProHandoff() {
+  const title = $('#proHandoffTitle');
+  const copy = $('#proHandoffCopy');
+  const chips = $('#scopeChips');
+  const button = $('#proQuoteButton');
+  if (!title || !copy || !chips || !button) return;
+
+  const loc = currentLocation();
+  const [lo, hi] = estimateRange();
+  const count = state.placed.length;
+  const scope = projectScopeLabel();
+  const range = count ? rangeText(lo, hi) : 'an estimate';
+  const local = loc.key === 'national' ? 'local' : `${loc.label} area`;
+
+  title.textContent = count ? `Get ${local} quotes for this plan` : 'Get matched with bathroom remodelers near you';
+  copy.textContent = count
+    ? `Your ${scope} scope is ready to share with pros. Send the same plan to local remodelers so estimates start from ${range}.`
+    : 'Build a project scope, then share it with local remodelers for more accurate quotes.';
+  button.textContent = count ? 'Send this plan to local pros' : 'Find bathroom remodelers';
+
+  const chipData = [
+    `${count} scoped item${count === 1 ? '' : 's'}`,
+    `${fmtNum(state.roomW * state.roomH)} sq ft bathroom`,
+    locationLabel(loc),
+    count ? range : 'Estimate pending',
+  ];
+  chips.innerHTML = chipData.map(chip => `<span>${escapeHtml(chip)}</span>`).join('');
+}
+
+function renderInspector() {
+  const item = selectedItem();
+  const wrap = $('#inspectorContent');
+  if (!item) {
+    wrap.innerHTML = `
+      <section class="config-empty">
+        <h2>Select a component</h2>
+        <p>Click any item on the plan to configure finish level, dimensions, add-ons, and related guides.</p>
+      </section>
+    `;
+    return;
+  }
+
+  const c = COMPONENTS[item.type];
+  const [lo, hi] = itemRange(item);
+  const spotlight = primaryRecommendation();
+  const variants = c.variants.map(variant => `
+    <button class="pill-button${item.name === variant ? ' is-active' : ''}" type="button" data-action="variant" data-id="${item.id}" data-value="${escapeHtml(variant)}">${escapeHtml(variant)}</button>
+  `).join('');
+  const tiers = ['good', 'better', 'best'].map(tier => `
+    <button class="tier-button${item.tier === tier ? ' is-active' : ''}" type="button" data-action="tier" data-id="${item.id}" data-tier="${tier}">
+      <span class="tier-label">${TIER_LABEL[tier]}</span>
+      <span class="tier-short">${TIER_SHORT[tier]}</span>
+    </button>
+  `).join('');
+  const addons = c.addons.length ? c.addons.map(addon => {
+    const active = !!item.addons[addon.key];
+    const price = rangeText(addon.lo * currentLocation().mult, addon.hi * currentLocation().mult);
+    return `
+      <button class="addon-row${active ? ' is-active' : ''}" type="button" data-action="addon" data-id="${item.id}" data-addon="${addon.key}">
+        <span class="addon-check">${active ? '&#10003;' : ''}</span>
+        <span>
+          <span class="addon-title">${escapeHtml(addon.label)}</span>
+          <span class="addon-desc">${escapeHtml(addon.desc)}</span>
+        </span>
+        <span class="addon-price">+${price}</span>
+      </button>
+    `;
+  }).join('') : '<p class="coverage-note">No add-ons for this component yet.</p>';
+  const articles = c.articles.map(article => `
+    <a class="article-card" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
+      <span class="article-thumb article-thumb--${article.tag}">${article.image ? `<img src="${article.image}" alt="">` : iconSvg(c.iconKey)}</span>
+      <span>
+        <span class="article-title">${escapeHtml(article.title)}</span>
+        <span class="article-meta">${escapeHtml(article.meta)}</span>
+      </span>
+    </a>
+  `).join('');
+
+  wrap.innerHTML = `
+    <section class="selected-config">
+      <div class="selected-head">
+        <span class="item-icon">${iconSvg(c.iconKey)}</span>
+        <div>
+          <h2>${escapeHtml(item.name)}</h2>
+          <p>${escapeHtml(c.label)}</p>
+        </div>
+      </div>
+
+      <section class="inspector-section inspector-section--variants" aria-label="Configuration">
+        <div class="variant-row">${variants}</div>
+      </section>
+
+      <p class="selected-range"><span>This item</span><strong>${rangeText(lo, hi)}</strong></p>
+
+      <a class="guide-spotlight" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
+        <span class="guide-spotlight__thumb"><img src="${spotlight.image}" alt=""></span>
+        <span class="guide-spotlight__body">
+          <span class="guide-spotlight__kicker">Recommended guide</span>
+          <strong>${escapeHtml(spotlight.title)}</strong>
+          <span>${escapeHtml(spotlight.reason)}</span>
+        </span>
+      </a>
+
+      <section class="inspector-section inspector-section--compact inspector-section--finish">
+        <h3>Finish level</h3>
+        <div class="tier-row">${tiers}</div>
+      </section>
+
+      <section class="inspector-section inspector-section--compact inspector-section--size">
+        <div class="section-title-row">
+          <h3>Size &amp; footprint</h3>
+          <span class="sqft-badge">${fmtNum(item.w * item.h)} sq ft</span>
+        </div>
+        <div class="dimension-grid">
+          <div class="dimension-control">
+            <label for="itemWidth">Width</label>
+            <div class="stepper">
+              <button type="button" data-action="dim-step" data-id="${item.id}" data-axis="w" data-delta="-0.25">-</button>
+              <input id="itemWidth" value="${fmtNum(item.w)}" inputmode="decimal" data-action="dim-input" data-id="${item.id}" data-axis="w" aria-label="Item width in feet">
+              <button type="button" data-action="dim-step" data-id="${item.id}" data-axis="w" data-delta="0.25">+</button>
+            </div>
+          </div>
+          <div class="dimension-control">
+            <label for="itemHeight">Depth</label>
+            <div class="stepper">
+              <button type="button" data-action="dim-step" data-id="${item.id}" data-axis="h" data-delta="-0.25">-</button>
+              <input id="itemHeight" value="${fmtNum(item.h)}" inputmode="decimal" data-action="dim-input" data-id="${item.id}" data-axis="h" aria-label="Item depth in feet">
+              <button type="button" data-action="dim-step" data-id="${item.id}" data-axis="h" data-delta="0.25">+</button>
+            </div>
+          </div>
+        </div>
+        <p class="coverage-note">${fmtNum(item.w * item.h)} sq ft footprint${isAreaDriven(item.type) ? ' updates this cost range.' : '.'}</p>
+      </section>
+
+      <section class="inspector-section">
+        <h3>Add-ons</h3>
+        <div class="addon-list">${addons}</div>
+      </section>
+
+      <section class="inspector-section">
+        <h3>Related guides</h3>
+        <div class="article-list">${articles}</div>
+      </section>
+
+      <button class="danger-button" type="button" data-action="remove" data-id="${item.id}">Remove from plan</button>
+    </section>
+  `;
+}
+
+function renderAll() {
+  renderViewTabs();
+  renderPalette();
+  renderRoomControls();
+  renderLocations();
+  renderCanvas();
+  renderEstimate();
+  renderEstimateScreen();
+  renderRecommendations();
+  renderGuidesScreen();
+  renderProHandoff();
+  renderInspector();
+}
+
+function findItem(id) {
+  return state.placed.find(item => item.id === Number(id)) || null;
+}
+
+function setItemDimension(id, axis, value) {
+  const item = findItem(id);
+  if (!item || Number.isNaN(value)) return;
+  const max = axis === 'w' ? state.roomW : state.roomH;
+  item[axis] = clamp(snap(value), 0.5, max);
+  clampItem(item);
+  renderAll();
+}
+
+function commitRoomDimensions() {
+  const roomW = parseFloat($('#roomWidth').value);
+  const roomH = parseFloat($('#roomHeight').value);
+  if (Number.isNaN(roomW) || Number.isNaN(roomH)) return;
+  state.roomW = clamp(snap(roomW, 0.5), 4, 40);
+  state.roomH = clamp(snap(roomH, 0.5), 4, 40);
+  state.placed.forEach(clampItem);
+  renderAll();
+}
+
+function beginPaletteDrag(type, e) {
+  const ghost = document.createElement('div');
+  ghost.className = 'drag-ghost';
+  ghost.innerHTML = `
+    <span class="ghost-icon">${iconSvg(COMPONENTS[type].iconKey)}</span>
+    <span>${escapeHtml(COMPONENTS[type].label)}</span>
+  `;
+  document.body.appendChild(ghost);
+  drag = {
+    mode: 'palette',
+    type,
+    startX: e.clientX,
+    startY: e.clientY,
+    moved: false,
+    ghost,
+  };
+  moveGhost(e.clientX, e.clientY);
+}
+
+function beginMoveDrag(item, e) {
+  const rect = canvasRect();
+  const cx = rect.left + item.nx * rect.width;
+  const cy = rect.top + item.ny * rect.height;
+  drag = {
+    mode: 'move',
+    id: item.id,
+    startX: e.clientX,
+    startY: e.clientY,
+    offsetX: e.clientX - cx,
+    offsetY: e.clientY - cy,
+    moved: false,
+  };
+}
+
+function beginResizeDrag(item, e) {
+  drag = {
+    mode: 'resize',
+    id: item.id,
+    startX: e.clientX,
+    startY: e.clientY,
+    tlx: item.nx - (item.w / state.roomW) / 2,
+    tly: item.ny - (item.h / state.roomH) / 2,
+    moved: false,
+  };
+}
+
+function moveGhost(clientX, clientY) {
+  if (!drag?.ghost) return;
+  drag.ghost.style.left = `${clientX}px`;
+  drag.ghost.style.top = `${clientY}px`;
+}
+
+function cleanupDrag() {
+  drag?.ghost?.remove();
+  drag = null;
+  $('#planCanvas').classList.remove('is-over');
+}
+
+function handlePointerMove(e) {
+  if (!drag) return;
+  const dx = e.clientX - drag.startX;
+  const dy = e.clientY - drag.startY;
+  drag.moved = drag.moved || Math.hypot(dx, dy) > 5;
+
+  if (drag.mode === 'palette') {
+    moveGhost(e.clientX, e.clientY);
+    $('#planCanvas').classList.toggle('is-over', isInsideCanvas(e.clientX, e.clientY));
+    return;
+  }
+
+  const item = findItem(drag.id);
+  if (!item) return;
+
+  if (drag.mode === 'move') {
+    const rect = canvasRect();
+    const cx = e.clientX - drag.offsetX;
+    const cy = e.clientY - drag.offsetY;
+    const nx = snapNormX((cx - rect.left) / rect.width);
+    const ny = snapNormY((cy - rect.top) / rect.height);
+    item.nx = clamp(nx, (item.w / state.roomW) / 2, 1 - (item.w / state.roomW) / 2);
+    item.ny = clamp(ny, (item.h / state.roomH) / 2, 1 - (item.h / state.roomH) / 2);
+    renderAll();
+    return;
+  }
+
+  if (drag.mode === 'resize') {
+    const rect = canvasRect();
+    const fx = (e.clientX - rect.left) / rect.width;
+    const fy = (e.clientY - rect.top) / rect.height;
+    const maxW = state.roomW - drag.tlx * state.roomW;
+    const maxH = state.roomH - drag.tly * state.roomH;
+    item.w = clamp(snap((fx - drag.tlx) * state.roomW), 0.5, maxW);
+    item.h = clamp(snap((fy - drag.tly) * state.roomH), 0.5, maxH);
+    item.nx = drag.tlx + (item.w / state.roomW) / 2;
+    item.ny = drag.tly + (item.h / state.roomH) / 2;
+    renderAll();
+  }
+}
+
+function handlePointerUp(e) {
+  if (!drag) return;
+  if (drag.mode === 'palette') {
+    if (drag.moved && isInsideCanvas(e.clientX, e.clientY)) {
+      const item = createItem(drag.type, 0.5, 0.5);
+      const pos = pointToNorm(e.clientX, e.clientY, item);
+      item.nx = clamp(snapNormX(pos.nx), (item.w / state.roomW) / 2, 1 - (item.w / state.roomW) / 2);
+      item.ny = clamp(snapNormY(pos.ny), (item.h / state.roomH) / 2, 1 - (item.h / state.roomH) / 2);
+      state.placed.push(item);
+      state.selectedId = item.id;
+      renderAll();
+    } else if (!drag.moved) {
+      addItem(drag.type);
+    }
+  }
+  cleanupDrag();
+}
+
+document.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'touch') return;
+  const resize = e.target.closest('[data-action="resize"]');
+  if (resize) {
+    const item = findItem(resize.dataset.id);
+    if (!item) return;
+    state.selectedId = item.id;
+    beginResizeDrag(item, e);
+    e.preventDefault();
+    e.stopPropagation();
+    renderAll();
+    return;
+  }
+
+  const planItem = e.target.closest('.plan-item');
+  if (planItem && !e.target.closest('button, a, input')) {
+    const item = findItem(planItem.dataset.id);
+    if (!item) return;
+    state.selectedId = item.id;
+    beginMoveDrag(item, e);
+    e.preventDefault();
+    renderAll();
+    return;
+  }
+
+  const palette = e.target.closest('[data-action="palette"]');
+  if (palette) {
+    beginPaletteDrag(palette.dataset.type, e);
+    e.preventDefault();
+  }
+});
+
+document.addEventListener('pointermove', handlePointerMove);
+document.addEventListener('pointerup', handlePointerUp);
+document.addEventListener('pointercancel', cleanupDrag);
+
+document.addEventListener('click', e => {
+  const actionTarget = e.target.closest('[data-action]');
+  if (actionTarget) {
+    const action = actionTarget.dataset.action;
+    if (action === 'location') {
+      state.location = actionTarget.dataset.location;
+      state.locOpen = false;
+      renderAll();
+      return;
+    }
+    if (action === 'view') {
+      state.view = actionTarget.dataset.view;
+      renderAll();
+      return;
+    }
+    if (action === 'remove') {
+      removeItem(Number(actionTarget.dataset.id));
+      return;
+    }
+    if (action === 'variant') {
+      const item = findItem(actionTarget.dataset.id);
+      if (item) item.name = actionTarget.dataset.value;
+      renderAll();
+      return;
+    }
+    if (action === 'tier') {
+      const item = findItem(actionTarget.dataset.id);
+      if (item) item.tier = actionTarget.dataset.tier;
+      renderAll();
+      return;
+    }
+    if (action === 'addon') {
+      const item = findItem(actionTarget.dataset.id);
+      if (item) item.addons[actionTarget.dataset.addon] = !item.addons[actionTarget.dataset.addon];
+      renderAll();
+      return;
+    }
+    if (action === 'dim-step') {
+      const item = findItem(actionTarget.dataset.id);
+      if (!item) return;
+      const axis = actionTarget.dataset.axis;
+      setItemDimension(item.id, axis, item[axis] + parseFloat(actionTarget.dataset.delta));
+      return;
+    }
+  }
+
+  const planItem = e.target.closest('.plan-item');
+  if (planItem && !e.target.closest('button, a, input')) {
+    state.selectedId = Number(planItem.dataset.id);
+    renderAll();
+  }
+});
+
+document.addEventListener('change', e => {
+  if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+    commitRoomDimensions();
+    return;
+  }
+  if (e.target.dataset.action === 'dim-input') {
+    setItemDimension(e.target.dataset.id, e.target.dataset.axis, parseFloat(e.target.value));
+  }
+});
+
+document.addEventListener('input', e => {
+  if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+    previewRoomDimensions();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.matches('input')) {
+    if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
+      commitRoomDimensions();
+    }
+    e.target.blur();
+  }
+});
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'locationToggle' || e.target.closest('#locationToggle')) {
+    state.locOpen = !state.locOpen;
+    renderAll();
+    return;
+  }
+  if (state.locOpen && !e.target.closest('.location-picker')) {
+    state.locOpen = false;
+    renderAll();
+  }
+});
+
+$('#locateButton').addEventListener('click', () => {
+  state.location = state.location === 'national' ? 'seattle' : 'national';
+  state.locOpen = false;
+  renderAll();
+});
+
+function openDownloadModal() {
+  const [lo, hi] = estimateRange();
+  const modal = $('#briefModal');
+  $('#briefSummary').textContent = state.placed.length
+    ? `${state.placed.length} scoped item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom near ${locationLabel()}. Estimated range: ${rangeText(lo, hi)}. Enter your info to download the PDF.`
+    : 'Add fixtures to generate a contractor-ready PDF.';
+  modal.hidden = false;
+  $('#leadName').focus();
+}
+
+$('#quoteButton').addEventListener('click', openDownloadModal);
+$('#downloadPlanButton').addEventListener('click', openDownloadModal);
+$('#estimateDownloadButton').addEventListener('click', openDownloadModal);
+
+$('#modalClose').addEventListener('click', () => {
+  $('#briefModal').hidden = true;
+});
+
+$('#briefModal').addEventListener('click', e => {
+  if (e.target.id === 'briefModal') $('#briefModal').hidden = true;
+});
+
+function planPdfLines(lead) {
+  const [lo, hi] = estimateRange();
+  return [
+    'BATHROOM REMODEL PROJECT BRIEF',
+    'Prepared with Angi',
+    `Prepared for: ${lead.name} (${lead.email})`,
+    '',
+    `Room: ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft (${fmtNum(state.roomW * state.roomH)} sq ft)`,
+    `Location: ${locationLabel()}`,
+    `Estimated range: ${state.placed.length ? rangeText(lo, hi) : '$0'}`,
+    '',
+    'SCOPE',
+    ...state.placed.map(item => {
+      const [itemLo, itemHi] = itemRange(item);
+      const c = COMPONENTS[item.type];
+      const addonLabels = c.addons.filter(addon => item.addons[addon.key]).map(addon => addon.label);
+      return `- ${item.name}: ${fmtNum(item.w)} x ${fmtNum(item.h)} ft, ${TIER_LABEL[item.tier]} tier, ${rangeText(itemLo, itemHi)}${addonLabels.length ? `, add-ons: ${addonLabels.join(', ')}` : ''}`;
+    }),
+    '',
+    'RECOMMENDED GUIDES',
+    ...recommendationItems(3).map(article => `- ${article.title}`),
+    '',
+    'NEXT STEP',
+    'Share this scope with local pros so each estimate starts from the same project details.',
+  ];
+}
+
+function wrapPdfText(text, maxChars = 78) {
+  const words = String(text).replace(/\s+/g, ' ').trim().split(' ');
+  const lines = [];
+  let line = '';
+  words.forEach(word => {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > maxChars && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  });
+  if (line) lines.push(line);
+  return lines.length ? lines : [''];
+}
+
+function escapePdfText(text) {
+  return String(text)
+    .replace(/[^\x20-\x7E]/g, '-')
+    .replace(/\\/g, '\\\\')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)');
+}
+
+function createPlanPdfBlob(lead) {
+  const pageWidth = 612;
+  const pageHeight = 792;
+  const margin = 48;
+  const pages = [];
+  let y = pageHeight - margin;
+  let stream = '';
+
+  function newPage() {
+    if (stream) pages.push(stream);
+    stream = '';
+    y = pageHeight - margin;
+  }
+
+  function addLine(text = '', options = {}) {
+    const size = options.size || 11;
+    const font = options.bold ? 'F2' : 'F1';
+    const leading = options.leading || Math.round(size * 1.45);
+    const maxChars = options.maxChars || (size >= 16 ? 44 : 78);
+    const wrapped = text ? wrapPdfText(text, maxChars) : [''];
+    wrapped.forEach(line => {
+      if (y < margin + leading) newPage();
+      stream += `BT /${font} ${size} Tf ${margin} ${y} Td (${escapePdfText(line)}) Tj ET\n`;
+      y -= leading;
+    });
+  }
+
+  planPdfLines(lead).forEach((line, index) => {
+    if (index === 0) {
+      addLine(line, { size: 20, bold: true, leading: 28, maxChars: 42 });
+      return;
+    }
+    if (line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
+      addLine('');
+      addLine(line, { size: 13, bold: true, leading: 18, maxChars: 60 });
+      return;
+    }
+    addLine(line);
+  });
+  if (stream) pages.push(stream);
+
+  const objects = [];
+  const addObject = content => {
+    objects.push(content);
+    return objects.length;
+  };
+  addObject('<< /Type /Catalog /Pages 2 0 R >>');
+  const pagesObjectIndex = addObject('');
+  addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+  addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>');
+  const pageRefs = [];
+  pages.forEach(content => {
+    const contentObject = addObject(`<< /Length ${content.length} >>\nstream\n${content}endstream`);
+    const pageObject = addObject(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${contentObject} 0 R >>`);
+    pageRefs.push(`${pageObject} 0 R`);
+  });
+  objects[pagesObjectIndex - 1] = `<< /Type /Pages /Kids [${pageRefs.join(' ')}] /Count ${pageRefs.length} >>`;
+
+  let pdf = '%PDF-1.4\n';
+  const offsets = [0];
+  objects.forEach((object, index) => {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  });
+  const xrefOffset = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach(offset => {
+    pdf += `${String(offset).padStart(10, '0')} 00000 n \n`;
+  });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+  return new Blob([pdf], { type: 'application/pdf' });
+}
+
+function downloadPlanPdf(lead) {
+  const blob = createPlanPdfBlob(lead);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'bathroom-remodel-project-brief.pdf';
+  document.body.appendChild(a);
+  a.click();
+  window.setTimeout(() => {
+    URL.revokeObjectURL(a.href);
+    a.remove();
+  }, 1000);
+}
+
+$('#downloadLeadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!e.currentTarget.reportValidity()) return;
+  downloadPlanPdf({
+    name: $('#leadName').value.trim(),
+    email: $('#leadEmail').value.trim(),
+  });
+  $('#briefModal').hidden = true;
+});
+
+renderAll();
+  </script>
+</body>
+</html>
