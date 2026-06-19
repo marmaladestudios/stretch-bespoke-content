@@ -604,15 +604,15 @@ html, body { overflow-x: hidden; }
 
   <div class="v2-container">
     <div class="sol-hero-content">
-      <span class="v2-overline v2-reveal v2-delay-1">Solutions</span>
-      <h1 class="v2-reveal v2-delay-2">Creative Solutions <span class="gradient-text">Fit For You</span></h1>
-      <p class="v2-subtitle v2-reveal v2-delay-3">From ecommerce product copy to enterprise content strategy, we tailor our services to meet you where you are.</p>
+      <span class="v2-overline v2-reveal v2-delay-1">Stretch Creative</span>
+      <h1 class="v2-reveal v2-delay-2">Content Solutions for <span class="gradient-text">Modern Search &amp; Discoverability</span></h1>
+      <p class="v2-subtitle v2-reveal v2-delay-3">Rank smarter, not harder. Stretch Creative maximizes your marketing budget with SEO, AEO, and content services that fit your needs&mdash;nothing more, nothing less.</p>
     </div>
   </div>
 
   <div class="v2-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
+      <polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/>
     </svg>
   </div>
 </section>
