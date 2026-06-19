@@ -563,6 +563,22 @@ html, body { overflow-x: hidden; }
   box-shadow: 0 8px 30px rgba(0,0,0,0.25);
 }
 
+/* Trust section CTA button (same white-pill treatment on the dark bg) */
+.sol-trust .v2-btn-primary {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: #8560A8; background: #fff;
+  padding: 16px 40px; border-radius: 6px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.sol-trust .v2-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
 /* ========================================
    RESPONSIVE
    ======================================== */
