@@ -119,4 +119,19 @@ if (!$healthcare) {
     }
 }
 
+// --------------------------------------------------------------------
+// FIX 3 — Repoint homepage to the new Home template (page-home.php)
+// The Solutions design is now the homepage; front-page-v2 is retired.
+// --------------------------------------------------------------------
+WP_CLI::log("\n=== Repointing homepage to page-home.php ===");
+$home_page = get_page_by_path('home');
+if (!$home_page) {
+    WP_CLI::warning('  Home page (slug "home") not found. Skipping front-page repoint.');
+} else {
+    update_post_meta($home_page->ID, '_wp_page_template', 'page-home.php');
+    update_option('show_on_front', 'page');
+    update_option('page_on_front', $home_page->ID);
+    WP_CLI::log("  ✓ Home page (ID {$home_page->ID}) → page-home.php; front page set");
+}
+
 WP_CLI::success('Content fixes complete.');

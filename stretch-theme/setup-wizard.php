@@ -27,7 +27,7 @@ if ($step === 1) {
     $home = get_page_by_path('home');
     if (!$home) { $home_id = wp_insert_post(['post_title' => 'Home', 'post_name' => 'home', 'post_type' => 'page', 'post_status' => 'publish']); }
     else { $home_id = $home->ID; }
-    update_post_meta($home_id, '_wp_page_template', 'front-page-v2.php');
+    update_post_meta($home_id, '_wp_page_template', 'page-home.php');
     update_option('show_on_front', 'page');
     update_option('page_on_front', $home_id);
     echo "✓ Homepage created<br>";
