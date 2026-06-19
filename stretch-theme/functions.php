@@ -81,6 +81,18 @@ function stretch_maybe_flush_rewrites() {
 add_action('init', 'stretch_maybe_flush_rewrites');
 
 /**
+ * The Solutions page content is now the homepage. 301-redirect the retired
+ * /stretch-creative-solutions/ URL to the site root.
+ */
+add_action('template_redirect', 'stretch_redirect_retired_solutions');
+function stretch_redirect_retired_solutions() {
+    if (is_page('stretch-creative-solutions')) {
+        wp_redirect(home_url('/'), 301);
+        exit;
+    }
+}
+
+/**
  * Enqueue styles and scripts.
  */
 function stretch_enqueue_assets() {
