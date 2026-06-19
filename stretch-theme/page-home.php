@@ -619,187 +619,164 @@ html, body { overflow-x: hidden; }
 
 
 <!-- ========================================
-     2. SOLUTIONS CARDS
+     2. OUR SERVICES
      ======================================== -->
-<section class="v2-section sol-cards-section" aria-label="Solutions">
+<section class="v2-section sol-services" aria-label="Our Services">
   <div class="v2-container">
-    <div class="sol-cards-heading">
-      <span class="v2-overline v2-reveal">Who We Serve</span>
-      <h2 class="v2-reveal v2-delay-1">Industries &amp; <span class="gradient-text">Solutions</span></h2>
+    <div class="sol-services-heading">
+      <span class="v2-overline v2-reveal">Our Services</span>
+      <h2 class="v2-reveal v2-delay-1">Multiple services <span class="gradient-text">&times; one agency</span></h2>
     </div>
 
-    <div class="sol-cards-grid">
-      <div class="sol-card v2-reveal v2-delay-1">
-        <div class="sol-card-image">
-          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Ecommerce solutions" loading="lazy">
+    <div class="sol-services-grid">
+      <a href="/seo_content_strategy_services/" class="sol-svc-card v2-reveal v2-delay-1" style="--svc-start:#8560A8;--svc-end:#5674B9;--svc-icon-bg:rgba(133,96,168,0.1);--svc-icon-bg-end:rgba(86,116,185,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
         </div>
-        <div class="sol-card-content">
-          <div class="sol-card-tag">Ecommerce</div>
-          <div class="sol-card-title">Scale Your Product Content</div>
-          <div class="sol-card-desc">High-converting product descriptions, category pages, and brand storytelling for online retailers of every size.</div>
-          <div class="sol-card-stats">
-            <div>
-              <div class="sol-stat-num">500+</div>
-              <div class="sol-stat-label">Products Written</div>
-            </div>
-            <div>
-              <div class="sol-stat-num">3x</div>
-              <div class="sol-stat-label">Conversion Lift</div>
-            </div>
-          </div>
-          <a href="/contact-stretch-creative/" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        </div>
-      </div>
+        <h3>SEO/AEO Strategy &amp; Services</h3>
+        <p>Search has changed, but people still need answers. We help businesses earn visibility across traditional search, AI-generated results, and emerging discovery platforms with content and site experiences that are useful, accurate, and easy to understand.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
 
-      <div class="sol-card v2-reveal v2-delay-2">
-        <div class="sol-card-image">
-          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=400&fit=crop" alt="Agency solutions" loading="lazy">
+      <a href="/services/bespoke-content-experience/" class="sol-svc-card v2-reveal v2-delay-2" style="--svc-start:#5674B9;--svc-end:#448CCB;--svc-icon-bg:rgba(86,116,185,0.1);--svc-icon-bg-end:rgba(68,140,203,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
         </div>
-        <div class="sol-card-content">
-          <div class="sol-card-tag">Agencies</div>
-          <div class="sol-card-title">Your White-Label Content Partner</div>
-          <div class="sol-card-desc">Reliable, scalable content production that integrates seamlessly with your agency&rsquo;s workflow and client expectations.</div>
-          <div class="sol-card-stats">
-            <div>
-              <div class="sol-stat-num">50+</div>
-              <div class="sol-stat-label">Agency Partners</div>
-            </div>
-            <div>
-              <div class="sol-stat-num">98%</div>
-              <div class="sol-stat-label">On-Time Delivery</div>
-            </div>
-          </div>
-          <a href="/contact-stretch-creative/" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        </div>
-      </div>
+        <h3>Interactive Content Marketing</h3>
+        <p>Calculators, assessments, maps, quizzes, and other interactive tools give visitors a reason to engage instead of bounce. We build bespoke content experiences that answer questions, surface insights, recommend products, and provide your visitors with value&mdash;and fun.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
 
-      <div class="sol-card v2-reveal v2-delay-3">
-        <div class="sol-card-image">
-          <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=600&h=400&fit=crop" alt="Publisher solutions" loading="lazy">
+      <a href="/content-writing-at-any-scale/" class="sol-svc-card v2-reveal v2-delay-3" style="--svc-start:#448CCB;--svc-end:#00BFF3;--svc-icon-bg:rgba(68,140,203,0.1);--svc-icon-bg-end:rgba(0,191,243,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
         </div>
-        <div class="sol-card-content">
-          <div class="sol-card-tag">Publishers</div>
-          <div class="sol-card-title">Editorial Content at Scale</div>
-          <div class="sol-card-desc">From blogs and articles to longform features, we deliver publish-ready editorial content that meets your standards.</div>
-          <div class="sol-card-stats">
-            <div>
-              <div class="sol-stat-num">1,000+</div>
-              <div class="sol-stat-label">Articles Delivered</div>
-            </div>
-            <div>
-              <div class="sol-stat-num">200+</div>
-              <div class="sol-stat-label">Writers Available</div>
-            </div>
-          </div>
-          <a href="/contact-stretch-creative/" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        </div>
-      </div>
+        <h3>Content Writing</h3>
+        <p>Our hand-picked roster of experienced content writers can take on whatever written assets you need to inform, persuade, and support your customers through the buying journey. Every piece we produce is written by humans for real people, fully optimized and written with a clear purpose.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
 
-      <div class="sol-card v2-reveal v2-delay-4">
-        <div class="sol-card-image">
-          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Content marketing solutions" loading="lazy">
+      <a href="/graphic_design_services/" class="sol-svc-card v2-reveal v2-delay-1" style="--svc-start:#00BFF3;--svc-end:#5674B9;--svc-icon-bg:rgba(0,191,243,0.1);--svc-icon-bg-end:rgba(86,116,185,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 1 0 10 10c0-4.22-4.5-3-5-6s-1-4-5-4z"/></svg>
         </div>
-        <div class="sol-card-content">
-          <div class="sol-card-tag">Content Marketing</div>
-          <div class="sol-card-title">Full-Funnel Content Strategy</div>
-          <div class="sol-card-desc">SEO-driven blogs, gated content, email campaigns, and social copy that attract, engage, and convert your audience.</div>
-          <div class="sol-card-stats">
-            <div>
-              <div class="sol-stat-num">40%</div>
-              <div class="sol-stat-label">Traffic Growth</div>
-            </div>
-            <div>
-              <div class="sol-stat-num">2x</div>
-              <div class="sol-stat-label">Lead Generation</div>
-            </div>
-          </div>
-          <a href="/contact-stretch-creative/" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <h3>Visual Content &amp; Design</h3>
+        <p>Strong visuals make complex information easier to understand. Our in-house, human creatives produce high-quality graphics, infographics, digital assets, photography, and video productions that clarify key points, strengthen messaging and branding, and help your content perform across multiple channels.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <a href="/paid-advertising/" class="sol-svc-card v2-reveal v2-delay-2" style="--svc-start:#8560A8;--svc-end:#448CCB;--svc-icon-bg:rgba(133,96,168,0.1);--svc-icon-bg-end:rgba(68,140,203,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         </div>
+        <h3>Paid Advertising</h3>
+        <p>Traffic alone doesn&rsquo;t pay the bills. Our paid advertising team creates paid campaigns that connect with the right audiences, align with your business goals, and support measurable outcomes, from lead generation to product sales.</p>
+        <span class="sol-svc-link">Learn more &rarr;</span>
+      </a>
+
+      <div class="sol-svc-card sol-svc-card--addon v2-reveal v2-delay-3" style="--svc-start:#5674B9;--svc-end:#00BFF3;--svc-icon-bg:rgba(86,116,185,0.1);--svc-icon-bg-end:rgba(0,191,243,0.1);">
+        <div class="sol-svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <h3>Add-On Services</h3>
+        <ul class="sol-addon-list">
+          <li>Budget management</li>
+          <li>CMS loading</li>
+        </ul>
       </div>
     </div>
   </div>
 
   <div class="v2-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/>
+      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
     </svg>
   </div>
 </section>
 
 
 <!-- ========================================
-     3. ALL SERVICES
+     3. WHO WE SERVE
      ======================================== -->
-<section class="v2-section sol-services" aria-label="All Services">
+<section class="v2-section sol-cards-section" aria-label="Who We Serve">
   <div class="v2-container">
-    <div class="sol-services-heading">
-      <span class="v2-overline v2-reveal">Everything We Do</span>
-      <h2 class="v2-reveal v2-delay-1">Multiple services <span class="gradient-text">&times; one agency</span></h2>
-      <p class="sol-services-subtitle v2-reveal v2-delay-2">Scale your brand with strategy, storytelling, and visuals that connect and convert.</p>
+    <div class="sol-cards-heading">
+      <span class="v2-overline v2-reveal">Who We Serve</span>
+      <h2 class="v2-reveal v2-delay-1">Built for <span class="gradient-text">your industry</span></h2>
     </div>
 
-    <div class="sol-services-grid">
-      <a href="/content-writing-at-any-scale/" class="sol-svc-card v2-reveal v2-delay-1" style="--svc-start:#8560A8;--svc-end:#5674B9;--svc-icon-bg:rgba(133,96,168,0.1);--svc-icon-bg-end:rgba(86,116,185,0.1);">
-        <div class="sol-svc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
+    <div class="sol-cards-grid">
+      <div class="sol-card v2-reveal v2-delay-1">
+        <div class="sol-card-image">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Ecommerce" loading="lazy">
         </div>
-        <h3>Content Writing</h3>
-        <p>Our roster of writers can take on whatever written content you need &mdash; B2B, B2C, SaaS, eCommerce &mdash; always fully optimized with current SEO best practices.</p>
-        <span class="sol-svc-link">Learn more &rarr;</span>
-      </a>
-
-      <a href="/graphic_design_services/" class="sol-svc-card v2-reveal v2-delay-2" style="--svc-start:#5674B9;--svc-end:#448CCB;--svc-icon-bg:rgba(86,116,185,0.1);--svc-icon-bg-end:rgba(68,140,203,0.1);">
-        <div class="sol-svc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2a10 10 0 1 0 10 10c0-4.22-4.5-3-5-6s-1-4-5-4z"/></svg>
+        <div class="sol-card-content">
+          <div class="sol-card-tag">Ecommerce</div>
+          <div class="sol-card-title">SEO and content services for every stage of the buying journey.</div>
+          <div class="sol-card-desc">We help DTC brands and retailers attract qualified shoppers and improve product discovery with expert SEO services, informative product detail and category pages, interactive content experiences, and engaging blogs that build your brand and help your customers find the products they need.</div>
+          <ul class="sol-card-list">
+            <li>Product Detail Pages &amp; Category Page Content</li>
+            <li>SEO &amp; Product Discovery</li>
+            <li>Creative Assets &amp; Visual Storytelling</li>
+            <li>Buying Guides and Gift Guides</li>
+          </ul>
+          <a href="#" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-        <h3>Graphic Design</h3>
-        <p>We create infographics, white papers, and ebooks that make your brand stand out and your message stick. We have the talent to match your needs &mdash; and your budget.</p>
-        <span class="sol-svc-link">Learn more &rarr;</span>
-      </a>
+      </div>
 
-      <a href="/video-content-services/" class="sol-svc-card v2-reveal v2-delay-3" style="--svc-start:#448CCB;--svc-end:#00BFF3;--svc-icon-bg:rgba(68,140,203,0.1);--svc-icon-bg-end:rgba(0,191,243,0.1);">
-        <div class="sol-svc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      <div class="sol-card v2-reveal v2-delay-2">
+        <div class="sol-card-image">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=400&fit=crop" alt="Agencies and strategic partners" loading="lazy">
         </div>
-        <h3>Video &amp; Photography</h3>
-        <p>Our in-house crew handles video and photography under one roof — concept, filming, editing, motion graphics, product shoots, and lifestyle shoots — so more of your budget stays on the screen.</p>
-        <span class="sol-svc-link">Learn more &rarr;</span>
-      </a>
-
-      <a href="/seo_content_strategy_services/" class="sol-svc-card v2-reveal v2-delay-1" style="--svc-start:#00BFF3;--svc-end:#5674B9;--svc-icon-bg:rgba(0,191,243,0.1);--svc-icon-bg-end:rgba(86,116,185,0.1);">
-        <div class="sol-svc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        <div class="sol-card-content">
+          <div class="sol-card-tag">Agencies &amp; Strategic Partners</div>
+          <div class="sol-card-title">High-volume, white-labeled content for agencies and other partners.</div>
+          <div class="sol-card-desc">When demand exceeds capacity, Stretch Creative is ready to help with the expertise, talent, and production support to help your agency scale. We work as an extension of your team to produce high-quality, human-written content at any scale.</div>
+          <ul class="sol-card-list">
+            <li>White-Labeled SEO Content Production</li>
+            <li>SEO &amp; Content Strategy</li>
+            <li>Design &amp; Interactive Assets</li>
+            <li>High-Volume Production</li>
+          </ul>
+          <a href="#" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-        <h3>SEO Strategy &amp; Services</h3>
-        <p>Our SEO services range from detailed audits and tracking for enterprise operations to SEO-Lite for smaller brands &mdash; you only pay for what you need.</p>
-        <span class="sol-svc-link">Learn more &rarr;</span>
-      </a>
+      </div>
 
-      <a href="/content-strategy/" class="sol-svc-card v2-reveal v2-delay-2" style="--svc-start:#8560A8;--svc-end:#448CCB;--svc-icon-bg:rgba(133,96,168,0.1);--svc-icon-bg-end:rgba(68,140,203,0.1);">
-        <div class="sol-svc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 2v20"/><path d="M4 4h11l2 3-2 3H4"/><path d="M4 12h9l2 3-2 3H4"/></svg>
+      <div class="sol-card v2-reveal v2-delay-3">
+        <div class="sol-card-image">
+          <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=400&fit=crop" alt="Local service providers" loading="lazy">
         </div>
-        <h3>Content Strategy</h3>
-        <p>We&rsquo;re here to provide whatever support you need with your content strategy &mdash; we can create it from scratch starting with SEO research or jump in to help you create winning editorial content briefs.</p>
-        <span class="sol-svc-link">Learn more &rarr;</span>
-      </a>
-
-      <a href="/paid-advertising/" class="sol-svc-card v2-reveal v2-delay-3" style="--svc-start:#5674B9;--svc-end:#00BFF3;--svc-icon-bg:rgba(86,116,185,0.1);--svc-icon-bg-end:rgba(0,191,243,0.1);">
-        <div class="sol-svc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <div class="sol-card-content">
+          <div class="sol-card-tag">Local Service Providers</div>
+          <div class="sol-card-title">Get found locally, build trust, and turn searches into service calls.</div>
+          <div class="sol-card-desc">Your local service business or franchise needs to be visible where customers are searching&mdash;and persuasive when they click onto your site. Stretch Creative combines local SEO, service-focused content, and digital marketing strategies that will help your business earn trust and generate work orders.</div>
+          <ul class="sol-card-list">
+            <li>SEO for Local Search Visibility</li>
+            <li>Service &amp; Geographic Landing Pages and Blogs</li>
+            <li>Social Media &amp; Design</li>
+            <li>Paid Advertising</li>
+          </ul>
+          <a href="#" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-        <h3>Paid Advertising</h3>
-        <p>Stop wasting money on ads that miss the mark. We&rsquo;re experts in creating Google and Facebook ads that reach your target audience, boost conversions, and grow your revenue.</p>
-        <span class="sol-svc-link">Learn more &rarr;</span>
-      </a>
-    </div>
+      </div>
 
-    <div class="sol-addons v2-reveal v2-delay-4">
-      <span class="sol-addons-label">Add-On Services</span>
-      <span class="sol-addons-items">
-        <span>Budget management</span>
-        <span>CMS loading</span>
-      </span>
+      <div class="sol-card v2-reveal v2-delay-4">
+        <div class="sol-card-image">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS and digital platforms" loading="lazy">
+        </div>
+        <div class="sol-card-content">
+          <div class="sol-card-tag">SaaS &amp; Digital Platforms</div>
+          <div class="sol-card-title">Clear, accurate content for high-stakes buying decisions.</div>
+          <div class="sol-card-desc">Whether you&rsquo;re selling software or connecting users to services, your success depends on helping people make informed decisions, often involving serious topics like money, law, and health. Stretch Creative produces content that distills down complex ideas and offerings and answers all the right questions.</div>
+          <ul class="sol-card-list">
+            <li>Expert-Written or -Reviewed Content</li>
+            <li>White Papers and Case Studies</li>
+            <li>Graphic Design</li>
+            <li>SEO Content Strategy</li>
+          </ul>
+          <a href="#" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
     </div>
   </div>
 
