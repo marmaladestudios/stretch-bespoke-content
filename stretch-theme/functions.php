@@ -93,6 +93,19 @@ function stretch_redirect_retired_solutions() {
 }
 
 /**
+ * The /industries/ landing page is not built yet. Redirect the bare parent URL
+ * to the homepage; the child industry pages (e.g. /industries/ecommerce/) render
+ * normally.
+ */
+add_action('template_redirect', 'stretch_redirect_industries_parent');
+function stretch_redirect_industries_parent() {
+    if (is_page('industries')) {
+        wp_redirect(home_url('/'), 302);
+        exit;
+    }
+}
+
+/**
  * Enqueue styles and scripts.
  */
 function stretch_enqueue_assets() {
