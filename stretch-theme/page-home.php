@@ -791,34 +791,42 @@ html, body { overflow-x: hidden; }
 <!-- ========================================
      3.5 WHY TRUST STRETCH
      ======================================== -->
-<section class="v2-section sol-trust" aria-label="Why Trust Stretch">
+<section class="v2-section sol-trust" aria-label="Why Trust Stretch Creative">
   <div class="v2-container">
     <div class="sol-trust-heading">
-      <span class="v2-overline v2-reveal">Why Trust Stretch</span>
-      <h2 class="v2-reveal v2-delay-1">We don&rsquo;t just create content &mdash; <span class="gradient-text">we solve problems.</span></h2>
-      <p class="sol-trust-intro v2-reveal v2-delay-2">Get the most out of your budget with integrated, end-to-end content solutions. Transparent processes and consistent communication among our writing, design, SEO, video, and ads teams ensures your content is consistent across all of your channels.</p>
+      <span class="v2-overline v2-reveal">Why Stretch</span>
+      <h2 class="v2-reveal v2-delay-1">Why Trust <span class="gradient-text">Stretch Creative?</span></h2>
     </div>
 
     <div class="sol-trust-grid">
       <div class="sol-prop-card v2-reveal v2-delay-1" style="--prop-start:#8560A8;--prop-end:#5674B9;">
-        <h3>We&rsquo;re an extension of your team</h3>
-        <p>We&rsquo;re not a one-size-fits-all agency, and we never set it and forget it. Regularly scheduled touch-base calls and easy access to your Client Services Team and Managing Editor keep our partnership fresh and current. That makes it easy for us to pivot with you when big changes come down the pipeline (for better or worse).</p>
+        <h3>All of the services you need under one roof</h3>
+        <p>Content works better when the people creating it work together. With writers, designers, SEO specialists, videographers, and paid media experts under one roof, your campaigns stay aligned, your message remains consistent, and your projects move faster.</p>
       </div>
 
       <div class="sol-prop-card v2-reveal v2-delay-2" style="--prop-start:#5674B9;--prop-end:#448CCB;">
-        <h3>Stay agile in the face of change</h3>
-        <p>It&rsquo;s more important than ever to stay current on trends in content, SEO, and AI &mdash; and we&rsquo;re on top of it at the agency level. Everything we produce at Stretch is optimized for the search engines using current SEO best practices. AI Overviews got you down? We can help you correct the course and weatherproof your content.</p>
+        <h3>We&rsquo;re an extension of your team</h3>
+        <p>The best partnerships don&rsquo;t happen through support tickets and quarterly check-ins. Regularly scheduled touch-base calls and easy access to your Client Services Team and Managing Editor keep our partnership fresh and current. That makes it easy for us to pivot with you when big changes come down the pipeline, for better or worse.</p>
       </div>
 
       <div class="sol-prop-card v2-reveal v2-delay-3" style="--prop-start:#448CCB;--prop-end:#00BFF3;">
-        <h3>Keep more of your money on the screen</h3>
-        <p>We&rsquo;re not the cheapest content agency, but we&rsquo;re far from the most expensive. What makes us so cost-effective is our end-to-end model &mdash; you don&rsquo;t need a separate SEO agency, production company, or content creators. Anything you can&rsquo;t handle in-house, we can take on under one roof &mdash; one invoice, one primary contact, a multitude of services, all customizable to your specific needs.</p>
+        <h3>Stay agile in the face of change</h3>
+        <p>Search is evolving fast, and it&rsquo;s more important than ever to stay current on trends in content, SEO, and AI. We&rsquo;re on top of it at the agency level, and everything we produce is optimized using current SEO and AEO best practices.</p>
       </div>
 
       <div class="sol-prop-card v2-reveal v2-delay-4" style="--prop-start:#8560A8;--prop-end:#00BFF3;">
         <h3>Scale with ease</h3>
-        <p>From the get-go, your dedicated creative teams are fully trained and supported in producing consistent, on-brand content for all of your channels. If you need to increase production or kick off a whole new project with new content types, we can ramp up to full production quick and easy.</p>
+        <p>Need more content? Launching a new product? Expanding into a new market? Our processes make it easy to increase production, add new content types and services, and grow your marketing efforts without rebuilding your entire operation.</p>
       </div>
+
+      <div class="sol-prop-card sol-prop-card--wide v2-reveal v2-delay-5" style="--prop-start:#8560A8;--prop-end:#448CCB;">
+        <h3>Human-created, editorially driven</h3>
+        <p>We&rsquo;re not an AI-assisted content mill. Our writers, editors, and visual creatives are vetted, experienced freelancers who we hand-pick for every project. While we use AI to streamline operational workflows, we never send our clients AI-written content.</p>
+      </div>
+    </div>
+
+    <div class="sol-trust-cta v2-reveal v2-delay-2">
+      <a href="/about-stretch-creative/" class="v2-btn-primary">Learn how we work &rarr;</a>
     </div>
   </div>
 
