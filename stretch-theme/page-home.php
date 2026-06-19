@@ -844,7 +844,7 @@ html, body { overflow-x: hidden; }
 <section class="v2-section sol-cta" aria-label="Call to Action">
   <div class="v2-container">
     <h2 class="v2-reveal">Let&rsquo;s Talk</h2>
-    <p class="v2-reveal v2-delay-1">Ready to scale your content? Tell us about your project and we&rsquo;ll show you how Stretch can help.</p>
+    <p class="v2-reveal v2-delay-1">Tell us about your project and we&rsquo;ll show you how Stretch Creative can help.</p>
     <a href="/contact-stretch-creative/" class="v2-btn-primary v2-reveal v2-delay-2">Contact Us &rarr;</a>
   </div>
 </section>
