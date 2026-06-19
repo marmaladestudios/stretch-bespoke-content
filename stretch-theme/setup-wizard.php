@@ -86,6 +86,29 @@ if ($step === 1) {
     update_post_meta($bce_id, '_wp_page_template', 'page-bespoke-content-experience.php');
     echo "✓ Bespoke Content Experience (under /services/)<br>";
 
+    // Industries parent + child pages (use shared page-industry.php template)
+    $industries_parent = get_page_by_path('industries');
+    $industries_parent_id = $industries_parent ? $industries_parent->ID : wp_insert_post([
+        'post_title'  => 'Industries',
+        'post_name'   => 'industries',
+        'post_type'   => 'page',
+        'post_status' => 'publish',
+    ]);
+    echo "✓ Industries parent page<br>";
+
+    foreach ([['Ecommerce','ecommerce'], ['Agencies & Strategic Partners','agencies']] as $ind) {
+        $child = get_page_by_path('industries/' . $ind[1]);
+        $child_id = $child ? $child->ID : wp_insert_post([
+            'post_title'  => $ind[0],
+            'post_name'   => $ind[1],
+            'post_type'   => 'page',
+            'post_status' => 'publish',
+            'post_parent' => $industries_parent_id,
+        ]);
+        update_post_meta($child_id, '_wp_page_template', 'page-industry.php');
+        echo "✓ Industry: {$ind[0]}<br>";
+    }
+
     // Our Work (portfolio) page
     $our_work = get_page_by_path('our-work');
     $our_work_id = $our_work ? $our_work->ID : wp_insert_post([
@@ -305,8 +328,8 @@ if ($step === 1) {
         if ($existing) foreach ($existing as $item) wp_delete_post($item->ID, true);
     }
 
-    wp_update_nav_menu_item($menu_locations['footer-1'], 0, ['menu-item-title' => 'Ecommerce', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
-    wp_update_nav_menu_item($menu_locations['footer-1'], 0, ['menu-item-title' => 'Agencies', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
+    wp_update_nav_menu_item($menu_locations['footer-1'], 0, ['menu-item-title' => 'Ecommerce', 'menu-item-url' => home_url('/industries/ecommerce/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
+    wp_update_nav_menu_item($menu_locations['footer-1'], 0, ['menu-item-title' => 'Agencies', 'menu-item-url' => home_url('/industries/agencies/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
     wp_update_nav_menu_item($menu_locations['footer-1'], 0, ['menu-item-title' => 'Publishers', 'menu-item-url' => home_url('/stretch-creative-solutions/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);
 
     wp_update_nav_menu_item($menu_locations['footer-2'], 0, ['menu-item-title' => 'Our Story', 'menu-item-url' => home_url('/about-stretch-creative/'), 'menu-item-status' => 'publish', 'menu-item-type' => 'custom']);

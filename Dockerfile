@@ -25,6 +25,7 @@ COPY setup-team-photos.php /opt/setup-team-photos.php
 COPY setup-services.php /opt/setup-services.php
 COPY setup-portfolio.php /opt/setup-portfolio.php
 COPY content-fixes.php /opt/content-fixes.php
+COPY setup-industries.php /opt/setup-industries.php
 COPY portfolio-assets/ /opt/portfolio-assets/
 COPY static-sites/ /opt/static-sites/
 

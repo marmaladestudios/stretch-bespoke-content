@@ -96,6 +96,7 @@ cp -f /opt/setup-team-photos.php /var/www/html/setup-team-photos.php 2>/dev/null
 cp -f /opt/setup-services.php /var/www/html/setup-services.php 2>/dev/null || true
 cp -f /opt/setup-portfolio.php /var/www/html/setup-portfolio.php 2>/dev/null || true
 cp -f /opt/content-fixes.php /var/www/html/content-fixes.php 2>/dev/null || true
+cp -f /opt/setup-industries.php /var/www/html/setup-industries.php 2>/dev/null || true
 
 # Publish static demo bundles alongside WordPress. Existing directories are
 # overwritten so git-backed demos update cleanly on each Render deploy.
@@ -125,6 +126,7 @@ if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
     wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-team-photos.php 2>&1 || echo "  ! setup-team-photos failed (continuing)"
     wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-portfolio.php  2>&1 || echo "  ! setup-portfolio failed (continuing)"
     wp --allow-root --path=/var/www/html eval-file /var/www/html/content-fixes.php    2>&1 || echo "  ! content-fixes failed (continuing)"
+    wp --allow-root --path=/var/www/html eval-file /var/www/html/setup-industries.php 2>&1 || echo "  ! setup-industries failed (continuing)"
     echo "Idempotent setup complete."
 else
     echo "WordPress not installed yet — skipping idempotent setup. Run scripts manually after install."
