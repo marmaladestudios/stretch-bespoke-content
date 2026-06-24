@@ -978,16 +978,6 @@ function renderInspector() {
       </button>
     `;
   }).join('') : '<p class="coverage-note">No add-ons for this component yet.</p>';
-  const articles = c.articles.map(article => `
-    <a class="article-card" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
-      <span class="article-thumb article-thumb--${article.tag}">${article.image ? `<img src="${article.image}" alt="">` : iconSvg(c.iconKey)}</span>
-      <span>
-        <span class="article-title">${escapeHtml(article.title)}</span>
-        <span class="article-meta">${escapeHtml(article.meta)}</span>
-      </span>
-    </a>
-  `).join('');
-
   wrap.innerHTML = `
     <section class="selected-config">
       <div class="selected-head">
@@ -1047,11 +1037,6 @@ function renderInspector() {
       <section class="inspector-section">
         <h3>Add-ons</h3>
         <div class="addon-list">${addons}</div>
-      </section>
-
-      <section class="inspector-section">
-        <h3>Related guides</h3>
-        <div class="article-list">${articles}</div>
       </section>
 
       <button class="danger-button" type="button" data-action="remove" data-id="${item.id}">Remove from plan</button>
