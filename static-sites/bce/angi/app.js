@@ -17,6 +17,7 @@ const COMPONENTS = {
       { key: 'glass', label: 'Glass door', desc: 'Frameless enclosure', lo: 900, hi: 2400 },
       { key: 'surround', label: 'Tile surround', desc: 'Wall tile beyond base', lo: 1600, hi: 4500 },
       { key: 'spray', label: 'Body sprays', desc: 'Extra shower controls', lo: 350, hi: 1200 },
+      { key: 'movePlumbing', label: 'Move plumbing', desc: 'Relocate shower drain or supply lines', lo: 800, hi: 2600 },
     ],
     articles: [
       { title: 'Shower vs. Bathtub: Which Is Right for Your Bathroom?', meta: 'Stephanie Mickelson - Apr 05, 2026', tag: 'Guide', image: './assets/modern-small-bathroom-rain-shower.jpg' },
@@ -34,6 +35,7 @@ const COMPONENTS = {
     addons: [
       { key: 'double', label: 'Double sink', desc: 'Two basins', lo: 800, hi: 2200 },
       { key: 'stone', label: 'Stone countertop', desc: 'Quartz or granite', lo: 500, hi: 1800 },
+      { key: 'movePlumbing', label: 'Move plumbing', desc: 'Relocate sink supply or drain lines', lo: 700, hi: 2200 },
     ],
     articles: [
       { title: '7 Types of Bathroom Countertop Materials to Upgrade Your Space', meta: 'Mizuki Hisaka - May 02, 2026', tag: 'Materials', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
@@ -83,6 +85,7 @@ const COMPONENTS = {
     tiers: { good: [250, 600], better: [700, 1400], best: [1700, 3800] },
     addons: [
       { key: 'bidet', label: 'Bidet seat', desc: 'Smart washlet', lo: 400, hi: 1200 },
+      { key: 'movePlumbing', label: 'Move plumbing', desc: 'Relocate toilet flange or supply line', lo: 900, hi: 3000 },
     ],
     articles: [
       { title: '12 Types of Toilets to Upgrade to in Your Bathroom Remodel', meta: 'Samantha Hawrylack - May 5, 2026', tag: 'Guide', image: './assets/interior-small-bathroom.jpg' },
@@ -107,23 +110,9 @@ const COMPONENTS = {
       { title: 'Bathroom Remodeling Trends That Are Here to Stay', meta: 'Stacey Marcus - May 02, 2026', tag: 'Guide', image: './assets/white-bathroom.jpg' },
     ],
   },
-  plumbing: {
-    label: 'Move plumbing',
-    iconKey: 'plumbing',
-    blurb: 'Relocate supply and drains',
-    size: { w: 2, h: 2 },
-    variants: ['Relocate drain', 'Move supply lines', 'Add new line'],
-    tiers: { good: [800, 1800], better: [1800, 4500], best: [4500, 9000] },
-    addons: [],
-    articles: [
-      { title: '12 Important Questions to Ask Bathroom Remodeling Contractors', meta: 'Stephanie Mickelson - Apr 09, 2026', tag: 'Guide', image: './assets/family-bathroom.jpg' },
-      { title: 'Who to Hire for a Bathroom Remodel Project', meta: 'Gemma Johnstone - May 5, 2026', tag: 'Guide', image: './assets/budget-friendly-small-bathroom-ideas.jpg' },
-      { title: 'How Long Does a Bathroom Remodel Take?', meta: 'Becca Lewis - May 02, 2026', tag: 'Guide', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
-    ],
-  },
 };
 
-const ORDER = ['shower', 'vanity', 'tile', 'floor', 'toilet', 'lighting', 'plumbing'];
+const ORDER = ['shower', 'vanity', 'tile', 'floor', 'toilet', 'lighting'];
 const TIER_LABEL = { good: 'Good', better: 'Better', best: 'Best' };
 const TIER_SHORT = { good: 'Budget', better: 'Mid-range', best: 'High-end' };
 const DEFAULT_POS = {
@@ -133,7 +122,6 @@ const DEFAULT_POS = {
   floor: { x: 0.50, y: 0.74 },
   toilet: { x: 0.82, y: 0.72 },
   lighting: { x: 0.26, y: 0.72 },
-  plumbing: { x: 0.52, y: 0.50 },
 };
 
 const OPENINGS = {
@@ -700,7 +688,10 @@ function renderViewTabs() {
 function costDriverItems() {
   const drivers = [];
   const types = placedTypes();
-  if (types.includes('plumbing')) {
+  const hasPlumbingMove = state.placed.some(item => (
+    ['shower', 'vanity', 'toilet'].includes(item.type) && item.addons.movePlumbing
+  ));
+  if (hasPlumbingMove) {
     drivers.push({
       title: 'Plumbing changes',
       text: 'Moving drains or supply lines usually requires a local pro to confirm access, permits, and final labor.',
