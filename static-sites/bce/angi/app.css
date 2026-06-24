@@ -396,6 +396,11 @@ img {
   line-height: 1.3 !important;
 }
 
+.tool-lede {
+  max-width: 680px;
+  color: #333330;
+}
+
 .help-card {
   margin: 28px 0 34px;
   padding: 24px 28px;
@@ -684,6 +689,21 @@ img {
   gap: 9px;
 }
 
+.opening-palette {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--tool-line);
+}
+
+.panel-title--sub {
+  font-size: 15px;
+}
+
+.opening-list {
+  display: grid;
+  gap: 9px;
+}
+
 .palette-card {
   display: flex;
   align-items: center;
@@ -773,6 +793,80 @@ img {
   border-radius: 999px;
   background: var(--mint-bg);
   color: var(--teal);
+}
+
+.opening-card {
+  cursor: pointer;
+}
+
+.opening-card > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+.opening-blurb {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.opening-icon,
+.opening-inspector-icon {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: var(--radius-card);
+  background: #eef7f4;
+  color: var(--teal);
+}
+
+.opening-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.opening-inspector-icon {
+  width: 44px;
+  height: 44px;
+}
+
+.opening-icon::before,
+.opening-inspector-icon::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 50%;
+  height: 8px;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  transform: translateY(-50%);
+}
+
+.opening-icon--window::before,
+.opening-inspector-icon.opening-icon--window::before {
+  height: 11px;
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-radius: 0;
+}
+
+.opening-icon--door::after,
+.opening-inspector-icon.opening-icon--door::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px dashed currentColor;
+  border-right: 2px dashed currentColor;
+  border-radius: 0 16px 0 0;
+  opacity: 0.72;
 }
 
 .plan-head {
@@ -994,6 +1088,164 @@ img {
 .placed-items {
   position: absolute;
   inset: 0;
+}
+
+.room-openings {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.room-feature {
+  --opening-pad: 8px;
+  position: absolute;
+  display: block;
+  border: 0;
+  background: transparent;
+  color: #075f66;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.room-feature:active {
+  cursor: grabbing;
+}
+
+.room-feature--horizontal {
+  left: calc(var(--pos) * 1%);
+  width: max(42px, calc(var(--len) * 1%));
+  height: 34px;
+  transform: translateX(-50%);
+}
+
+.room-feature--vertical {
+  top: calc(var(--pos) * 1%);
+  width: 34px;
+  height: max(42px, calc(var(--len) * 1%));
+  transform: translateY(-50%);
+}
+
+.room-feature--top {
+  top: var(--opening-pad);
+}
+
+.room-feature--right {
+  right: var(--opening-pad);
+}
+
+.room-feature--bottom {
+  bottom: var(--opening-pad);
+}
+
+.room-feature--left {
+  left: var(--opening-pad);
+}
+
+.feature-line {
+  position: absolute;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.82);
+}
+
+.room-feature--horizontal .feature-line {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 8px;
+  border: 2px solid currentColor;
+  transform: translateY(-50%);
+}
+
+.room-feature--vertical .feature-line {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 8px;
+  border: 2px solid currentColor;
+  transform: translateX(-50%);
+}
+
+.room-feature--window .feature-line {
+  border-width: 3px 0;
+  border-radius: 0;
+  background: rgba(232, 253, 242, 0.96);
+}
+
+.room-feature--vertical.room-feature--window .feature-line {
+  border-width: 0 3px;
+}
+
+.feature-swing {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border: 1.5px dashed rgba(6, 92, 98, 0.62);
+  pointer-events: none;
+}
+
+.room-feature--bottom .feature-swing {
+  left: calc(50% - 1px);
+  bottom: 17px;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0 46px 0 0;
+}
+
+.room-feature--top .feature-swing {
+  left: calc(50% - 45px);
+  top: 17px;
+  border-top: 0;
+  border-right: 0;
+  border-radius: 0 0 0 46px;
+}
+
+.room-feature--left .feature-swing {
+  left: 17px;
+  top: calc(50% - 45px);
+  border-top: 0;
+  border-left: 0;
+  border-radius: 0 0 46px 0;
+}
+
+.room-feature--right .feature-swing {
+  right: 17px;
+  top: calc(50% - 1px);
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 46px 0 0 0;
+}
+
+.feature-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 72px;
+  padding: 2px 5px;
+  border-radius: var(--radius-tight);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.room-feature--vertical .feature-label {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.room-feature.is-selected .feature-line {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px #ffefea;
+}
+
+.room-feature.is-selected .feature-label {
+  color: var(--coral-dark);
 }
 
 .floor-item,
@@ -1245,6 +1497,11 @@ img {
   line-height: 1.1;
 }
 
+.selected-range--opening strong {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
 .inspector-section {
   padding-top: 14px;
   margin-top: 14px;
@@ -1396,6 +1653,10 @@ img {
   min-width: 0;
 }
 
+.inspector-section--size .dimension-grid--single {
+  grid-template-columns: 1fr;
+}
+
 .dimension-control {
   display: grid;
   gap: 6px;
@@ -1441,6 +1702,12 @@ img {
   font-size: 16px;
   font-weight: 600;
   line-height: 1;
+}
+
+.stepper button:disabled {
+  color: #a5aaa5;
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .inspector-section--size .stepper button {
@@ -2474,6 +2741,10 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .opening-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .estimate-bar {
     grid-template-columns: 1fr;
   }
@@ -2581,6 +2852,10 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .opening-list {
+    grid-template-columns: 1fr;
+  }
+
   .plan-canvas {
     min-height: 260px;
     max-height: 680px;
@@ -2591,6 +2866,26 @@ img {
   .location-note {
     width: 100%;
     min-width: 0;
+  }
+
+  .plan-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .location-picker,
+  .location-button,
+  .locate-button {
+    width: 100%;
+  }
+
+  .location-button,
+  .locate-button {
+    justify-content: center;
+  }
+
+  .location-note {
+    grid-column: 1 / -1;
   }
 
   .dimension-grid {

@@ -136,6 +136,43 @@ const DEFAULT_POS = {
   plumbing: { x: 0.52, y: 0.50 },
 };
 
+const OPENINGS = {
+  door: {
+    label: 'Door',
+    blurb: 'Entry or closet clearance',
+    length: 2.5,
+    min: 2,
+    max: 4,
+  },
+  window: {
+    label: 'Window',
+    blurb: 'Wall space and daylight',
+    length: 3,
+    min: 1.5,
+    max: 6,
+  },
+};
+
+const OPENING_ORDER = ['door', 'window'];
+const WALLS = [
+  { key: 'top', label: 'Top wall' },
+  { key: 'right', label: 'Right wall' },
+  { key: 'bottom', label: 'Bottom wall' },
+  { key: 'left', label: 'Left wall' },
+];
+const DEFAULT_OPENINGS = {
+  door: [
+    { wall: 'bottom', offset: 0.22 },
+    { wall: 'left', offset: 0.45 },
+    { wall: 'right', offset: 0.72 },
+  ],
+  window: [
+    { wall: 'top', offset: 0.70 },
+    { wall: 'right', offset: 0.35 },
+    { wall: 'left', offset: 0.30 },
+  ],
+};
+
 const LOCATIONS = [
   { key: 'national', label: 'United States', st: '', mult: 1.00 },
   { key: 'seattle', label: 'Seattle', st: 'WA', mult: 1.18 },
@@ -188,12 +225,18 @@ const state = {
     addons: {},
   }],
   selectedId: 1,
+  openings: [
+    { id: 1, type: 'door', wall: 'bottom', offset: 0.22, length: 2.5 },
+    { id: 2, type: 'window', wall: 'top', offset: 0.70, length: 3 },
+  ],
+  selectedOpeningId: null,
   location: 'national',
   locOpen: false,
   view: 'plan',
 };
 
 let uid = 2;
+let openingUid = 3;
 let drag = null;
 
 const $ = selector => document.querySelector(selector);
@@ -275,12 +318,56 @@ function componentCount(type) {
   return state.placed.filter(item => item.type === type).length;
 }
 
+function openingCount(type) {
+  return state.openings.filter(opening => opening.type === type).length;
+}
+
 function placedTypes() {
   return [...new Set(state.placed.map(item => item.type))];
 }
 
 function selectedItem() {
   return state.placed.find(item => item.id === state.selectedId) || null;
+}
+
+function selectedOpening() {
+  return state.openings.find(opening => opening.id === state.selectedOpeningId) || null;
+}
+
+function wallLabel(wall) {
+  return WALLS.find(option => option.key === wall)?.label || 'Wall';
+}
+
+function wallLength(wall) {
+  return wall === 'top' || wall === 'bottom' ? state.roomW : state.roomH;
+}
+
+function openingWallAxis(wall) {
+  return wall === 'top' || wall === 'bottom' ? 'horizontal' : 'vertical';
+}
+
+function openingName(opening) {
+  const typeCount = state.openings
+    .filter(candidate => candidate.type === opening.type && candidate.id <= opening.id)
+    .length;
+  return `${OPENINGS[opening.type].label}${typeCount > 1 ? ` ${typeCount}` : ''}`;
+}
+
+function openingOffsetFt(opening) {
+  return opening.offset * wallLength(opening.wall);
+}
+
+function openingDescription(opening) {
+  return `${openingName(opening)} on ${wallLabel(opening.wall).toLowerCase()}, ${fmtNum(opening.length)} ft wide, centered ${fmtNum(openingOffsetFt(opening))} ft along the wall`;
+}
+
+function clampOpening(opening) {
+  const spec = OPENINGS[opening.type];
+  const maxLength = Math.min(spec.max, wallLength(opening.wall));
+  opening.length = clamp(snap(opening.length), spec.min, maxLength);
+  const half = (opening.length / wallLength(opening.wall)) / 2;
+  opening.offset = clamp(opening.offset, half, 1 - half);
+  return opening;
 }
 
 function projectScopeLabel() {
@@ -367,6 +454,18 @@ function createItem(type, nx, ny) {
   return clampItem(item);
 }
 
+function createOpening(type) {
+  const presets = DEFAULT_OPENINGS[type] || [{ wall: 'bottom', offset: 0.5 }];
+  const preset = presets[openingCount(type) % presets.length];
+  return clampOpening({
+    id: openingUid++,
+    type,
+    wall: preset.wall,
+    offset: preset.offset,
+    length: OPENINGS[type].length,
+  });
+}
+
 function addItem(type, nx, ny) {
   const fallback = DEFAULT_POS[type] || { x: 0.5, y: 0.5 };
   const offset = (componentCount(type) % 4) * 0.05;
@@ -377,6 +476,15 @@ function addItem(type, nx, ny) {
   );
   state.placed.push(item);
   state.selectedId = item.id;
+  state.selectedOpeningId = null;
+  renderAll();
+}
+
+function addOpening(type) {
+  const opening = createOpening(type);
+  state.openings.push(opening);
+  state.selectedOpeningId = opening.id;
+  state.selectedId = null;
   renderAll();
 }
 
@@ -384,6 +492,14 @@ function removeItem(id) {
   state.placed = state.placed.filter(item => item.id !== id);
   if (state.selectedId === id) {
     state.selectedId = state.placed.length ? state.placed[state.placed.length - 1].id : null;
+  }
+  renderAll();
+}
+
+function removeOpening(id) {
+  state.openings = state.openings.filter(opening => opening.id !== id);
+  if (state.selectedOpeningId === id) {
+    state.selectedOpeningId = state.openings.length ? state.openings[state.openings.length - 1].id : null;
   }
   renderAll();
 }
@@ -458,6 +574,24 @@ function renderPalette() {
       </button>
     `;
   }).join('');
+
+  $('#openingPalette').innerHTML = OPENING_ORDER.map(type => {
+    const opening = OPENINGS[type];
+    const count = openingCount(type);
+    const status = count
+      ? `<span class="palette-count">${count > 1 ? `${count} marked` : 'Marked'}</span>`
+      : '<span class="palette-action">+ Mark</span>';
+    return `
+      <button class="palette-card opening-card${count ? ' is-active' : ''}" type="button" data-action="opening-add" data-opening-type="${type}">
+        <span class="opening-icon opening-icon--${type}" aria-hidden="true"></span>
+        <span>
+          <span class="palette-label">${escapeHtml(opening.label)}</span>
+          <span class="opening-blurb">${escapeHtml(opening.blurb)}</span>
+        </span>
+        ${status}
+      </button>
+    `;
+  }).join('');
 }
 
 function renderRoomControls() {
@@ -490,8 +624,32 @@ function renderLocations() {
   }).join('');
 }
 
+function renderOpenings() {
+  $('#roomOpenings').innerHTML = state.openings.map(opening => {
+    clampOpening(opening);
+    const type = OPENINGS[opening.type];
+    const axis = openingWallAxis(opening.wall);
+    const lenPct = (opening.length / wallLength(opening.wall)) * 100;
+    const selected = opening.id === state.selectedOpeningId;
+    return `
+      <button
+        class="room-feature room-feature--${opening.type} room-feature--${opening.wall} room-feature--${axis}${selected ? ' is-selected' : ''}"
+        type="button"
+        data-action="opening-select"
+        data-opening-id="${opening.id}"
+        style="--pos:${opening.offset * 100};--len:${lenPct}"
+        aria-label="${escapeHtml(openingDescription(opening))}">
+        <span class="feature-line"></span>
+        ${opening.type === 'door' ? '<span class="feature-swing"></span>' : ''}
+        <span class="feature-label">${escapeHtml(type.label)}</span>
+      </button>
+    `;
+  }).join('');
+}
+
 function renderCanvas() {
-  $('#emptyCanvas').hidden = state.placed.length > 0;
+  $('#emptyCanvas').hidden = state.placed.length > 0 || state.openings.length > 0;
+  renderOpenings();
   $('#placedItems').innerHTML = state.placed.map((item, index) => {
     const c = COMPONENTS[item.type];
     const selected = item.id === state.selectedId;
@@ -520,7 +678,7 @@ function renderEstimate() {
   const n = state.placed.length;
   const loc = currentLocation();
   $('#estimateTotal').textContent = n ? rangeText(lo, hi) : 'Add fixtures to start';
-  $('#placedCount').textContent = `${n} item${n === 1 ? '' : 's'} on your plan`;
+  $('#placedCount').textContent = `${n} item${n === 1 ? '' : 's'} on your plan${state.openings.length ? ` + ${state.openings.length} opening marker${state.openings.length === 1 ? '' : 's'}` : ''}`;
   $('#estimateLocation').textContent = locationLabel(loc);
   $('#estimateNote').textContent = locationNote(loc);
   $('#quoteButton').textContent = n > 2 ? 'Get quotes for this scoped plan' : 'Get local quotes for this plan';
@@ -564,6 +722,12 @@ function costDriverItems() {
     drivers.push({
       title: 'Vanity size and countertop',
       text: 'Double sinks, stone counters, and custom storage can change finish allowances quickly.',
+    });
+  }
+  if (state.openings.length) {
+    drivers.push({
+      title: 'Door and window clearances',
+      text: 'Marked openings help pros understand usable wall space, fixture placement, and swing clearance before a walkthrough.',
     });
   }
   if (!drivers.length) {
@@ -702,6 +866,7 @@ function renderProHandoff() {
 
   const chipData = [
     `${count} scoped item${count === 1 ? '' : 's'}`,
+    `${state.openings.length} opening marker${state.openings.length === 1 ? '' : 's'}`,
     `${fmtNum(state.roomW * state.roomH)} sq ft bathroom`,
     locationLabel(loc),
     count ? range : 'Estimate pending',
@@ -709,14 +874,79 @@ function renderProHandoff() {
   chips.innerHTML = chipData.map(chip => `<span>${escapeHtml(chip)}</span>`).join('');
 }
 
+function renderOpeningInspector(opening, wrap) {
+  const spec = OPENINGS[opening.type];
+  const walls = WALLS.map(wall => `
+    <button class="pill-button${opening.wall === wall.key ? ' is-active' : ''}" type="button" data-action="opening-wall" data-opening-id="${opening.id}" data-wall="${wall.key}">${escapeHtml(wall.label.replace(' wall', ''))}</button>
+  `).join('');
+  const maxLength = Math.min(spec.max, wallLength(opening.wall));
+  const offsetFt = openingOffsetFt(opening);
+
+  wrap.innerHTML = `
+    <section class="selected-config selected-config--opening">
+      <div class="selected-head">
+        <span class="opening-inspector-icon opening-icon--${opening.type}" aria-hidden="true"></span>
+        <div>
+          <h2>${escapeHtml(openingName(opening))}</h2>
+          <p>${escapeHtml(wallLabel(opening.wall))} - does not change the cost estimate</p>
+        </div>
+      </div>
+
+      <p class="selected-range selected-range--opening">
+        <span>Layout marker</span>
+        <strong>${escapeHtml(openingDescription(opening))}</strong>
+      </p>
+
+      <section class="inspector-section inspector-section--compact">
+        <h3>Wall</h3>
+        <div class="variant-row">${walls}</div>
+      </section>
+
+      <section class="inspector-section inspector-section--compact inspector-section--size">
+        <div class="section-title-row">
+          <h3>Opening size</h3>
+          <span class="sqft-badge">${fmtNum(opening.length)} ft</span>
+        </div>
+        <div class="dimension-grid dimension-grid--single">
+          <div class="dimension-control">
+            <label for="openingLength">Length</label>
+            <div class="stepper">
+              <button type="button" data-action="opening-length-step" data-opening-id="${opening.id}" data-delta="-0.25" ${opening.length <= spec.min ? 'disabled' : ''}>-</button>
+              <input id="openingLength" value="${fmtNum(opening.length)}" inputmode="decimal" data-action="opening-length-input" data-opening-id="${opening.id}" aria-label="${escapeHtml(spec.label)} length in feet">
+              <button type="button" data-action="opening-length-step" data-opening-id="${opening.id}" data-delta="0.25" ${opening.length >= maxLength ? 'disabled' : ''}>+</button>
+            </div>
+          </div>
+          <div class="dimension-control">
+            <label for="openingOffset">Position</label>
+            <div class="stepper">
+              <button type="button" data-action="opening-offset-step" data-opening-id="${opening.id}" data-delta="-0.25">-</button>
+              <input id="openingOffset" value="${fmtNum(offsetFt)}" inputmode="decimal" data-action="opening-offset-input" data-opening-id="${opening.id}" aria-label="${escapeHtml(spec.label)} position along wall in feet">
+              <button type="button" data-action="opening-offset-step" data-opening-id="${opening.id}" data-delta="0.25">+</button>
+            </div>
+          </div>
+        </div>
+        <p class="coverage-note">Drag the marker along the wall or adjust the position in feet.</p>
+      </section>
+
+      <button class="danger-button" type="button" data-action="opening-remove" data-opening-id="${opening.id}">Remove marker</button>
+    </section>
+  `;
+}
+
 function renderInspector() {
+  const opening = selectedOpening();
   const item = selectedItem();
   const wrap = $('#inspectorContent');
+  if (opening) {
+    renderOpeningInspector(opening, wrap);
+    return;
+  }
+
   if (!item) {
     wrap.innerHTML = `
       <section class="config-empty">
         <h2>Select a component</h2>
-        <p>Click any item on the plan to configure finish level, dimensions, add-ons, and related guides.</p>
+        <p>Click any fixture, door, or window on the plan to configure dimensions and layout details.</p>
       </section>
     `;
     return;
@@ -847,12 +1077,42 @@ function findItem(id) {
   return state.placed.find(item => item.id === Number(id)) || null;
 }
 
+function findOpening(id) {
+  return state.openings.find(opening => opening.id === Number(id)) || null;
+}
+
 function setItemDimension(id, axis, value) {
   const item = findItem(id);
   if (!item || Number.isNaN(value)) return;
   const max = axis === 'w' ? state.roomW : state.roomH;
   item[axis] = clamp(snap(value), 0.5, max);
   clampItem(item);
+  renderAll();
+}
+
+function setOpeningLength(id, value) {
+  const opening = findOpening(id);
+  if (!opening || Number.isNaN(value)) return;
+  const spec = OPENINGS[opening.type];
+  opening.length = clamp(snap(value), spec.min, Math.min(spec.max, wallLength(opening.wall)));
+  clampOpening(opening);
+  renderAll();
+}
+
+function setOpeningOffsetFt(id, value) {
+  const opening = findOpening(id);
+  if (!opening || Number.isNaN(value)) return;
+  const length = wallLength(opening.wall);
+  opening.offset = snap(value) / length;
+  clampOpening(opening);
+  renderAll();
+}
+
+function setOpeningWall(id, wall) {
+  const opening = findOpening(id);
+  if (!opening) return;
+  opening.wall = wall;
+  clampOpening(opening);
   renderAll();
 }
 
@@ -863,6 +1123,7 @@ function commitRoomDimensions() {
   state.roomW = clamp(snap(roomW, 0.5), 4, 40);
   state.roomH = clamp(snap(roomH, 0.5), 4, 40);
   state.placed.forEach(clampItem);
+  state.openings.forEach(clampOpening);
   renderAll();
 }
 
@@ -912,6 +1173,16 @@ function beginResizeDrag(item, e) {
   };
 }
 
+function beginOpeningDrag(opening, e) {
+  drag = {
+    mode: 'opening',
+    id: opening.id,
+    startX: e.clientX,
+    startY: e.clientY,
+    moved: false,
+  };
+}
+
 function moveGhost(clientX, clientY) {
   if (!drag?.ghost) return;
   drag.ghost.style.left = `${clientX}px`;
@@ -933,6 +1204,19 @@ function handlePointerMove(e) {
   if (drag.mode === 'palette') {
     moveGhost(e.clientX, e.clientY);
     $('#planCanvas').classList.toggle('is-over', isInsideCanvas(e.clientX, e.clientY));
+    return;
+  }
+
+  if (drag.mode === 'opening') {
+    const opening = findOpening(drag.id);
+    if (!opening) return;
+    const rect = canvasRect();
+    const raw = openingWallAxis(opening.wall) === 'horizontal'
+      ? (e.clientX - rect.left) / rect.width
+      : (e.clientY - rect.top) / rect.height;
+    opening.offset = snap(raw * wallLength(opening.wall)) / wallLength(opening.wall);
+    clampOpening(opening);
+    renderAll();
     return;
   }
 
@@ -985,11 +1269,24 @@ function handlePointerUp(e) {
 
 document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch') return;
+  const openingMarker = e.target.closest('.room-feature');
+  if (openingMarker) {
+    const opening = findOpening(openingMarker.dataset.openingId);
+    if (!opening) return;
+    state.selectedOpeningId = opening.id;
+    state.selectedId = null;
+    beginOpeningDrag(opening, e);
+    e.preventDefault();
+    renderAll();
+    return;
+  }
+
   const resize = e.target.closest('[data-action="resize"]');
   if (resize) {
     const item = findItem(resize.dataset.id);
     if (!item) return;
     state.selectedId = item.id;
+    state.selectedOpeningId = null;
     beginResizeDrag(item, e);
     e.preventDefault();
     e.stopPropagation();
@@ -1002,6 +1299,7 @@ document.addEventListener('pointerdown', e => {
     const item = findItem(planItem.dataset.id);
     if (!item) return;
     state.selectedId = item.id;
+    state.selectedOpeningId = null;
     beginMoveDrag(item, e);
     e.preventDefault();
     renderAll();
@@ -1032,6 +1330,36 @@ document.addEventListener('click', e => {
     if (action === 'view') {
       state.view = actionTarget.dataset.view;
       renderAll();
+      return;
+    }
+    if (action === 'opening-add') {
+      addOpening(actionTarget.dataset.openingType);
+      return;
+    }
+    if (action === 'opening-select') {
+      state.selectedOpeningId = Number(actionTarget.dataset.openingId);
+      state.selectedId = null;
+      renderAll();
+      return;
+    }
+    if (action === 'opening-wall') {
+      setOpeningWall(actionTarget.dataset.openingId, actionTarget.dataset.wall);
+      return;
+    }
+    if (action === 'opening-length-step') {
+      const opening = findOpening(actionTarget.dataset.openingId);
+      if (!opening) return;
+      setOpeningLength(opening.id, opening.length + parseFloat(actionTarget.dataset.delta));
+      return;
+    }
+    if (action === 'opening-offset-step') {
+      const opening = findOpening(actionTarget.dataset.openingId);
+      if (!opening) return;
+      setOpeningOffsetFt(opening.id, openingOffsetFt(opening) + parseFloat(actionTarget.dataset.delta));
+      return;
+    }
+    if (action === 'opening-remove') {
+      removeOpening(Number(actionTarget.dataset.openingId));
       return;
     }
     if (action === 'remove') {
@@ -1068,6 +1396,7 @@ document.addEventListener('click', e => {
   const planItem = e.target.closest('.plan-item');
   if (planItem && !e.target.closest('button, a, input')) {
     state.selectedId = Number(planItem.dataset.id);
+    state.selectedOpeningId = null;
     renderAll();
   }
 });
@@ -1079,6 +1408,14 @@ document.addEventListener('change', e => {
   }
   if (e.target.dataset.action === 'dim-input') {
     setItemDimension(e.target.dataset.id, e.target.dataset.axis, parseFloat(e.target.value));
+    return;
+  }
+  if (e.target.dataset.action === 'opening-length-input') {
+    setOpeningLength(e.target.dataset.openingId, parseFloat(e.target.value));
+    return;
+  }
+  if (e.target.dataset.action === 'opening-offset-input') {
+    setOpeningOffsetFt(e.target.dataset.openingId, parseFloat(e.target.value));
   }
 });
 
@@ -1147,6 +1484,11 @@ function planPdfLines(lead) {
     `Room: ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft (${fmtNum(state.roomW * state.roomH)} sq ft)`,
     `Location: ${locationLabel()}`,
     `Estimated range: ${state.placed.length ? rangeText(lo, hi) : '$0'}`,
+    '',
+    'ROOM OPENINGS',
+    ...(state.openings.length
+      ? state.openings.map(opening => `- ${openingDescription(opening)}`)
+      : ['- No doors or windows marked']),
     '',
     'SCOPE',
     ...state.placed.map(item => {
@@ -1221,7 +1563,7 @@ function createPlanPdfBlob(lead) {
       addLine(line, { size: 20, bold: true, leading: 28, maxChars: 42 });
       return;
     }
-    if (line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
+    if (line === 'ROOM OPENINGS' || line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
       addLine('');
       addLine(line, { size: 13, bold: true, leading: 18, maxChars: 60 });
       return;
