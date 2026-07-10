@@ -5,14 +5,26 @@
  */
 if (!current_user_can('manage_options')) { wp_die('Access denied.'); }
 
+// AUD-023: the wizard ships in the theme on every Docker deploy, so it must be
+// explicitly enabled. Define STRETCH_ALLOW_WIZARD as true in wp-config.php to use it.
+if (!defined('STRETCH_ALLOW_WIZARD') || !STRETCH_ALLOW_WIZARD) {
+    wp_die('Setup wizard is disabled. Define STRETCH_ALLOW_WIZARD in wp-config.php to enable.');
+}
+
 @ini_set('max_execution_time', 300);
 @set_time_limit(300);
+
+$step = isset($_GET['step']) ? intval($_GET['step']) : 0;
+
+// AUD-023: every step mutates state on a GET request — require a per-step nonce
+// (links below are generated with wp_nonce_url) before anything runs.
+if ($step >= 1) {
+    check_admin_referer('stretch_wizard_step_' . $step);
+}
 
 get_header();
 echo '<section style="padding:160px 40px 80px;max-width:800px;margin:0 auto;font-family:Poppins,sans-serif;">';
 echo '<h1 style="font-size:32px;margin-bottom:24px;">Stretch Creative Setup Wizard</h1>';
-
-$step = isset($_GET['step']) ? intval($_GET['step']) : 0;
 
 echo '<div style="background:#f9f9fb;padding:24px;margin-bottom:24px;font-size:14px;line-height:2;">';
 
@@ -20,7 +32,9 @@ if ($step === 1) {
     // ── STEP 1: Pages & Settings ──
     echo '<strong>Step 1: Creating pages...</strong><br>';
 
-    update_option('permalink_structure', '/%postname%/');
+    // AUD-023: use the real production structure (matches Step 6 and the live DB)
+    // so re-running the wizard can never break existing /blog/... URLs.
+    update_option('permalink_structure', '/blog/%category%/%postname%/');
     flush_rewrite_rules();
     echo '✓ Permalinks set<br>';
 
@@ -132,7 +146,7 @@ if ($step === 1) {
     echo "✓ Pricing page<br>";
 
     echo '<br><strong style="color:#28c840;">Step 1 complete!</strong>';
-    echo '<br><br><a href="?step=2" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 2: Blog Posts →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=2', 'stretch_wizard_step_2') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 2: Blog Posts →</a>';
 
 } elseif ($step === 2) {
     // ── STEP 2: Categories & Posts ──
@@ -202,7 +216,7 @@ if ($step === 1) {
     }
 
     echo '<br><strong style="color:#28c840;">Step 2 complete!</strong>';
-    echo '<br><br><a href="?step=3" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 3: Logos →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=3', 'stretch_wizard_step_3') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 3: Logos →</a>';
 
 } elseif ($step === 3) {
     // ── STEP 3: Client Logos ──
@@ -252,7 +266,7 @@ if ($step === 1) {
     echo "✓ Saved " . count($imported) . " logos<br>";
 
     echo '<br><strong style="color:#28c840;">Step 3 complete!</strong>';
-    echo '<br><br><a href="?step=4" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 4: Menus →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=4', 'stretch_wizard_step_4') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 4: Menus →</a>';
 
 } elseif ($step === 4) {
     // ── STEP 4: Navigation Menus ──
@@ -342,7 +356,7 @@ if ($step === 1) {
     echo "✓ Footer menus<br>";
 
     echo '<br><strong style="color:#28c840;">Step 4 complete!</strong>';
-    echo '<br><br><a href="?step=5" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 5: Team Photos →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=5', 'stretch_wizard_step_5') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 5: Team Photos →</a>';
 
 } elseif ($step === 5) {
     // ── STEP 5: Team Photos ──
@@ -386,7 +400,7 @@ if ($step === 1) {
     echo "✓ Saved " . count($photo_map) . " team members<br>";
 
     echo '<br><strong style="color:#28c840;">Step 5 complete!</strong>';
-    echo '<br><br><a href="?step=6" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 6: Services & Author →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=6', 'stretch_wizard_step_6') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 6: Services & Author →</a>';
 
 } elseif ($step === 6) {
     // ── STEP 6: Services, Author, Permalinks, Featured Images ──
@@ -432,13 +446,18 @@ if ($step === 1) {
         echo "✓ All posts assigned to Cole Vineyard<br>";
     }
 
-    // Service page content
-    $service_file = ABSPATH . 'setup-services.php';
+    // Service page content — AUD-022: the canonical copy is staged in /opt by the
+    // Docker image (setup scripts are no longer copied into the webroot). Fall back
+    // to a legacy webroot copy for older containers, else skip with a notice.
+    $service_file = file_exists('/opt/setup-services.php') ? '/opt/setup-services.php' : ABSPATH . 'setup-services.php';
     if (file_exists($service_file)) {
+        // setup-services.php's web-exposure guard allows inclusion when this
+        // constant is defined immediately before the include.
+        if (!defined('STRETCH_WIZARD')) { define('STRETCH_WIZARD', true); }
         include $service_file;
         echo "✓ Service content populated<br>";
     } else {
-        echo "- Service setup script not found (run manually)<br>";
+        echo "- Service setup script not found in /opt or webroot (run setup-services.php via WP-CLI manually)<br>";
     }
 
     // Blog post featured images
@@ -472,7 +491,7 @@ if ($step === 1) {
     echo "✓ Site title set<br>";
 
     echo '<br><strong style="color:#28c840;">Step 6 complete!</strong>';
-    echo '<br><br><a href="?step=7" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 7: Demo AEO Post →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=7', 'stretch_wizard_step_7') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 7: Demo AEO Post →</a>';
 
 } elseif ($step === 7) {
     // ── STEP 7: Rich Demo AEO Post ──
@@ -594,7 +613,7 @@ if ($step === 1) {
     }
 
     echo '<br><strong style="color:#28c840;">Step 7 complete!</strong>';
-    echo '<br><br><a href="?step=8" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 8: AEO Hub Pillar →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=8', 'stretch_wizard_step_8') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 8: AEO Hub Pillar →</a>';
 
 } elseif ($step === 8) {
     // ── STEP 8: AEO Hub Pillar Content ──
@@ -617,7 +636,7 @@ if ($step === 1) {
     }
 
     echo '<br><strong style="color:#28c840;">Step 8 complete!</strong>';
-    echo '<br><br><a href="?step=9" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 9: Seed Blog Posts →</a>';
+    echo '<br><br><a href="' . wp_nonce_url('?step=9', 'stretch_wizard_step_9') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Run Step 9: Seed Blog Posts →</a>';
 
 } elseif ($step === 9) {
     // ── STEP 9: Seed Blog Posts from data/blog-posts.json (batched to avoid timeout) ──
@@ -627,8 +646,8 @@ if ($step === 1) {
     @ini_set('output_buffering', 'Off');
     @ini_set('implicit_flush', 1);
     while (ob_get_level()) { ob_end_flush(); }
-    header('X-Accel-Buffering: no');
-    header('Content-Encoding: identity');
+    // AUD-042: header() calls removed — output already started (get_header()),
+    // so they only produced "headers already sent" warnings.
 
     @ini_set('max_execution_time', 120);
     @set_time_limit(120);
@@ -770,7 +789,8 @@ if ($step === 1) {
             $more = ($next_batch * $batch_size) < $total;
 
             if ($more) {
-                $next_url = '?step=9&batch=' . $next_batch . ($skip_thumbs ? '&skip_thumbs=1' : '');
+                // Raw (unescaped-&) nonced URL: esc_url() for the href, json_encode for the JS redirect.
+                $next_url = add_query_arg('_wpnonce', wp_create_nonce('stretch_wizard_step_9'), '?step=9&batch=' . $next_batch . ($skip_thumbs ? '&skip_thumbs=1' : ''));
                 echo '<br><a href="' . esc_url($next_url) . '" id="nextBatch" style="display:inline-block;background:#8560A8;color:#fff;padding:12px 28px;text-decoration:none;">Continue: Batch ' . ($next_batch + 1) . ' →</a>';
                 echo '<br><br><em style="color:#999;">Auto-advancing in 2 seconds…</em>';
                 echo '<script>setTimeout(function(){ window.location.href = ' . json_encode($next_url) . '; }, 2000);</script>';
@@ -785,7 +805,7 @@ if ($step === 1) {
 } else {
     echo '<p style="font-size:16px;color:#323A51;line-height:1.6;">This wizard sets up all content for the Stretch Creative site in 9 steps.</p>';
     echo '<p style="font-size:14px;color:#999;">Pages already created will be skipped.</p>';
-    echo '<br><a href="?step=1" style="display:inline-block;background:#8560A8;color:#fff;padding:16px 36px;font-size:17px;text-decoration:none;">Start Setup: Step 1 →</a>';
+    echo '<br><a href="' . wp_nonce_url('?step=1', 'stretch_wizard_step_1') . '" style="display:inline-block;background:#8560A8;color:#fff;padding:16px 36px;font-size:17px;text-decoration:none;">Start Setup: Step 1 →</a>';
 }
 
 echo '</div></section>';

@@ -5,8 +5,13 @@
  * availability API; if a snapshot exists, download the raw file and
  * sideload into the media library; replace URL in post content.
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
-if (!defined('ABSPATH')) { WP_CLI::error('Run via wp eval-file'); }
+if (!defined('ABSPATH')) { if (defined('WP_CLI') && WP_CLI) { WP_CLI::error('Run via wp eval-file'); } else { echo 'Error: ' . 'Run via wp eval-file' . "\n"; exit; } }
 
 require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -32,7 +37,7 @@ foreach ($posts as $post) {
     $changed = false;
     $unique  = array_unique($m[0]);
 
-    WP_CLI::log("\n[{$post->ID}] {$post->post_title} — " . count($unique) . " broken");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n[{$post->ID}] {$post->post_title} — " . count($unique) . " broken"); } else { echo "\n[{$post->ID}] {$post->post_title} — " . count($unique) . " broken" . "\n"; }
 
     foreach ($unique as $broken_url) {
         if (isset($url_map[$broken_url])) {
@@ -48,7 +53,7 @@ foreach ($posts as $post) {
         $api = 'https://archive.org/wayback/available?url=' . urlencode($broken_url);
         $resp = wp_remote_get($api, ['timeout' => 30]);
         if (is_wp_error($resp)) {
-            WP_CLI::warning("  API FAIL {$broken_url}: " . $resp->get_error_message());
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  API FAIL {$broken_url}: " . $resp->get_error_message()); } else { echo 'Warning: ' . "  API FAIL {$broken_url}: " . $resp->get_error_message() . "\n"; }
             $stats['download_fail']++;
             continue;
         }
@@ -56,7 +61,7 @@ foreach ($posts as $post) {
         $snap = $body['archived_snapshots']['closest'] ?? null;
 
         if (empty($snap) || empty($snap['available']) || empty($snap['url'])) {
-            WP_CLI::log("  no snapshot for " . basename($broken_url));
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  no snapshot for " . basename($broken_url)); } else { echo "  no snapshot for " . basename($broken_url) . "\n"; }
             $stats['no_snapshot']++;
             continue;
         }
@@ -67,7 +72,7 @@ foreach ($posts as $post) {
         // Sideload
         $attach_id = media_sideload_image($wayback_url, $post->ID, null, 'id');
         if (is_wp_error($attach_id)) {
-            WP_CLI::warning("  sideload FAIL {$broken_url}: " . $attach_id->get_error_message());
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  sideload FAIL {$broken_url}: " . $attach_id->get_error_message()); } else { echo 'Warning: ' . "  sideload FAIL {$broken_url}: " . $attach_id->get_error_message() . "\n"; }
             $stats['download_fail']++;
             continue;
         }
@@ -86,7 +91,7 @@ foreach ($posts as $post) {
         $content = str_replace($broken_url, $new_url, $content);
         $changed = true;
         $stats['recovered']++;
-        WP_CLI::log("  recovered -> #{$attach_id}");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  recovered -> #{$attach_id}"); } else { echo "  recovered -> #{$attach_id}" . "\n"; }
         usleep(500000); // 0.5s between Wayback calls to be polite
     }
 
@@ -96,9 +101,9 @@ foreach ($posts as $post) {
     }
 }
 
-WP_CLI::log("\n=== WAYBACK SUMMARY ===");
-WP_CLI::log("Recovered:        {$stats['recovered']}");
-WP_CLI::log("No snapshot:      {$stats['no_snapshot']}");
-WP_CLI::log("Download failed:  {$stats['download_fail']}");
-WP_CLI::log("Posts updated:    {$stats['posts_updated']}");
-WP_CLI::success("Done");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== WAYBACK SUMMARY ==="); } else { echo "\n=== WAYBACK SUMMARY ===" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Recovered:        {$stats['recovered']}"); } else { echo "Recovered:        {$stats['recovered']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("No snapshot:      {$stats['no_snapshot']}"); } else { echo "No snapshot:      {$stats['no_snapshot']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Download failed:  {$stats['download_fail']}"); } else { echo "Download failed:  {$stats['download_fail']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Posts updated:    {$stats['posts_updated']}"); } else { echo "Posts updated:    {$stats['posts_updated']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::success("Done"); } else { echo 'Success: ' . "Done" . "\n"; }

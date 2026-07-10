@@ -5,8 +5,13 @@
  *
  * Run: docker compose exec wordpress wp eval-file /var/www/html/setup-industries.php --allow-root
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 if (!defined('ABSPATH')) {
-    WP_CLI::error('This script must be run via wp eval-file.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::error('This script must be run via wp eval-file.'); } else { echo 'Error: ' . 'This script must be run via wp eval-file.' . "\n"; exit; }
 }
 
 // ── Parent: /industries/ ──────────────────────────────────────────────
@@ -18,10 +23,10 @@ if (!$parent) {
         'post_type'   => 'page',
         'post_status' => 'publish',
     ]);
-    WP_CLI::log("Created /industries/ parent (ID {$parent_id})");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Created /industries/ parent (ID {$parent_id})"); } else { echo "Created /industries/ parent (ID {$parent_id})" . "\n"; }
 } else {
     $parent_id = $parent->ID;
-    WP_CLI::log("/industries/ parent exists (ID {$parent_id})");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("/industries/ parent exists (ID {$parent_id})"); } else { echo "/industries/ parent exists (ID {$parent_id})" . "\n"; }
 }
 
 // ── Content ───────────────────────────────────────────────────────────
@@ -174,7 +179,7 @@ foreach ($industries as $slug => $data) {
             'post_status' => 'publish',
             'post_parent' => $parent_id,
         ]);
-        WP_CLI::log("Created page: industries/{$slug} (ID {$page_id})");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Created page: industries/{$slug} (ID {$page_id})"); } else { echo "Created page: industries/{$slug} (ID {$page_id})" . "\n"; }
     } else {
         $page_id = $page->ID;
         // Ensure correct parent
@@ -188,7 +193,7 @@ foreach ($industries as $slug => $data) {
     $option_data = $data;
     unset($option_data['title']);
     update_option('stretch_industry_' . $slug, $option_data, false);
-    WP_CLI::log("Saved option: stretch_industry_{$slug}");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Saved option: stretch_industry_{$slug}"); } else { echo "Saved option: stretch_industry_{$slug}" . "\n"; }
 }
 
-WP_CLI::success('Industry pages created and content seeded.');
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('Industry pages created and content seeded.'); } else { echo 'Success: ' . 'Industry pages created and content seeded.' . "\n"; }

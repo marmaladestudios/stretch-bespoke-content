@@ -275,6 +275,34 @@ html, body { overflow-x: hidden; }
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(133,96,168,0.45);
 }
+.form-submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+/* Submission status messages */
+.form-status {
+  display: none;
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+.form-status.visible { display: block; }
+.form-status.success {
+  background: rgba(40,200,64,0.08);
+  border: 1px solid rgba(40,200,64,0.35);
+  color: #1d7a2f;
+}
+.form-status.error {
+  background: rgba(199,75,111,0.08);
+  border: 1px solid rgba(199,75,111,0.35);
+  color: #b03052;
+}
+.form-status a { color: inherit; font-weight: 600; }
 
 /* ========================================
    3. MAP / LOCATION
@@ -490,19 +518,33 @@ html, body { overflow-x: hidden; }
         </div>
       </div>
 
-      <div class="contact-form-wrapper v2-reveal-right">
+      <div class="contact-form-wrapper v2-reveal-right" id="contact-form">
         <h3>Send Us a Message</h3>
         <p class="form-subtitle">Fill out the form below and we&rsquo;ll get back to you within one business day.</p>
 
-        <form class="contact-form" onsubmit="return false;">
+        <?php
+        // Status states after a non-JS POST + redirect (?sent=1 / ?lead_error=1).
+        // (`lead_error` because WP core strips `error` from $_GET.)
+        $stretch_form_sent  = isset($_GET['sent']);
+        $stretch_form_error = isset($_GET['lead_error']);
+        ?>
+        <div class="form-status success<?php echo $stretch_form_sent ? ' visible' : ''; ?>" id="contactFormSuccess" role="status">
+          Thanks &mdash; your message has been sent. We&rsquo;ll get back to you within one business day.
+        </div>
+        <div class="form-status error<?php echo $stretch_form_error ? ' visible' : ''; ?>" id="contactFormError" role="alert">
+          Something went wrong and your message wasn&rsquo;t sent. Please try again, or email us directly at <a href="mailto:hello@stretchcreative.com">hello@stretchcreative.com</a>.
+        </div>
+
+        <form class="contact-form" id="contactForm" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+          <?php if (function_exists('stretch_lead_form_fields')) { stretch_lead_form_fields('contact'); } ?>
           <div class="form-row">
             <div class="form-group">
               <label for="contact-name">Your Name</label>
-              <input type="text" id="contact-name" name="name" placeholder="Jane Smith" autocomplete="name">
+              <input type="text" id="contact-name" name="name" placeholder="Jane Smith" autocomplete="name" required>
             </div>
             <div class="form-group">
               <label for="contact-email">Email Address</label>
-              <input type="email" id="contact-email" name="email" placeholder="jane@company.com" autocomplete="email">
+              <input type="email" id="contact-email" name="email" placeholder="jane@company.com" autocomplete="email" required>
             </div>
           </div>
 
@@ -513,7 +555,7 @@ html, body { overflow-x: hidden; }
 
           <div class="form-group">
             <label for="contact-message">Message</label>
-            <textarea id="contact-message" name="message" placeholder="Tell us about your project and content needs..."></textarea>
+            <textarea id="contact-message" name="message" placeholder="Tell us about your project and content needs..." required></textarea>
           </div>
 
           <button type="submit" class="form-submit">Send Message &rarr;</button>
@@ -571,6 +613,46 @@ html, body { overflow-x: hidden; }
   document.querySelectorAll('.v2-reveal, .v2-reveal-left, .v2-reveal-right').forEach(function(el) {
     revealObserver.observe(el);
   });
+
+  /* ---------- CONTACT FORM (fetch submit with native POST fallback) ---------- */
+  var contactForm = document.getElementById('contactForm');
+  var contactOk = document.getElementById('contactFormSuccess');
+  var contactErr = document.getElementById('contactFormError');
+  if (contactForm && window.fetch && window.FormData) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = contactForm.querySelector('.form-submit');
+      var btnHtml = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      // getAttribute: the hidden input named "action" shadows form.action.
+      fetch(contactForm.getAttribute('action'), {
+        method: 'POST',
+        body: new FormData(contactForm),
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }).then(function(res) {
+        return res.json();
+      }).then(function(json) {
+        if (btn) { btn.disabled = false; btn.innerHTML = btnHtml; }
+        if (json && json.success) {
+          contactErr.classList.remove('visible');
+          contactOk.classList.add('visible');
+          contactForm.reset();
+          contactOk.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          contactOk.classList.remove('visible');
+          if (json && json.data && json.data.message) { contactErr.textContent = json.data.message; }
+          contactErr.classList.add('visible');
+          contactErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }).catch(function() {
+        // Network/parse failure — fall back to a normal POST + redirect.
+        if (btn) { btn.disabled = false; btn.innerHTML = btnHtml; }
+        contactForm.submit();
+      });
+    });
+  }
 })();
 </script>
 

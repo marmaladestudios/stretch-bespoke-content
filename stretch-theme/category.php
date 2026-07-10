@@ -934,9 +934,8 @@ html, body { overflow-x: hidden; }
   </div>
 </section>
 
-<!-- AEO Scanner Tool -->
+<!-- AEO Scanner Tool (jsPDF is lazy-loaded by the scanner on first PDF export — no blocking CDN script here) -->
 <?php if ($current_cat && $current_cat->slug === 'aeo') : ?>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" crossorigin="anonymous"></script>
   <?php get_template_part('aeo-scanner'); ?>
 <?php endif; ?>
 
@@ -1010,7 +1009,7 @@ html, body { overflow-x: hidden; }
         <?php // Special element: table
         if (!empty($sec['table'])) : ?>
           <div class="hub-reveal">
-            <?php echo $sec['table']; ?>
+            <?php echo wp_kses_post($sec['table']); ?>
           </div>
           <?php if (!empty($sec['content_after_table'])) : ?>
             <div class="hub-section-body hub-reveal">
@@ -1217,7 +1216,9 @@ if (!empty($other_cats)) :
   /* ── Smooth Scroll for "Start Reading" ── */
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(ev) {
-      var target = document.querySelector(this.getAttribute('href'));
+      var h = this.getAttribute('href');
+      if (!h || h.length < 2) return; // bare "#" would make querySelector throw
+      var target = document.querySelector(h);
       if (target) {
         ev.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });

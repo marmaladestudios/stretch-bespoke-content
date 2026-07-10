@@ -3,6 +3,11 @@
  * Strip Rank Math inline TOC blocks from imported blog posts.
  * Run via: docker exec stretch-wordpress-1 wp --allow-root eval-file /var/www/html/strip-rank-math-toc.php
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 global $wpdb;
 

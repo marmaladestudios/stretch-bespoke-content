@@ -3,9 +3,14 @@
  * Sideload images from stretchcreative.co into local media library.
  * Run via: docker compose exec wordpress wp eval-file /tmp/sideload-blog-images.php --allow-root
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 if (!defined('ABSPATH')) {
-    WP_CLI::error('Run via wp eval-file');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::error('Run via wp eval-file'); } else { echo 'Error: ' . 'Run via wp eval-file' . "\n"; exit; }
 }
 
 require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -26,13 +31,13 @@ $imported_posts = get_posts([
     ],
 ]);
 
-WP_CLI::log("Found " . count($imported_posts) . " imported posts to process");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Found " . count($imported_posts) . " imported posts to process"); } else { echo "Found " . count($imported_posts) . " imported posts to process" . "\n"; }
 
 $url_map = [];
 $stats = ['posts_updated' => 0, 'inline_imgs' => 0, 'featured_imgs' => 0, 'failures' => 0];
 
 foreach ($imported_posts as $post) {
-    WP_CLI::log("\n[{$post->ID}] {$post->post_title}");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n[{$post->ID}] {$post->post_title}"); } else { echo "\n[{$post->ID}] {$post->post_title}" . "\n"; }
     $content = $post->post_content;
     $changed = false;
 
@@ -51,7 +56,7 @@ foreach ($imported_posts as $post) {
 
             $attach_id = media_sideload_image($url, $post->ID, null, 'id');
             if (is_wp_error($attach_id)) {
-                WP_CLI::warning("  inline FAIL {$url}: " . $attach_id->get_error_message());
+                if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  inline FAIL {$url}: " . $attach_id->get_error_message()); } else { echo 'Warning: ' . "  inline FAIL {$url}: " . $attach_id->get_error_message() . "\n"; }
                 $stats['failures']++;
                 continue;
             }
@@ -61,7 +66,7 @@ foreach ($imported_posts as $post) {
             $content = str_replace($url, $new_url, $content);
             $changed = true;
             $stats['inline_imgs']++;
-            WP_CLI::log("  inline OK   #{$attach_id}");
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  inline OK   #{$attach_id}"); } else { echo "  inline OK   #{$attach_id}" . "\n"; }
         }
     }
 
@@ -76,7 +81,7 @@ foreach ($imported_posts as $post) {
         $api_url = "https://stretchcreative.co/wp-json/wp/v2/posts?slug=" . urlencode($post->post_name) . "&_embed=true";
         $resp = wp_remote_get($api_url, ['timeout' => 30]);
         if (is_wp_error($resp)) {
-            WP_CLI::warning("  REST FAIL: " . $resp->get_error_message());
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  REST FAIL: " . $resp->get_error_message()); } else { echo 'Warning: ' . "  REST FAIL: " . $resp->get_error_message() . "\n"; }
             continue;
         }
         $body = json_decode(wp_remote_retrieve_body($resp), true);
@@ -87,7 +92,7 @@ foreach ($imported_posts as $post) {
             } else {
                 $new_thumb_id = media_sideload_image($featured_url, $post->ID, null, 'id');
                 if (is_wp_error($new_thumb_id)) {
-                    WP_CLI::warning("  featured FAIL: " . $new_thumb_id->get_error_message());
+                    if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  featured FAIL: " . $new_thumb_id->get_error_message()); } else { echo 'Warning: ' . "  featured FAIL: " . $new_thumb_id->get_error_message() . "\n"; }
                     $stats['failures']++;
                     continue;
                 }
@@ -95,16 +100,16 @@ foreach ($imported_posts as $post) {
             }
             update_post_meta($post->ID, '_thumbnail_id', $new_thumb_id);
             $stats['featured_imgs']++;
-            WP_CLI::log("  featured OK #{$new_thumb_id}");
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  featured OK #{$new_thumb_id}"); } else { echo "  featured OK #{$new_thumb_id}" . "\n"; }
         } else {
-            WP_CLI::warning("  no featured image at REST for slug={$post->post_name}");
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  no featured image at REST for slug={$post->post_name}"); } else { echo 'Warning: ' . "  no featured image at REST for slug={$post->post_name}" . "\n"; }
         }
     }
 }
 
-WP_CLI::log("\n=== SUMMARY ===");
-WP_CLI::log("Posts updated:    {$stats['posts_updated']}");
-WP_CLI::log("Inline images:    {$stats['inline_imgs']}");
-WP_CLI::log("Featured images:  {$stats['featured_imgs']}");
-WP_CLI::log("Failures:         {$stats['failures']}");
-WP_CLI::success("Image sideload complete");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== SUMMARY ==="); } else { echo "\n=== SUMMARY ===" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Posts updated:    {$stats['posts_updated']}"); } else { echo "Posts updated:    {$stats['posts_updated']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Inline images:    {$stats['inline_imgs']}"); } else { echo "Inline images:    {$stats['inline_imgs']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Featured images:  {$stats['featured_imgs']}"); } else { echo "Featured images:  {$stats['featured_imgs']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Failures:         {$stats['failures']}"); } else { echo "Failures:         {$stats['failures']}" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::success("Image sideload complete"); } else { echo 'Success: ' . "Image sideload complete" . "\n"; }

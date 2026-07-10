@@ -5,9 +5,14 @@
  *
  * Run: docker compose exec wordpress wp eval-file /var/www/html/content-fixes.php --allow-root
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 if (!defined('ABSPATH')) {
-    WP_CLI::error('This script must be run via wp eval-file.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::error('This script must be run via wp eval-file.'); } else { echo 'Error: ' . 'This script must be run via wp eval-file.' . "\n"; exit; }
 }
 
 require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -40,7 +45,7 @@ $posts_to_unpublish = [
     'building-content-team-scale',                        // local slug variant
 ];
 
-WP_CLI::log("=== Unpublishing dated/incomplete posts ===");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("=== Unpublishing dated/incomplete posts ==="); } else { echo "=== Unpublishing dated/incomplete posts ===" . "\n"; }
 foreach ($posts_to_unpublish as $slug) {
     // Try matching slug or trashed-variant slug
     $candidates = get_posts([
@@ -61,27 +66,27 @@ foreach ($posts_to_unpublish as $slug) {
         ]);
     }
     if (empty($candidates)) {
-        WP_CLI::log("  ○ skip (not published): {$slug}");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ skip (not published): {$slug}"); } else { echo "  ○ skip (not published): {$slug}" . "\n"; }
         continue;
     }
     $post = $candidates[0];
     wp_update_post(['ID' => $post->ID, 'post_status' => 'draft']);
-    WP_CLI::log("  ✓ drafted: {$post->post_title} (ID {$post->ID})");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ drafted: {$post->post_title} (ID {$post->ID})"); } else { echo "  ✓ drafted: {$post->post_title} (ID {$post->ID})" . "\n"; }
 }
 
 // --------------------------------------------------------------------
 // FIX 2 — Repair broken healthcare-content-marketing post image (#13)
 // --------------------------------------------------------------------
-WP_CLI::log("\n=== Fixing healthcare post image ===");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Fixing healthcare post image ==="); } else { echo "\n=== Fixing healthcare post image ===" . "\n"; }
 $healthcare = get_page_by_path('the-guide-for-healthcare-content-marketing', OBJECT, 'post');
 if (!$healthcare) {
-    WP_CLI::warning('  Healthcare post not found by slug. Skipping image fix.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning('  Healthcare post not found by slug. Skipping image fix.'); } else { echo 'Warning: ' . '  Healthcare post not found by slug. Skipping image fix.' . "\n"; }
 } else {
     // Sideload a replacement image
     $replacement_url = 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80&auto=format&fit=crop';
     $att_id = cf_sideload_image($replacement_url, 'healthcare-content-marketing-hero');
     if (!$att_id) {
-        WP_CLI::warning('  Failed to sideload replacement image.');
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning('  Failed to sideload replacement image.'); } else { echo 'Warning: ' . '  Failed to sideload replacement image.' . "\n"; }
     } else {
         $img_url = wp_get_attachment_image_url($att_id, 'full');
 
@@ -103,17 +108,17 @@ if (!$healthcare) {
                 wp_update_post(['ID' => $healthcare->ID, 'post_content' => $new_content]);
                 // Set as featured image too
                 set_post_thumbnail($healthcare->ID, $att_id);
-                WP_CLI::log("  ✓ replaced broken DALLC2B7E… image with attachment {$att_id}");
+                if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ replaced broken DALLC2B7E… image with attachment {$att_id}"); } else { echo "  ✓ replaced broken DALLC2B7E… image with attachment {$att_id}" . "\n"; }
             } else {
-                WP_CLI::warning('  Regex did not match. Image block unchanged.');
+                if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning('  Regex did not match. Image block unchanged.'); } else { echo 'Warning: ' . '  Regex did not match. Image block unchanged.' . "\n"; }
             }
         } else {
             // Already patched — just make sure featured image is set
             if (!has_post_thumbnail($healthcare->ID)) {
                 set_post_thumbnail($healthcare->ID, $att_id);
-                WP_CLI::log("  ✓ set featured image on already-patched post");
+                if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ set featured image on already-patched post"); } else { echo "  ✓ set featured image on already-patched post" . "\n"; }
             } else {
-                WP_CLI::log("  ○ already patched — no change needed");
+                if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ already patched — no change needed"); } else { echo "  ○ already patched — no change needed" . "\n"; }
             }
         }
     }
@@ -123,15 +128,15 @@ if (!$healthcare) {
 // FIX 3 — Repoint homepage to the new Home template (page-home.php)
 // The Solutions design is now the homepage; front-page-v2 is retired.
 // --------------------------------------------------------------------
-WP_CLI::log("\n=== Repointing homepage to page-home.php ===");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Repointing homepage to page-home.php ==="); } else { echo "\n=== Repointing homepage to page-home.php ===" . "\n"; }
 $home_page = get_page_by_path('home');
 if (!$home_page) {
-    WP_CLI::warning('  Home page (slug "home") not found. Skipping front-page repoint.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning('  Home page (slug "home") not found. Skipping front-page repoint.'); } else { echo 'Warning: ' . '  Home page (slug "home") not found. Skipping front-page repoint.' . "\n"; }
 } else {
     update_post_meta($home_page->ID, '_wp_page_template', 'page-home.php');
     update_option('show_on_front', 'page');
     update_option('page_on_front', $home_page->ID);
-    WP_CLI::log("  ✓ Home page (ID {$home_page->ID}) → page-home.php; front page set");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ Home page (ID {$home_page->ID}) → page-home.php; front page set"); } else { echo "  ✓ Home page (ID {$home_page->ID}) → page-home.php; front page set" . "\n"; }
 }
 
-WP_CLI::success('Content fixes complete.');
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('Content fixes complete.'); } else { echo 'Success: ' . 'Content fixes complete.' . "\n"; }

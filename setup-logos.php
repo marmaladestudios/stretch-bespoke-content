@@ -3,6 +3,11 @@
  * Import real client logos and update Homepage 2.0 marquee.
  * Run: wp eval-file setup-logos.php
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -14,13 +19,13 @@ function stretch_import_logo($url, $name) {
 
     $tmp = download_url($url);
     if (is_wp_error($tmp)) {
-        WP_CLI::warning("Failed: {$name} — " . $tmp->get_error_message());
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Failed: {$name} — " . $tmp->get_error_message()); } else { echo 'Warning: ' . "Failed: {$name} — " . $tmp->get_error_message() . "\n"; }
         return 0;
     }
     $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'png';
     $id = media_handle_sideload(['name' => sanitize_title($name) . '.' . $ext, 'tmp_name' => $tmp], 0, $name);
     if (is_wp_error($id)) { @unlink($tmp); return 0; }
-    WP_CLI::log("  Imported: {$name} (ID: {$id})");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Imported: {$name} (ID: {$id})"); } else { echo "  Imported: {$name} (ID: {$id})" . "\n"; }
     return $id;
 }
 
@@ -54,7 +59,7 @@ $logos = [
     'UGG'              => 'https://stretchcreative.co/wp-content/uploads/2024/03/ugg-client.png',
 ];
 
-WP_CLI::log("=== Importing client logos ===\n");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("=== Importing client logos ===\n"); } else { echo "=== Importing client logos ===\n" . "\n"; }
 
 $imported = [];
 foreach ($logos as $name => $url) {
@@ -64,7 +69,7 @@ foreach ($logos as $name => $url) {
     }
 }
 
-WP_CLI::log("\nImported " . count($imported) . " logos.");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nImported " . count($imported) . " logos."); } else { echo "\nImported " . count($imported) . " logos." . "\n"; }
 
 // Now update the Homepage 2.0 template marquee
 // The marquee is hardcoded in front-page-v2.php with text-based SVGs.
@@ -79,14 +84,14 @@ foreach ($imported as $name => $id) {
 
 // Save the logo data as an option so we can use it in the template
 update_option('stretch_client_logos', $imported);
-WP_CLI::log("\nSaved logo IDs to stretch_client_logos option.");
-WP_CLI::log("Logo URLs available for template use.");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nSaved logo IDs to stretch_client_logos option."); } else { echo "\nSaved logo IDs to stretch_client_logos option." . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Logo URLs available for template use."); } else { echo "Logo URLs available for template use." . "\n"; }
 
 // Output the HTML snippet for manual insertion
-WP_CLI::log("\n=== Logo marquee HTML (for reference) ===");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Logo marquee HTML (for reference) ==="); } else { echo "\n=== Logo marquee HTML (for reference) ===" . "\n"; }
 foreach ($imported as $name => $id) {
     $url = wp_get_attachment_url($id);
-    WP_CLI::log("  {$name}: {$url}");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  {$name}: {$url}"); } else { echo "  {$name}: {$url}" . "\n"; }
 }
 
-WP_CLI::log("\n=== Done! ===");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Done! ==="); } else { echo "\n=== Done! ===" . "\n"; }

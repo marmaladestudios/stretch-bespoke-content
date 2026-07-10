@@ -179,10 +179,21 @@ p:last-child { margin-bottom: 0; }
   padding: 14px 0;
   box-shadow: 0 4px 30px rgba(0,0,0,0.15);
 }
+/* Solid nav on light-topped pages (AUD-009): 404 gets it automatically via the
+   body class WordPress adds; other light pages can opt in with .site-nav--solid. */
+.error404 .site-nav,
+.site-nav--solid {
+  background: rgba(37, 44, 58, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+}
 .site-nav .container { display: flex; justify-content: space-between; align-items: center; }
 .site-nav .logo { display: block; line-height: 0; }
 .site-nav .logo img { height: 40px; width: auto; }
-.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+/* Toggle sits above the open mobile panel (z-index 200) so the X stays tappable (AUD-005) */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; position: relative; z-index: 300; }
+.nav-toggle:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
 .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; transition: 0.3s; }
 .nav-links { display: flex; list-style: none; gap: 32px; align-items: center; }
 .nav-links a {
@@ -217,7 +228,8 @@ p:last-child { margin-bottom: 0; }
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
   z-index: 200;
 }
-.nav-links li:hover > .sub-menu {
+.nav-links li:hover > .sub-menu,
+.nav-links li:focus-within > .sub-menu {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
@@ -252,10 +264,51 @@ p:last-child { margin-bottom: 0; }
   gap: 20px;
   z-index: 200;
   box-shadow: -4px 0 30px rgba(0,0,0,0.3);
+  overflow-y: auto;
 }
 .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .nav-toggle.active span:nth-child(2) { opacity: 0; }
 .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Dimmed backdrop behind the open mobile panel (AUD-005). Sits below .site-nav
+   (z-index 100) so the bar, panel and toggle stay bright; taps on it are caught
+   by the outside-tap listener in theme.js. */
+body.nav-open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(37, 44, 58, 0.55);
+  z-index: 90;
+}
+/* While the panel is open, drop the nav's backdrop-filter: a filtered ancestor
+   becomes the containing block for position:fixed descendants (Chrome/Safari),
+   which would clip the fixed 280px panel to the nav bar's height. */
+body.nav-open .site-nav {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Inside the open mobile panel, sub-menus render inline and always visible so
+   child pages are reachable by touch (AUD-006 interim). The li:hover/:focus-within
+   selectors are repeated here at higher specificity so the desktop dropdown
+   positioning above never re-applies transform/absolute inside the panel. */
+.nav-links.open .sub-menu,
+.nav-links.open li:hover > .sub-menu,
+.nav-links.open li:focus-within > .sub-menu {
+  position: static;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  min-width: 0;
+  padding: 10px 0 0 14px;
+}
+.nav-links.open .sub-menu a { padding: 8px 0; white-space: normal; }
+.nav-links.open .sub-menu a:hover { padding-left: 4px; background: transparent; }
 
 /* ===== SECTION BACKGROUNDS ===== */
 .section-white { background: var(--color-white); padding: var(--section-padding) 0; }
@@ -290,7 +343,7 @@ p:last-child { margin-bottom: 0; }
 }
 .section-dark .container { position: relative; z-index: 1; }
 .section-dark .overline {
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.62); /* AUD-028: was 0.45 (~4.2:1 on #282829 at 13px) */
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 13px;
@@ -856,7 +909,7 @@ p:last-child { margin-bottom: 0; }
   font-style: italic;
 }
 .testimonial-author { font-family: var(--font-heading); font-size: 16px; font-weight: 600; color: var(--color-purple); }
-.testimonial-role { font-size: 14px; color: #999; margin-top: 4px; }
+.testimonial-role { font-size: 14px; color: #767676; margin-top: 4px; } /* AUD-028: was #999 (2.85:1) */
 .testimonial-photo {
   width: 60px;
   height: 60px;
@@ -963,7 +1016,7 @@ p:last-child { margin-bottom: 0; }
 .blog-card-title a { transition: color 0.2s; }
 .blog-card-title a:hover { color: var(--color-purple); }
 .blog-card-excerpt { font-size: 15px; color: #666; line-height: 1.55; margin-bottom: 16px; }
-.blog-card-meta { font-size: 13px; color: #999; }
+.blog-card-meta { font-size: 13px; color: #767676; } /* AUD-028: was #999 (2.85:1) */
 .blog-card-readmore {
   font-family: var(--font-heading);
   font-size: 14px;
@@ -997,6 +1050,7 @@ p:last-child { margin-bottom: 0; }
   border-color: var(--color-purple);
   color: #fff;
 }
+.blog-filter-btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
 
 /* Blog single post */
 .single-post-header {
@@ -1099,13 +1153,39 @@ p:last-child { margin-bottom: 0; }
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: 24px;
   font-size: 13px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.62); /* AUD-028: was 0.35 (~3.1:1 on #282829 at 13px) */
 }
 
 /* ===== 404 ===== */
 .page-404 { text-align: center; padding: 160px 0 100px; }
 .page-404 h1 { font-size: 120px; font-weight: 600; color: var(--color-purple); opacity: 0.2; margin-bottom: 0; }
 .page-404 h2 { margin-top: -20px; }
+.page-404 .helpful-links { margin-top: 48px; }
+.page-404 .helpful-links p {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--color-body);
+  margin-bottom: 16px;
+}
+.page-404 .helpful-links ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+}
+.page-404 .helpful-links a {
+  font-family: var(--font-nav);
+  font-size: 15px;
+  color: var(--color-purple);
+  border-bottom: 1px solid rgba(133, 96, 168, 0.3);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.page-404 .helpful-links a:hover { color: var(--color-cyan); border-color: var(--color-cyan); }
+.page-404 .helpful-links a:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
 
 /* ===== SEARCH RESULTS ===== */
 .search-header { padding: 160px 0 60px; background: var(--color-dark); }

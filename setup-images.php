@@ -5,6 +5,11 @@
  *
  * Downloads placeholder images and attaches them to pages/posts.
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 // ── Helper: Download image and add to media library ──
 function stretch_import_image($url, $title, $post_id = 0) {
@@ -19,13 +24,13 @@ function stretch_import_image($url, $title, $post_id = 0) {
         'numberposts' => 1,
     ]);
     if ($existing) {
-        WP_CLI::log("    Image '{$title}' already exists (ID: {$existing[0]->ID})");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("    Image '{$title}' already exists (ID: {$existing[0]->ID})"); } else { echo "    Image '{$title}' already exists (ID: {$existing[0]->ID})" . "\n"; }
         return $existing[0]->ID;
     }
 
     $tmp = download_url($url);
     if (is_wp_error($tmp)) {
-        WP_CLI::warning("Failed to download {$url}: " . $tmp->get_error_message());
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Failed to download {$url}: " . $tmp->get_error_message()); } else { echo 'Warning: ' . "Failed to download {$url}: " . $tmp->get_error_message() . "\n"; }
         return 0;
     }
 
@@ -38,20 +43,20 @@ function stretch_import_image($url, $title, $post_id = 0) {
     $attachment_id = media_handle_sideload($file_array, $post_id, $title);
     if (is_wp_error($attachment_id)) {
         @unlink($tmp);
-        WP_CLI::warning("Failed to sideload {$title}: " . $attachment_id->get_error_message());
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Failed to sideload {$title}: " . $attachment_id->get_error_message()); } else { echo 'Warning: ' . "Failed to sideload {$title}: " . $attachment_id->get_error_message() . "\n"; }
         return 0;
     }
 
-    WP_CLI::log("    Imported '{$title}' (ID: {$attachment_id})");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("    Imported '{$title}' (ID: {$attachment_id})"); } else { echo "    Imported '{$title}' (ID: {$attachment_id})" . "\n"; }
     return $attachment_id;
 }
 
-WP_CLI::log("=== Importing images ===\n");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("=== Importing images ===\n"); } else { echo "=== Importing images ===\n" . "\n"; }
 
 // ────────────────────────────────────────
 // BLOG POST FEATURED IMAGES
 // ────────────────────────────────────────
-WP_CLI::log("Blog post featured images...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Blog post featured images..."); } else { echo "Blog post featured images..." . "\n"; }
 
 $blog_images = [
     'content-marketing-2024'       => 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&h=450&fit=crop',
@@ -65,7 +70,7 @@ foreach ($blog_images as $slug => $url) {
         $img_id = stretch_import_image($url, 'blog-' . $slug, $post->ID);
         if ($img_id) {
             set_post_thumbnail($post->ID, $img_id);
-            WP_CLI::log("  Set featured image for '{$post->post_title}'");
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Set featured image for '{$post->post_title}'"); } else { echo "  Set featured image for '{$post->post_title}'" . "\n"; }
         }
     }
 }
@@ -73,7 +78,7 @@ foreach ($blog_images as $slug => $url) {
 // ────────────────────────────────────────
 // TEAM MEMBER PHOTOS (placeholder avatars)
 // ────────────────────────────────────────
-WP_CLI::log("\nTeam member photos...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nTeam member photos..."); } else { echo "\nTeam member photos..." . "\n"; }
 
 $team_page = get_page_by_path('the-team');
 if ($team_page) {
@@ -98,14 +103,14 @@ if ($team_page) {
             }
         }
         update_field('page_sections', $sections, $team_page->ID);
-        WP_CLI::log("  Updated team grid with photos");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Updated team grid with photos"); } else { echo "  Updated team grid with photos" . "\n"; }
     }
 }
 
 // ────────────────────────────────────────
 // ABOUT PAGE — Add image+text section
 // ────────────────────────────────────────
-WP_CLI::log("\nAbout page image...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nAbout page image..."); } else { echo "\nAbout page image..." . "\n"; }
 
 $about_page = get_page_by_path('about-stretch-creative');
 if ($about_page) {
@@ -133,14 +138,14 @@ if ($about_page) {
         ];
         array_splice($sections, 2, 0, [$image_text_section]);
         update_field('page_sections', $sections, $about_page->ID);
-        WP_CLI::log("  Added image+text section to About page");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Added image+text section to About page"); } else { echo "  Added image+text section to About page" . "\n"; }
     }
 }
 
 // ────────────────────────────────────────
 // HOMEPAGE — Add image to featured card area
 // ────────────────────────────────────────
-WP_CLI::log("\nHomepage images...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nHomepage images..."); } else { echo "\nHomepage images..." . "\n"; }
 
 $home_page = get_page_by_path('home');
 if ($home_page) {
@@ -186,7 +191,7 @@ if ($home_page) {
             $insert_pos = count($sections) - 2; // Before blog preview and CTA
             array_splice($sections, $insert_pos, 0, [$logo_section]);
             update_field('page_sections', $sections, $home_page->ID);
-            WP_CLI::log("  Added logo carousel to homepage");
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Added logo carousel to homepage"); } else { echo "  Added logo carousel to homepage" . "\n"; }
         }
     }
 }
@@ -194,7 +199,7 @@ if ($home_page) {
 // ────────────────────────────────────────
 // SOLUTIONS PAGE — Hero-style images for sub-pages
 // ────────────────────────────────────────
-WP_CLI::log("\nSolution/Service page images...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nSolution/Service page images..."); } else { echo "\nSolution/Service page images..." . "\n"; }
 
 $page_images = [
     'ecommerce-content'            => ['https://images.unsplash.com/photo-1556742393-d75f468bfcb0?w=800&h=600&fit=crop', 'Ecommerce workspace'],
@@ -238,11 +243,11 @@ foreach ($page_images as $slug => $info) {
                     // Insert before the CTA (last section)
                     array_splice($sections, count($sections) - 1, 0, [$image_section]);
                     update_field('page_sections', $sections, $page->ID);
-                    WP_CLI::log("  Added image to {$page->post_title}");
+                    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Added image to {$page->post_title}"); } else { echo "  Added image to {$page->post_title}" . "\n"; }
                 }
             }
         }
     }
 }
 
-WP_CLI::log("\n=== Image import complete! ===");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Image import complete! ==="); } else { echo "\n=== Image import complete! ===" . "\n"; }

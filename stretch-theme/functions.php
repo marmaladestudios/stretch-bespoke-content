@@ -12,6 +12,16 @@ require_once get_template_directory() . '/inc/customizer.php';
 // ACF field registration (PHP fallback for flexible content)
 require_once get_template_directory() . '/inc/acf-fields.php';
 
+// Contact form + lead capture handler (AUD-001/002)
+if (file_exists(get_template_directory() . '/inc/contact-form.php')) {
+    require_once get_template_directory() . '/inc/contact-form.php';
+}
+
+// Same-origin scanner fetch proxy (AUD-008)
+if (file_exists(get_template_directory() . '/inc/scanner-proxy.php')) {
+    require_once get_template_directory() . '/inc/scanner-proxy.php';
+}
+
 /**
  * Fix blog/category/post permalink resolution.
  * The permalink /blog/%category%/%postname%/ causes category rules to

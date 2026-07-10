@@ -3,9 +3,15 @@
  * Setup script for Service Page content.
  * Run via: docker compose exec wordpress wp eval-file /var/www/html/setup-services.php --allow-root
  */
+// AUD-022: web-exposure guard — WP-CLI only, except when included by the setup
+// wizard, which defines STRETCH_WIZARD immediately before including this file.
+// A direct web request exits before doing anything.
+if ((!defined('WP_CLI') || !WP_CLI) && !defined('STRETCH_WIZARD')) {
+    exit;
+}
 
 if (!defined('ABSPATH')) {
-    WP_CLI::error('This script must be run via wp eval-file.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::error('This script must be run via wp eval-file.'); } else { echo 'Error: ' . 'This script must be run via wp eval-file.' . "\n"; exit; }
 }
 
 $services = [];
@@ -660,16 +666,16 @@ unset($data);
 foreach ($services as $slug => $data) {
     // Save option
     update_option('stretch_service_' . $slug, $data, false);
-    WP_CLI::log("Saved option: stretch_service_{$slug}");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Saved option: stretch_service_{$slug}"); } else { echo "Saved option: stretch_service_{$slug}" . "\n"; }
 
     // Find the page by slug and set its template
     $page = get_page_by_path($slug);
     if ($page) {
         update_post_meta($page->ID, '_wp_page_template', 'page-service.php');
-        WP_CLI::log("Set template for page: {$page->post_title} (ID: {$page->ID})");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Set template for page: {$page->post_title} (ID: {$page->ID})"); } else { echo "Set template for page: {$page->post_title} (ID: {$page->ID})" . "\n"; }
     } else {
-        WP_CLI::warning("Page not found for slug: {$slug}");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Page not found for slug: {$slug}"); } else { echo 'Warning: ' . "Page not found for slug: {$slug}" . "\n"; }
     }
 }
 
-WP_CLI::success('All service page content saved and templates assigned.');
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('All service page content saved and templates assigned.'); } else { echo 'Success: ' . 'All service page content saved and templates assigned.' . "\n"; }

@@ -9,9 +9,14 @@
  *
  * Run: docker compose exec wordpress wp eval-file /var/www/html/setup-portfolio.php --allow-root
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 if (!defined('ABSPATH')) {
-    WP_CLI::error('This script must be run via wp eval-file.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::error('This script must be run via wp eval-file.'); } else { echo 'Error: ' . 'This script must be run via wp eval-file.' . "\n"; exit; }
 }
 
 require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -29,10 +34,10 @@ foreach ($candidate_dirs as $d) {
     if (is_dir($d)) { $assets_dir = $d; break; }
 }
 if (!$assets_dir) {
-    WP_CLI::warning('No portfolio-assets/ directory found. Skipping.');
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning('No portfolio-assets/ directory found. Skipping.'); } else { echo 'Warning: ' . 'No portfolio-assets/ directory found. Skipping.' . "\n"; }
     return;
 }
-WP_CLI::log("Sideloading portfolio assets from: {$assets_dir}");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Sideloading portfolio assets from: {$assets_dir}"); } else { echo "Sideloading portfolio assets from: {$assets_dir}" . "\n"; }
 
 // Definitions mirror stretch_portfolio_definitions() in functions.php.
 // File names here MUST match what the theme's lookup expects.
@@ -63,7 +68,7 @@ $imported = 0; $skipped = 0; $failed = 0;
 foreach ($items as [$file, $title, $alt]) {
     $src = $assets_dir . '/' . $file;
     if (!file_exists($src)) {
-        WP_CLI::warning("  missing source: {$file}");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  missing source: {$file}"); } else { echo 'Warning: ' . "  missing source: {$file}" . "\n"; }
         $failed++;
         continue;
     }
@@ -86,7 +91,7 @@ foreach ($items as [$file, $title, $alt]) {
     // Copy to a tmp file and sideload (so the original in /opt stays intact)
     $tmp = wp_tempnam($file);
     if (!copy($src, $tmp)) {
-        WP_CLI::warning("  copy failed: {$file}");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  copy failed: {$file}"); } else { echo 'Warning: ' . "  copy failed: {$file}" . "\n"; }
         $failed++;
         continue;
     }
@@ -96,14 +101,14 @@ foreach ($items as [$file, $title, $alt]) {
         $title
     );
     if (is_wp_error($id)) {
-        WP_CLI::warning("  sideload failed for {$file}: " . $id->get_error_message());
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("  sideload failed for {$file}: " . $id->get_error_message()); } else { echo 'Warning: ' . "  sideload failed for {$file}: " . $id->get_error_message() . "\n"; }
         @unlink($tmp);
         $failed++;
         continue;
     }
     if ($alt) update_post_meta($id, '_wp_attachment_image_alt', $alt);
-    WP_CLI::log("  ✓ imported {$file} (ID {$id})");
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ imported {$file} (ID {$id})"); } else { echo "  ✓ imported {$file} (ID {$id})" . "\n"; }
     $imported++;
 }
 
-WP_CLI::success("Portfolio: {$imported} imported, {$skipped} already existed, {$failed} failed.");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::success("Portfolio: {$imported} imported, {$skipped} already existed, {$failed} failed."); } else { echo 'Success: ' . "Portfolio: {$imported} imported, {$skipped} already existed, {$failed} failed." . "\n"; }

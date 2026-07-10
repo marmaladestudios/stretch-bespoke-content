@@ -832,6 +832,22 @@ html, body { overflow-x: hidden; }
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(133,96,168,0.4);
 }
+.sp-nl-form button:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+.sp-nl-form[hidden] { display: none; }
+.sp-nl-status {
+  display: none;
+  margin: 12px 0 0;
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.sp-nl-status.visible { display: block; }
+.sp-nl-status.success { color: #7ee2a0; }
+.sp-nl-status.error { color: #ff9db1; }
 
 .sp-cta-final {
   background: linear-gradient(135deg, #8560A8, #5674B9);
@@ -999,6 +1015,11 @@ html, body { overflow-x: hidden; }
 }
 .sp-hub-acc-link:hover { color: #00BFF3; }
 .sp-hub-acc-trigger .sp-hub-arrow {
+  /* Button element styled to match the previous <span> exactly */
+  background: none;
+  border: none;
+  font-family: inherit;
+  line-height: inherit;
   font-size: 14px;
   font-weight: 300;
   color: #bbb;
@@ -1422,18 +1443,6 @@ html, body { overflow-x: hidden; }
 @media (max-width: 960px) { .sp-reading-position { display: none; } }
 
 /* ========================================
-   ENGAGEMENT: Interactive Comparison Table
-   ======================================== */
-.sp-article table tbody tr { cursor: pointer; position: relative; }
-.sp-article table tbody tr.highlighted {
-  background: rgba(133,96,168,0.08) !important;
-}
-.sp-article table tbody tr.highlighted td:first-child {
-  font-weight: 600;
-  color: #8560A8;
-}
-
-/* ========================================
    ENGAGEMENT: Copy Button on Quotes
    ======================================== */
 .sp-copy-btn {
@@ -1614,6 +1623,22 @@ html, body { overflow-x: hidden; }
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(133,96,168,0.3);
 }
+.sp-exit-form button:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+.sp-exit-form[hidden] { display: none; }
+.sp-exit-status {
+  display: none;
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+.sp-exit-status.visible { display: block; }
+.sp-exit-status.success { color: #1d7a2f; font-weight: 600; }
+.sp-exit-status.error { color: #b03052; }
 .sp-exit-skip {
   display: block;
   margin-top: 16px;
@@ -1713,9 +1738,9 @@ html, body { overflow-x: hidden; }
     <div class="sp-hub-acc">
       <div class="sp-hub-acc-trigger open">
         <a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>" class="sp-hub-acc-link"><?php echo esc_html($cat->name); ?></a>
-        <span class="sp-hub-arrow" onclick="var t=this.parentElement;t.classList.toggle('open');var p=t.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">+</span>
+        <button type="button" class="sp-hub-arrow" aria-expanded="true" aria-controls="sp-hub-panel-<?php echo (int) $cat->term_id; ?>" aria-label="Toggle <?php echo esc_attr($cat->name); ?> article list">+</button>
       </div>
-      <div class="sp-hub-acc-panel" style="max-height:500px;">
+      <div class="sp-hub-acc-panel" id="sp-hub-panel-<?php echo (int) $cat->term_id; ?>" style="max-height:500px;">
         <ul class="sp-hub-acc-list">
           <?php while ($hub_posts->have_posts()) : $hub_posts->the_post(); ?>
             <li<?php if (get_the_ID() == $current_post_id) echo ' class="current-post"'; ?>>
@@ -1739,9 +1764,9 @@ html, body { overflow-x: hidden; }
     <div class="sp-hub-acc">
       <div class="sp-hub-acc-trigger">
         <a href="<?php echo esc_url(get_category_link($ocat->term_id)); ?>" class="sp-hub-acc-link"><?php echo esc_html($ocat->name); ?></a>
-        <span class="sp-hub-arrow" onclick="var t=this.parentElement;t.classList.toggle('open');var p=t.nextElementSibling;if(p.style.maxHeight){p.style.maxHeight=null}else{p.style.maxHeight=p.scrollHeight+'px'}">+</span>
+        <button type="button" class="sp-hub-arrow" aria-expanded="false" aria-controls="sp-hub-panel-<?php echo (int) $ocat->term_id; ?>" aria-label="Toggle <?php echo esc_attr($ocat->name); ?> article list">+</button>
       </div>
-      <div class="sp-hub-acc-panel">
+      <div class="sp-hub-acc-panel" id="sp-hub-panel-<?php echo (int) $ocat->term_id; ?>">
         <ul class="sp-hub-acc-list">
           <?php while ($ocat_posts->have_posts()) : $ocat_posts->the_post(); ?>
             <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
@@ -1824,13 +1849,13 @@ html, body { overflow-x: hidden; }
               ['What industries do you work with?', 'We work across ecommerce, SaaS, healthcare, finance, retail, publishing, and many more. Our writers have deep expertise across industries, and we match your project with writers who understand your space.'],
           ];
       }
-      foreach ($faqs as $faq) : ?>
+      foreach ($faqs as $faq_i => $faq) : ?>
       <div class="sp-faq-item">
-        <button class="sp-faq-trigger" onclick="this.classList.toggle('open');var a=this.nextElementSibling;if(a.style.maxHeight){a.style.maxHeight=null}else{a.style.maxHeight=a.scrollHeight+'px'}">
+        <button type="button" class="sp-faq-trigger" aria-expanded="false" aria-controls="sp-faq-answer-<?php echo (int) $faq_i; ?>">
           <?php echo esc_html($faq[0]); ?>
-          <span class="sp-faq-icon">+</span>
+          <span class="sp-faq-icon" aria-hidden="true">+</span>
         </button>
-        <div class="sp-faq-answer">
+        <div class="sp-faq-answer" id="sp-faq-answer-<?php echo (int) $faq_i; ?>">
           <div class="sp-faq-answer-inner"><?php echo esc_html($faq[1]); ?></div>
         </div>
       </div>
@@ -2009,7 +2034,7 @@ if ($related->have_posts()) :
 <!-- ============================
      7. NEWSLETTER CTA
      ============================ -->
-<section class="sp-section sp-newsletter">
+<section class="sp-section sp-newsletter" id="newsletter-signup">
   <div class="sp-container">
     <div class="sp-newsletter-inner sp-reveal">
       <div>
@@ -2017,10 +2042,20 @@ if ($related->have_posts()) :
         <p class="nl-sub">Get the latest insights on content strategy, SEO, and digital storytelling delivered to your inbox.</p>
       </div>
       <div>
-        <form class="sp-nl-form" onsubmit="return false;">
-          <input type="email" placeholder="your@email.com" aria-label="Email address">
+        <?php
+        // Status states after a non-JS POST + redirect (?sent=1/?lead_error=1&lead=…).
+        // (`lead_error` because WP core strips `error` from $_GET.)
+        $stretch_nl_lead  = isset($_GET['lead']) ? sanitize_key(wp_unslash($_GET['lead'])) : '';
+        $stretch_nl_sent  = isset($_GET['sent']) && in_array($stretch_nl_lead, ['newsletter', 'exit_intent'], true);
+        $stretch_nl_error = isset($_GET['lead_error']) && in_array($stretch_nl_lead, ['newsletter', 'exit_intent'], true);
+        ?>
+        <form class="sp-nl-form" id="newsletterForm" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"<?php echo $stretch_nl_sent ? ' hidden' : ''; ?>>
+          <?php if (function_exists('stretch_lead_form_fields')) { stretch_lead_form_fields('newsletter'); } ?>
+          <input type="email" name="email" placeholder="your@email.com" aria-label="Email address" required>
           <button type="submit">Subscribe</button>
         </form>
+        <p class="sp-nl-status success<?php echo $stretch_nl_sent ? ' visible' : ''; ?>" id="newsletterSuccess" role="status">You&rsquo;re subscribed &#10003; &mdash; new insights will land in your inbox.</p>
+        <p class="sp-nl-status error<?php echo $stretch_nl_error ? ' visible' : ''; ?>" id="newsletterError" role="alert">Something went wrong &mdash; please check your email address and try again.</p>
       </div>
     </div>
   </div>
@@ -2294,24 +2329,6 @@ if ($related->have_posts()) :
     }, { passive: true });
   }
 
-  // --- 2. Inline Content Upgrade CTA ---
-  if (article) {
-    var articleH2s = article.querySelectorAll('h2');
-    if (articleH2s.length >= 3) {
-      var upgradeBox = document.createElement('div');
-      upgradeBox.className = 'sp-content-upgrade sp-gradient-border sp-reveal';
-      upgradeBox.innerHTML = '<div class="sp-content-upgrade-inner">'
-          + '<div class="sp-content-upgrade-overline">Free Consultation</div>'
-          + '<h3>Want us to build a content strategy for your brand?</h3>'
-          + '<p>Our team of 200+ creatives can help you dominate organic search and get cited by AI answer engines. Let\'s talk about your goals.</p>'
-          + '<a href="/contact-stretch-creative/" class="sp-content-upgrade-btn">Book a Free Consult \u2192</a>'
-          + '</div>';
-      articleH2s[2].parentNode.insertBefore(upgradeBox, articleH2s[2]);
-      // Observe for reveal animation
-      observer.observe(upgradeBox);
-    }
-  }
-
   // --- 3. Text Highlight Share ---
   var textShareEl = document.getElementById('textShare');
   var textShareTwitter = document.getElementById('textShareTwitter');
@@ -2376,33 +2393,6 @@ if ($related->have_posts()) :
         }
       });
     }, { passive: true });
-  }
-
-  // --- 5. Key Takeaway Boxes ---
-  if (article) {
-    var h2sForTakeaway = article.querySelectorAll('h2');
-    var takeaways = [
-      { index: 0, text: 'AEO is the practice of structuring content so AI-powered engines cite your brand \u2014 it\u2019s becoming as essential as traditional SEO.' },
-      { index: 3, text: 'Structure your content with clear headings, lead with answers, and build topical authority through content clusters.' }
-    ];
-    takeaways.forEach(function(tk) {
-      if (h2sForTakeaway.length > tk.index) {
-        var h2El = h2sForTakeaway[tk.index];
-        // Find the first paragraph sibling after this h2
-        var nextEl = h2El.nextElementSibling;
-        while (nextEl && nextEl.tagName !== 'P') {
-          nextEl = nextEl.nextElementSibling;
-        }
-        if (nextEl) {
-          var takeawayBox = document.createElement('div');
-          takeawayBox.className = 'sp-key-takeaway sp-reveal';
-          takeawayBox.innerHTML = '<div class="sp-key-takeaway-label">Key Takeaway</div>'
-              + '<p>' + tk.text + '</p>';
-          nextEl.parentNode.insertBefore(takeawayBox, nextEl.nextSibling);
-          observer.observe(takeawayBox);
-        }
-      }
-    });
   }
 
   // ========================================
@@ -2493,36 +2483,20 @@ if ($related->have_posts()) :
     }, { passive: true });
   }
 
-  // --- E4. Interactive Comparison Table ---
+  // --- E5. Copy Button on Quotes ---
   if (article) {
-    var tableRows = article.querySelectorAll('table tbody tr');
-    tableRows.forEach(function(row) {
-      row.addEventListener('click', function() {
-        var wasHighlighted = row.classList.contains('highlighted');
-        // Remove from all rows in same table
-        var tbody = row.parentElement;
-        tbody.querySelectorAll('tr.highlighted').forEach(function(r) {
-          r.classList.remove('highlighted');
-        });
-        if (!wasHighlighted) {
-          row.classList.add('highlighted');
-        }
-      });
-    });
-  }
-
-  // --- E5. Copy Button on Quotes and Takeaways ---
-  if (article) {
-    var copyTargets = article.querySelectorAll('blockquote, .wp-block-pullquote, .pullquote, .sp-key-takeaway');
+    var copyTargets = article.querySelectorAll('blockquote, .wp-block-pullquote, .pullquote');
     copyTargets.forEach(function(el) {
       el.style.position = 'relative';
       var btn = document.createElement('button');
       btn.className = 'sp-copy-btn';
       btn.textContent = 'Copy';
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var textContent = el.textContent.replace(/^Copy/, '').replace(/^Copied!/, '').trim();
-        navigator.clipboard.writeText(textContent);
+      btn.addEventListener('click', function() {
+        // Clone the quote and strip the button so its label never ends up
+        // in the copied text.
+        var clone = el.cloneNode(true);
+        clone.querySelectorAll('.sp-copy-btn').forEach(function(b) { b.remove(); });
+        navigator.clipboard.writeText(clone.textContent.trim());
         btn.textContent = 'Copied!';
         btn.classList.add('copied');
         setTimeout(function() {
@@ -2555,20 +2529,132 @@ if ($related->have_posts()) :
     });
   }
 
-  // --- E7. Exit Intent Popup ---
-  var exitOverlay = document.getElementById('exitOverlay');
-  if (exitOverlay && !isTouchDevice) {
+  // ========================================
+  // ACCESSIBLE ACCORDIONS (AUD-019)
+  // ========================================
+  // Hub sidebar: the arrow <button> sits inside .sp-hub-acc-trigger,
+  // and the collapsible panel is the trigger's next sibling.
+  document.querySelectorAll('.sp-hub-arrow').forEach(function(arrowBtn) {
+    arrowBtn.addEventListener('click', function() {
+      var trigger = arrowBtn.parentElement;
+      var panel = trigger.nextElementSibling;
+      var isOpen = trigger.classList.toggle('open');
+      arrowBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      panel.style.maxHeight = isOpen ? panel.scrollHeight + 'px' : '';
+    });
+  });
+
+  // FAQ: the trigger <button> itself carries the open state; the answer
+  // panel is its next sibling.
+  document.querySelectorAll('.sp-faq-trigger').forEach(function(faqBtn) {
+    faqBtn.addEventListener('click', function() {
+      var answer = faqBtn.nextElementSibling;
+      var isOpen = faqBtn.classList.toggle('open');
+      faqBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      answer.style.maxHeight = isOpen ? answer.scrollHeight + 'px' : '';
+    });
+  });
+
+  // ========================================
+  // LEAD CAPTURE FORMS (AUD-002)
+  // Newsletter + exit-intent submit via fetch for an in-page success
+  // state; on network failure they fall back to a normal POST + redirect.
+  // ========================================
+  function wireLeadForm(form, successEl, errorEl, onSuccess) {
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      if (!window.fetch || !window.FormData) return; // let the native POST run
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var btnText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      if (errorEl) errorEl.classList.remove('visible');
+
+      // getAttribute: the hidden input named "action" shadows form.action.
+      fetch(form.getAttribute('action'), {
+        method: 'POST',
+        body: new FormData(form),
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }).then(function(res) {
+        return res.json();
+      }).then(function(json) {
+        if (btn) { btn.disabled = false; btn.textContent = btnText; }
+        if (json && json.success) {
+          form.hidden = true;
+          if (successEl) successEl.classList.add('visible');
+          if (typeof onSuccess === 'function') onSuccess();
+        } else if (errorEl) {
+          if (json && json.data && json.data.message) { errorEl.textContent = json.data.message; }
+          errorEl.classList.add('visible');
+        }
+      }).catch(function() {
+        // Network/parse failure — fall back to a normal POST + redirect.
+        if (btn) { btn.disabled = false; btn.textContent = btnText; }
+        form.submit();
+      });
+    });
+  }
+
+  // --- E7. Exit Intent Popup (dialog semantics + focus management, AUD-025) ---
+  // The overlay markup is rendered after this script block, so bind on
+  // DOM-ready. (The previous inline lookup ran too early and never bound.)
+  function initLeadCapture() {
+    var exitOverlay = document.getElementById('exitOverlay');
+
+    wireLeadForm(
+      document.getElementById('newsletterForm'),
+      document.getElementById('newsletterSuccess'),
+      document.getElementById('newsletterError')
+    );
+    wireLeadForm(
+      document.getElementById('exitForm'),
+      document.getElementById('exitSuccess'),
+      document.getElementById('exitError'),
+      function() {
+        // Form is gone — keep keyboard focus inside the dialog.
+        var closeBtn = document.getElementById('exitClose');
+        if (closeBtn) closeBtn.focus();
+      }
+    );
+
+    if (!exitOverlay || isTouchDevice) return;
+
     var exitShown = false;
     var exitScrollThreshold = 0.3;
+    var exitLastFocus = null;
+    var exitEmailInput = document.getElementById('exitEmail');
+
+    function openExitPopup() {
+      exitLastFocus = document.activeElement;
+      exitOverlay.classList.add('visible');
+      exitOverlay.setAttribute('aria-hidden', 'false');
+      if (exitEmailInput && !exitEmailInput.closest('form[hidden]')) {
+        exitEmailInput.focus();
+      } else {
+        document.getElementById('exitClose').focus();
+      }
+    }
 
     function closeExitPopup() {
       exitOverlay.classList.remove('visible');
+      exitOverlay.setAttribute('aria-hidden', 'true');
+      if (exitLastFocus && typeof exitLastFocus.focus === 'function') {
+        exitLastFocus.focus();
+      }
     }
 
     document.getElementById('exitClose').addEventListener('click', closeExitPopup);
     document.getElementById('exitSkip').addEventListener('click', closeExitPopup);
+    // Outside click
     exitOverlay.addEventListener('click', function(e) {
       if (e.target === exitOverlay) closeExitPopup();
+    });
+    // Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && exitOverlay.classList.contains('visible')) {
+        closeExitPopup();
+      }
     });
 
     document.addEventListener('mouseleave', function(e) {
@@ -2586,8 +2672,14 @@ if ($related->have_posts()) :
       }
 
       exitShown = true;
-      exitOverlay.classList.add('visible');
+      openExitPopup();
     });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", initLeadCapture);
+  } else {
+    initLeadCapture();
   }
 
   // --- E8. Scroll Depth Milestones (disabled) ---
@@ -2659,16 +2751,19 @@ if ($next_post) :
 <?php endif; ?>
 
 <!-- Exit Intent Overlay -->
-<div class="sp-exit-overlay" id="exitOverlay">
-  <div class="sp-exit-modal">
-    <button class="sp-exit-close" id="exitClose">&times;</button>
-    <div class="sp-exit-icon">&#128203;</div>
-    <h3>Before you go...</h3>
-    <p>Get our free AEO checklist &mdash; 15 actionable steps to get your content cited by AI answer engines.</p>
-    <div class="sp-exit-form">
-      <input type="email" placeholder="your@email.com" aria-label="Email">
-      <button type="button" onclick="this.textContent='Sent! \u2713';this.style.background='#28c840';">Get It Free</button>
-    </div>
+<div class="sp-exit-overlay" id="exitOverlay" aria-hidden="true">
+  <div class="sp-exit-modal" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
+    <button class="sp-exit-close" id="exitClose" aria-label="Close">&times;</button>
+    <div class="sp-exit-icon" aria-hidden="true">&#9993;&#65039;</div>
+    <h3 id="exitTitle">Before you go...</h3>
+    <p>Get AEO tips in your inbox &mdash; practical advice on getting your content cited by AI answer engines, straight from our team.</p>
+    <form class="sp-exit-form" id="exitForm" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+      <?php if (function_exists('stretch_lead_form_fields')) { stretch_lead_form_fields('exit_intent'); } ?>
+      <input type="email" name="email" id="exitEmail" placeholder="your@email.com" aria-label="Email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="sp-exit-status success" id="exitSuccess" role="status">You&rsquo;re subscribed &#10003; &mdash; tips are on the way.</p>
+    <p class="sp-exit-status error" id="exitError" role="alert">Something went wrong &mdash; please try again.</p>
     <button class="sp-exit-skip" id="exitSkip">No thanks, I'll figure it out myself</button>
   </div>
 </div>

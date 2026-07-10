@@ -6,13 +6,18 @@
  * Creates all pages and populates ACF flexible content sections
  * with content from the current stretchcreative.co site.
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 // ── Helper: Create or update a page ──
 function stretch_create_page($title, $slug, $sections = [], $parent_id = 0) {
     $existing = get_page_by_path($slug);
     if ($existing) {
         $page_id = $existing->ID;
-        WP_CLI::log("  Page '{$title}' already exists (ID: {$page_id}), updating...");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Page '{$title}' already exists (ID: {$page_id}), updating..."); } else { echo "  Page '{$title}' already exists (ID: {$page_id}), updating..." . "\n"; }
     } else {
         $page_id = wp_insert_post([
             'post_title'  => $title,
@@ -21,12 +26,12 @@ function stretch_create_page($title, $slug, $sections = [], $parent_id = 0) {
             'post_status' => 'publish',
             'post_parent' => $parent_id,
         ]);
-        WP_CLI::log("  Created page '{$title}' (ID: {$page_id})");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Created page '{$title}' (ID: {$page_id})"); } else { echo "  Created page '{$title}' (ID: {$page_id})" . "\n"; }
     }
 
     if (!empty($sections) && function_exists('update_field')) {
         update_field('page_sections', $sections, $page_id);
-        WP_CLI::log("    -> Added " . count($sections) . " sections");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("    -> Added " . count($sections) . " sections"); } else { echo "    -> Added " . count($sections) . " sections" . "\n"; }
     }
 
     return $page_id;
@@ -42,12 +47,12 @@ function sec($bg = 'white', $id = '') {
     ];
 }
 
-WP_CLI::log("=== Setting up Stretch Creative content ===\n");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("=== Setting up Stretch Creative content ===\n"); } else { echo "=== Setting up Stretch Creative content ===\n" . "\n"; }
 
 // ────────────────────────────────────────
 // NAVIGATION MENUS
 // ────────────────────────────────────────
-WP_CLI::log("Setting up navigation menus...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Setting up navigation menus..."); } else { echo "Setting up navigation menus..." . "\n"; }
 
 // Primary menu
 $primary_menu = wp_get_nav_menu_object('Primary');
@@ -80,7 +85,7 @@ set_theme_mod('nav_menu_locations', $menu_locations);
 // ────────────────────────────────────────
 // HOMEPAGE
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Homepage...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Homepage..."); } else { echo "\nCreating Homepage..." . "\n"; }
 
 $home_sections = [
     // Hero
@@ -244,7 +249,7 @@ update_option('page_on_front', $home_id);
 // ────────────────────────────────────────
 // ABOUT / OUR STORY
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Our Story page...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Our Story page..."); } else { echo "\nCreating Our Story page..." . "\n"; }
 
 $about_sections = [
     // Hero
@@ -324,7 +329,7 @@ stretch_create_page('Our Story', 'about-stretch-creative', $about_sections);
 // ────────────────────────────────────────
 // OUR TEAM
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Our Team page...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Our Team page..."); } else { echo "\nCreating Our Team page..." . "\n"; }
 
 $team_sections = [
     // Hero
@@ -397,7 +402,7 @@ stretch_create_page('Our Team', 'the-team', $team_sections);
 // ────────────────────────────────────────
 // SOLUTIONS (parent page)
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Solutions pages...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Solutions pages..."); } else { echo "\nCreating Solutions pages..." . "\n"; }
 
 $solutions_sections = [
     [
@@ -488,7 +493,7 @@ foreach ($solution_subpages as $sp) {
 // ────────────────────────────────────────
 // SERVICES PAGES
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Service pages...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Service pages..."); } else { echo "\nCreating Service pages..." . "\n"; }
 
 $service_pages = [
     ['Content Writing at Any Scale', 'content-writing-at-any-scale', 'Content Writing at Any Scale', "From a single blog post to thousands of product descriptions — we build dedicated cohorts of writers calibrated to your brand voice, style guide, and quality standards."],
@@ -537,7 +542,7 @@ foreach ($service_pages as $svc) {
 // ────────────────────────────────────────
 // CONTACT
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Contact page...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Contact page..."); } else { echo "\nCreating Contact page..." . "\n"; }
 
 $contact_sections = [
     [
@@ -573,7 +578,7 @@ stretch_create_page('Contact Stretch Creative', 'contact-stretch-creative', $con
 // ────────────────────────────────────────
 // BLOG PAGE
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating Blog page...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating Blog page..."); } else { echo "\nCreating Blog page..." . "\n"; }
 
 $blog_id = stretch_create_page('Blog', 'blog', []);
 update_option('page_for_posts', $blog_id);
@@ -581,7 +586,7 @@ update_option('page_for_posts', $blog_id);
 // ────────────────────────────────────────
 // NAVIGATION MENU ITEMS
 // ────────────────────────────────────────
-WP_CLI::log("\nPopulating navigation menus...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nPopulating navigation menus..."); } else { echo "\nPopulating navigation menus..." . "\n"; }
 
 // Primary menu
 $primary_menu_id = $menu_locations['primary'];
@@ -642,7 +647,7 @@ wp_update_nav_menu_item($f3_id, 0, ['menu-item-title' => 'Blog', 'menu-item-url'
 // ────────────────────────────────────────
 // SAMPLE BLOG POSTS
 // ────────────────────────────────────────
-WP_CLI::log("\nCreating sample blog posts...");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nCreating sample blog posts..."); } else { echo "\nCreating sample blog posts..." . "\n"; }
 
 $posts = [
     ['7 Things You Need to Know Now for Successful Content Marketing in 2024', 'content-marketing-2024', 'Content marketing continues to evolve at a rapid pace. From AI-assisted writing to interactive content experiences, the landscape is shifting beneath our feet. Here are the seven most important trends and strategies you need to know to stay ahead.', 'content-marketing'],
@@ -667,18 +672,20 @@ foreach ($posts as $p) {
             'post_type'     => 'post',
             'post_category' => [$cat],
         ]);
-        WP_CLI::log("  Created post: {$p[0]}");
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  Created post: {$p[0]}"); } else { echo "  Created post: {$p[0]}" . "\n"; }
     }
 }
 
 // ────────────────────────────────────────
 // PERMALINK STRUCTURE
 // ────────────────────────────────────────
-WP_CLI::log("\nSetting permalink structure...");
-update_option('permalink_structure', '/%postname%/');
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\nSetting permalink structure..."); } else { echo "\nSetting permalink structure..." . "\n"; }
+// AUD-023: match the real production structure so a manual re-run of this legacy
+// rebuild script can never break existing /blog/... URLs.
+update_option('permalink_structure', '/blog/%category%/%postname%/');
 flush_rewrite_rules();
 
-WP_CLI::log("\n=== Content setup complete! ===");
-WP_CLI::log("Pages created: Home, Our Story, Our Team, Solutions (+ 4 sub-pages), 4 Service pages, Contact, Blog");
-WP_CLI::log("Menus: Primary nav + 3 footer columns");
-WP_CLI::log("Blog: 3 sample posts with categories");
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Content setup complete! ==="); } else { echo "\n=== Content setup complete! ===" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Pages created: Home, Our Story, Our Team, Solutions (+ 4 sub-pages), 4 Service pages, Contact, Blog"); } else { echo "Pages created: Home, Our Story, Our Team, Solutions (+ 4 sub-pages), 4 Service pages, Contact, Blog" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Menus: Primary nav + 3 footer columns"); } else { echo "Menus: Primary nav + 3 footer columns" . "\n"; }
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Blog: 3 sample posts with categories"); } else { echo "Blog: 3 sample posts with categories" . "\n"; }

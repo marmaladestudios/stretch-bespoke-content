@@ -3,6 +3,11 @@
  * Create AEO spoke posts for the content hub.
  * Run via: wp eval-file create-aeo-spokes.php --allow-root
  */
+// AUD-022: web-exposure guard — this script mutates content and must only run
+// via WP-CLI (wp eval-file). A direct web request exits before doing anything.
+if (!defined('WP_CLI') || !WP_CLI) {
+    exit;
+}
 
 $aeo_category_id = 9;
 $author_id = 1;
