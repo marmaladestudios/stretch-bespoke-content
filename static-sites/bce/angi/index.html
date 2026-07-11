@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How Much Does a Bathroom Remodel Cost? | Angi</title>
-  <link rel="stylesheet" href="./styles.css?v=20260618-pdf-aspect">
-  <link rel="stylesheet" href="./app.css?v=20260618-pdf-aspect">
+  <link rel="stylesheet" href="./styles.css?v=20260624-journey-openings">
+  <link rel="stylesheet" href="./app.css?v=20260624-journey-openings">
 </head>
 <body>
   <svg aria-hidden="true" class="icon-sprite">
@@ -87,34 +87,7 @@
 
       <p class="updated-date">Updated June 18, 2026</p>
 
-      <section class="help-card">
-        <h2>Need Help With a Bathroom Remodel? Connect With a Pro</h2>
-        <ul>
-          <li>Bathroom remodels combine fixtures, finishes, plumbing, electrical, waterproofing, and local labor costs.</li>
-          <li>Expect broad ranges until a local pro confirms the room condition, layout changes, and material quantities.</li>
-          <li>Use the planner below to organize your scope before requesting project quotes.</li>
-        </ul>
-      </section>
-
-      <section class="zip-cta">
-        <div class="zip-cta__icon">A</div>
-        <div>
-          <h2>Get quotes from up to 3 pros!</h2>
-          <p>Enter a zip below and get matched to top-rated pros near you.</p>
-        </div>
-        <form action="https://www.angi.com/companylist/">
-          <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
-          <button type="submit">Find Local Pros</button>
-        </form>
-      </section>
-
-      <p>This article brings Angi cost-guide context together with an interactive planning tool. Add fixtures, adjust dimensions, choose finishes, and see how each decision changes the project range.</p>
-      <p>Bathroom remodel costs vary by room size, fixture quality, local labor rates, and whether plumbing or electrical systems need to move. A finished quote should also account for demolition, waterproofing, permits, and any repairs uncovered during the project.</p>
-
-      <section id="cost-estimator" class="article-section">
-        <h2>Bathroom remodel cost estimator</h2>
-        <p>Start with the default room, then drag components into place. The estimate updates as you size each item, choose a finish level, add options, or switch metro pricing.</p>
-      </section>
+      <p class="tool-lede">Start with the default room, then drag fixtures, doors, and windows into place. The estimate updates as you size each item, choose a finish level, add options, or switch metro pricing.</p>
     </article>
 
     <aside class="article-rail" aria-label="Article sidebar">
@@ -125,19 +98,14 @@
         <a href="#before-hiring">Before hiring a remodeling pro</a>
         <a href="#questions">Questions to ask</a>
       </nav>
-      <form class="rail-quote-card" action="https://www.angi.com/companylist/" aria-label="Request project quotes">
-        <h2>Need a quote for your project? Connect with local pros for free</h2>
-        <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
-        <button type="submit">Request quotes</button>
-      </form>
     </aside>
 
-    <section id="app" class="builder-app article-tool" aria-live="polite">
+    <section id="cost-estimator" class="builder-app article-tool" aria-live="polite">
       <header class="builder-hero">
         <div>
           <p class="builder-eyebrow"><span></span> Interactive cost estimator</p>
-          <h2>Build your bathroom remodel</h2>
-          <p>Drop in fixtures, size them on the plan, and pick finishes. Add the same component more than once, like tile for your floor, shower, and backsplash.</p>
+          <h2>Bathroom remodel cost estimator</h2>
+          <p>Drop in fixtures, size them on the plan, and mark doors or windows so the layout reflects what can actually fit.</p>
         </div>
       </header>
 
@@ -174,13 +142,18 @@
             <div class="panel-title" id="paletteTitle">Components</div>
             <p class="panel-subtitle">Drag onto your plan - add as many as you need</p>
             <div id="componentPalette" class="palette-list"></div>
+            <div class="opening-palette" aria-labelledby="openingPaletteTitle">
+              <div class="panel-title panel-title--sub" id="openingPaletteTitle">Room openings</div>
+              <p class="panel-subtitle">Mark doors and windows that affect usable wall space.</p>
+              <div id="openingPalette" class="opening-list"></div>
+            </div>
           </aside>
 
           <section class="panel plan-panel" aria-labelledby="planTitle">
             <div class="plan-head">
               <div>
                 <div class="panel-title" id="planTitle">Your bathroom plan</div>
-                <p class="panel-subtitle">Drag to move - pull the corner to resize - items can overlap</p>
+                <p class="panel-subtitle">Drag fixtures to move - mark doors and windows on the walls</p>
               </div>
               <div class="room-control" aria-label="Room dimensions">
                 <span>Room</span>
@@ -195,6 +168,7 @@
               <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas">
                 <span id="canvasHeightLabel" class="canvas-measure canvas-measure--height">8 ft</span>
                 <span id="canvasWidthLabel" class="canvas-measure canvas-measure--width">10 ft</span>
+                <div id="roomOpenings" class="room-openings"></div>
                 <div id="placedItems" class="placed-items"></div>
                 <div id="emptyCanvas" class="empty-canvas">
                   <div class="empty-icon"><svg><use href="#ic-shower"></use></svg></div>
@@ -292,6 +266,18 @@
     </section>
 
     <article class="article-main article-continuation">
+      <section class="help-card">
+        <h2>Need Help With a Bathroom Remodel? Connect With a Pro</h2>
+        <ul>
+          <li>Bathroom remodels combine fixtures, finishes, plumbing, electrical, waterproofing, and local labor costs.</li>
+          <li>Expect broad ranges until a local pro confirms the room condition, layout changes, and material quantities.</li>
+          <li>Use the planner above to organize your scope before requesting project quotes.</li>
+        </ul>
+      </section>
+
+      <p>This article brings Angi cost-guide context together with an interactive planning tool. Add fixtures, adjust dimensions, choose finishes, and see how each decision changes the project range.</p>
+      <p>Bathroom remodel costs vary by room size, fixture quality, local labor rates, and whether plumbing or electrical systems need to move. A finished quote should also account for demolition, waterproofing, permits, and any repairs uncovered during the project.</p>
+
       <section id="cost-factors" class="article-section">
         <h2>What impacts bathroom remodel costs?</h2>
         <p>Fixture choices, room size, finish level, and local labor rates usually move the estimate the most. Layout changes can add plumbing and electrical work, while tile, glass, stone, and custom storage raise material and labor totals.</p>
@@ -321,17 +307,6 @@
           <li>How do you handle hidden damage or scope changes after demolition?</li>
           <li>Will you provide a written timeline, payment schedule, and warranty details?</li>
         </ul>
-      </section>
-
-      <section class="zip-cta zip-cta--bottom">
-        <div class="zip-cta__icon">A</div>
-        <div>
-          <h2>Need professional help with your project?</h2>
-          <p>Get quotes from top-rated pros.</p>
-        </div>
-        <form action="https://www.angi.com/companylist/">
-          <button type="submit">Find Local Pros</button>
-        </form>
       </section>
     </article>
   </main>
@@ -446,6 +421,6 @@
     </div>
   </div>
 
-  <script src="./app.js?v=20260618-pdf-aspect"></script>
+  <script src="./app.js?v=20260624-journey-openings"></script>
 </body>
 </html>

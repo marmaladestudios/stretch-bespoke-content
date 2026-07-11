@@ -672,6 +672,11 @@ img {
   line-height: 1.3 !important;
 }
 
+.tool-lede {
+  max-width: 680px;
+  color: #333330;
+}
+
 .help-card {
   margin: 28px 0 34px;
   padding: 24px 28px;
@@ -960,6 +965,21 @@ img {
   gap: 9px;
 }
 
+.opening-palette {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--tool-line);
+}
+
+.panel-title--sub {
+  font-size: 15px;
+}
+
+.opening-list {
+  display: grid;
+  gap: 9px;
+}
+
 .palette-card {
   display: flex;
   align-items: center;
@@ -1049,6 +1069,80 @@ img {
   border-radius: 999px;
   background: var(--mint-bg);
   color: var(--teal);
+}
+
+.opening-card {
+  cursor: pointer;
+}
+
+.opening-card > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+.opening-blurb {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.opening-icon,
+.opening-inspector-icon {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: var(--radius-card);
+  background: #eef7f4;
+  color: var(--teal);
+}
+
+.opening-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.opening-inspector-icon {
+  width: 44px;
+  height: 44px;
+}
+
+.opening-icon::before,
+.opening-inspector-icon::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 50%;
+  height: 8px;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  transform: translateY(-50%);
+}
+
+.opening-icon--window::before,
+.opening-inspector-icon.opening-icon--window::before {
+  height: 11px;
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-radius: 0;
+}
+
+.opening-icon--door::after,
+.opening-inspector-icon.opening-icon--door::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px dashed currentColor;
+  border-right: 2px dashed currentColor;
+  border-radius: 0 16px 0 0;
+  opacity: 0.72;
 }
 
 .plan-head {
@@ -1270,6 +1364,164 @@ img {
 .placed-items {
   position: absolute;
   inset: 0;
+}
+
+.room-openings {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.room-feature {
+  --opening-pad: 8px;
+  position: absolute;
+  display: block;
+  border: 0;
+  background: transparent;
+  color: #075f66;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.room-feature:active {
+  cursor: grabbing;
+}
+
+.room-feature--horizontal {
+  left: calc(var(--pos) * 1%);
+  width: max(42px, calc(var(--len) * 1%));
+  height: 34px;
+  transform: translateX(-50%);
+}
+
+.room-feature--vertical {
+  top: calc(var(--pos) * 1%);
+  width: 34px;
+  height: max(42px, calc(var(--len) * 1%));
+  transform: translateY(-50%);
+}
+
+.room-feature--top {
+  top: var(--opening-pad);
+}
+
+.room-feature--right {
+  right: var(--opening-pad);
+}
+
+.room-feature--bottom {
+  bottom: var(--opening-pad);
+}
+
+.room-feature--left {
+  left: var(--opening-pad);
+}
+
+.feature-line {
+  position: absolute;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.82);
+}
+
+.room-feature--horizontal .feature-line {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 8px;
+  border: 2px solid currentColor;
+  transform: translateY(-50%);
+}
+
+.room-feature--vertical .feature-line {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 8px;
+  border: 2px solid currentColor;
+  transform: translateX(-50%);
+}
+
+.room-feature--window .feature-line {
+  border-width: 3px 0;
+  border-radius: 0;
+  background: rgba(232, 253, 242, 0.96);
+}
+
+.room-feature--vertical.room-feature--window .feature-line {
+  border-width: 0 3px;
+}
+
+.feature-swing {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border: 1.5px dashed rgba(6, 92, 98, 0.62);
+  pointer-events: none;
+}
+
+.room-feature--bottom .feature-swing {
+  left: calc(50% - 1px);
+  bottom: 17px;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0 46px 0 0;
+}
+
+.room-feature--top .feature-swing {
+  left: calc(50% - 45px);
+  top: 17px;
+  border-top: 0;
+  border-right: 0;
+  border-radius: 0 0 0 46px;
+}
+
+.room-feature--left .feature-swing {
+  left: 17px;
+  top: calc(50% - 45px);
+  border-top: 0;
+  border-left: 0;
+  border-radius: 0 0 46px 0;
+}
+
+.room-feature--right .feature-swing {
+  right: 17px;
+  top: calc(50% - 1px);
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 46px 0 0 0;
+}
+
+.feature-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 72px;
+  padding: 2px 5px;
+  border-radius: var(--radius-tight);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.room-feature--vertical .feature-label {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.room-feature.is-selected .feature-line {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px #ffefea;
+}
+
+.room-feature.is-selected .feature-label {
+  color: var(--coral-dark);
 }
 
 .floor-item,
@@ -1521,6 +1773,11 @@ img {
   line-height: 1.1;
 }
 
+.selected-range--opening strong {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
 .inspector-section {
   padding-top: 14px;
   margin-top: 14px;
@@ -1672,6 +1929,10 @@ img {
   min-width: 0;
 }
 
+.inspector-section--size .dimension-grid--single {
+  grid-template-columns: 1fr;
+}
+
 .dimension-control {
   display: grid;
   gap: 6px;
@@ -1717,6 +1978,12 @@ img {
   font-size: 16px;
   font-weight: 600;
   line-height: 1;
+}
+
+.stepper button:disabled {
+  color: #a5aaa5;
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .inspector-section--size .stepper button {
@@ -2750,6 +3017,10 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .opening-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .estimate-bar {
     grid-template-columns: 1fr;
   }
@@ -2857,6 +3128,10 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .opening-list {
+    grid-template-columns: 1fr;
+  }
+
   .plan-canvas {
     min-height: 260px;
     max-height: 680px;
@@ -2867,6 +3142,26 @@ img {
   .location-note {
     width: 100%;
     min-width: 0;
+  }
+
+  .plan-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .location-picker,
+  .location-button,
+  .locate-button {
+    width: 100%;
+  }
+
+  .location-button,
+  .locate-button {
+    justify-content: center;
+  }
+
+  .location-note {
+    grid-column: 1 / -1;
   }
 
   .dimension-grid {
@@ -3008,34 +3303,7 @@ img {
 
       <p class="updated-date">Updated June 18, 2026</p>
 
-      <section class="help-card">
-        <h2>Need Help With a Bathroom Remodel? Connect With a Pro</h2>
-        <ul>
-          <li>Bathroom remodels combine fixtures, finishes, plumbing, electrical, waterproofing, and local labor costs.</li>
-          <li>Expect broad ranges until a local pro confirms the room condition, layout changes, and material quantities.</li>
-          <li>Use the planner below to organize your scope before requesting project quotes.</li>
-        </ul>
-      </section>
-
-      <section class="zip-cta">
-        <div class="zip-cta__icon">A</div>
-        <div>
-          <h2>Get quotes from up to 3 pros!</h2>
-          <p>Enter a zip below and get matched to top-rated pros near you.</p>
-        </div>
-        <form action="https://www.angi.com/companylist/">
-          <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
-          <button type="submit">Find Local Pros</button>
-        </form>
-      </section>
-
-      <p>This article brings Angi cost-guide context together with an interactive planning tool. Add fixtures, adjust dimensions, choose finishes, and see how each decision changes the project range.</p>
-      <p>Bathroom remodel costs vary by room size, fixture quality, local labor rates, and whether plumbing or electrical systems need to move. A finished quote should also account for demolition, waterproofing, permits, and any repairs uncovered during the project.</p>
-
-      <section id="cost-estimator" class="article-section">
-        <h2>Bathroom remodel cost estimator</h2>
-        <p>Start with the default room, then drag components into place. The estimate updates as you size each item, choose a finish level, add options, or switch metro pricing.</p>
-      </section>
+      <p class="tool-lede">Start with the default room, then drag fixtures, doors, and windows into place. The estimate updates as you size each item, choose a finish level, add options, or switch metro pricing.</p>
     </article>
 
     <aside class="article-rail" aria-label="Article sidebar">
@@ -3046,19 +3314,14 @@ img {
         <a href="#before-hiring">Before hiring a remodeling pro</a>
         <a href="#questions">Questions to ask</a>
       </nav>
-      <form class="rail-quote-card" action="https://www.angi.com/companylist/" aria-label="Request project quotes">
-        <h2>Need a quote for your project? Connect with local pros for free</h2>
-        <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Zip Code" aria-label="Zip Code">
-        <button type="submit">Request quotes</button>
-      </form>
     </aside>
 
-    <section id="app" class="builder-app article-tool" aria-live="polite">
+    <section id="cost-estimator" class="builder-app article-tool" aria-live="polite">
       <header class="builder-hero">
         <div>
           <p class="builder-eyebrow"><span></span> Interactive cost estimator</p>
-          <h2>Build your bathroom remodel</h2>
-          <p>Drop in fixtures, size them on the plan, and pick finishes. Add the same component more than once, like tile for your floor, shower, and backsplash.</p>
+          <h2>Bathroom remodel cost estimator</h2>
+          <p>Drop in fixtures, size them on the plan, and mark doors or windows so the layout reflects what can actually fit.</p>
         </div>
       </header>
 
@@ -3095,13 +3358,18 @@ img {
             <div class="panel-title" id="paletteTitle">Components</div>
             <p class="panel-subtitle">Drag onto your plan - add as many as you need</p>
             <div id="componentPalette" class="palette-list"></div>
+            <div class="opening-palette" aria-labelledby="openingPaletteTitle">
+              <div class="panel-title panel-title--sub" id="openingPaletteTitle">Room openings</div>
+              <p class="panel-subtitle">Mark doors and windows that affect usable wall space.</p>
+              <div id="openingPalette" class="opening-list"></div>
+            </div>
           </aside>
 
           <section class="panel plan-panel" aria-labelledby="planTitle">
             <div class="plan-head">
               <div>
                 <div class="panel-title" id="planTitle">Your bathroom plan</div>
-                <p class="panel-subtitle">Drag to move - pull the corner to resize - items can overlap</p>
+                <p class="panel-subtitle">Drag fixtures to move - mark doors and windows on the walls</p>
               </div>
               <div class="room-control" aria-label="Room dimensions">
                 <span>Room</span>
@@ -3116,6 +3384,7 @@ img {
               <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas">
                 <span id="canvasHeightLabel" class="canvas-measure canvas-measure--height">8 ft</span>
                 <span id="canvasWidthLabel" class="canvas-measure canvas-measure--width">10 ft</span>
+                <div id="roomOpenings" class="room-openings"></div>
                 <div id="placedItems" class="placed-items"></div>
                 <div id="emptyCanvas" class="empty-canvas">
                   <div class="empty-icon"><svg><use href="#ic-shower"></use></svg></div>
@@ -3213,6 +3482,18 @@ img {
     </section>
 
     <article class="article-main article-continuation">
+      <section class="help-card">
+        <h2>Need Help With a Bathroom Remodel? Connect With a Pro</h2>
+        <ul>
+          <li>Bathroom remodels combine fixtures, finishes, plumbing, electrical, waterproofing, and local labor costs.</li>
+          <li>Expect broad ranges until a local pro confirms the room condition, layout changes, and material quantities.</li>
+          <li>Use the planner above to organize your scope before requesting project quotes.</li>
+        </ul>
+      </section>
+
+      <p>This article brings Angi cost-guide context together with an interactive planning tool. Add fixtures, adjust dimensions, choose finishes, and see how each decision changes the project range.</p>
+      <p>Bathroom remodel costs vary by room size, fixture quality, local labor rates, and whether plumbing or electrical systems need to move. A finished quote should also account for demolition, waterproofing, permits, and any repairs uncovered during the project.</p>
+
       <section id="cost-factors" class="article-section">
         <h2>What impacts bathroom remodel costs?</h2>
         <p>Fixture choices, room size, finish level, and local labor rates usually move the estimate the most. Layout changes can add plumbing and electrical work, while tile, glass, stone, and custom storage raise material and labor totals.</p>
@@ -3242,17 +3523,6 @@ img {
           <li>How do you handle hidden damage or scope changes after demolition?</li>
           <li>Will you provide a written timeline, payment schedule, and warranty details?</li>
         </ul>
-      </section>
-
-      <section class="zip-cta zip-cta--bottom">
-        <div class="zip-cta__icon">A</div>
-        <div>
-          <h2>Need professional help with your project?</h2>
-          <p>Get quotes from top-rated pros.</p>
-        </div>
-        <form action="https://www.angi.com/companylist/">
-          <button type="submit">Find Local Pros</button>
-        </form>
       </section>
     </article>
   </main>
@@ -3387,6 +3657,7 @@ const COMPONENTS = {
       { key: 'glass', label: 'Glass door', desc: 'Frameless enclosure', lo: 900, hi: 2400 },
       { key: 'surround', label: 'Tile surround', desc: 'Wall tile beyond base', lo: 1600, hi: 4500 },
       { key: 'spray', label: 'Body sprays', desc: 'Extra shower controls', lo: 350, hi: 1200 },
+      { key: 'movePlumbing', label: 'Move plumbing', desc: 'Relocate shower drain or supply lines', lo: 800, hi: 2600 },
     ],
     articles: [
       { title: 'Shower vs. Bathtub: Which Is Right for Your Bathroom?', meta: 'Stephanie Mickelson - Apr 05, 2026', tag: 'Guide', image: './assets/modern-small-bathroom-rain-shower.jpg' },
@@ -3404,6 +3675,7 @@ const COMPONENTS = {
     addons: [
       { key: 'double', label: 'Double sink', desc: 'Two basins', lo: 800, hi: 2200 },
       { key: 'stone', label: 'Stone countertop', desc: 'Quartz or granite', lo: 500, hi: 1800 },
+      { key: 'movePlumbing', label: 'Move plumbing', desc: 'Relocate sink supply or drain lines', lo: 700, hi: 2200 },
     ],
     articles: [
       { title: '7 Types of Bathroom Countertop Materials to Upgrade Your Space', meta: 'Mizuki Hisaka - May 02, 2026', tag: 'Materials', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
@@ -3453,6 +3725,7 @@ const COMPONENTS = {
     tiers: { good: [250, 600], better: [700, 1400], best: [1700, 3800] },
     addons: [
       { key: 'bidet', label: 'Bidet seat', desc: 'Smart washlet', lo: 400, hi: 1200 },
+      { key: 'movePlumbing', label: 'Move plumbing', desc: 'Relocate toilet flange or supply line', lo: 900, hi: 3000 },
     ],
     articles: [
       { title: '12 Types of Toilets to Upgrade to in Your Bathroom Remodel', meta: 'Samantha Hawrylack - May 5, 2026', tag: 'Guide', image: './assets/interior-small-bathroom.jpg' },
@@ -3477,23 +3750,9 @@ const COMPONENTS = {
       { title: 'Bathroom Remodeling Trends That Are Here to Stay', meta: 'Stacey Marcus - May 02, 2026', tag: 'Guide', image: './assets/white-bathroom.jpg' },
     ],
   },
-  plumbing: {
-    label: 'Move plumbing',
-    iconKey: 'plumbing',
-    blurb: 'Relocate supply and drains',
-    size: { w: 2, h: 2 },
-    variants: ['Relocate drain', 'Move supply lines', 'Add new line'],
-    tiers: { good: [800, 1800], better: [1800, 4500], best: [4500, 9000] },
-    addons: [],
-    articles: [
-      { title: '12 Important Questions to Ask Bathroom Remodeling Contractors', meta: 'Stephanie Mickelson - Apr 09, 2026', tag: 'Guide', image: './assets/family-bathroom.jpg' },
-      { title: 'Who to Hire for a Bathroom Remodel Project', meta: 'Gemma Johnstone - May 5, 2026', tag: 'Guide', image: './assets/budget-friendly-small-bathroom-ideas.jpg' },
-      { title: 'How Long Does a Bathroom Remodel Take?', meta: 'Becca Lewis - May 02, 2026', tag: 'Guide', image: './assets/bathroom-double-vanity-bathtub-shower.jpg' },
-    ],
-  },
 };
 
-const ORDER = ['shower', 'vanity', 'tile', 'floor', 'toilet', 'lighting', 'plumbing'];
+const ORDER = ['shower', 'vanity', 'tile', 'floor', 'toilet', 'lighting'];
 const TIER_LABEL = { good: 'Good', better: 'Better', best: 'Best' };
 const TIER_SHORT = { good: 'Budget', better: 'Mid-range', best: 'High-end' };
 const DEFAULT_POS = {
@@ -3503,7 +3762,43 @@ const DEFAULT_POS = {
   floor: { x: 0.50, y: 0.74 },
   toilet: { x: 0.82, y: 0.72 },
   lighting: { x: 0.26, y: 0.72 },
-  plumbing: { x: 0.52, y: 0.50 },
+};
+
+const OPENINGS = {
+  door: {
+    label: 'Door',
+    blurb: 'Entry or closet clearance',
+    length: 2.5,
+    min: 2,
+    max: 4,
+  },
+  window: {
+    label: 'Window',
+    blurb: 'Wall space and daylight',
+    length: 3,
+    min: 1.5,
+    max: 6,
+  },
+};
+
+const OPENING_ORDER = ['door', 'window'];
+const WALLS = [
+  { key: 'top', label: 'Top wall' },
+  { key: 'right', label: 'Right wall' },
+  { key: 'bottom', label: 'Bottom wall' },
+  { key: 'left', label: 'Left wall' },
+];
+const DEFAULT_OPENINGS = {
+  door: [
+    { wall: 'bottom', offset: 0.22 },
+    { wall: 'left', offset: 0.45 },
+    { wall: 'right', offset: 0.72 },
+  ],
+  window: [
+    { wall: 'top', offset: 0.70 },
+    { wall: 'right', offset: 0.35 },
+    { wall: 'left', offset: 0.30 },
+  ],
 };
 
 const LOCATIONS = [
@@ -3558,12 +3853,18 @@ const state = {
     addons: {},
   }],
   selectedId: 1,
+  openings: [
+    { id: 1, type: 'door', wall: 'bottom', offset: 0.22, length: 2.5 },
+    { id: 2, type: 'window', wall: 'top', offset: 0.70, length: 3 },
+  ],
+  selectedOpeningId: null,
   location: 'national',
   locOpen: false,
   view: 'plan',
 };
 
 let uid = 2;
+let openingUid = 3;
 let drag = null;
 
 const $ = selector => document.querySelector(selector);
@@ -3645,12 +3946,56 @@ function componentCount(type) {
   return state.placed.filter(item => item.type === type).length;
 }
 
+function openingCount(type) {
+  return state.openings.filter(opening => opening.type === type).length;
+}
+
 function placedTypes() {
   return [...new Set(state.placed.map(item => item.type))];
 }
 
 function selectedItem() {
   return state.placed.find(item => item.id === state.selectedId) || null;
+}
+
+function selectedOpening() {
+  return state.openings.find(opening => opening.id === state.selectedOpeningId) || null;
+}
+
+function wallLabel(wall) {
+  return WALLS.find(option => option.key === wall)?.label || 'Wall';
+}
+
+function wallLength(wall) {
+  return wall === 'top' || wall === 'bottom' ? state.roomW : state.roomH;
+}
+
+function openingWallAxis(wall) {
+  return wall === 'top' || wall === 'bottom' ? 'horizontal' : 'vertical';
+}
+
+function openingName(opening) {
+  const typeCount = state.openings
+    .filter(candidate => candidate.type === opening.type && candidate.id <= opening.id)
+    .length;
+  return `${OPENINGS[opening.type].label}${typeCount > 1 ? ` ${typeCount}` : ''}`;
+}
+
+function openingOffsetFt(opening) {
+  return opening.offset * wallLength(opening.wall);
+}
+
+function openingDescription(opening) {
+  return `${openingName(opening)} on ${wallLabel(opening.wall).toLowerCase()}, ${fmtNum(opening.length)} ft wide, centered ${fmtNum(openingOffsetFt(opening))} ft along the wall`;
+}
+
+function clampOpening(opening) {
+  const spec = OPENINGS[opening.type];
+  const maxLength = Math.min(spec.max, wallLength(opening.wall));
+  opening.length = clamp(snap(opening.length), spec.min, maxLength);
+  const half = (opening.length / wallLength(opening.wall)) / 2;
+  opening.offset = clamp(opening.offset, half, 1 - half);
+  return opening;
 }
 
 function projectScopeLabel() {
@@ -3737,6 +4082,18 @@ function createItem(type, nx, ny) {
   return clampItem(item);
 }
 
+function createOpening(type) {
+  const presets = DEFAULT_OPENINGS[type] || [{ wall: 'bottom', offset: 0.5 }];
+  const preset = presets[openingCount(type) % presets.length];
+  return clampOpening({
+    id: openingUid++,
+    type,
+    wall: preset.wall,
+    offset: preset.offset,
+    length: OPENINGS[type].length,
+  });
+}
+
 function addItem(type, nx, ny) {
   const fallback = DEFAULT_POS[type] || { x: 0.5, y: 0.5 };
   const offset = (componentCount(type) % 4) * 0.05;
@@ -3747,6 +4104,15 @@ function addItem(type, nx, ny) {
   );
   state.placed.push(item);
   state.selectedId = item.id;
+  state.selectedOpeningId = null;
+  renderAll();
+}
+
+function addOpening(type) {
+  const opening = createOpening(type);
+  state.openings.push(opening);
+  state.selectedOpeningId = opening.id;
+  state.selectedId = null;
   renderAll();
 }
 
@@ -3754,6 +4120,14 @@ function removeItem(id) {
   state.placed = state.placed.filter(item => item.id !== id);
   if (state.selectedId === id) {
     state.selectedId = state.placed.length ? state.placed[state.placed.length - 1].id : null;
+  }
+  renderAll();
+}
+
+function removeOpening(id) {
+  state.openings = state.openings.filter(opening => opening.id !== id);
+  if (state.selectedOpeningId === id) {
+    state.selectedOpeningId = state.openings.length ? state.openings[state.openings.length - 1].id : null;
   }
   renderAll();
 }
@@ -3828,6 +4202,24 @@ function renderPalette() {
       </button>
     `;
   }).join('');
+
+  $('#openingPalette').innerHTML = OPENING_ORDER.map(type => {
+    const opening = OPENINGS[type];
+    const count = openingCount(type);
+    const status = count
+      ? `<span class="palette-count">${count > 1 ? `${count} marked` : 'Marked'}</span>`
+      : '<span class="palette-action">+ Mark</span>';
+    return `
+      <button class="palette-card opening-card${count ? ' is-active' : ''}" type="button" data-action="opening-add" data-opening-type="${type}">
+        <span class="opening-icon opening-icon--${type}" aria-hidden="true"></span>
+        <span>
+          <span class="palette-label">${escapeHtml(opening.label)}</span>
+          <span class="opening-blurb">${escapeHtml(opening.blurb)}</span>
+        </span>
+        ${status}
+      </button>
+    `;
+  }).join('');
 }
 
 function renderRoomControls() {
@@ -3860,8 +4252,32 @@ function renderLocations() {
   }).join('');
 }
 
+function renderOpenings() {
+  $('#roomOpenings').innerHTML = state.openings.map(opening => {
+    clampOpening(opening);
+    const type = OPENINGS[opening.type];
+    const axis = openingWallAxis(opening.wall);
+    const lenPct = (opening.length / wallLength(opening.wall)) * 100;
+    const selected = opening.id === state.selectedOpeningId;
+    return `
+      <button
+        class="room-feature room-feature--${opening.type} room-feature--${opening.wall} room-feature--${axis}${selected ? ' is-selected' : ''}"
+        type="button"
+        data-action="opening-select"
+        data-opening-id="${opening.id}"
+        style="--pos:${opening.offset * 100};--len:${lenPct}"
+        aria-label="${escapeHtml(openingDescription(opening))}">
+        <span class="feature-line"></span>
+        ${opening.type === 'door' ? '<span class="feature-swing"></span>' : ''}
+        <span class="feature-label">${escapeHtml(type.label)}</span>
+      </button>
+    `;
+  }).join('');
+}
+
 function renderCanvas() {
-  $('#emptyCanvas').hidden = state.placed.length > 0;
+  $('#emptyCanvas').hidden = state.placed.length > 0 || state.openings.length > 0;
+  renderOpenings();
   $('#placedItems').innerHTML = state.placed.map((item, index) => {
     const c = COMPONENTS[item.type];
     const selected = item.id === state.selectedId;
@@ -3890,7 +4306,7 @@ function renderEstimate() {
   const n = state.placed.length;
   const loc = currentLocation();
   $('#estimateTotal').textContent = n ? rangeText(lo, hi) : 'Add fixtures to start';
-  $('#placedCount').textContent = `${n} item${n === 1 ? '' : 's'} on your plan`;
+  $('#placedCount').textContent = `${n} item${n === 1 ? '' : 's'} on your plan${state.openings.length ? ` + ${state.openings.length} opening marker${state.openings.length === 1 ? '' : 's'}` : ''}`;
   $('#estimateLocation').textContent = locationLabel(loc);
   $('#estimateNote').textContent = locationNote(loc);
   $('#quoteButton').textContent = n > 2 ? 'Get quotes for this scoped plan' : 'Get local quotes for this plan';
@@ -3912,7 +4328,10 @@ function renderViewTabs() {
 function costDriverItems() {
   const drivers = [];
   const types = placedTypes();
-  if (types.includes('plumbing')) {
+  const hasPlumbingMove = state.placed.some(item => (
+    ['shower', 'vanity', 'toilet'].includes(item.type) && item.addons.movePlumbing
+  ));
+  if (hasPlumbingMove) {
     drivers.push({
       title: 'Plumbing changes',
       text: 'Moving drains or supply lines usually requires a local pro to confirm access, permits, and final labor.',
@@ -3934,6 +4353,12 @@ function costDriverItems() {
     drivers.push({
       title: 'Vanity size and countertop',
       text: 'Double sinks, stone counters, and custom storage can change finish allowances quickly.',
+    });
+  }
+  if (state.openings.length) {
+    drivers.push({
+      title: 'Door and window clearances',
+      text: 'Marked openings help pros understand usable wall space, fixture placement, and swing clearance before a walkthrough.',
     });
   }
   if (!drivers.length) {
@@ -4072,6 +4497,7 @@ function renderProHandoff() {
 
   const chipData = [
     `${count} scoped item${count === 1 ? '' : 's'}`,
+    `${state.openings.length} opening marker${state.openings.length === 1 ? '' : 's'}`,
     `${fmtNum(state.roomW * state.roomH)} sq ft bathroom`,
     locationLabel(loc),
     count ? range : 'Estimate pending',
@@ -4079,14 +4505,79 @@ function renderProHandoff() {
   chips.innerHTML = chipData.map(chip => `<span>${escapeHtml(chip)}</span>`).join('');
 }
 
+function renderOpeningInspector(opening, wrap) {
+  const spec = OPENINGS[opening.type];
+  const walls = WALLS.map(wall => `
+    <button class="pill-button${opening.wall === wall.key ? ' is-active' : ''}" type="button" data-action="opening-wall" data-opening-id="${opening.id}" data-wall="${wall.key}">${escapeHtml(wall.label.replace(' wall', ''))}</button>
+  `).join('');
+  const maxLength = Math.min(spec.max, wallLength(opening.wall));
+  const offsetFt = openingOffsetFt(opening);
+
+  wrap.innerHTML = `
+    <section class="selected-config selected-config--opening">
+      <div class="selected-head">
+        <span class="opening-inspector-icon opening-icon--${opening.type}" aria-hidden="true"></span>
+        <div>
+          <h2>${escapeHtml(openingName(opening))}</h2>
+          <p>${escapeHtml(wallLabel(opening.wall))} - does not change the cost estimate</p>
+        </div>
+      </div>
+
+      <p class="selected-range selected-range--opening">
+        <span>Layout marker</span>
+        <strong>${escapeHtml(openingDescription(opening))}</strong>
+      </p>
+
+      <section class="inspector-section inspector-section--compact">
+        <h3>Wall</h3>
+        <div class="variant-row">${walls}</div>
+      </section>
+
+      <section class="inspector-section inspector-section--compact inspector-section--size">
+        <div class="section-title-row">
+          <h3>Opening size</h3>
+          <span class="sqft-badge">${fmtNum(opening.length)} ft</span>
+        </div>
+        <div class="dimension-grid dimension-grid--single">
+          <div class="dimension-control">
+            <label for="openingLength">Length</label>
+            <div class="stepper">
+              <button type="button" data-action="opening-length-step" data-opening-id="${opening.id}" data-delta="-0.25" ${opening.length <= spec.min ? 'disabled' : ''}>-</button>
+              <input id="openingLength" value="${fmtNum(opening.length)}" inputmode="decimal" data-action="opening-length-input" data-opening-id="${opening.id}" aria-label="${escapeHtml(spec.label)} length in feet">
+              <button type="button" data-action="opening-length-step" data-opening-id="${opening.id}" data-delta="0.25" ${opening.length >= maxLength ? 'disabled' : ''}>+</button>
+            </div>
+          </div>
+          <div class="dimension-control">
+            <label for="openingOffset">Position</label>
+            <div class="stepper">
+              <button type="button" data-action="opening-offset-step" data-opening-id="${opening.id}" data-delta="-0.25">-</button>
+              <input id="openingOffset" value="${fmtNum(offsetFt)}" inputmode="decimal" data-action="opening-offset-input" data-opening-id="${opening.id}" aria-label="${escapeHtml(spec.label)} position along wall in feet">
+              <button type="button" data-action="opening-offset-step" data-opening-id="${opening.id}" data-delta="0.25">+</button>
+            </div>
+          </div>
+        </div>
+        <p class="coverage-note">Drag the marker along the wall or adjust the position in feet.</p>
+      </section>
+
+      <button class="danger-button" type="button" data-action="opening-remove" data-opening-id="${opening.id}">Remove marker</button>
+    </section>
+  `;
+}
+
 function renderInspector() {
+  const opening = selectedOpening();
   const item = selectedItem();
   const wrap = $('#inspectorContent');
+  if (opening) {
+    renderOpeningInspector(opening, wrap);
+    return;
+  }
+
   if (!item) {
     wrap.innerHTML = `
       <section class="config-empty">
         <h2>Select a component</h2>
-        <p>Click any item on the plan to configure finish level, dimensions, add-ons, and related guides.</p>
+        <p>Click any fixture, door, or window on the plan to configure dimensions and layout details.</p>
       </section>
     `;
     return;
@@ -4118,16 +4609,6 @@ function renderInspector() {
       </button>
     `;
   }).join('') : '<p class="coverage-note">No add-ons for this component yet.</p>';
-  const articles = c.articles.map(article => `
-    <a class="article-card" href="${ANGI_BATHROOM_HUB}" target="_blank" rel="noreferrer">
-      <span class="article-thumb article-thumb--${article.tag}">${article.image ? `<img src="${article.image}" alt="">` : iconSvg(c.iconKey)}</span>
-      <span>
-        <span class="article-title">${escapeHtml(article.title)}</span>
-        <span class="article-meta">${escapeHtml(article.meta)}</span>
-      </span>
-    </a>
-  `).join('');
-
   wrap.innerHTML = `
     <section class="selected-config">
       <div class="selected-head">
@@ -4189,11 +4670,6 @@ function renderInspector() {
         <div class="addon-list">${addons}</div>
       </section>
 
-      <section class="inspector-section">
-        <h3>Related guides</h3>
-        <div class="article-list">${articles}</div>
-      </section>
-
       <button class="danger-button" type="button" data-action="remove" data-id="${item.id}">Remove from plan</button>
     </section>
   `;
@@ -4217,12 +4693,42 @@ function findItem(id) {
   return state.placed.find(item => item.id === Number(id)) || null;
 }
 
+function findOpening(id) {
+  return state.openings.find(opening => opening.id === Number(id)) || null;
+}
+
 function setItemDimension(id, axis, value) {
   const item = findItem(id);
   if (!item || Number.isNaN(value)) return;
   const max = axis === 'w' ? state.roomW : state.roomH;
   item[axis] = clamp(snap(value), 0.5, max);
   clampItem(item);
+  renderAll();
+}
+
+function setOpeningLength(id, value) {
+  const opening = findOpening(id);
+  if (!opening || Number.isNaN(value)) return;
+  const spec = OPENINGS[opening.type];
+  opening.length = clamp(snap(value), spec.min, Math.min(spec.max, wallLength(opening.wall)));
+  clampOpening(opening);
+  renderAll();
+}
+
+function setOpeningOffsetFt(id, value) {
+  const opening = findOpening(id);
+  if (!opening || Number.isNaN(value)) return;
+  const length = wallLength(opening.wall);
+  opening.offset = snap(value) / length;
+  clampOpening(opening);
+  renderAll();
+}
+
+function setOpeningWall(id, wall) {
+  const opening = findOpening(id);
+  if (!opening) return;
+  opening.wall = wall;
+  clampOpening(opening);
   renderAll();
 }
 
@@ -4233,6 +4739,7 @@ function commitRoomDimensions() {
   state.roomW = clamp(snap(roomW, 0.5), 4, 40);
   state.roomH = clamp(snap(roomH, 0.5), 4, 40);
   state.placed.forEach(clampItem);
+  state.openings.forEach(clampOpening);
   renderAll();
 }
 
@@ -4282,6 +4789,16 @@ function beginResizeDrag(item, e) {
   };
 }
 
+function beginOpeningDrag(opening, e) {
+  drag = {
+    mode: 'opening',
+    id: opening.id,
+    startX: e.clientX,
+    startY: e.clientY,
+    moved: false,
+  };
+}
+
 function moveGhost(clientX, clientY) {
   if (!drag?.ghost) return;
   drag.ghost.style.left = `${clientX}px`;
@@ -4303,6 +4820,19 @@ function handlePointerMove(e) {
   if (drag.mode === 'palette') {
     moveGhost(e.clientX, e.clientY);
     $('#planCanvas').classList.toggle('is-over', isInsideCanvas(e.clientX, e.clientY));
+    return;
+  }
+
+  if (drag.mode === 'opening') {
+    const opening = findOpening(drag.id);
+    if (!opening) return;
+    const rect = canvasRect();
+    const raw = openingWallAxis(opening.wall) === 'horizontal'
+      ? (e.clientX - rect.left) / rect.width
+      : (e.clientY - rect.top) / rect.height;
+    opening.offset = snap(raw * wallLength(opening.wall)) / wallLength(opening.wall);
+    clampOpening(opening);
+    renderAll();
     return;
   }
 
@@ -4355,11 +4885,24 @@ function handlePointerUp(e) {
 
 document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch') return;
+  const openingMarker = e.target.closest('.room-feature');
+  if (openingMarker) {
+    const opening = findOpening(openingMarker.dataset.openingId);
+    if (!opening) return;
+    state.selectedOpeningId = opening.id;
+    state.selectedId = null;
+    beginOpeningDrag(opening, e);
+    e.preventDefault();
+    renderAll();
+    return;
+  }
+
   const resize = e.target.closest('[data-action="resize"]');
   if (resize) {
     const item = findItem(resize.dataset.id);
     if (!item) return;
     state.selectedId = item.id;
+    state.selectedOpeningId = null;
     beginResizeDrag(item, e);
     e.preventDefault();
     e.stopPropagation();
@@ -4372,6 +4915,7 @@ document.addEventListener('pointerdown', e => {
     const item = findItem(planItem.dataset.id);
     if (!item) return;
     state.selectedId = item.id;
+    state.selectedOpeningId = null;
     beginMoveDrag(item, e);
     e.preventDefault();
     renderAll();
@@ -4402,6 +4946,36 @@ document.addEventListener('click', e => {
     if (action === 'view') {
       state.view = actionTarget.dataset.view;
       renderAll();
+      return;
+    }
+    if (action === 'opening-add') {
+      addOpening(actionTarget.dataset.openingType);
+      return;
+    }
+    if (action === 'opening-select') {
+      state.selectedOpeningId = Number(actionTarget.dataset.openingId);
+      state.selectedId = null;
+      renderAll();
+      return;
+    }
+    if (action === 'opening-wall') {
+      setOpeningWall(actionTarget.dataset.openingId, actionTarget.dataset.wall);
+      return;
+    }
+    if (action === 'opening-length-step') {
+      const opening = findOpening(actionTarget.dataset.openingId);
+      if (!opening) return;
+      setOpeningLength(opening.id, opening.length + parseFloat(actionTarget.dataset.delta));
+      return;
+    }
+    if (action === 'opening-offset-step') {
+      const opening = findOpening(actionTarget.dataset.openingId);
+      if (!opening) return;
+      setOpeningOffsetFt(opening.id, openingOffsetFt(opening) + parseFloat(actionTarget.dataset.delta));
+      return;
+    }
+    if (action === 'opening-remove') {
+      removeOpening(Number(actionTarget.dataset.openingId));
       return;
     }
     if (action === 'remove') {
@@ -4438,6 +5012,7 @@ document.addEventListener('click', e => {
   const planItem = e.target.closest('.plan-item');
   if (planItem && !e.target.closest('button, a, input')) {
     state.selectedId = Number(planItem.dataset.id);
+    state.selectedOpeningId = null;
     renderAll();
   }
 });
@@ -4449,6 +5024,14 @@ document.addEventListener('change', e => {
   }
   if (e.target.dataset.action === 'dim-input') {
     setItemDimension(e.target.dataset.id, e.target.dataset.axis, parseFloat(e.target.value));
+    return;
+  }
+  if (e.target.dataset.action === 'opening-length-input') {
+    setOpeningLength(e.target.dataset.openingId, parseFloat(e.target.value));
+    return;
+  }
+  if (e.target.dataset.action === 'opening-offset-input') {
+    setOpeningOffsetFt(e.target.dataset.openingId, parseFloat(e.target.value));
   }
 });
 
@@ -4517,6 +5100,11 @@ function planPdfLines(lead) {
     `Room: ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft (${fmtNum(state.roomW * state.roomH)} sq ft)`,
     `Location: ${locationLabel()}`,
     `Estimated range: ${state.placed.length ? rangeText(lo, hi) : '$0'}`,
+    '',
+    'ROOM OPENINGS',
+    ...(state.openings.length
+      ? state.openings.map(opening => `- ${openingDescription(opening)}`)
+      : ['- No doors or windows marked']),
     '',
     'SCOPE',
     ...state.placed.map(item => {
@@ -4591,7 +5179,7 @@ function createPlanPdfBlob(lead) {
       addLine(line, { size: 20, bold: true, leading: 28, maxChars: 42 });
       return;
     }
-    if (line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
+    if (line === 'ROOM OPENINGS' || line === 'SCOPE' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
       addLine('');
       addLine(line, { size: 13, bold: true, leading: 18, maxChars: 60 });
       return;
