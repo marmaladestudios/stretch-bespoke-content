@@ -105,6 +105,18 @@ function aud004_valid_download($tmp, $filename) {
 
 /** Download one candidate URL (throttled) and sideload it as $filename. */
 function aud004_download_and_sideload($candidate_url, $filename, $parent_post_id, $label) {
+    // Boot-time safety: this runs as a deploy seed on a small instance that also
+    // hosts MySQL. Oversized media (the 64MB campaign video) starves the box and
+    // can crash-loop the container — skip anything > 15MB and log it for a
+    // manual import instead.
+    $head = wp_remote_head($candidate_url, ['timeout' => 10, 'redirection' => 3]);
+    if (!is_wp_error($head)) {
+        $len = (int) wp_remote_retrieve_header($head, 'content-length');
+        if ($len > 15 * 1024 * 1024) {
+            WP_CLI::log("    {$label} skipped: " . size_format($len) . " exceeds boot-time cap — import manually");
+            return 0; // treated as a failed candidate; group lands in the skipped report
+        }
+    }
     $tmp = download_url($candidate_url, 30);
     usleep(AUD004_THROTTLE_US); // be polite to the remote host
     if (is_wp_error($tmp)) {
