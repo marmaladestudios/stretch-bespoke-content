@@ -3,6 +3,10 @@
  * Template Name: About Us
  */
 get_header();
+
+// AUD-014: local attachment IDs seeded by setup-page-images.php.
+// Falls back to the original hotlink when the option/attachment is missing.
+$stretch_page_images = (array) get_option('stretch_page_images', []);
 ?>
 
 <style>
@@ -438,12 +442,28 @@ html, body { overflow-x: hidden; }
   z-index: 1;
 }
 .v2-timeline-step {
+  /* AUD-018: steps are real <button>s now — reset UA button styles so visuals are unchanged */
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  display: block;
+  width: 100%;
   text-align: center;
   padding: 0 8px;
   cursor: pointer;
   user-select: none;
 }
+.v2-timeline-step:focus-visible {
+  outline: 2px solid #00BFF3;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
 .v2-timeline-dot {
+  display: block;
   width: 18px; height: 18px;
   border-radius: 50%;
   background: #e0e0e8;
@@ -476,6 +496,7 @@ html, body { overflow-x: hidden; }
 }
 .v2-timeline-step.active .v2-timeline-dot::after { border-color: rgba(0,191,243,0.2); }
 .v2-timeline-step-number {
+  display: block;
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -487,6 +508,7 @@ html, body { overflow-x: hidden; }
 .v2-timeline-step:hover .v2-timeline-step-number { color: #8560A8; }
 .v2-timeline-step.active:hover .v2-timeline-step-number { color: #00BFF3; }
 .v2-timeline-step-title {
+  display: block;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -702,7 +724,12 @@ html, body { overflow-x: hidden; }
         <p>Today, we serve clients across industries &mdash; from ecommerce brands and publishers to agencies and enterprise marketing teams &mdash; with content that moves the needle.</p>
       </div>
       <div class="about-story-image v2-reveal-right">
+        <?php
+        // AUD-014: serve the local attachment (with srcset) when seeded.
+        $about_img = wp_get_attachment_image((int) ($stretch_page_images['about_team'] ?? 0), 'large', false, ['loading' => 'lazy', 'alt' => 'Team collaboration at Stretch Creative']);
+        if ($about_img) : echo $about_img; else : ?>
         <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" alt="Team collaboration at Stretch Creative" loading="lazy">
+        <?php endif; ?>
       </div>
     </div>
   </div>
@@ -838,41 +865,42 @@ html, body { overflow-x: hidden; }
         <div class="v2-timeline-progress" id="timelineProgress"></div>
       </div>
 
-      <div class="v2-timeline-steps">
-        <div class="v2-timeline-step active" data-step="1">
-          <div class="v2-timeline-step-number">01</div>
-          <div class="v2-timeline-dot"></div>
-          <div class="v2-timeline-step-title">Consultation</div>
-        </div>
-        <div class="v2-timeline-step" data-step="2">
-          <div class="v2-timeline-step-number">02</div>
-          <div class="v2-timeline-dot"></div>
-          <div class="v2-timeline-step-title">Brief &amp; Style Guide</div>
-        </div>
-        <div class="v2-timeline-step" data-step="3">
-          <div class="v2-timeline-step-number">03</div>
-          <div class="v2-timeline-dot"></div>
-          <div class="v2-timeline-step-title">Curate Team</div>
-        </div>
-        <div class="v2-timeline-step" data-step="4">
-          <div class="v2-timeline-step-number">04</div>
-          <div class="v2-timeline-dot"></div>
-          <div class="v2-timeline-step-title">Calibrate</div>
-        </div>
-        <div class="v2-timeline-step" data-step="5">
-          <div class="v2-timeline-step-number">05</div>
-          <div class="v2-timeline-dot"></div>
-          <div class="v2-timeline-step-title">Create</div>
-        </div>
-        <div class="v2-timeline-step" data-step="6">
-          <div class="v2-timeline-step-number">06</div>
-          <div class="v2-timeline-dot"></div>
-          <div class="v2-timeline-step-title">Deliver &amp; Report</div>
-        </div>
+      <?php // AUD-018: keyboard-accessible tabs — real buttons, roving tabindex, arrow keys (JS below). ?>
+      <div class="v2-timeline-steps" role="tablist" aria-label="Process steps">
+        <button type="button" class="v2-timeline-step active" data-step="1" id="processTab1" role="tab" aria-selected="true" aria-controls="processPanel1" tabindex="0">
+          <span class="v2-timeline-step-number">01</span>
+          <span class="v2-timeline-dot"></span>
+          <span class="v2-timeline-step-title">Consultation</span>
+        </button>
+        <button type="button" class="v2-timeline-step" data-step="2" id="processTab2" role="tab" aria-selected="false" aria-controls="processPanel2" tabindex="-1">
+          <span class="v2-timeline-step-number">02</span>
+          <span class="v2-timeline-dot"></span>
+          <span class="v2-timeline-step-title">Brief &amp; Style Guide</span>
+        </button>
+        <button type="button" class="v2-timeline-step" data-step="3" id="processTab3" role="tab" aria-selected="false" aria-controls="processPanel3" tabindex="-1">
+          <span class="v2-timeline-step-number">03</span>
+          <span class="v2-timeline-dot"></span>
+          <span class="v2-timeline-step-title">Curate Team</span>
+        </button>
+        <button type="button" class="v2-timeline-step" data-step="4" id="processTab4" role="tab" aria-selected="false" aria-controls="processPanel4" tabindex="-1">
+          <span class="v2-timeline-step-number">04</span>
+          <span class="v2-timeline-dot"></span>
+          <span class="v2-timeline-step-title">Calibrate</span>
+        </button>
+        <button type="button" class="v2-timeline-step" data-step="5" id="processTab5" role="tab" aria-selected="false" aria-controls="processPanel5" tabindex="-1">
+          <span class="v2-timeline-step-number">05</span>
+          <span class="v2-timeline-dot"></span>
+          <span class="v2-timeline-step-title">Create</span>
+        </button>
+        <button type="button" class="v2-timeline-step" data-step="6" id="processTab6" role="tab" aria-selected="false" aria-controls="processPanel6" tabindex="-1">
+          <span class="v2-timeline-step-number">06</span>
+          <span class="v2-timeline-dot"></span>
+          <span class="v2-timeline-step-title">Deliver &amp; Report</span>
+        </button>
       </div>
 
       <div class="v2-timeline-detail">
-        <div class="v2-timeline-detail-card active" data-detail="1">
+        <div class="v2-timeline-detail-card active" data-detail="1" id="processPanel1" role="tabpanel" aria-labelledby="processTab1" tabindex="0">
           <div>
             <div class="v2-timeline-detail-step">Step 01</div>
             <div class="v2-timeline-detail-title">Consultation</div>
@@ -882,7 +910,7 @@ html, body { overflow-x: hidden; }
             <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
         </div>
-        <div class="v2-timeline-detail-card" data-detail="2">
+        <div class="v2-timeline-detail-card" data-detail="2" id="processPanel2" role="tabpanel" aria-labelledby="processTab2" tabindex="-1" aria-hidden="true">
           <div>
             <div class="v2-timeline-detail-step">Step 02</div>
             <div class="v2-timeline-detail-title">Brief &amp; Style Guide</div>
@@ -892,7 +920,7 @@ html, body { overflow-x: hidden; }
             <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           </div>
         </div>
-        <div class="v2-timeline-detail-card" data-detail="3">
+        <div class="v2-timeline-detail-card" data-detail="3" id="processPanel3" role="tabpanel" aria-labelledby="processTab3" tabindex="-1" aria-hidden="true">
           <div>
             <div class="v2-timeline-detail-step">Step 03</div>
             <div class="v2-timeline-detail-title">Curate Team</div>
@@ -902,7 +930,7 @@ html, body { overflow-x: hidden; }
             <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
         </div>
-        <div class="v2-timeline-detail-card" data-detail="4">
+        <div class="v2-timeline-detail-card" data-detail="4" id="processPanel4" role="tabpanel" aria-labelledby="processTab4" tabindex="-1" aria-hidden="true">
           <div>
             <div class="v2-timeline-detail-step">Step 04</div>
             <div class="v2-timeline-detail-title">Calibrate</div>
@@ -912,7 +940,7 @@ html, body { overflow-x: hidden; }
             <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
           </div>
         </div>
-        <div class="v2-timeline-detail-card" data-detail="5">
+        <div class="v2-timeline-detail-card" data-detail="5" id="processPanel5" role="tabpanel" aria-labelledby="processTab5" tabindex="-1" aria-hidden="true">
           <div>
             <div class="v2-timeline-detail-step">Step 05</div>
             <div class="v2-timeline-detail-title">Create</div>
@@ -922,7 +950,7 @@ html, body { overflow-x: hidden; }
             <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
           </div>
         </div>
-        <div class="v2-timeline-detail-card" data-detail="6">
+        <div class="v2-timeline-detail-card" data-detail="6" id="processPanel6" role="tabpanel" aria-labelledby="processTab6" tabindex="-1" aria-hidden="true">
           <div>
             <div class="v2-timeline-detail-step">Step 06</div>
             <div class="v2-timeline-detail-title">Deliver &amp; Report</div>
@@ -938,7 +966,6 @@ html, body { overflow-x: hidden; }
 
   <div class="v2-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="linear-gradient(135deg, #8560A8, #5674B9)"/>
       <polygon points="0,0 1440,60 1440,60 0,60" fill="#8560A8"/>
     </svg>
   </div>
@@ -978,21 +1005,45 @@ html, body { overflow-x: hidden; }
   var timelineSteps = document.querySelectorAll('.v2-timeline-step');
   var timelineDetails = document.querySelectorAll('.v2-timeline-detail-card');
 
+  /* AUD-018: tablist pattern — roving tabindex, aria-selected, arrow-key navigation */
   function setActiveStep(index) {
     timelineSteps.forEach(function(step, i) {
       step.classList.toggle('active', i <= index);
+      step.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      step.setAttribute('tabindex', i === index ? '0' : '-1');
     });
     if (timelineProgress) {
       var pct = ((index + 1) / timelineSteps.length) * 100;
       timelineProgress.style.width = pct + '%';
     }
-    timelineDetails.forEach(function(card) { card.classList.remove('active'); });
+    timelineDetails.forEach(function(card) {
+      card.classList.remove('active');
+      card.setAttribute('aria-hidden', 'true');
+      card.setAttribute('tabindex', '-1');
+    });
     var targetCard = document.querySelector('.v2-timeline-detail-card[data-detail="' + (index + 1) + '"]');
-    if (targetCard) targetCard.classList.add('active');
+    if (targetCard) {
+      targetCard.classList.add('active');
+      targetCard.setAttribute('aria-hidden', 'false');
+      targetCard.setAttribute('tabindex', '0');
+    }
   }
 
   timelineSteps.forEach(function(step, i) {
     step.addEventListener('click', function() { setActiveStep(i); });
+    step.addEventListener('keydown', function(e) {
+      var total = timelineSteps.length;
+      var next = null;
+      if (e.key === 'ArrowRight') next = (i + 1) % total;
+      else if (e.key === 'ArrowLeft') next = (i - 1 + total) % total;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = total - 1;
+      if (next !== null) {
+        e.preventDefault();
+        setActiveStep(next);
+        timelineSteps[next].focus();
+      }
+    });
   });
 
   setActiveStep(0);

@@ -22,12 +22,31 @@ if (file_exists(get_template_directory() . '/inc/scanner-proxy.php')) {
     require_once get_template_directory() . '/inc/scanner-proxy.php';
 }
 
+// Performance tweaks: emoji dequeue, autoload fixes (AUD-042)
+if (file_exists(get_template_directory() . '/inc/perf.php')) {
+    require_once get_template_directory() . '/inc/perf.php';
+}
+
 /**
  * Fix blog/category/post permalink resolution.
  * The permalink /blog/%category%/%postname%/ causes category rules to
  * match post URLs. This adds higher-priority post rewrite rules.
  */
 function stretch_fix_blog_rewrites() {
+    // Category feeds must be registered BEFORE the two-segment post rule below,
+    // or /blog/{cat}/feed/ matches as a post named "feed" and 404s (AUD-021).
+    // add_rewrite_rule('top') APPENDS to extra_rules_top, so registration order
+    // here == matching order (verified via `wp rewrite list`).
+    add_rewrite_rule(
+        'blog/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$',
+        'index.php?category_name=$matches[1]&feed=$matches[2]',
+        'top'
+    );
+    add_rewrite_rule(
+        'blog/([^/]+)/(feed|rdf|rss|rss2|atom)/?$',
+        'index.php?category_name=$matches[1]&feed=$matches[2]',
+        'top'
+    );
     add_rewrite_rule(
         'blog/([^/]+)/([^/]+)/?$',
         'index.php?category_name=$matches[1]&name=$matches[2]',
@@ -82,13 +101,35 @@ add_action('init', 'stretch_blog_category_rewrites');
  * Flush rewrite rules when they change (version-gated).
  */
 function stretch_maybe_flush_rewrites() {
-    $version = '2.0';
+    $version = '2.1';
     if (get_option('stretch_rewrite_version') !== $version) {
         flush_rewrite_rules();
         update_option('stretch_rewrite_version', $version);
     }
 }
 add_action('init', 'stretch_maybe_flush_rewrites');
+
+/**
+ * Legacy blog URL redirects (AUD-021).
+ * /blog/category/{slug}/... → /blog/{slug}/  (old category base)
+ * /blog/page/N/             → /blog/          (old blog pagination)
+ * Runs at template_redirect priority 1 — before redirect_canonical (priority 10)
+ * fires redirect_guess_404_permalink() and 301s these to a random post.
+ */
+add_action('template_redirect', 'stretch_legacy_blog_redirects', 1);
+function stretch_legacy_blog_redirects() {
+    $path = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+
+    if (preg_match('#^/blog/category/([^/]+)#', $path, $m)) {
+        wp_safe_redirect(home_url('/blog/' . sanitize_title($m[1]) . '/'), 301);
+        exit;
+    }
+
+    if (preg_match('#^/blog/page/[0-9]+/?$#', $path)) {
+        wp_safe_redirect(home_url('/blog/'), 301);
+        exit;
+    }
+}
 
 /**
  * The Solutions page content is now the homepage. 301-redirect the retired
@@ -223,6 +264,161 @@ function stretch_section_classes() {
 
 
 /**
+ * ────────────────────────────────────────────────────────────────
+ * Read time as post meta (AUD-029).
+ * Templates previously ran str_word_count(strip_tags(get_the_content()))
+ * per card per request. The minutes now live in `_stretch_read_min`,
+ * recomputed on save and lazily backfilled.
+ * ────────────────────────────────────────────────────────────────
+ */
+function stretch_calc_read_min($content) {
+    return max(1, (int) ceil(str_word_count(strip_tags((string) $content)) / 250));
+}
+
+/**
+ * Read `_stretch_read_min` for a post (defaults to the loop post),
+ * computing + persisting it on the fly if missing.
+ */
+function stretch_get_read_min($post_id = 0) {
+    $post_id = $post_id ? (int) $post_id : get_the_ID();
+    if (!$post_id) {
+        return 1;
+    }
+    $min = get_post_meta($post_id, '_stretch_read_min', true);
+    if ($min === '' || (int) $min < 1) {
+        $min = stretch_calc_read_min(get_post_field('post_content', $post_id));
+        update_post_meta($post_id, '_stretch_read_min', $min);
+    }
+    return (int) $min;
+}
+
+add_action('save_post_post', 'stretch_update_read_min_meta', 10, 2);
+function stretch_update_read_min_meta($post_id, $post) {
+    if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+        return;
+    }
+    update_post_meta($post_id, '_stretch_read_min', stretch_calc_read_min($post->post_content));
+}
+
+// One-time backfill for existing posts, guarded by an option flag.
+add_action('init', 'stretch_backfill_read_min', 20);
+function stretch_backfill_read_min() {
+    if (get_option('stretch_read_min_backfilled')) {
+        return;
+    }
+    $posts = get_posts([
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+    ]);
+    foreach ($posts as $p) {
+        if (get_post_meta($p->ID, '_stretch_read_min', true) === '') {
+            update_post_meta($p->ID, '_stretch_read_min', stretch_calc_read_min($p->post_content));
+        }
+    }
+    update_option('stretch_read_min_backfilled', '1', false);
+}
+
+/**
+ * ────────────────────────────────────────────────────────────────
+ * Blog index for /blog/ (AUD-015).
+ * page-blog-home.php previously ran a posts_per_page=-1 WP_Query with
+ * full-content word counts plus one preview WP_Query per category on
+ * EVERY request. The whole dataset now lives in one transient:
+ *   'posts'    → client-side archive/search index (no colors — the
+ *                template maps hub colors on top)
+ *   'previews' → newest 3 posts per category slug (hub hover cards)
+ * Rebuilt lazily; invalidated on save/trash/delete of a post.
+ * ────────────────────────────────────────────────────────────────
+ */
+function stretch_get_blog_index() {
+    $index = get_transient('stretch_blog_index');
+    if (is_array($index) && isset($index['posts'], $index['previews'])) {
+        return $index;
+    }
+
+    $q = new WP_Query([
+        'post_type'      => 'post',
+        'posts_per_page' => -1,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'no_found_rows'  => true,
+    ]);
+
+    $posts    = [];
+    $previews = [];
+    while ($q->have_posts()) {
+        $q->the_post();
+        $pid  = get_the_ID();
+        $cats = get_the_category();
+
+        $primary_cat = null;
+        $has_uncat   = false;
+        foreach ($cats as $c) {
+            if ($c->slug === 'uncategorized') {
+                $has_uncat = true;
+            } elseif (!$primary_cat) {
+                $primary_cat = $c;
+            }
+        }
+
+        // Newest 3 per non-Uncategorized category (by membership; the list is
+        // already date DESC) — matches the old per-hub `cat => id` queries,
+        // which included posts that are also in Uncategorized.
+        foreach ($cats as $c) {
+            if ($c->slug === 'uncategorized') {
+                continue;
+            }
+            if (count($previews[$c->slug] ?? []) >= 3) {
+                continue;
+            }
+            $previews[$c->slug][] = [
+                'title' => get_the_title(),
+                'url'   => get_permalink(),
+                'date'  => get_the_date('M j'),
+            ];
+        }
+
+        // Archive index — matches the old `category__not_in => [uncat]` query,
+        // which skipped any post that is in Uncategorized at all.
+        if ($has_uncat || !$primary_cat) {
+            continue;
+        }
+
+        $posts[] = [
+            'title'     => html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8'),
+            'url'       => get_permalink(),
+            'excerpt'   => html_entity_decode(wp_trim_words(get_the_excerpt(), 22), ENT_QUOTES, 'UTF-8'),
+            'thumb'     => has_post_thumbnail() ? get_the_post_thumbnail_url($pid, 'medium_large') : '',
+            'cat_slug'  => $primary_cat->slug,
+            'cat_name'  => $primary_cat->name,
+            'author'    => get_the_author(),
+            'date'      => get_the_date('M j, Y'),
+            'read_time' => stretch_get_read_min($pid),
+        ];
+    }
+    wp_reset_postdata();
+
+    $index = ['posts' => $posts, 'previews' => $previews];
+    set_transient('stretch_blog_index', $index, 12 * HOUR_IN_SECONDS);
+    return $index;
+}
+
+function stretch_flush_blog_index($post_id = 0, $post = null) {
+    if ($post_id) {
+        $type = ($post instanceof WP_Post) ? $post->post_type : get_post_type($post_id);
+        if ($type && $type !== 'post') {
+            return;
+        }
+    }
+    delete_transient('stretch_blog_index');
+}
+add_action('save_post_post', 'stretch_flush_blog_index', 10, 2);
+add_action('deleted_post', 'stretch_flush_blog_index', 10, 2);
+add_action('trashed_post', 'stretch_flush_blog_index');
+
+/**
  * Curated portfolio items keyed for filtering.
  *
  * Items are declared with their source `file` name. At render time we resolve
@@ -258,25 +454,101 @@ function stretch_portfolio_definitions() {
 }
 
 /**
+ * Persisted filename → attachment ID map (AUD-029).
+ * Replaces the 18 leading-wildcard LIKE queries per /our-work/ view with a
+ * single non-autoloaded option. Rebuilt lazily when a lookup misses (at most
+ * once per request), appended to on `add_attachment`, pruned on
+ * `delete_attachment`.
+ */
+function stretch_attachment_file_map($force_rebuild = false) {
+    if (!$force_rebuild) {
+        $map = get_option('stretch_attachment_file_map', null);
+        if (is_array($map)) {
+            return $map;
+        }
+    }
+
+    global $wpdb;
+    $rows = $wpdb->get_results(
+        "SELECT post_id, meta_value FROM {$wpdb->postmeta}
+         WHERE meta_key = '_wp_attached_file'
+         ORDER BY post_id ASC"
+    );
+    $map = [];
+    foreach ($rows as $row) {
+        if (!$row->meta_value) {
+            continue;
+        }
+        $map[basename($row->meta_value)] = (int) $row->post_id; // highest ID wins
+    }
+    update_option('stretch_attachment_file_map', $map, false);
+    return $map;
+}
+
+add_action('add_attachment', 'stretch_attachment_map_add');
+function stretch_attachment_map_add($post_id) {
+    $file = get_post_meta($post_id, '_wp_attached_file', true);
+    if (!$file) {
+        return;
+    }
+    $map = get_option('stretch_attachment_file_map', null);
+    if (!is_array($map)) {
+        return; // map builds itself on the next lookup
+    }
+    $map[basename($file)] = (int) $post_id;
+    update_option('stretch_attachment_file_map', $map, false);
+}
+
+add_action('delete_attachment', 'stretch_attachment_map_forget');
+function stretch_attachment_map_forget($post_id) {
+    $map = get_option('stretch_attachment_file_map', null);
+    if (!is_array($map)) {
+        return;
+    }
+    $changed = false;
+    foreach ($map as $file => $id) {
+        if ((int) $id === (int) $post_id) {
+            unset($map[$file]);
+            $changed = true;
+        }
+    }
+    if ($changed) {
+        update_option('stretch_attachment_file_map', $map, false);
+    }
+}
+
+/**
  * Look up an attachment ID by its source filename (matches the wp-content/uploads
  * file the attachment points at). Returns 0 if not found.
  */
 function stretch_attachment_id_by_filename($filename) {
-    static $cache = [];
+    static $cache   = [];
+    static $rebuilt = false;
     if (isset($cache[$filename])) return $cache[$filename];
 
-    global $wpdb;
-    $base = pathinfo($filename, PATHINFO_FILENAME);
-    $row  = $wpdb->get_var($wpdb->prepare(
-        "SELECT post_id FROM {$wpdb->postmeta}
-         WHERE meta_key = '_wp_attached_file'
-           AND (meta_value LIKE %s OR meta_value LIKE %s)
-         ORDER BY post_id DESC LIMIT 1",
-        '%/' . $wpdb->esc_like($filename),
-        '%/' . $wpdb->esc_like($base) . '%'
-    ));
-    $cache[$filename] = $row ? (int) $row : 0;
-    return $cache[$filename];
+    $lookup = static function ($map) use ($filename) {
+        if (isset($map[$filename])) {
+            return (int) $map[$filename];
+        }
+        // Filename-prefix fallback (scaled/renamed variants), highest ID wins —
+        // mirrors the old `meta_value LIKE '%/base%' ORDER BY post_id DESC`.
+        $base = pathinfo($filename, PATHINFO_FILENAME);
+        $best = 0;
+        foreach ($map as $file => $id) {
+            if (strpos($file, $base) === 0 && (int) $id > $best) {
+                $best = (int) $id;
+            }
+        }
+        return $best;
+    };
+
+    $id = $lookup(stretch_attachment_file_map());
+    if (!$id && !$rebuilt) {
+        $rebuilt = true; // rebuild at most once per request
+        $id = $lookup(stretch_attachment_file_map(true));
+    }
+    $cache[$filename] = $id;
+    return $id;
 }
 
 /**

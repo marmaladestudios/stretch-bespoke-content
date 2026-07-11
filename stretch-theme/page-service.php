@@ -2202,34 +2202,65 @@ $has_multi_testimonials = is_array($testimonials_list) && count($testimonials_li
   }
 
   /* ---------- SELECTED WORK LIGHTBOX ---------- */
+  /* AUD-024: content built with createElement/textContent (no HTML string
+     interpolation of dataset values); vimeo id validated as digits-only.
+     AUD-025: focus moves to the close button on open, Tab is trapped inside
+     the dialog, and focus returns to the invoking card on close. */
   var svcLb       = document.getElementById('svcLightbox');
   var svcLbInner  = document.getElementById('svcLightboxInner');
   var svcLbClose  = document.getElementById('svcLightboxClose');
   var svcWorkCards = document.querySelectorAll('.svc-work-card');
+  var svcLbInvoker = null;
 
-  if (svcLb && svcLbInner && svcWorkCards.length) {
+  if (svcLb && svcLbInner && svcLbClose && svcWorkCards.length) {
     function svcOpenLb(card) {
-      var imgUrl = card.dataset.img;
-      var client = card.dataset.client;
-      var tag    = card.dataset.tag;
-      var vimeo  = card.dataset.vimeo;
-      var media  = vimeo
-        ? '<iframe src="https://player.vimeo.com/video/' + vimeo + '?h=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>'
-        : '<img src="' + imgUrl + '" alt="' + client + '">';
-      svcLbInner.innerHTML = media +
-        '<div class="svc-lightbox-meta">' +
-          '<p class="svc-lightbox-client">' + client + '</p>' +
-          '<span class="svc-lightbox-tag">' + tag + '</span>' +
-        '</div>';
+      var imgUrl = card.dataset.img || '';
+      var client = card.dataset.client || '';
+      var tag    = card.dataset.tag || '';
+      var vimeo  = card.dataset.vimeo || '';
+
+      var media;
+      if (/^\d+$/.test(vimeo)) {
+        media = document.createElement('iframe');
+        media.src = 'https://player.vimeo.com/video/' + vimeo + '?h=0&title=0&byline=0&portrait=0';
+        media.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        media.setAttribute('allowfullscreen', '');
+      } else {
+        media = document.createElement('img');
+        media.src = imgUrl;
+        media.alt = client;
+      }
+
+      var meta = document.createElement('div');
+      meta.className = 'svc-lightbox-meta';
+      var clientEl = document.createElement('p');
+      clientEl.className = 'svc-lightbox-client';
+      clientEl.textContent = client;
+      var tagEl = document.createElement('span');
+      tagEl.className = 'svc-lightbox-tag';
+      tagEl.textContent = tag;
+      meta.appendChild(clientEl);
+      meta.appendChild(tagEl);
+
+      svcLbInner.textContent = '';
+      svcLbInner.appendChild(media);
+      svcLbInner.appendChild(meta);
+
+      svcLbInvoker = card;
       svcLb.classList.add('open');
       svcLb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      svcLbClose.focus();
     }
     function svcCloseLb() {
       svcLb.classList.remove('open');
       svcLb.setAttribute('aria-hidden', 'true');
-      svcLbInner.innerHTML = '';
+      svcLbInner.textContent = '';
       document.body.style.overflow = '';
+      if (svcLbInvoker && typeof svcLbInvoker.focus === 'function') {
+        svcLbInvoker.focus();
+      }
+      svcLbInvoker = null;
     }
     svcWorkCards.forEach(function(card) {
       card.addEventListener('click', function(e) {
@@ -2242,7 +2273,26 @@ $has_multi_testimonials = is_array($testimonials_list) && count($testimonials_li
       if (e.target === svcLb) svcCloseLb();
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && svcLb.classList.contains('open')) svcCloseLb();
+      if (!svcLb.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        svcCloseLb();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var focusables = svcLb.querySelectorAll('button, a[href], iframe, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (!svcLb.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
   }
 

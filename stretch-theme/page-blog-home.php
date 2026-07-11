@@ -97,56 +97,17 @@ usort($regular_hubs, function ($a, $b) {
 });
 
 // ────────────────────────────────────────────────
-// FETCH ALL POSTS FOR CLIENT-SIDE FILTER
+// POSTS FOR CLIENT-SIDE FILTER + HUB PREVIEWS
+// One cached index (transient, see stretch_get_blog_index) replaces the
+// old per-request posts_per_page=-1 corpus query + 8 preview queries
+// (AUD-015). The template only layers hub colors on top.
 // ────────────────────────────────────────────────
-$all_posts_query = new WP_Query([
-    'post_type'        => 'post',
-    'posts_per_page'   => -1,
-    'post_status'      => 'publish',
-    'orderby'          => 'date',
-    'order'            => 'DESC',
-    'category__not_in' => [$uncat_id],
-    'no_found_rows'    => true,
-]);
+$blog_index = stretch_get_blog_index();
 
 $posts_data = [];
-if ($all_posts_query->have_posts()) {
-    while ($all_posts_query->have_posts()) {
-        $all_posts_query->the_post();
-        $pid  = get_the_ID();
-        $cats = get_the_category();
-
-        // Primary category = first non-Uncategorized
-        $primary_cat = null;
-        foreach ($cats as $c) {
-            if ($c->slug !== 'uncategorized') {
-                $primary_cat = $c;
-                break;
-            }
-        }
-        if (!$primary_cat) continue;
-
-        $content = strip_tags(get_the_content());
-        $wc      = str_word_count($content);
-        $rt      = max(1, (int) ceil($wc / 250));
-        $thumb   = has_post_thumbnail() ? get_the_post_thumbnail_url($pid, 'medium_large') : '';
-        $color   = $hub_meta[$primary_cat->slug]['color'] ?? $default_color;
-
-        $posts_data[] = [
-            'id'        => $pid,
-            'title'     => html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8'),
-            'url'       => get_permalink(),
-            'excerpt'   => html_entity_decode(wp_trim_words(get_the_excerpt(), 22), ENT_QUOTES, 'UTF-8'),
-            'thumb'     => $thumb,
-            'cat_slug'  => $primary_cat->slug,
-            'cat_name'  => $primary_cat->name,
-            'cat_color' => $color,
-            'author'    => get_the_author(),
-            'date'      => get_the_date('M j, Y'),
-            'read_time' => $rt,
-        ];
-    }
-    wp_reset_postdata();
+foreach ($blog_index['posts'] as $p) {
+    $p['cat_color'] = $hub_meta[$p['cat_slug']]['color'] ?? $default_color;
+    $posts_data[]   = $p;
 }
 
 // Hubs list for chips (All + each hub, sorted by count desc)
@@ -166,30 +127,9 @@ $chip_data = array_map(function ($c) use ($hub_meta, $default_color) {
     ];
 }, $chip_hubs);
 
-// 3 latest posts per hub for hover previews
-$hub_previews = [];
-foreach ($chip_hubs as $cat) {
-    $q = new WP_Query([
-        'post_type'      => 'post',
-        'posts_per_page' => 3,
-        'post_status'    => 'publish',
-        'cat'            => $cat->term_id,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'no_found_rows'  => true,
-    ]);
-    $items = [];
-    while ($q->have_posts()) {
-        $q->the_post();
-        $items[] = [
-            'title' => get_the_title(),
-            'url'   => get_permalink(),
-            'date'  => get_the_date('M j'),
-        ];
-    }
-    wp_reset_postdata();
-    $hub_previews[$cat->slug] = $items;
-}
+// 3 latest posts per hub for hover previews — precomputed in the same
+// cached index (was: one WP_Query per hub, every request).
+$hub_previews = $blog_index['previews'];
 
 $total_posts_count = count($posts_data);
 ?>

@@ -16,6 +16,10 @@ RUN echo 'upload_max_filesize = 64M' > /usr/local/etc/php/conf.d/uploads.ini \
     && echo 'memory_limit = 256M' >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo 'max_execution_time = 120' >> /usr/local/etc/php/conf.d/uploads.ini
 
+# AUD-020: Cache-Control headers for static assets (1y immutable) + HTML (no-cache)
+COPY apache-caching.conf /etc/apache2/conf-available/caching.conf
+RUN a2enconf caching && a2enmod expires headers
+
 # Copy theme to a staging location (WordPress entrypoint overwrites /var/www/html at runtime)
 COPY stretch-theme/ /opt/stretch-theme/
 COPY setup-content.php /opt/setup-content.php
@@ -28,6 +32,7 @@ COPY content-fixes.php /opt/content-fixes.php
 COPY setup-industries.php /opt/setup-industries.php
 COPY setup-seo.php /opt/setup-seo.php
 COPY sideload-old-domain-images.php /opt/sideload-old-domain-images.php
+COPY setup-page-images.php /opt/setup-page-images.php
 COPY portfolio-assets/ /opt/portfolio-assets/
 COPY static-sites/ /opt/static-sites/
 

@@ -457,11 +457,12 @@ $counts = [
 ?>
 <div class="pf-filters-wrap">
   <div class="v2-container">
-    <div class="pf-filters" role="tablist" aria-label="Portfolio filters">
-      <button class="pf-filter-btn active" data-filter="all" role="tab" aria-selected="true">All <span class="pf-filter-count"><?php echo $counts['all']; ?></span></button>
-      <button class="pf-filter-btn" data-filter="writing" role="tab">Writing <span class="pf-filter-count"><?php echo $counts['writing']; ?></span></button>
-      <button class="pf-filter-btn" data-filter="design" role="tab">Graphic Design <span class="pf-filter-count"><?php echo $counts['design']; ?></span></button>
-      <button class="pf-filter-btn" data-filter="video" role="tab">Video &amp; Photography <span class="pf-filter-count"><?php echo $counts['video']; ?></span></button>
+    <?php // AUD-035: plain toggle buttons (aria-pressed) — not a tabs widget. ?>
+    <div class="pf-filters" role="group" aria-label="Portfolio filters">
+      <button type="button" class="pf-filter-btn active" data-filter="all" aria-pressed="true">All <span class="pf-filter-count"><?php echo $counts['all']; ?></span></button>
+      <button type="button" class="pf-filter-btn" data-filter="writing" aria-pressed="false">Writing <span class="pf-filter-count"><?php echo $counts['writing']; ?></span></button>
+      <button type="button" class="pf-filter-btn" data-filter="design" aria-pressed="false">Graphic Design <span class="pf-filter-count"><?php echo $counts['design']; ?></span></button>
+      <button type="button" class="pf-filter-btn" data-filter="video" aria-pressed="false">Video &amp; Photography <span class="pf-filter-count"><?php echo $counts['video']; ?></span></button>
     </div>
   </div>
 </div>
@@ -474,10 +475,14 @@ $counts = [
   <div class="v2-container">
     <div class="pf-grid" id="pfGrid">
       <?php foreach ($portfolio as $i => $item) :
-        $img_url = wp_get_attachment_image_url($item['id'], 'large');
         $img_full = wp_get_attachment_image_url($item['id'], 'full');
-        $alt     = get_post_meta($item['id'], '_wp_attachment_image_alt', true);
-        if (!$img_url) continue;
+        $alt      = get_post_meta($item['id'], '_wp_attachment_image_alt', true);
+        // AUD-031: full <img> markup with srcset/sizes instead of a bare src.
+        $img_html = wp_get_attachment_image($item['id'], 'large', false, [
+            'loading' => 'lazy',
+            'alt'     => $alt ?: $item['client'] . ' ' . $item['subcat'],
+        ]);
+        if (!$img_html) continue;
       ?>
         <a href="#"
            class="pf-card v2-reveal v2-delay-<?php echo (($i % 4) + 1); ?>"
@@ -488,7 +493,7 @@ $counts = [
            <?php if (!empty($item['vimeo'])) : ?>data-vimeo="<?php echo esc_attr($item['vimeo']); ?>"<?php endif; ?>
            aria-label="<?php echo esc_attr($item['client'] . ' — ' . $item['subcat']); ?>">
           <div class="pf-card-img-wrap">
-            <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($alt ?: $item['client'] . ' ' . $item['subcat']); ?>" loading="lazy">
+            <?php echo $img_html; ?>
           </div>
           <?php if (!empty($item['vimeo'])) : ?>
           <div class="pf-card-vimeo" aria-hidden="true">
@@ -554,10 +559,10 @@ $counts = [
 
       filterBtns.forEach(function(b) {
         b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('aria-pressed', 'false');
       });
       btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('aria-pressed', 'true');
 
       cards.forEach(function(card) {
         if (filter === 'all' || card.dataset.category === filter) {
@@ -572,39 +577,64 @@ $counts = [
   });
 
   /* ---------- LIGHTBOX ---------- */
+  /* AUD-024: content built with createElement/textContent (no HTML string
+     interpolation of dataset values); vimeo id validated as digits-only.
+     AUD-025: focus moves to the close button on open, Tab is trapped inside
+     the dialog, and focus returns to the invoking card on close. */
   var lightbox = document.getElementById('pfLightbox');
   var lightboxInner = document.getElementById('pfLightboxInner');
   var lightboxClose = document.getElementById('pfLightboxClose');
+  var lightboxInvoker = null;
 
   function openLightbox(card) {
-    var imgUrl = card.dataset.img;
-    var client = card.dataset.client;
-    var tag    = card.dataset.tag;
-    var vimeo  = card.dataset.vimeo;
+    var imgUrl = card.dataset.img || '';
+    var client = card.dataset.client || '';
+    var tag    = card.dataset.tag || '';
+    var vimeo  = card.dataset.vimeo || '';
 
     var media;
-    if (vimeo) {
-      media = '<iframe src="https://player.vimeo.com/video/' + vimeo + '?h=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    if (/^\d+$/.test(vimeo)) {
+      media = document.createElement('iframe');
+      media.src = 'https://player.vimeo.com/video/' + vimeo + '?h=0&title=0&byline=0&portrait=0';
+      media.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      media.setAttribute('allowfullscreen', '');
     } else {
-      media = '<img src="' + imgUrl + '" alt="' + client + '">';
+      media = document.createElement('img');
+      media.src = imgUrl;
+      media.alt = client;
     }
 
-    lightboxInner.innerHTML = media +
-      '<div class="pf-lightbox-meta">' +
-        '<p class="pf-lightbox-client">' + client + '</p>' +
-        '<span class="pf-lightbox-tag">' + tag + '</span>' +
-      '</div>';
+    var meta = document.createElement('div');
+    meta.className = 'pf-lightbox-meta';
+    var clientEl = document.createElement('p');
+    clientEl.className = 'pf-lightbox-client';
+    clientEl.textContent = client;
+    var tagEl = document.createElement('span');
+    tagEl.className = 'pf-lightbox-tag';
+    tagEl.textContent = tag;
+    meta.appendChild(clientEl);
+    meta.appendChild(tagEl);
 
+    lightboxInner.textContent = '';
+    lightboxInner.appendChild(media);
+    lightboxInner.appendChild(meta);
+
+    lightboxInvoker = card;
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
   }
 
   function closeLightbox() {
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
-    lightboxInner.innerHTML = '';
+    lightboxInner.textContent = '';
     document.body.style.overflow = '';
+    if (lightboxInvoker && typeof lightboxInvoker.focus === 'function') {
+      lightboxInvoker.focus();
+    }
+    lightboxInvoker = null;
   }
 
   cards.forEach(function(card) {
@@ -619,7 +649,26 @@ $counts = [
     if (e.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') {
+      closeLightbox();
+      return;
+    }
+    if (e.key !== 'Tab') return;
+    var focusables = lightbox.querySelectorAll('button, a[href], iframe, [tabindex]:not([tabindex="-1"])');
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (!lightbox.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 })();
 </script>

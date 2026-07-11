@@ -3,6 +3,10 @@
  * Template Name: Home
  */
 get_header();
+
+// AUD-014: local attachment IDs seeded by setup-page-images.php.
+// Templates fall back to the original hotlink when a key is missing/unseeded.
+$stretch_page_images = (array) get_option('stretch_page_images', []);
 ?>
 
 <style>
@@ -724,7 +728,12 @@ html, body { overflow-x: hidden; }
     <div class="sol-cards-grid">
       <div class="sol-card v2-reveal v2-delay-1">
         <div class="sol-card-image">
+          <?php
+          // AUD-014: serve the local attachment (with srcset) when seeded.
+          $sol_img = wp_get_attachment_image((int) ($stretch_page_images['home_ecommerce'] ?? 0), 'large', false, ['loading' => 'lazy', 'alt' => 'Ecommerce']);
+          if ($sol_img) : echo $sol_img; else : ?>
           <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Ecommerce" loading="lazy">
+          <?php endif; ?>
         </div>
         <div class="sol-card-content">
           <div class="sol-card-tag">Ecommerce</div>
@@ -742,7 +751,11 @@ html, body { overflow-x: hidden; }
 
       <div class="sol-card v2-reveal v2-delay-2">
         <div class="sol-card-image">
+          <?php
+          $sol_img = wp_get_attachment_image((int) ($stretch_page_images['home_agencies'] ?? 0), 'large', false, ['loading' => 'lazy', 'alt' => 'Agencies and strategic partners']);
+          if ($sol_img) : echo $sol_img; else : ?>
           <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=400&fit=crop" alt="Agencies and strategic partners" loading="lazy">
+          <?php endif; ?>
         </div>
         <div class="sol-card-content">
           <div class="sol-card-tag">Agencies &amp; Strategic Partners</div>
@@ -760,7 +773,11 @@ html, body { overflow-x: hidden; }
 
       <div class="sol-card v2-reveal v2-delay-3">
         <div class="sol-card-image">
+          <?php
+          $sol_img = wp_get_attachment_image((int) ($stretch_page_images['home_service_providers'] ?? 0), 'large', false, ['loading' => 'lazy', 'alt' => 'Local service providers']);
+          if ($sol_img) : echo $sol_img; else : ?>
           <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=400&fit=crop" alt="Local service providers" loading="lazy">
+          <?php endif; ?>
         </div>
         <div class="sol-card-content">
           <div class="sol-card-tag">Local Service Providers</div>
@@ -772,13 +789,18 @@ html, body { overflow-x: hidden; }
             <li>Social Media &amp; Design</li>
             <li>Paid Advertising</li>
           </ul>
-          <a href="#" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <?php // AUD-036: interim target until the Local Service Providers industry page ships. ?>
+          <a href="/contact-stretch-creative/" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
 
       <div class="sol-card v2-reveal v2-delay-4">
         <div class="sol-card-image">
+          <?php
+          $sol_img = wp_get_attachment_image((int) ($stretch_page_images['home_saas'] ?? 0), 'large', false, ['loading' => 'lazy', 'alt' => 'SaaS and digital platforms']);
+          if ($sol_img) : echo $sol_img; else : ?>
           <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS and digital platforms" loading="lazy">
+          <?php endif; ?>
         </div>
         <div class="sol-card-content">
           <div class="sol-card-tag">SaaS &amp; Digital Platforms</div>
@@ -790,7 +812,8 @@ html, body { overflow-x: hidden; }
             <li>Graphic Design</li>
             <li>SEO Content Strategy</li>
           </ul>
-          <a href="#" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <?php // AUD-036: interim target until the SaaS industry page ships. ?>
+          <a href="/contact-stretch-creative/" class="sol-card-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
     </div>

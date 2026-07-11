@@ -8,8 +8,7 @@ while (have_posts()) : the_post();
 
 $cats = get_the_category();
 $cat = $cats ? $cats[0] : null;
-$read_time = ceil(str_word_count(strip_tags(get_the_content())) / 250);
-if ($read_time < 1) $read_time = 1;
+$read_time = stretch_get_read_min(); // `_stretch_read_min` meta (AUD-029)
 $author_id = get_the_author_meta('ID');
 $author_name = get_the_author();
 $author_bio = get_the_author_meta('description');
@@ -541,7 +540,7 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .sp-toc-sidebar {
   position: fixed;
-  left: max(20px, calc((100vw - 780px) / 2 - 260px));
+  left: max(20px, calc((100% - 780px) / 2 - 260px)); /* % of viewport excl. scrollbar (AUD-042) */
   top: 160px;
   width: 200px;
   max-height: calc(100vh - 140px);
@@ -599,6 +598,10 @@ html, body { overflow-x: hidden; }
   transform: scale(1.1);
 }
 .sp-share-btn svg { width: 16px; height: 16px; fill: currentColor; }
+/* Copy-link copied state (AUD-035) — class toggle instead of innerHTML rewrites */
+.sp-copy-link .sp-copy-check { display: none; }
+.sp-copy-link.copied .sp-copy-icon { display: none; }
+.sp-copy-link.copied .sp-copy-check { display: inline; }
 
 /* Mobile share bar — hidden, replaced by inline bar */
 .sp-share-mobile {
@@ -689,11 +692,6 @@ html, body { overflow-x: hidden; }
 /* ========================================
    5. RELATED POSTS
    ======================================== */
-.sp-related {
-  background: #f9f9fb;
-  padding: 100px 0;
-  position: relative;
-}
 .sp-related-heading {
   font-family: 'Poppins', sans-serif;
   font-size: 36px;
@@ -702,73 +700,6 @@ html, body { overflow-x: hidden; }
   text-align: center;
   margin: 0 0 48px;
 }
-.sp-related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-.sp-rcard {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  border: 1px solid rgba(0,0,0,0.04);
-}
-.sp-rcard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-}
-.sp-rcard-image {
-  aspect-ratio: 16/10;
-  overflow: hidden;
-  display: block;
-}
-.sp-rcard-image img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.6s ease;
-}
-.sp-rcard:hover .sp-rcard-image img { transform: scale(1.06); }
-.sp-rcard-image .fallback-gradient {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, #8560A8, #5674B9);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Poppins', sans-serif; font-size: 18px; color: rgba(255,255,255,0.25);
-}
-.sp-rcard-body { padding: 24px; }
-.sp-rcard-body .cat-badge {
-  display: inline-block;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #8560A8;
-  background: rgba(133,96,168,0.08);
-  padding: 3px 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-.sp-rcard-body h3 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.35;
-  margin: 0 0 8px;
-  color: #252C3A;
-}
-.sp-rcard-body h3 a { color: inherit; text-decoration: none; }
-.sp-rcard-body h3 a:hover { color: #8560A8; }
-.sp-rcard-body .card-excerpt {
-  font-family: 'Assistant', sans-serif;
-  font-size: 15px;
-  color: #555;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 /* ========================================
    6. NEWSLETTER + CTA
    ======================================== */
@@ -949,7 +880,6 @@ html, body { overflow-x: hidden; }
   /* share bars handled globally */
 }
 @media (max-width: 960px) {
-  .sp-related-grid { grid-template-columns: repeat(2, 1fr); }
   .sp-newsletter-inner { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 768px) {
@@ -969,14 +899,13 @@ html, body { overflow-x: hidden; }
   .sp-article table thead th, .sp-article table tbody td { padding: 10px 12px; }
   .sp-author-bio { padding: 36px 24px 0; }
   .sp-author-card { flex-direction: column; text-align: center; align-items: center; }
-  .sp-related, .sp-newsletter { padding: 60px 0; }
+  .sp-newsletter { padding: 60px 0; }
   .sp-related-heading { font-size: 28px; }
   .sp-nl-form { flex-direction: column; }
   .sp-cta-final h2 { font-size: 28px; }
   .sp-newsletter h2 { font-size: 28px; }
 }
 @media (max-width: 480px) {
-  .sp-related-grid { grid-template-columns: 1fr; }
   .sp-header h1 { font-size: 26px; }
 }
 
@@ -1425,7 +1354,7 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .sp-reading-position {
   position: fixed;
-  right: calc((100vw - 780px) / 2 - 30px);
+  right: calc((100% - 780px) / 2 - 30px); /* % of viewport excl. scrollbar (AUD-042) */
   top: 160px;
   font-family: 'Poppins', sans-serif;
   font-size: 11px;
@@ -1704,10 +1633,10 @@ html, body { overflow-x: hidden; }
 
 <!-- Text Highlight Share Tooltip -->
 <div class="sp-text-share" id="textShare">
-  <a id="textShareTwitter" href="#" target="_blank" rel="noopener noreferrer" title="Share on X">
+  <a id="textShareTwitter" href="#" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X">
     <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
   </a>
-  <a id="textShareLinkedIn" href="#" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn">
+  <a id="textShareLinkedIn" href="#" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn" aria-label="Share on LinkedIn">
     <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
   </a>
 </div>
@@ -1721,15 +1650,45 @@ html, body { overflow-x: hidden; }
   $current_post_id = get_the_ID();
   $saved_cat = $cat;
   if ($cat) :
-    $hub_posts = new WP_Query([
-        'post_type'      => 'post',
-        'posts_per_page' => 10,
-        'cat'            => $cat->term_id,
-        'post_status'    => 'publish',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-    ]);
     $other_cats = get_categories(['hide_empty' => true, 'exclude' => [$cat->term_id]]);
+
+    // One grouped query for the whole "Learn" sidebar (AUD-029) — replaces the
+    // old per-category WP_Query pileup (1 × current hub + 1 per other hub).
+    // Grouped lists are cached 30 min in a transient keyed by the category list.
+    $sidebar_cat_ids = array_map('intval', array_merge([$cat->term_id], wp_list_pluck($other_cats, 'term_id')));
+    sort($sidebar_cat_ids);
+    $sidebar_key    = 'stretch_sp_sidebar_' . md5(implode(',', $sidebar_cat_ids));
+    $sidebar_groups = get_transient($sidebar_key);
+    if (!is_array($sidebar_groups)) {
+        $sidebar_groups = [];
+        $sidebar_q = new WP_Query([
+            'post_type'      => 'post',
+            'posts_per_page' => 100, // covers 10/hub across all hubs
+            'post_status'    => 'publish',
+            'category__in'   => $sidebar_cat_ids,
+            // Explicit ID tiebreak: bulk-seeded posts share a post_date, and
+            // an unpinned tie order shuffles per query plan.
+            'orderby'        => ['date' => 'DESC', 'ID' => 'ASC'],
+            'no_found_rows'  => true,
+        ]);
+        while ($sidebar_q->have_posts()) {
+            $sidebar_q->the_post();
+            $sb_pid = get_the_ID();
+            foreach (get_the_category() as $sb_cat) {
+                $sb_tid = (int) $sb_cat->term_id;
+                if (!in_array($sb_tid, $sidebar_cat_ids, true)) continue;
+                if (count($sidebar_groups[$sb_tid] ?? []) >= 10) continue;
+                $sidebar_groups[$sb_tid][] = [
+                    'id'    => $sb_pid,
+                    'title' => get_the_title(),
+                    'url'   => get_permalink(),
+                ];
+            }
+        }
+        wp_reset_postdata();
+        set_transient($sidebar_key, $sidebar_groups, 30 * MINUTE_IN_SECONDS);
+    }
+    $hub_list = array_slice($sidebar_groups[(int) $cat->term_id] ?? [], 0, 10);
   ?>
   <div class="sp-hub-sidebar" id="hubSidebar">
     <div class="sp-toc-label">Learn</div>
@@ -1742,24 +1701,19 @@ html, body { overflow-x: hidden; }
       </div>
       <div class="sp-hub-acc-panel" id="sp-hub-panel-<?php echo (int) $cat->term_id; ?>" style="max-height:500px;">
         <ul class="sp-hub-acc-list">
-          <?php while ($hub_posts->have_posts()) : $hub_posts->the_post(); ?>
-            <li<?php if (get_the_ID() == $current_post_id) echo ' class="current-post"'; ?>>
-              <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+          <?php foreach ($hub_list as $hub_item) : ?>
+            <li<?php if ($hub_item['id'] == $current_post_id) echo ' class="current-post"'; ?>>
+              <a href="<?php echo esc_url($hub_item['url']); ?>"><?php echo $hub_item['title']; ?></a>
             </li>
-          <?php endwhile; wp_reset_postdata(); ?>
+          <?php endforeach; ?>
         </ul>
       </div>
     </div>
 
     <!-- Other hubs (collapsed) -->
     <?php foreach ($other_cats as $ocat) :
-      $ocat_posts = new WP_Query([
-          'post_type'      => 'post',
-          'posts_per_page' => 5,
-          'cat'            => $ocat->term_id,
-          'post_status'    => 'publish',
-      ]);
-      if ($ocat_posts->have_posts()) :
+      $ocat_list = array_slice($sidebar_groups[(int) $ocat->term_id] ?? [], 0, 5);
+      if (!empty($ocat_list)) :
     ?>
     <div class="sp-hub-acc">
       <div class="sp-hub-acc-trigger">
@@ -1768,9 +1722,9 @@ html, body { overflow-x: hidden; }
       </div>
       <div class="sp-hub-acc-panel" id="sp-hub-panel-<?php echo (int) $ocat->term_id; ?>">
         <ul class="sp-hub-acc-list">
-          <?php while ($ocat_posts->have_posts()) : $ocat_posts->the_post(); ?>
-            <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-          <?php endwhile; wp_reset_postdata(); ?>
+          <?php foreach ($ocat_list as $ocat_item) : ?>
+            <li><a href="<?php echo esc_url($ocat_item['url']); ?>"><?php echo $ocat_item['title']; ?></a></li>
+          <?php endforeach; ?>
         </ul>
       </div>
     </div>
@@ -1865,17 +1819,18 @@ html, body { overflow-x: hidden; }
     <!-- Inline horizontal share bar -->
     <div class="sp-share-inline">
       <span class="sp-share-inline-label">Share</span>
-      <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X">
+      <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X" aria-label="Share on X">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn">
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn">
         <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook" aria-label="Share on Facebook">
         <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       </a>
-      <button class="sp-share-btn" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href);this.innerHTML='&#10003;';var btn=this;setTimeout(function(){btn.innerHTML='<svg viewBox=\'0 0 24 24\'><path d=\'M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z\'/><path d=\'M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z\'/></svg>'},2000)">
-        <svg viewBox="0 0 24 24"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+      <button type="button" class="sp-share-btn sp-copy-link" title="Copy link" aria-label="Copy link">
+        <svg class="sp-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+        <span class="sp-copy-check" aria-hidden="true">&#10003;</span>
       </button>
     </div>
   </article>
@@ -1908,33 +1863,35 @@ html, body { overflow-x: hidden; }
 
 <!-- Share bar (desktop — fixed left) -->
 <div class="sp-share-bar" id="shareBar">
-  <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X">
+  <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X" aria-label="Share on X">
     <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
   </a>
-  <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn">
+  <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn">
     <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
   </a>
-  <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook" aria-label="Share on Facebook">
     <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
   </a>
-  <button class="sp-share-btn" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href);this.innerHTML='&#10003;';setTimeout(function(){document.querySelector('#shareBar .sp-share-btn:last-child').innerHTML='<svg viewBox=\'0 0 24 24\'><path d=\'M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z\'/><path d=\'M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z\'/></svg>'},2000)">
-    <svg viewBox="0 0 24 24"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+  <button type="button" class="sp-share-btn sp-copy-link" title="Copy link" aria-label="Copy link">
+    <svg class="sp-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+    <span class="sp-copy-check" aria-hidden="true">&#10003;</span>
   </button>
 </div>
 
 <!-- Share bar (mobile — bottom) -->
 <div class="sp-share-mobile" id="shareMobile">
-  <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X">
+  <a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on X" aria-label="Share on X">
     <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
   </a>
-  <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn">
+  <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn">
     <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
   </a>
-  <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" target="_blank" rel="noopener noreferrer" class="sp-share-btn" title="Share on Facebook" aria-label="Share on Facebook">
     <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
   </a>
-  <button class="sp-share-btn" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='Copied!';">
-    <svg viewBox="0 0 24 24"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+  <button type="button" class="sp-share-btn sp-copy-link" title="Copy link" aria-label="Copy link">
+    <svg class="sp-copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.723 18.654l-3.61 3.609c-2.316 2.315-6.063 2.315-8.378 0-2.315-2.316-2.315-6.062 0-8.377l3.61-3.609c2.316-2.315 6.063-2.315 8.378 0 .542.541.961 1.174 1.257 1.858l-1.633 1.129c-.157-.474-.42-.911-.789-1.28-1.536-1.536-4.025-1.536-5.561 0l-3.61 3.61c-1.536 1.535-1.536 4.025 0 5.56 1.536 1.536 4.025 1.536 5.561 0l2.643-2.643c.65.187 1.322.27 1.988.255z"/><path d="M19.265 1.736c-2.316-2.315-6.063-2.315-8.378 0l-3.61 3.609c-.542.541-.961 1.174-1.257 1.858l1.633 1.129c.157-.474.42-.911.789-1.28l3.61-3.61c1.536-1.535 4.025-1.535 5.561 0 1.536 1.536 1.536 4.025 0 5.561l-3.61 3.61c-1.536 1.535-4.025 1.535-5.561 0-.157-.157-.3-.324-.427-.499l-1.633 1.129c.341.498.752.955 1.234 1.354l.223.196.003.003c2.298 2.143 5.903 2.07 8.117-.282l3.61-3.609c2.316-2.316 2.316-6.063 0-8.378z"/></svg>
+    <span class="sp-copy-check" aria-hidden="true">&#10003;</span>
   </button>
 </div>
 
@@ -1969,67 +1926,22 @@ if ($more_hub->have_posts() && $cat) :
         </div>
         <div class="sp-hub-card-body">
           <h3><?php the_title(); ?></h3>
-          <span class="sp-hub-card-meta"><?php echo get_the_date(); ?> &middot; <?php echo ceil(str_word_count(strip_tags(get_the_content())) / 250); ?> min</span>
+          <span class="sp-hub-card-meta"><?php echo get_the_date(); ?> &middot; <?php echo stretch_get_read_min(); ?> min</span>
         </div>
       </a>
       <?php endwhile; wp_reset_postdata(); ?>
     </div>
+  </div>
+  <div class="sp-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#252C3A"/></svg>
   </div>
 </section>
 <?php endif; ?>
 
 <?php endwhile; ?>
 
-<!-- ============================
-     7. RELATED POSTS
-     ============================ -->
-<?php
-$related = new WP_Query([
-    'post_type'      => 'post',
-    'posts_per_page' => 3,
-    'post__not_in'   => [get_the_ID()],
-    'category__in'   => $cat ? [$cat->term_id] : [],
-    'post_status'    => 'publish',
-]);
-if ($related->have_posts()) :
-?>
-<section class="sp-section sp-related">
-  <div class="sp-angle-divider" style="top:-1px;bottom:auto;">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,0 1440,60" fill="#fff"/></svg>
-  </div>
-  <div class="sp-container">
-    <h2 class="sp-related-heading sp-reveal">Keep Reading</h2>
-    <div class="sp-related-grid">
-      <?php while ($related->have_posts()) : $related->the_post();
-        $rc = get_the_category();
-        $rcat = $rc ? $rc[0] : null;
-      ?>
-        <article class="sp-rcard sp-reveal">
-          <a href="<?php the_permalink(); ?>" class="sp-rcard-image">
-            <?php if (has_post_thumbnail()) : ?>
-              <?php the_post_thumbnail('blog-card'); ?>
-            <?php else : ?>
-              <div class="fallback-gradient">Stretch</div>
-            <?php endif; ?>
-          </a>
-          <div class="sp-rcard-body">
-            <?php if ($rcat) : ?>
-              <span class="cat-badge"><?php echo esc_html($rcat->name); ?></span>
-            <?php endif; ?>
-            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-            <p class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
-          </div>
-        </article>
-      <?php endwhile; ?>
-    </div>
-  </div>
-  <?php wp_reset_postdata(); ?>
-
-  <div class="sp-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#252C3A"/></svg>
-  </div>
-</section>
-<?php endif; ?>
+<!-- Near-duplicate "Related Posts" section removed (AUD-029) — the
+     "More from this hub" section above covers it. -->
 
 <!-- ============================
      7. NEWSLETTER CTA
@@ -2552,6 +2464,24 @@ if ($related->have_posts()) :
       var isOpen = faqBtn.classList.toggle('open');
       faqBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       answer.style.maxHeight = isOpen ? answer.scrollHeight + 'px' : '';
+    });
+  });
+
+  // ========================================
+  // COPY-LINK SHARE BUTTONS (AUD-035)
+  // Class toggle for the copied state — no inline onclick / innerHTML swaps.
+  // ========================================
+  document.querySelectorAll('.sp-copy-link').forEach(function(copyBtn) {
+    var copyTimer = null;
+    copyBtn.addEventListener('click', function() {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(window.location.href);
+        }
+      } catch (err) { /* clipboard unavailable — still show feedback */ }
+      copyBtn.classList.add('copied');
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function() { copyBtn.classList.remove('copied'); }, 2000);
     });
   });
 

@@ -159,6 +159,7 @@ SEED_SCRIPTS=(
     /opt/setup-industries.php
     /opt/setup-seo.php
     /opt/sideload-old-domain-images.php
+    /opt/setup-page-images.php
 )
 SEED_VERSION="$(cat "${SEED_SCRIPTS[@]}" 2>/dev/null | sha256sum | awk '{print $1}')"
 
@@ -170,6 +171,44 @@ if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
     else
         wp --allow-root --path=/var/www/html plugin activate seo-by-rank-math >/dev/null 2>&1 || true
     fi
+
+    # Page cache (AUD-012): plugin, advanced-cache.php, and wp-cache-config.php all
+    # live in the EPHEMERAL webroot — a deploy wipes them and the site silently runs
+    # uncached. Reinstall + restore settings on every boot (cheap no-op when present).
+    if ! wp --allow-root --path=/var/www/html plugin is-installed wp-super-cache 2>/dev/null; then
+        wp --allow-root --path=/var/www/html plugin install wp-super-cache --activate 2>&1 \
+            || echo "  ! wp-super-cache install failed (continuing)"
+    else
+        wp --allow-root --path=/var/www/html plugin activate wp-super-cache >/dev/null 2>&1 || true
+    fi
+    wp --allow-root --path=/var/www/html eval '
+        if ( ! function_exists( "wp_cache_enable" ) && defined( "WP_PLUGIN_DIR" ) ) {
+            @include_once WP_PLUGIN_DIR . "/wp-super-cache/wp-cache.php";
+        }
+        if ( function_exists( "wp_cache_enable" ) ) {
+            if ( function_exists( "wp_cache_verify_config_file" ) ) { wp_cache_verify_config_file(); }
+            if ( function_exists( "wp_cache_create_advanced_cache" ) ) { wp_cache_create_advanced_cache(); }
+            wp_cache_enable();
+            wp_cache_setting( "super_cache_enabled", 1 );
+            wp_cache_setting( "wp_cache_mod_rewrite", 0 );
+            wp_cache_setting( "wp_cache_not_logged_in", 2 );
+            wp_cache_setting( "wp_cache_no_cache_for_get", 1 );
+            wp_cache_setting( "cache_max_time", 1800 );
+            wp_cache_setting( "cache_time_interval", 600 );
+            wp_cache_setting( "cache_rejected_uri", array( "wp-.*\\.php", "index\\.php", "wp-json" ) );
+            echo "wp-super-cache config restored\n";
+        } else {
+            echo "wp-super-cache functions unavailable — skipped\n";
+        }
+    ' 2>&1 || echo "  ! wp-super-cache config restore failed (continuing)"
+    chown -R www-data:www-data \
+        /var/www/html/wp-content/plugins/wp-super-cache \
+        /var/www/html/wp-content/cache \
+        /var/www/html/wp-content/wp-cache-config.php \
+        /var/www/html/wp-content/advanced-cache.php 2>/dev/null || true
+
+    # AUD-042: keep the large hub option out of autoload on every environment
+    wp --allow-root --path=/var/www/html option set-autoload stretch_hub_aeo off >/dev/null 2>&1 || true
 
     CURRENT_SEED="$(wp --allow-root --path=/var/www/html option get stretch_seed_version 2>/dev/null || true)"
     if [ -n "${SEED_VERSION}" ] && [ "${CURRENT_SEED}" = "${SEED_VERSION}" ]; then

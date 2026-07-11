@@ -104,8 +104,7 @@ html, body { overflow-x: hidden; }
       ]);
       if ($grid_query->have_posts()) :
         while ($grid_query->have_posts()) : $grid_query->the_post();
-          $c_read = ceil(str_word_count(strip_tags(get_the_content())) / 250);
-          if ($c_read < 1) $c_read = 1;
+          $c_read = stretch_get_read_min(); // `_stretch_read_min` meta (AUD-029)
       ?>
         <article class="hub-card hub-reveal">
           <a href="<?php the_permalink(); ?>" class="hub-card-image">
@@ -186,14 +185,16 @@ if (!empty($spoke_slugs)) {
     wp_reset_postdata();
 }
 
-// All articles in category for the library
+// Articles in category for the library — capped at 24 newest (AUD-029;
+// was posts_per_page=-1, growing the page linearly with content).
 $all_articles = new WP_Query([
     'post_type'      => 'post',
-    'posts_per_page' => -1,
+    'posts_per_page' => 24,
     'cat'            => $cat_id,
     'post_status'    => 'publish',
     'orderby'        => 'date',
     'order'          => 'DESC',
+    'no_found_rows'  => true,
 ]);
 $sticky_posts = get_option('sticky_posts');
 ?>
@@ -300,7 +301,7 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .hub-toc {
   position: fixed;
-  left: max(20px, calc((100vw - 780px) / 2 - 280px));
+  left: max(20px, calc((100% - 780px) / 2 - 280px)); /* % of viewport excl. scrollbar (AUD-042) */
   top: 160px;
   width: 220px;
   max-height: calc(100vh - 200px);
@@ -1096,8 +1097,7 @@ html, body { overflow-x: hidden; }
       <?php
       if ($all_articles->have_posts()) :
         while ($all_articles->have_posts()) : $all_articles->the_post();
-          $c_read = ceil(str_word_count(strip_tags(get_the_content())) / 250);
-          if ($c_read < 1) $c_read = 1;
+          $c_read = stretch_get_read_min(); // `_stretch_read_min` meta (AUD-029)
           $is_sticky = in_array(get_the_ID(), (array)$sticky_posts) ? 'true' : 'false';
       ?>
         <article class="hub-lib-card hub-reveal"
