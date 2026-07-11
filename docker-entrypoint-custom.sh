@@ -36,54 +36,79 @@ fi
 mkdir -p /run/mysqld
 chown mysql:mysql /run/mysqld
 
+# ── Survivability boundary ─────────────────────────────────────────────
+# Everything below must NEVER kill PID 1: a failed seed, auth mismatch, or a
+# slow InnoDB crash-recovery should degrade the site, not crash-loop the
+# container (learned the hard way in production — repeated OOM kills left
+# recovery slower than the old 60s timeout, and `set -e` turned every hiccup
+# into a restart storm).
+set +e
+
 # Start MySQL in background
 echo "Starting MySQL..."
 mysqld --user=mysql --datadir=/data/mysql --socket=/run/mysqld/mysqld.sock --port=3306 &
 
-# Wait for MySQL to be ready
-echo "Waiting for MySQL to be ready..."
-for i in $(seq 1 60); do
-    if mysqladmin ping --socket=/run/mysqld/mysqld.sock --silent 2>/dev/null; then
-        echo "MySQL is ready."
-        break
+# Wait for MySQL to be ready — InnoDB crash recovery after an unclean shutdown
+# can take minutes; give it 180s, then one restart attempt, then proceed
+# regardless (Apache will serve a DB-error page, but the container stays alive
+# and the next health cycle retries instead of hard-looping).
+wait_for_mysql() {
+    local budget=$1
+    for i in $(seq 1 "$budget"); do
+        if mysqladmin ping --socket=/run/mysqld/mysqld.sock --silent 2>/dev/null; then
+            return 0
+        fi
+        sleep 1
+    done
+    return 1
+}
+echo "Waiting for MySQL to be ready (up to 180s)..."
+if wait_for_mysql 180; then
+    echo "MySQL is ready."
+else
+    echo "WARNING: MySQL not ready after 180s — restarting mysqld once..."
+    mysqld --user=mysql --datadir=/data/mysql --socket=/run/mysqld/mysqld.sock --port=3306 &
+    if wait_for_mysql 120; then
+        echo "MySQL is ready after restart."
+    else
+        echo "ERROR: MySQL still not ready — continuing so the container stays alive for inspection."
     fi
-    if [ $i -eq 60 ]; then
-        echo "MySQL failed to start."
-        exit 1
-    fi
-    sleep 1
-done
+fi
 
 # ── Root authentication probe (AUD-017) ──
 # Fresh installs authenticate root passwordless over the socket (unix_socket auth);
 # once MYSQL_ROOT_PASSWORD has been applied it also works with the password.
+# Never fatal: if neither works we skip user sync with a loud warning.
+MYSQL_ROOT_OK=0
 MYSQL_ROOT_ARGS=(--socket=/run/mysqld/mysqld.sock -u root)
-if ! mysqladmin "${MYSQL_ROOT_ARGS[@]}" status >/dev/null 2>&1; then
-    if [ -n "${MYSQL_ROOT_PASSWORD}" ] && mysqladmin "${MYSQL_ROOT_ARGS[@]}" -p"${MYSQL_ROOT_PASSWORD}" status >/dev/null 2>&1; then
-        MYSQL_ROOT_ARGS+=(-p"${MYSQL_ROOT_PASSWORD}")
-    else
-        echo "ERROR: unable to authenticate to MySQL as root."
-        exit 1
-    fi
+if mysqladmin "${MYSQL_ROOT_ARGS[@]}" status >/dev/null 2>&1; then
+    MYSQL_ROOT_OK=1
+elif [ -n "${MYSQL_ROOT_PASSWORD}" ] && mysqladmin "${MYSQL_ROOT_ARGS[@]}" -p"${MYSQL_ROOT_PASSWORD}" status >/dev/null 2>&1; then
+    MYSQL_ROOT_ARGS+=(-p"${MYSQL_ROOT_PASSWORD}")
+    MYSQL_ROOT_OK=1
+else
+    echo "WARNING: unable to authenticate to MySQL as root — skipping DB user sync this boot."
 fi
 
-# Create WordPress database and user. ALTER USER keeps the app user's password in
-# sync with WORDPRESS_DB_PASSWORD even when the user already exists (migration
-# from the old hardcoded 'wordpress' password to a Render-generated secret).
-mysql "${MYSQL_ROOT_ARGS[@]}" <<-EOSQL
-    CREATE DATABASE IF NOT EXISTS wordpress;
-    CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
-    ALTER USER 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
-    GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
-    FLUSH PRIVILEGES;
-EOSQL
-echo "Database ready."
+if [ "${MYSQL_ROOT_OK}" -eq 1 ]; then
+    # Create WordPress database and user. ALTER USER keeps the app user's password
+    # in sync with WORDPRESS_DB_PASSWORD even when the user already exists
+    # (migration from the old hardcoded 'wordpress' password to a Render secret).
+    mysql "${MYSQL_ROOT_ARGS[@]}" <<-EOSQL || echo "WARNING: DB/user sync failed (continuing)."
+	CREATE DATABASE IF NOT EXISTS wordpress;
+	CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
+	ALTER USER 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
+	GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
+	FLUSH PRIVILEGES;
+	EOSQL
+    echo "Database ready."
 
-# Apply the root password when configured (idempotent). The entrypoint itself keeps
-# access via unix_socket auth as the root OS user, so this cannot lock us out.
-if [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
-    mysql "${MYSQL_ROOT_ARGS[@]}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; FLUSH PRIVILEGES;" \
-        || echo "Warning: could not set MySQL root password (continuing)."
+    # Apply the root password when configured (idempotent). unix_socket auth keeps
+    # the entrypoint's own access working either way.
+    if [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
+        mysql "${MYSQL_ROOT_ARGS[@]}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; FLUSH PRIVILEGES;" \
+            || echo "Warning: could not set MySQL root password (continuing)."
+    fi
 fi
 
 # Set WordPress environment (the official image's wp-config.php reads these via
