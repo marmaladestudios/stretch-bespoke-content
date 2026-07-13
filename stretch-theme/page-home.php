@@ -294,8 +294,7 @@ html, body { overflow-x: hidden; }
             <li>Social Media &amp; Design</li>
             <li>Paid Advertising</li>
           </ul>
-          <?php // AUD-036: interim target until the Local Service Providers industry page ships. ?>
-          <a href="/contact-stretch-creative/" class="home-ind-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="/industries/service-providers/" class="home-ind-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
 
@@ -317,8 +316,7 @@ html, body { overflow-x: hidden; }
             <li>Graphic Design</li>
             <li>SEO Content Strategy</li>
           </ul>
-          <?php // AUD-036: interim target until the SaaS industry page ships. ?>
-          <a href="/contact-stretch-creative/" class="home-ind-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="/industries/saas/" class="home-ind-link">Learn More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
     </div>
