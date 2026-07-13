@@ -56,7 +56,7 @@ $stretch_page_image_sources = [
  * Find an attachment previously sideloaded from $url (deduped via meta),
  * or sideload it now. Returns attachment ID or 0 on failure.
  */
-function stretch_page_image_sideload($url, $title, $alt) {
+function stretch_page_image_sideload($url, $title, $alt, $bundle_key = '') {
     // Dedupe: was this exact source URL already imported by this script?
     $existing = get_posts([
         'post_type'   => 'attachment',
@@ -72,17 +72,39 @@ function stretch_page_image_sideload($url, $title, $alt) {
         return $id;
     }
 
-    $tmp = download_url($url, 60);
-    if (is_wp_error($tmp)) {
-        // One retry — the first production run failed on transient network
-        // contention during a crash-loop window and never got another chance.
-        WP_CLI::log("  … download failed ({$tmp->get_error_message()}), retrying once");
-        sleep(2);
-        $tmp = download_url($url, 60);
+    $tmp = null;
+
+    // Prefer the repo-bundled file (Unsplash is unreachable from Render egress).
+    if (!empty($bundle_key)) {
+        $bundle_dirs = ['/opt/page-images', dirname(ABSPATH) . '/page-images'];
+        foreach ($bundle_dirs as $dir) {
+            foreach (['jpg', 'jpeg', 'png', 'webp'] as $try_ext) {
+                $local = $dir . '/' . $bundle_key . '.' . $try_ext;
+                if (file_exists($local)) {
+                    $tmp_copy = wp_tempnam($bundle_key . '.' . $try_ext);
+                    if ($tmp_copy && copy($local, $tmp_copy)) {
+                        WP_CLI::log("  ✓ Using bundled file for '{$bundle_key}' ({$local})");
+                        $tmp = $tmp_copy;
+                        break 2;
+                    }
+                }
+            }
+        }
     }
-    if (is_wp_error($tmp)) {
-        WP_CLI::warning("Failed to download {$url}: " . $tmp->get_error_message());
-        return 0;
+
+    if (empty($tmp)) {
+        $tmp = download_url($url, 60);
+        if (is_wp_error($tmp)) {
+            // One retry — the first production run failed on transient network
+            // contention during a crash-loop window and never got another chance.
+            WP_CLI::log("  … download failed ({$tmp->get_error_message()}), retrying once");
+            sleep(2);
+            $tmp = download_url($url, 60);
+        }
+        if (is_wp_error($tmp)) {
+            WP_CLI::warning("Failed to download {$url}: " . $tmp->get_error_message());
+            return 0;
+        }
     }
 
     // Unsplash URLs carry no file extension — derive one from the real mime type.
@@ -130,7 +152,7 @@ foreach ($stretch_page_image_sources as $key => $src) {
         continue;
     }
 
-    $id = stretch_page_image_sideload($src['url'], $src['title'], $src['alt']);
+    $id = stretch_page_image_sideload($src['url'], $src['title'], $src['alt'], $key);
     if ($id) {
         $option[$key] = $id;
     } else {

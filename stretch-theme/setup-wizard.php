@@ -14,6 +14,14 @@ if (!defined('STRETCH_ALLOW_WIZARD') || !STRETCH_ALLOW_WIZARD) {
 @ini_set('max_execution_time', 300);
 @set_time_limit(300);
 
+// Wizard seed data lives outside the theme (AUD-030): /opt/wizard-data in the
+// production image, ../wizard-data relative to ABSPATH for local dev bind mounts.
+function stretch_wizard_data_dir() {
+    if (is_dir('/opt/wizard-data')) { return '/opt/wizard-data'; }
+    $local = dirname(ABSPATH) . '/wizard-data';
+    return is_dir($local) ? $local : '';
+}
+
 $step = isset($_GET['step']) ? intval($_GET['step']) : 0;
 
 // AUD-023: every step mutates state on a GET request — require a per-step nonce
@@ -56,7 +64,7 @@ if ($step === 1) {
     $pages = [
         ['Our Story',                       'about-stretch-creative',          'page-about.php'],
         ['Our Team',                        'the-team',                        'page-team.php'],
-        ['Solutions',                       'stretch-creative-solutions',      'page-solutions.php'],
+        ['Solutions',                       'stretch-creative-solutions',      'default'],
         ['Contact Stretch Creative',        'contact-stretch-creative',        'page-contact.php'],
         // Service pages — all use the shared page-service.php template
         ['Content Writing at Any Scale',    'content-writing-at-any-scale',    'page-service.php'],
@@ -663,8 +671,11 @@ if ($step === 1) {
     require_once ABSPATH . 'wp-admin/includes/file.php';
     require_once ABSPATH . 'wp-admin/includes/image.php';
 
-    $json_path = get_template_directory() . '/data/blog-posts.json';
-    if (!file_exists($json_path)) {
+    $wizard_data_dir = stretch_wizard_data_dir();
+    $json_path = $wizard_data_dir . '/blog-posts.json';
+    if ($wizard_data_dir === '') {
+        echo "✗ wizard-data not found — skipping seed<br>";
+    } elseif (!file_exists($json_path)) {
         echo "✗ data/blog-posts.json not found<br>";
     } else {
         $posts_data = json_decode(file_get_contents($json_path), true);
@@ -691,7 +702,7 @@ if ($step === 1) {
 
             $created = 0; $skipped = 0; $thumbs_ok = 0; $thumbs_fail = 0;
 
-            $thumbs_dir = get_template_directory() . '/data/thumbs';
+            $thumbs_dir = $wizard_data_dir . '/thumbs';
 
             foreach ($slice as $pd) {
                 if (empty($pd['slug']) || empty($pd['title'])) continue;

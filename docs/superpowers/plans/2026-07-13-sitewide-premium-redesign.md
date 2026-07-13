@@ -1802,3 +1802,80 @@ Mark the redesign shipped in the project docs (`docs/audits/...` execution-order
 1. **Spec coverage:** shared kit ✓(T1) home ✓(T2) industry template ✓(T4) 2 new pages ✓(T5) service copy ✓(T6) Visual page + anchors ✓(T7) BCE ✓(T8) nav+footer ✓(T9) GD/video redirects ✓(T10) About/Team ✓(T11) icons ✓(T2+T12) dead templates ✓(T3) noscript/reduced-motion ✓(T1) deploy ✓(T13) rollout ✓(T14). Spec's "Featured Work on industry pages" = explicitly out of scope (deferred with AUD-016). Spec's redirect list beyond GD/video (content-strategy etc.) = blocked on Cole (noted in T10).
 2. **Placeholder scan:** the `[COPY: keep existing]` blocks in T2 are carry-over instructions pointing at exact HEAD content, with a diff-verification step — not invented-content placeholders. Doc-line citations point at the in-repo `design-reference/copy-doc.md`. No TBDs remain.
 3. **Type consistency:** `stretch_pfx_logo_marquee($compact)` (T1) used in T2/T4 ✓; icon slugs defined in T4 = slugs used in T5 data ✓ (`wrench,heart,sparkle,shield,briefcase,storefront,map-pin,monitor,chart,graduation,globe,search,layout,book-open,camera,file-text,target` all exist in T4's library); `pfx-` class names consistent across T1/T2/T4/T9; option keys in T5 match T4's reads; anchor ids in T7 = hrefs in T9/T10 ✓.
+
+---
+
+### Task 15: Bundle page images into the repo; seed imports from disk (execute immediately after Task 2)
+
+**Files:**
+- Create: `page-images/` (repo root — 5 image files exported from the local media library)
+- Modify: `setup-page-images.php` (import from local disk instead of Unsplash), `Dockerfile` (`COPY page-images/ /opt/page-images/`)
+
+**Rationale:** Two production deploys failed the same 5 Unsplash downloads (retries included) — Unsplash is unreliable/blocked from Render egress. The images already exist in the LOCAL media library as attachments 3074-3078 with `_stretch_source_url` meta. Bundling the files removes the network dependency permanently.
+
+**Interfaces:**
+- Consumes: local attachments 3074-3078 (keys home_ecommerce, home_agencies, home_service_providers, home_saas, about_team in the `stretch_page_images` option).
+- Produces: `stretch_page_image_sideload()` reads `/opt/page-images/<key>.<ext>` (prod) or `<repo>/page-images/` resolved via `dirname(ABSPATH) . '/page-images'` fallback chain, then falls back to the original URL download only when no local file exists. Existing dedupe meta `_stretch_source_url` unchanged (value stays the original Unsplash URL so already-imported local attachments still match).
+
+- [ ] **Step 1: Export the 5 files from the local library into `page-images/`**
+
+```bash
+mkdir -p page-images
+docker compose exec -T wordpress wp eval '
+$map = ["home_ecommerce"=>3074,"home_agencies"=>3075,"home_service_providers"=>3076,"home_saas"=>3077,"about_team"=>3078];
+foreach ($map as $key => $id) { $p = get_attached_file($id); echo $key . "|" . $p . "|" . mime_content_type($p) . "\n"; }' --allow-root
+# For each line, docker compose cp the file out and rename to <key>.<ext by mime>:
+# docker compose cp wordpress:<path> page-images/<key>.<ext>
+ls -la page-images/   # expect 5 files, each > 20KB
+```
+If any attachment ID differs locally, resolve by option instead: `wp option get stretch_page_images --format=json --allow-root` and use those IDs.
+
+- [ ] **Step 2: Teach the seed to prefer disk**
+
+In `setup-page-images.php`, before the `download_url` call in `stretch_page_image_sideload()`, add:
+
+```php
+    // Prefer the repo-bundled file (Unsplash is unreachable from Render egress).
+    $bundle_dirs = ['/opt/page-images', dirname(ABSPATH) . '/page-images'];
+    foreach ($bundle_dirs as $dir) {
+        foreach (['jpg', 'jpeg', 'png', 'webp'] as $try_ext) {
+            $local = $dir . '/' . $bundle_key . '.' . $try_ext;
+            if (file_exists($local)) {
+                $tmp_copy = wp_tempnam($bundle_key . '.' . $try_ext);
+                if ($tmp_copy && copy($local, $tmp_copy)) {
+                    WP_CLI::log("  ✓ Using bundled file for '{$bundle_key}' ({$local})");
+                    $tmp = $tmp_copy;
+                    break 2;
+                }
+            }
+        }
+    }
+    if (empty($tmp)) {
+        $tmp = download_url($url, 60);
+        // ... existing retry + error handling unchanged
+    }
+```
+Thread `$bundle_key` into the function signature from the caller loop (`stretch_page_image_sideload($src['url'], $src['title'], $src['alt'], $key)`).
+
+- [ ] **Step 3: Dockerfile**
+
+After the existing COPY block: `COPY page-images/ /opt/page-images/`
+
+- [ ] **Step 4: Verify (must prove the no-network path)**
+
+```bash
+docker compose exec -T wordpress wp option delete stretch_page_images --allow-root
+docker compose exec -T wordpress wp eval '$ids=[3074,3075,3076,3077,3078]; foreach($ids as $i){ wp_delete_attachment($i, true);} echo "cleared\n";' --allow-root
+docker compose cp setup-page-images.php wordpress:/var/www/html/setup-page-images.php
+docker compose exec -T wordpress bash -c 'mkdir -p /tmp/pi'
+for f in page-images/*; do docker compose cp "$f" wordpress:/opt/page-images/$(basename "$f") 2>/dev/null || docker compose exec -T wordpress mkdir -p /opt/page-images && docker compose cp "$f" wordpress:/opt/page-images/$(basename "$f"); done
+docker compose exec -T wordpress wp eval-file /var/www/html/setup-page-images.php --allow-root
+```
+Expected: five `Using bundled file` lines, zero download attempts, option rewritten with five NEW attachment ids, `Success: All page images are local attachments.` Then `curl -s "http://localhost:8888/?t=$(date +%s)" | grep -c images.unsplash.com` → 0 and srcset present. Run eval-file again → all no-ops.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add page-images/ setup-page-images.php Dockerfile
+git commit -m "fix(seed): bundle page images in-repo; seed imports from disk (Unsplash unreachable from Render)"
+```

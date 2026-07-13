@@ -132,6 +132,23 @@ function stretch_legacy_blog_redirects() {
 }
 
 /**
+ * Graphic Design + Video pages merged into /visual-content-and-design/ (redesign
+ * Phase 3). Path-matched (not is_page) so the 301 survives unpublishing.
+ */
+add_action('template_redirect', 'stretch_redirect_merged_visual_pages', 1);
+function stretch_redirect_merged_visual_pages() {
+    $path = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    if (preg_match('#^/graphic_design_services(/|$)#', $path)) {
+        wp_safe_redirect(home_url('/visual-content-and-design/#graphic-design'), 301);
+        exit;
+    }
+    if (preg_match('#^/video-content-services(/|$)#', $path)) {
+        wp_safe_redirect(home_url('/visual-content-and-design/#photography-video'), 301);
+        exit;
+    }
+}
+
+/**
  * The Solutions page content is now the homepage. 301-redirect the retired
  * /stretch-creative-solutions/ URL to the site root.
  */
@@ -577,11 +594,13 @@ function stretch_get_portfolio() {
  */
 function stretch_get_portfolio_for_service($slug) {
     $map = [
-        'content-writing-at-any-scale' => ['paperless-post', 'etsy', 'walgreens', 'grove-co', 'brixton-coors', 'reef-aerial'],
         'graphic_design_services'      => ['quickbooks', 'remitly'],
         'video-content-services'       => ['vicis', 'meyers-product', 'meyers-life', 'open-road', 'monster', 'nhl'],
         'paid-advertising'             => ['monster', 'nhl'],
-        // SEO + Content Strategy left empty — strip hides automatically
+        // Union of the former Graphic Design + Video Content pages' keys (Task 7)
+        'visual-content-and-design'    => ['quickbooks', 'remitly', 'vicis', 'meyers-product', 'meyers-life', 'open-road', 'monster', 'nhl'],
+        // Content Writing (replaced by Add-On Services, AUD-039) and SEO +
+        // Content Strategy left empty — strip hides automatically
     ];
     if (empty($map[$slug])) return [];
     $by_key = [];

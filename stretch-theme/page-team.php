@@ -368,7 +368,7 @@ html, body { overflow-x: hidden; }
     <div class="team-hero-content">
       <span class="v2-overline v2-reveal v2-delay-1">Our Team</span>
       <h1 class="v2-reveal v2-delay-2">Clever. Skilled. <span class="gradient-text">Inspired.</span></h1>
-      <p class="v2-subtitle v2-reveal v2-delay-3">We choose our creative teams carefully &mdash; hand-selecting talent that brings expertise, empathy, and enthusiasm to every project.</p>
+      <p class="v2-subtitle v2-reveal v2-delay-3">We choose our creative teams carefully — hand-selecting talent that brings expertise, empathy, and enthusiasm to every project.</p>
     </div>
   </div>
 
@@ -502,7 +502,7 @@ html, body { overflow-x: hidden; }
 <section class="v2-section team-cta" aria-label="Call to Action">
   <div class="v2-container">
     <h2 class="v2-reveal">Start Your Career with Stretch</h2>
-    <p class="v2-reveal v2-delay-1">We&rsquo;re always looking for talented writers, editors, and creatives who want to do meaningful work. Let&rsquo;s connect.</p>
+    <p class="v2-reveal v2-delay-1">We’re always looking for talented writers, editors, and creatives who want to do meaningful work. Let’s connect.</p>
     <a href="/contact-stretch-creative/" class="v2-btn-primary v2-reveal v2-delay-2">Apply Now &rarr;</a>
   </div>
 </section>
