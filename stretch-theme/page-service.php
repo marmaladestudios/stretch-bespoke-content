@@ -93,7 +93,7 @@ if (empty($stats)) {
 
 // Pull quote by slug
 $pull_quotes = [
-    'content-writing-at-any-scale' => 'Most content bottlenecks aren\'t a volume problem — they\'re <span class="svc-quote-accent">a quality problem.</span>',
+    'content-writing-at-any-scale' => 'Most content bottlenecks are <span class="svc-quote-accent">a quality problem</span>, not a volume issue.',
     'seo_content_strategy_services' => 'From enterprise audits to SEO-Lite — <span class="svc-quote-accent">you only pay for what you need.</span>',
     'graphic_design_services' => 'Design is not decoration. It is <span class="svc-quote-accent">communication, trust, and brand equity</span> made visible.',
     'video-content-services' => 'Every frame tells a story. We make sure <span class="svc-quote-accent">yours is unforgettable.</span>',
