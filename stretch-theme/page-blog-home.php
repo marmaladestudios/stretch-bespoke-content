@@ -54,7 +54,7 @@ if (!function_exists('stretch_blog_hub_icon')) {
             'content-marketing' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6h18l8 8v22a2 2 0 0 1-2 2H14a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M30 6v8h8"/><path d="M18 22h12"/><path d="M18 28h12"/><path d="M18 34h8"/></svg>',
 
             // SEO: magnifier with connection nodes inside
-            'seo' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="12"/><path d="m29 29 11 11"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="25" cy="17" r="1.3" fill="currentColor" stroke="none"/><circle cx="22" cy="25" r="1.3" fill="currentColor" stroke="none"/><path d="M15 16 20 20 25 17 22 25 15 16" stroke-width="1"/></svg>',
+            'seo' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
 
             // Ecommerce: storefront with awning
             'ecommerce' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18h32l-2 22H10Z"/><path d="M8 18v-4l4-6h24l4 6v4"/><path d="M12 8h24"/><path d="M18 28a6 6 0 0 0 12 0"/></svg>',
@@ -66,7 +66,7 @@ if (!function_exists('stretch_blog_hub_icon')) {
             'video-content' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="24" height="24" rx="2"/><path d="m16 19 8 5-8 5z" fill="currentColor" stroke="none"/><path d="M34 19c2 2 2 10 0 12"/><path d="M38 15c4 3 4 15 0 18"/></svg>',
 
             // Creative Dojo: concentric rings with brush curve (aikido-inspired)
-            'creative-dojo' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="15"/><path d="M12 22c5-5 15 9 23 3" stroke-width="1.8"/><circle cx="24" cy="24" r="2" fill="currentColor" stroke="none"/><circle cx="12" cy="22" r="1.3" fill="currentColor" stroke="none"/><circle cx="35" cy="25" r="1.3" fill="currentColor" stroke="none"/></svg>',
+            'creative-dojo' => '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>',
         ];
         return $icons[$slug] ?? $icons['content-marketing'];
     }

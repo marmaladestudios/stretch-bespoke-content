@@ -1408,7 +1408,7 @@ html, body { overflow-x: hidden; }
         <div class="audience-card reveal reveal-delay-2">
           <div class="audience-icon">
             <!-- Flag/plant: own a topic -->
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 42L22 12l8 14 4-6 10 22z"/><path d="M22 12v-8"/><path d="M22 4h10l-3 3.5 3 3.5H22"/><circle cx="22" cy="4" r="0.6" fill="currentColor" stroke="none"/></svg>
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
           </div>
           <p>Teams that want to own a topic in organic search — not just rank for a few keywords</p>
         </div>
@@ -1611,7 +1611,7 @@ html, body { overflow-x: hidden; }
           <div class="trio-sub">Interactive tools</div>
         </div>
         <div class="trio-item">
-          <div class="trio-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4l18 20-18 20L6 24z"/><path d="M24 16l2.5 5 5.5 1-4 4 1 5-5-2.5-5 2.5 1-5-4-4 5.5-1z" stroke-width="1.3"/></svg></div>
+          <div class="trio-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg></div>
           <div class="trio-label">Part Brand Experience</div>
           <div class="trio-sub">Strategic design</div>
         </div>
@@ -1723,7 +1723,7 @@ html, body { overflow-x: hidden; }
           <p>Original video production, data visualizations, or infographics woven into the experience.</p>
         </div>
         <div class="feature-card reveal reveal-delay-5">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h36l-12 14v16l-12-6V22z"/><circle cx="36" cy="34" r="5"/><path d="M34 34h4M36 32v4" stroke-opacity="0.6"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
           <h3>Conversion Architecture</h3>
           <p>Strategic CTAs, lead capture, and user journeys designed to turn attention into action.</p>
         </div>
