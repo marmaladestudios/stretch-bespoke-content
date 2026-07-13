@@ -21,18 +21,19 @@ function stretch_menu_rebuild($menu_name, $location, array $items) {
     }
     if (is_wp_error($menu_id)) { WP_CLI::error("Menu {$menu_name}: " . $menu_id->get_error_message()); }
 
-    $add = function ($menu_id, $title, $url, $parent = 0) {
+    $add = function ($menu_id, $title, $url, $parent = 0, $classes = '') {
         return wp_update_nav_menu_item($menu_id, 0, [
             'menu-item-title'     => $title,
             'menu-item-url'       => home_url($url),
             'menu-item-status'    => 'publish',
             'menu-item-parent-id' => $parent,
+            'menu-item-classes'   => $classes, // space-separated CSS classes (e.g. nav-cta button)
         ]);
     };
     foreach ($items as $item) {
-        $parent_id = $add($menu_id, $item['title'], $item['url']);
+        $parent_id = $add($menu_id, $item['title'], $item['url'], 0, $item['classes'] ?? '');
         foreach ($item['children'] ?? [] as $child) {
-            $add($menu_id, $child['title'], $child['url'], $parent_id);
+            $add($menu_id, $child['title'], $child['url'], $parent_id, $child['classes'] ?? '');
         }
     }
     $locations = get_theme_mod('nav_menu_locations', []);
@@ -56,12 +57,14 @@ $primary = [
         ['title' => 'Service Providers',         'url' => '/industries/service-providers/'],
         ['title' => 'SaaS & Digital Platforms',  'url' => '/industries/saas/'],
     ]],
-    ['title' => 'About Us', 'url' => '/about-stretch-creative/', 'children' => [
+    ['title' => 'About', 'url' => '/about-stretch-creative/', 'children' => [
         ['title' => 'Our Story', 'url' => '/about-stretch-creative/'],
         ['title' => 'Our Team',  'url' => '/the-team/'],
+        ['title' => 'Our Work',  'url' => '/our-work/'],
     ]],
-    ['title' => 'Our Work', 'url' => '/our-work/'],
-    ['title' => 'Blog',     'url' => '/blog/'],
+    ['title' => 'Blog',    'url' => '/blog/'],
+    // Contact renders as the right-aligned CTA button (theme.css .nav-links .nav-cta).
+    ['title' => 'Contact', 'url' => '/contact-stretch-creative/', 'classes' => 'nav-cta'],
 ];
 stretch_menu_rebuild('Primary Navigation', 'primary', $primary);
 
@@ -69,26 +72,36 @@ stretch_menu_rebuild('Primary Navigation', 'primary', $primary);
 // (inc/theme-setup.php register_nav_menus; footer.php renders each as a column
 // with wp_get_nav_menu_name() as the heading), so the site map's three footer
 // groupings map straight onto them without merging.
-stretch_menu_rebuild('Footer — Solutions', 'footer-1', [
+// The menu name doubles as the footer column heading (footer.php renders
+// wp_get_nav_menu_name), so these are the clean visible headings. Remove the
+// earlier "Footer — *" named menus so they don't linger orphaned in wp-admin.
+foreach (['Footer — Solutions', 'Footer — Industries', 'Footer — Company'] as $legacy) {
+    $obj = wp_get_nav_menu_object($legacy);
+    if ($obj) { wp_delete_nav_menu($obj->term_id); }
+}
+stretch_menu_rebuild('Solutions', 'footer-1', [
     ['title' => 'SEO/AEO Services',              'url' => '/seo_content_strategy_services/'],
     ['title' => 'Interactive Content Marketing', 'url' => '/services/bespoke-content-experience/'],
     ['title' => 'Content Writing',               'url' => '/content-writing-at-any-scale/'],
     ['title' => 'Visual Content & Design',       'url' => '/visual-content-and-design/'],
     ['title' => 'Paid Advertising',              'url' => '/paid-advertising/'],
 ]);
-stretch_menu_rebuild('Footer — Industries', 'footer-2', [
+stretch_menu_rebuild('Industries', 'footer-2', [
     ['title' => 'Ecommerce',                'url' => '/industries/ecommerce/'],
     ['title' => 'Agencies & Partners',      'url' => '/industries/agencies/'],
     ['title' => 'Service Providers',        'url' => '/industries/service-providers/'],
     ['title' => 'SaaS & Digital Platforms', 'url' => '/industries/saas/'],
 ]);
-stretch_menu_rebuild('Footer — Company', 'footer-3', [
+// Footer col 3 leads with the About group (Our Story / Our Team / Our Work) to
+// mirror the primary nav, then keeps Blog, Contact, and Pricing reachable in the
+// footer (a 3-column footer can't 1:1 mirror a 5-item nav; Pricing lives only here).
+stretch_menu_rebuild('About', 'footer-3', [
     ['title' => 'Our Story',  'url' => '/about-stretch-creative/'],
     ['title' => 'Our Team',   'url' => '/the-team/'],
     ['title' => 'Our Work',   'url' => '/our-work/'],
-    ['title' => 'Pricing',    'url' => '/pricing/'],
     ['title' => 'Blog',       'url' => '/blog/'],
-    ['title' => 'Contact Us', 'url' => '/contact-stretch-creative/'],
+    ['title' => 'Contact',    'url' => '/contact-stretch-creative/'],
+    ['title' => 'Pricing',    'url' => '/pricing/'],
 ]);
 
 WP_CLI::success('Menus rebuilt per site map.');

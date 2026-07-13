@@ -205,8 +205,23 @@ p:last-child { margin-bottom: 0; }
 }
 .nav-links a:hover { opacity: 0.8; }
 .nav-links a:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
-.nav-cta { padding: 10px 24px !important; font-size: 15px !important; }
+.nav-cta { font-size: 15px !important; }
 .nav-links .nav-cta { order: 999; margin-left: auto; }
+/* The Contact menu item renders as the primary CTA button. WordPress puts the
+   menu class on the <li>, so the button skin targets the inner <a>. */
+.nav-links .nav-cta > a {
+  background: var(--color-purple);
+  color: #fff !important;
+  padding: 11px 26px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.nav-links .nav-cta > a:hover {
+  background: var(--color-purple-hover);
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(133, 96, 168, 0.35);
+}
 
 /* Dropdown menus */
 .nav-links li { position: relative; }
