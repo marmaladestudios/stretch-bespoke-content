@@ -64,7 +64,7 @@ if ($step === 1) {
     $pages = [
         ['Our Story',                       'about-stretch-creative',          'page-about.php'],
         ['Our Team',                        'the-team',                        'page-team.php'],
-        ['Solutions',                       'stretch-creative-solutions',      'page-solutions.php'],
+        ['Solutions',                       'stretch-creative-solutions',      'default'],
         ['Contact Stretch Creative',        'contact-stretch-creative',        'page-contact.php'],
         // Service pages — all use the shared page-service.php template
         ['Content Writing at Any Scale',    'content-writing-at-any-scale',    'page-service.php'],
