@@ -72,7 +72,14 @@ function stretch_page_image_sideload($url, $title, $alt) {
         return $id;
     }
 
-    $tmp = download_url($url);
+    $tmp = download_url($url, 60);
+    if (is_wp_error($tmp)) {
+        // One retry — the first production run failed on transient network
+        // contention during a crash-loop window and never got another chance.
+        WP_CLI::log("  … download failed ({$tmp->get_error_message()}), retrying once");
+        sleep(2);
+        $tmp = download_url($url, 60);
+    }
     if (is_wp_error($tmp)) {
         WP_CLI::warning("Failed to download {$url}: " . $tmp->get_error_message());
         return 0;
@@ -139,7 +146,11 @@ if ($option !== $before) {
 }
 
 if ($failed) {
-    WP_CLI::warning("{$failed} image(s) could not be imported — templates will keep their Unsplash fallback for those keys.");
+    // Exit non-zero so the deploy seed gate does NOT record this run as complete
+    // and retries on the next boot (all seeds are idempotent no-ops once done).
+    // A plain warning here previously let a transient failure seal the gate with
+    // Unsplash fallbacks still live on the homepage.
+    WP_CLI::error("{$failed} image(s) could not be imported — templates keep their Unsplash fallback; seed will retry next boot.");
 } else {
     WP_CLI::success('All page images are local attachments.');
 }
