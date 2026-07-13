@@ -75,25 +75,60 @@ else
     fi
 fi
 
-# ── Root authentication probe (AUD-017) ──
-# Fresh installs authenticate root passwordless over the socket (unix_socket auth);
-# once MYSQL_ROOT_PASSWORD has been applied it also works with the password.
-# Never fatal: if neither works we skip user sync with a loud warning.
-MYSQL_ROOT_OK=0
+# ── Root authentication + credential self-heal (AUD-017) ──
+# root authenticates passwordless over the local socket. We deliberately DO NOT
+# set a root password: the socket is localhost-only (never network-exposed), and
+# keeping root reachable over it means the entrypoint can ALWAYS resync the app
+# user's password. Setting a root password from a Render-generated env value is
+# what took production down — when that value drifted from the password stored on
+# the persistent MySQL disk, root auth failed, the app-user resync was skipped,
+# and WordPress could no longer connect (500 "Error establishing a database
+# connection"). Root-over-socket + always-resync makes that lockout unrecoverable
+# state impossible.
 MYSQL_ROOT_ARGS=(--socket=/run/mysqld/mysqld.sock -u root)
+MYSQL_ROOT_OK=0
 if mysqladmin "${MYSQL_ROOT_ARGS[@]}" status >/dev/null 2>&1; then
     MYSQL_ROOT_OK=1
 elif [ -n "${MYSQL_ROOT_PASSWORD}" ] && mysqladmin "${MYSQL_ROOT_ARGS[@]}" -p"${MYSQL_ROOT_PASSWORD}" status >/dev/null 2>&1; then
     MYSQL_ROOT_ARGS+=(-p"${MYSQL_ROOT_PASSWORD}")
     MYSQL_ROOT_OK=1
-else
-    echo "WARNING: unable to authenticate to MySQL as root — skipping DB user sync this boot."
+fi
+
+# Self-heal: if root auth failed, the disk holds a root password we can't
+# reproduce. Reset credentials via mysqld --init-file (runs the SQL as superuser
+# at startup, before the grant tables gate connections — the textbook, no
+# auth-bypass-window way to reset MySQL/MariaDB passwords). Passwords come from
+# this boot's variables, so WordPress and MySQL are guaranteed consistent after.
+if [ "${MYSQL_ROOT_OK}" -eq 0 ]; then
+    echo "WARNING: root auth failed — self-healing MySQL credentials via --init-file..."
+    RESET_SQL=/run/mysqld/reset-credentials.sql
+    cat > "${RESET_SQL}" <<-EOSQL
+	ALTER USER 'root'@'localhost' IDENTIFIED BY '';
+	CREATE DATABASE IF NOT EXISTS wordpress;
+	CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
+	ALTER USER 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
+	GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
+	FLUSH PRIVILEGES;
+	EOSQL
+    chown mysql:mysql "${RESET_SQL}" 2>/dev/null || true
+    # Stop the running mysqld (root auth is broken, so no graceful mysqladmin).
+    pkill -x mysqld 2>/dev/null || kill "$(pidof mysqld)" 2>/dev/null || true
+    for i in $(seq 1 30); do mysqladmin ping --socket=/run/mysqld/mysqld.sock --silent 2>/dev/null || break; sleep 1; done
+    # Restart with the reset init-file applied.
+    mysqld --user=mysql --datadir=/data/mysql --socket=/run/mysqld/mysqld.sock --port=3306 --init-file="${RESET_SQL}" &
+    if wait_for_mysql 180; then
+        echo "MySQL credentials reset — root now reachable over socket."
+        MYSQL_ROOT_ARGS=(--socket=/run/mysqld/mysqld.sock -u root)
+        MYSQL_ROOT_OK=1
+    else
+        echo "ERROR: MySQL did not come back after credential reset — container stays alive for inspection."
+    fi
+    rm -f "${RESET_SQL}" 2>/dev/null || true
 fi
 
 if [ "${MYSQL_ROOT_OK}" -eq 1 ]; then
-    # Create WordPress database and user. ALTER USER keeps the app user's password
-    # in sync with WORDPRESS_DB_PASSWORD even when the user already exists
-    # (migration from the old hardcoded 'wordpress' password to a Render secret).
+    # Create the DB + app user and keep the app-user password in sync with
+    # WORDPRESS_DB_PASSWORD (the value WordPress itself uses this boot).
     mysql "${MYSQL_ROOT_ARGS[@]}" <<-EOSQL || echo "WARNING: DB/user sync failed (continuing)."
 	CREATE DATABASE IF NOT EXISTS wordpress;
 	CREATE USER IF NOT EXISTS 'wordpress'@'localhost' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
@@ -103,12 +138,11 @@ if [ "${MYSQL_ROOT_OK}" -eq 1 ]; then
 	EOSQL
     echo "Database ready."
 
-    # Apply the root password when configured (idempotent). unix_socket auth keeps
-    # the entrypoint's own access working either way.
-    if [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
-        mysql "${MYSQL_ROOT_ARGS[@]}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; FLUSH PRIVILEGES;" \
-            || echo "Warning: could not set MySQL root password (continuing)."
-    fi
+    # Ensure root has NO password so future boots always get in over the socket
+    # (clears any lingering password from an older AUD-017 build). Non-fatal.
+    mysql "${MYSQL_ROOT_ARGS[@]}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY ''; FLUSH PRIVILEGES;" 2>/dev/null \
+        && MYSQL_ROOT_ARGS=(--socket=/run/mysqld/mysqld.sock -u root) \
+        || echo "Note: could not clear root password (continuing)."
 fi
 
 # Set WordPress environment (the official image's wp-config.php reads these via
