@@ -959,10 +959,20 @@ $new_page_titles = [
     'visual-content-and-design' => 'Visual Content & Design',
 ];
 
+// Retired pages: content merged into visual-content-and-design and 301-redirected
+// (see functions.php ~line 141). Their $services entries stay above only to feed
+// the combined page's FAQ merge — never (re)create or template-touch these pages.
+$retired_slugs = ['graphic_design_services', 'video-content-services'];
+
 foreach ($services as $slug => $data) {
     // Save option
     update_option('stretch_service_' . $slug, $data, false);
     if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Saved option: stretch_service_{$slug}"); } else { echo "Saved option: stretch_service_{$slug}" . "\n"; }
+
+    if (in_array($slug, $retired_slugs, true)) {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Skipped page create/template for retired slug: {$slug} (301s in functions.php)"); } else { echo "Skipped page create/template for retired slug: {$slug} (301s in functions.php)" . "\n"; }
+        continue;
+    }
 
     // Find the page by slug and set its template
     $page = get_page_by_path($slug);

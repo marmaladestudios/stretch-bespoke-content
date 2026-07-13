@@ -139,4 +139,27 @@ if (!$home_page) {
     if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ Home page (ID {$home_page->ID}) → page-home.php; front page set"); } else { echo "  ✓ Home page (ID {$home_page->ID}) → page-home.php; front page set" . "\n"; }
 }
 
+// --------------------------------------------------------------------
+// FIX 4 — Draft retired graphic-design/video-content pages (final-review I-1)
+// setup-services.php no longer creates these on fresh installs, but existing
+// production DBs still have them published from before the merge into
+// visual-content-and-design (301s live in functions.php ~line 141). Draft them
+// here so any install — fresh or existing — ends up in the same state.
+// --------------------------------------------------------------------
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Drafting retired GD/Video pages ==="); } else { echo "\n=== Drafting retired GD/Video pages ===" . "\n"; }
+$retired_page_slugs = ['graphic_design_services', 'video-content-services'];
+foreach ($retired_page_slugs as $slug) {
+    $retired_page = get_page_by_path($slug);
+    if (!$retired_page) {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ skip (not found): {$slug}"); } else { echo "  ○ skip (not found): {$slug}" . "\n"; }
+        continue;
+    }
+    if ($retired_page->post_status === 'publish') {
+        wp_update_post(['ID' => $retired_page->ID, 'post_status' => 'draft']);
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ drafted: {$retired_page->post_title} (ID {$retired_page->ID})"); } else { echo "  ✓ drafted: {$retired_page->post_title} (ID {$retired_page->ID})" . "\n"; }
+    } else {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ already {$retired_page->post_status} — no change needed: {$slug} (ID {$retired_page->ID})"); } else { echo "  ○ already {$retired_page->post_status} — no change needed: {$slug} (ID {$retired_page->ID})" . "\n"; }
+    }
+}
+
 if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('Content fixes complete.'); } else { echo 'Success: ' . 'Content fixes complete.' . "\n"; }
