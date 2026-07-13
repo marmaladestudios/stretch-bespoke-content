@@ -185,6 +185,7 @@ SEED_SCRIPTS=(
     /opt/setup-seo.php
     /opt/sideload-old-domain-images.php
     /opt/setup-page-images.php
+    /opt/setup-menus.php
 )
 SEED_VERSION="$(cat "${SEED_SCRIPTS[@]}" 2>/dev/null | sha256sum | awk '{print $1}')"
 
