@@ -210,23 +210,38 @@ p:last-child { margin-bottom: 0; }
 
 /* Dropdown menus */
 .nav-links li { position: relative; }
+/* Hover bridge: the panel sits translateY(8px) below the trigger; padding-bottom
+   on the parent li (offset by an equal negative margin so layout is unaffected)
+   keeps that gap inside the li's hoverable box so :hover doesn't drop moving
+   the mouse from link to panel. */
+.nav-links li.menu-item-has-children { padding-bottom: 14px; margin-bottom: -14px; }
+.nav-links li.menu-item-has-children > a::after {
+  content: ''; display: inline-block; width: 8px; height: 8px; margin-left: 7px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px); transition: transform 0.3s ease;
+}
+.nav-links li.menu-item-has-children:hover > a::after,
+.nav-links li.menu-item-has-children:focus-within > a::after { transform: rotate(225deg) translateY(-1px); }
 .nav-links .sub-menu {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(8px);
-  background: rgba(37, 44, 58, 0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  min-width: 260px;
+  background: rgba(26, 31, 46, 0.98);
   list-style: none;
-  padding: 12px 0;
-  min-width: 220px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
   z-index: 200;
+}
+.nav-links .sub-menu::before {
+  content: ''; position: absolute; top: 0; left: 14px; right: 14px; height: 2px;
+  border-radius: 2px; background: linear-gradient(90deg, #8560A8, #5674B9, #448CCB, #00BFF3);
 }
 .nav-links li:hover > .sub-menu,
 .nav-links li:focus-within > .sub-menu {
@@ -237,16 +252,18 @@ p:last-child { margin-bottom: 0; }
 .nav-links .sub-menu li { padding: 0; }
 .nav-links .sub-menu a {
   display: block;
-  padding: 10px 24px;
-  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: 9px;
+  font-size: 13.5px;
   color: rgba(255,255,255,0.75);
-  transition: color 0.2s, background 0.2s, padding-left 0.2s;
+  transition: background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
   white-space: nowrap;
 }
-.nav-links .sub-menu a:hover {
+.nav-links .sub-menu a:hover,
+.nav-links .sub-menu a:focus-visible {
   color: #fff;
-  background: rgba(133, 96, 168, 0.15);
-  padding-left: 28px;
+  background: rgba(133, 96, 168, 0.18);
+  padding-left: 22px;
   opacity: 1;
 }
 
