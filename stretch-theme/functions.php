@@ -577,11 +577,11 @@ function stretch_get_portfolio() {
  */
 function stretch_get_portfolio_for_service($slug) {
     $map = [
-        'content-writing-at-any-scale' => ['paperless-post', 'etsy', 'walgreens', 'grove-co', 'brixton-coors', 'reef-aerial'],
         'graphic_design_services'      => ['quickbooks', 'remitly'],
         'video-content-services'       => ['vicis', 'meyers-product', 'meyers-life', 'open-road', 'monster', 'nhl'],
         'paid-advertising'             => ['monster', 'nhl'],
-        // SEO + Content Strategy left empty — strip hides automatically
+        // Content Writing (replaced by Add-On Services, AUD-039) and SEO +
+        // Content Strategy left empty — strip hides automatically
     ];
     if (empty($map[$slug])) return [];
     $by_key = [];

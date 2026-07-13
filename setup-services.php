@@ -22,80 +22,113 @@ $services = [];
 $services['content-writing-at-any-scale'] = [
     // -------- Hero --------
     'headline'       => 'Content Writing at Any Scale',
-    'subheadline'    => 'Your voice, your brand, your story — publish-ready and on time, every time.',
-    'hero_text'      => "Whether you need five blog posts or five thousand product descriptions, we'll build you a dedicated team of writers who know your industry, speak your language, and deliver content that performs. No chasing. No rewrites. No compromises.",
-    'hero_cta_label' => "Let's Talk Content",
+    'subheadline'    => 'High-quality content solves problems.',
+    'hero_text'      =>     [
+        'Your audience is looking for helpful, trustworthy information to support their next steps. Google and AI-based search are prioritizing great content that explains offerings and answers questions in a clear, organized, and engaging way.',
+        'Stretch Creative creates content with purpose. We know how to build brand loyalty and credibility while guiding your readers ever closer to the bottom of the funnel.',
+    ],
+    'hero_cta_label' => 'Let’s Talk Content',
     'hero_cta_url'   => '/contact-stretch-creative/',
+
+    // -------- Props (stat pills, not counters) --------
+    'props' =>     [
+        'No Minimums',
+        'No Long-Term Contracts',
+        'Dedicated Writing Team',
+        'Editorial Visibility',
+    ],
 
     // -------- Problem --------
     'problem' => [
-        'overline'   => 'The Reality',
-        'heading'    => 'Sound Familiar?',
-        'subheading' => "Most content bottlenecks aren't a volume problem — they're a quality problem.",
-        'text'       => "You've got a content calendar, a strategy, and a backlog that never seems to shrink. What you don't have is a writing team that gets it — one that understands your brand, hits your deadlines, and produces work you can actually publish without spending half your day cleaning it up. Generic writers produce generic content. And generic content doesn't rank, doesn't convert, and doesn't sound remotely like you.",
+        'overline' => 'The Reality',
+        'heading'  => 'We’re in strange times.',
+        'text'     =>             [
+                'Search is changing faster than businesses can keep up.',
+                'Traditional SEO is still central to getting discovered, but it’s no longer the only way people will find you online. AI-powered search experiences are changing how users ask questions, evaluate answers, and interact with websites, leaving many businesses wondering how to maintain visibility as AI becomes more prevalent in search.',
+                'The good news? The fundamentals haven’t changed—along with strong technical SEO and a well-structured website, your best bet for capturing organic traffic online is to publish helpful, optimized content.',
+            ],
     ],
 
     // -------- Solution --------
     'solution' => [
-        'overline'   => 'The Solution',
-        'heading'    => 'Publish-Ready Content, Built Around You',
-        'subheading' => "We're not a content mill — we're an extension of your team.",
-        'text'       => "Stretch Creative partners with in-house marketing teams, SEO agencies, ecommerce brands, and publishers to produce content that's accurate, on-brand, and built to perform. We handle the briefs, the writing, the editing, and the delivery — so you can focus on strategy, not copy-editing someone else's work.",
-        'cta_label'  => 'Get in Touch',
-        'cta_url'    => '/contact-stretch-creative/',
+        'overline'  => 'The Solution',
+        'heading'   => 'We’re your strategic content-writing partner',
+        'text'      => 'If your business works with freelance writers, faceless agencies, or content mills, we’re betting the results are hit-and-miss—mostly miss. If the writers producing your content don’t understand your brand, audience, or goals, the results are bound to be inconsistent and disconnected from your bigger picture. And if you don’t know who your writers are, how can you be sure they’re human?',
+        'cta_label' => 'Get in Touch',
+        'cta_url'   => '/contact-stretch-creative/',
+        'points' =>             [
+                ['title' => 'We produce quality content at high volumes.', 'body' => 'Most content bottlenecks are a quality problem, not a volume issue. With a tight-knit, properly trained writing team, strong editorial oversight, and a world-class production workflow, large volumes of content can be cohesive, consistent, and well-written.'],
+                ['title' => 'We maintain consistent style and brand voice across assets.', 'body' => 'When you work with Stretch Creative, you work with a dedicated team of content professionals who get to know your audience, brand voice, and business goals. Content that flows from those foundations outperforms the rest every time.'],
+                ['title' => 'Everything we produce is AEO- and SEO-optimized.', 'body' => 'Agency-wide, Stretch Creative is plugged into the latest Google Updates and SEO/AEO best practices for content that ranks. Search may be changing, but accurate, helpful, and engaging written assets will always perform.'],
+                ['title' => 'We value accuracy and integrity.', 'body' => 'There’s a lot of terrible content on the Internet, and we’re committed to adding only words that bring value to the mix. Our editorial team is diligent about fact-checking and writing genuinely useful content that helps our fellow humans solve problems. No slop, no fluff.'],
+                ['title' => 'We hand-pick writers based on their expertise.', 'body' => 'Not every writer excels at every content type or writes knowledgably on all topics. We know every one of our writers, their areas of expertise, and what types of content they crush every time. Whatever content you need, we’ll handpick the perfect team.'],
+            ],
     ],
 
     // -------- Capabilities (Offerings) --------
     'offerings_overline'   => 'Capabilities',
     'offerings_heading'    => 'What We Write',
-    'offerings_subheading' => 'From a single landing page to a thousand product descriptions — we do it all.',
-    'offerings_intro'      => "Our writers are specialists, not generalists. We'll match you with a cohort that has real industry experience and a genuine grasp of your audience.",
-    'offerings' => [
-        ['title' => 'Blog articles & thought leadership', 'description' => "Helpful, well-researched, and written to rank. From how-to's and listicles to long-form guides and opinion pieces."],
-        ['title' => 'Buying guides',                     'description' => 'The perfect balance of editorial romance and practical information, built to inspire confidence and drive decisions.'],
-        ['title' => 'Product descriptions',              'description' => 'Engaging, accurate, and on-brand copy that earns the ADD TO CART.'],
-        ['title' => 'Product listing pages',             'description' => 'Category copy that educates, guides, and converts at every funnel stage.'],
-        ['title' => 'Ebooks & white papers',             'description' => 'Authoritative, well-structured gated content that establishes expertise and captures leads.'],
-        ['title' => 'Email & social content',            'description' => 'Copy people actually open, read, and act on.'],
-        ['title' => 'Google Ads, banners & landing pages', 'description' => 'Ads and the pages they lead to, written together and dialed in to perform.'],
-        ['title' => 'Website copy',                      'description' => "Clear, compelling, and optimized — whether you're starting from scratch or refreshing what's there."],
-        ['title' => 'User-generated content',            'description' => 'First-person, authentic UGC written by experienced writers who know how to make it land.'],
-        ['title' => 'Expert-written & E-E-A-T content',  'description' => 'For YMYL topics that need a credentialed byline and the authority to back it up.'],
+    'offerings_intro'      => 'Stretch Creative delivers whatever types of content you need, on brand, on time, and publish-ready.',
+    'offerings' =>     [
+        ['title' => 'Blog articles', 'description' => 'Educational, informative, inspirational, and search-optimized articles designed to answer questions and attract qualified audiences.'],
+        ['title' => 'Buying guides', 'description' => 'The perfect balance of editorial romance and practical information, built to inspire confidence and drive buying decisions.'],
+        ['title' => 'Product & category page content', 'description' => 'Product descriptions and helpful category page copy that help shoppers at every stage of the funnel evaluate and compare products.'],
+        ['title' => 'Service, industry, and location pages', 'description' => 'Informative location-, industry-, or service-specific content designed to support local visibility and help potential customers understand your services.'],
+        ['title' => 'Ebooks & white papers', 'description' => 'Authoritative long-form resources that establish expertise, educate audiences, and capture leads.'],
+        ['title' => 'Email & social content', 'description' => 'Audience-focused social media content and email campaigns that strengthen relationships, support broader marketing initiatives, and keep your brand top of mind.'],
+        ['title' => 'Google Ads, banners, and landing pages', 'description' => 'Snappy, optimized ads, banners, and the pages they lead to, written together and dialed in to perform.'],
+        ['title' => 'Website copy', 'description' => 'Clear, compelling, and SEO- and AEO-optimized copy for your homepage, landing pages, and supporting website content.'],
+        ['title' => 'User-generated content', 'description' => 'Authentic first-person UGC, created by clever, experienced writers who know how to make it land.'],
+        ['title' => 'Expert-written & expert-reviewed content', 'description' => 'Content for YMYL topics like healthcare, finance, technology, and other industries where trust, accuracy, subject-matter expertise, and an expert byline are critical.'],
+        ['title' => 'Thought leadership', 'description' => 'Expert articles, executive bylines, and other content that help your organization share expertise, build trust, and establish authority within your industry.'],
+        ['title' => 'Case studies', 'description' => 'Engaging customer stories and success narratives that demonstrate results and build trust and credibility.'],
+        ['title' => 'Optimizations and rewrites', 'description' => 'Blog articles, category pages, landing pages, and other website content can go stale after a while. We can optimize or rewrite existing content to improve visibility.'],
+    ],
+
+    // -------- Add-On Services (replaces Selected Work strip) --------
+    'addons_heading' => 'Add-On Services',
+    'addons' =>     [
+        ['title' => 'SEO + Editorial', 'description' => 'SEO keyword research, topic ideation, content strategy, content briefs'],
+        ['title' => 'Budget Management', 'description' => 'Coordinated production oversight and budget tracking'],
+        ['title' => 'Content Loading', 'description' => 'Formatting, uploading, publishing, and QA support within your content management system.'],
+    ],
+
+    // -------- Cross-sell CTA --------
+    'cross_cta' =>     [
+        'heading' => 'Need more than written content?',
+        'body'    => 'We’re a full-scale agency offering all of the services you need to work smarter and rank higher.',
+        'links'   => [
+            ['label' => 'SEO/AEO Services', 'url' => '/seo_content_strategy_services/'],
+            ['label' => 'Interactive Content Marketing', 'url' => '/services/bespoke-content-experience/'],
+            ['label' => 'Visual Content & Design', 'url' => '/visual-content-and-design/'],
+            ['label' => 'Paid Advertising', 'url' => '/paid-advertising/'],
+        ],
     ],
 
     // -------- Process (How It Works) --------
     'process' => [
-        'overline'   => 'Process',
-        'heading'    => 'How It Works',
-        'subheading' => 'A collaborative process designed to get better with every piece we produce.',
-        'intro'      => "Great content doesn't come from sending briefs into a void. It comes from a process that's built around your brand — and a team that's invested in getting it right.",
-        'steps' => [
-            ['title' => 'Consultation',         'description' => 'We start with a conversation. We want to understand your goals, your audience, your pain points, and what "great" looks like for you.'],
-            ['title' => 'Brief & style guide',  'description' => 'We document everything: your brand voice, tone, formatting preferences, off-limits topics, and must-haves. This becomes the north star for your entire cohort.'],
-            ['title' => 'Curate your team',     'description' => "We hand-select writers with experience in your industry. You're welcome to meet them."],
-            ['title' => 'Calibrate',            'description' => 'Before we scale, we write a handful of pieces and pressure-test the process. We gather your feedback, make adjustments, and get everything dialed in.'],
-            ['title' => 'Create',               'description' => 'Production begins. Your dedicated project manager oversees the workflow and keeps everything on track, on time, and on brand.'],
-            ['title' => 'Deliver & report',     'description' => 'You receive publish-ready content. We review performance with you regularly and keep refining — because good gets better.'],
-        ],
+        'overline' => 'Process',
+        'heading'  => 'How We Work',
+        'intro'    =>             [
+                'You can’t send a content brief into the void and expect great content to come back.',
+                'Our collaborative process sets us apart from other content agencies, and it’s what enables us to produce stellar work that lightens your editing load and removes uncertainties around quality and consistency.',
+            ],
+        'steps' =>             [
+                ['title' => 'Consultation', 'description' => 'We start with a conversation between your team and our client services and editorial teams. Producing effective content starts with understanding your goals, your audience, your pain points, and what "great" work looks like for you.'],
+                ['title' => 'Editorial selection', 'description' => 'We hand-select writers with the right experience for your content (you’re welcome to meet them). The team lead creates an internal style guide for your brand, including audience information, purpose, and formatting preferences, and trains the writers.'],
+                ['title' => 'Calibration', 'description' => 'Before we move into full production, we write a handful of pieces and pressure-test the process. We gather your feedback, make adjustments, and get everything dialed in.'],
+                ['title' => 'Full-scale production', 'description' => 'With your writing cohort trained and practiced, and your feedback documented and communicated, we move into full production. Two rounds of revisions are always included, but once we’re up and running, they’re not usually necessary.'],
+                ['title' => 'Ongoing collaboration', 'description' => 'Scheduled bi-weekly or monthly touch-base meetings provide an opportunity for us to get feedback, discuss emerging needs, and stay in the loop on projects coming down the pipeline. The relationship we build with your team is critical to our success.'],
+            ],
     ],
 
     // -------- Why Stretch / Benefits --------
-    'why_heading' => 'Why Stretch Creative',
-    'why_intro'   => "Quality doesn't take a back seat when volume goes up. A lot of agencies promise scale. Fewer can promise quality at scale. At Stretch, the two aren't in conflict — they're the whole point.",
-    'benefits' => [
-        ['title' => 'Dedicated cohorts',         'description' => "Your writers aren't shared across dozens of clients. They're yours, and they'll know your brand as well as you do."],
-        ['title' => 'Industry-matched writers',  'description' => "We don't assign random generalists. We find writers with genuine expertise in your space, so the content is authoritative from day one."],
-        ['title' => 'Consistent quality',        'description' => 'Our internal editorial process means every piece that lands in your inbox is ready to publish — not ready to be fixed.'],
-        ['title' => 'A single point of contact', 'description' => 'One dedicated project manager oversees everything, keeps communication clean, and makes sure nothing slips through the cracks.'],
-        ['title' => 'No monthly minimums',       'description' => "Scale up, scale down, or maintain a steady rhythm. We'll match your pace."],
-    ],
-
-    // -------- Stats --------
-    'stats' => [
-        ['label' => 'Writers',          'value' => '200',          'suffix' => '+'],
-        ['label' => 'Minimums',         'value' => 'No Minimums',  'suffix' => ''],
-        ['label' => 'Industries',       'value' => '10',           'suffix' => '+'],
-        ['label' => 'On-Time Delivery', 'value' => '98',           'suffix' => '%'],
+    'why_heading' => 'Why Stretch Creative?',
+    'benefits' =>     [
+        ['title' => 'All of the services you need under one roof', 'description' => 'SEO, content, design, photography, video, and paid advertising working together to support your growth strategy.'],
+        ['title' => 'Human-created, expert-led', 'description' => 'Every project is developed by experienced content writers who understand how to communicate important, complex ideas clearly and accurately.'],
+        ['title' => 'Built to scale', 'description' => 'Whether you’re launching a new product, entering a new market, or expanding your content program, our team can scale alongside your business.'],
+        ['title' => 'A single point of contact', 'description' => 'Your dedicated project manager supports your team with attention to the details and diligent communication so nothing falls through the cracks.'],
     ],
 
     // -------- Testimonials (3 real) --------
@@ -182,68 +215,113 @@ $shared_testimonials = [
 // 2. SEO & Content Strategy Services
 // ============================================================
 $services['seo_content_strategy_services'] = [
-    'headline'    => 'SEO Strategy & Services',
-    'subheadline' => "From detailed enterprise audits and rank tracking to SEO-Lite for smaller brands, our services flex to what you actually need — so you only pay for the work that moves the needle.",
-    'offerings'   => [
-        [
-            'title'       => 'Keyword Research',
-            'description' => 'Success in SEO starts with the right keywords. Our SEO team does a deep dive into your niche to uncover the keywords most relevant to your audience. We pay attention to context, search intent, and the story the keywords tell.',
-        ],
-        [
-            'title'       => 'SEO Content Briefs',
-            'description' => 'Success in SEO starts with the right keywords and a solid strategy — but it doesn\'t end there. We\'ll take your keywords (or do the research for you) and create editorial briefs that help our writers produce comprehensive, reader-friendly articles that are genuinely helpful and authentically authoritative.',
-        ],
-        [
-            'title'       => 'On-Page Optimization',
-            'description' => 'Title tags, meta descriptions, header hierarchy, internal linking, schema markup, and content structure — optimized across every page that matters. We handle the detail work that separates pages that rank from pages that sit on page two.',
-        ],
-        [
-            'title'       => 'Audits & Analyses',
-            'description' => 'Our internal SEO team provides insight and expert advice on improving the performance of your website and your content. Whatever information you need, we can deliver it with audits like a standalone keyword gap analysis, a link audit, or keyword performance tracking.',
-        ],
-        [
-            'title'       => 'Article Optimizations & Rewrites',
-            'description' => 'If your existing content is a little rough around the edges — or it was last updated in 2015 — leave it to us to dust off the cobwebs and give it the head-to-toe SEO treatment, plus a good, old-fashioned spit-shine to clean it up and make it current, cohesive, relevant, and results-oriented.',
-        ],
-        [
-            'title'       => 'A/B Testing',
-            'description' => 'Not sure why your content isn\'t performing? We\'ll help you gain insight into user behavior with A/B testing, then work with you to refine your site\'s UX and improve content for a more satisfying experience and better search results.',
-        ],
-        [
-            'title'       => 'SEO-Lite for Small Brands',
-            'description' => "Enterprise-grade SEO is overkill for most small and mid-sized brands. Our SEO-Lite offering delivers the essentials — foundational audits, targeted keyword work, on-page fundamentals, and light-touch reporting — at a price point that actually fits a lean marketing budget.",
-        ],
-        [
-            'title'       => 'Rank Tracking & Reporting',
-            'description' => "Transparent, business-focused reporting on the keywords and pages that matter to your revenue. We track rankings, organic traffic, click-through rates, and conversions — then translate the data into clear recommendations on what to do next.",
+    // -------- Hero --------
+    'headline'       => 'SEO + AEO Strategy & Services',
+    'subheadline'    => 'Get found today, stay visible tomorrow.',
+    'hero_text'      =>     [
+        'Search has changed. Ranking well on Google is still important, but it’s no longer the only way people discover businesses online.',
+        'Stretch Creative combines proven SEO strategies with Answer Engine Optimization (AEO) to help your website perform across traditional search engines, AI-powered search experiences, and whatever comes next.',
+    ],
+    'hero_cta_label' => 'Let’s Talk Search',
+    'hero_cta_url'   => '/contact-stretch-creative/',
+
+    // -------- Props (stat pills, not counters) --------
+    'props' =>     [
+        'Technical SEO Expertise',
+        'AEO-Ready Strategies',
+        'Transparent Reporting',
+        'No Long-Term Contracts',
+    ],
+    'props_footnote' => 'From enterprise audits to SEO-Lite, you only pay for the services you need.',
+
+    // -------- Problem --------
+    'problem' => [
+        'overline' => 'The Reality',
+        'heading'  => 'Search is evolving at light speed.',
+        'text'     =>             [
+                'Businesses have spent years learning how to succeed in traditional search, only to have AI reshape the landscape almost overnight.',
+                'People are still searching, but they’re increasingly asking questions directly in ChatGPT, Google AI Overviews, Perplexity, Claude, and other AI-powered tools.',
+                'The good news? SEO isn’t dead, and search engines and answer engines continue to reward websites that demonstrate expertise, publish genuinely helpful content, and provide an excellent user experience.',
+                'Search may be evolving, but the strongest websites still combine a solid technical foundation with helpful, authoritative content that’s organized and optimized for both search engines and AI platforms to understand.',
+            ],
+    ],
+
+    // -------- Solution --------
+    'solution' => [
+        'overline'  => 'The Solution',
+        'heading'   => 'SEO isn’t about chasing algorithms.',
+        'text'      =>             [
+                'Every Google update and AI leap forward seems to bring a new set of “must-follow” tactics. We focus on integrating new best practices thoughtfully into the fundamentals that have always mattered: understanding your audience, creating useful content, building technically sound websites, and adapting as search evolves.',
+                'Here’s how Stretch Creative helps businesses stay visible to search engines and AI-based search—without reinventing the wheel.',
+            ],
+        'cta_label' => 'Get in Touch',
+        'cta_url'   => '/contact-stretch-creative/',
+        'points' =>             [
+                ['title' => 'We build strategies around your business.', 'body' => 'We develop SEO and AEO strategies that reflect your goals instead of applying one-size-fits-all recommendations. We handle the detailed work that separates pages that rank from those that stay on page two.'],
+                ['title' => 'We combine technical SEO with great content.', 'body' => 'Technical SEO helps search engines find your content. Great content gives them something worth ranking. Our writers, editors, and SEO specialists work together to ensure every page serves both audiences.'],
+                ['title' => 'We optimize for today’s search experiences.', 'body' => 'Modern search extends beyond Google. We structure content to perform across traditional search, AI-generated answers, featured snippets, voice search, and emerging answer engines.'],
+                ['title' => 'We prioritize long-term growth.', 'body' => 'Quick wins are great, but sustainable visibility comes from consistent optimization, a thoughtful content strategy, and ongoing improvements—not shortcuts.'],
+                ['title' => 'We translate data into action.', 'body' => 'SEO reports shouldn’t require a translator. We explain what the data means, identify opportunities, and provide practical recommendations your team can actually use.'],
+            ],
+    ],
+
+    // -------- Capabilities (Offerings) --------
+    'offerings_overline'   => 'Capabilities',
+    'offerings_heading'    => 'What We Deliver',
+    'offerings_intro'      => 'Our strategic SEO support services improve visibility across modern-day search engines.',
+    'offerings' =>     [
+        ['title' => 'Technical SEO', 'description' => 'Website audits, crawl analyses, indexing recommendations, site architecture reviews, Core Web Vitals guidance, and technical improvements to help search engines understand your website.'],
+        ['title' => 'Keyword research', 'description' => 'Audience-focused keyword research that identifies ranking and conversion opportunities based on search demand, intent, competition, and your business goals.'],
+        ['title' => 'SEO content strategy', 'description' => 'Topic planning, editorial mapping, and content recommendations designed to support long-term, organic growth.'],
+        ['title' => 'Content briefs', 'description' => 'Your keywords and content strategy, embodied in SEO editorial briefs that help writers produce well-organized, helpful, and search-optimized articles.'],
+        ['title' => 'On-page SEO', 'description' => 'Title tags, meta descriptions, header hierarchy, internal linking, schema markup, and content structure—optimized across every page that matters.'],
+        ['title' => 'SEO audits', 'description' => 'Comprehensive evaluations of your website’s technical health, content quality, user experience, and search visibility, along with prioritized recommendations.'],
+        ['title' => 'SEO and AEO content optimization', 'description' => 'Optimize existing content for SEO and AEO, from blogs and category pages to location and service pages, to make them more visible to today’s search engines.'],
+        ['title' => 'Performance tracking & reporting', 'description' => 'Transparent, business-focused reporting focused on meaningful metrics like rankings, organic traffic, and click-through rates translated into actionable recommendations.'],
+    ],
+
+    // -------- Add-On Services --------
+    'addons_heading' => 'Add-On Services',
+    'addons' =>     [
+        ['title' => 'Budget management', 'description' => 'Coordinated production oversight and budget tracking for larger SEO and content initiatives.'],
+    ],
+
+    // -------- Cross-sell CTA --------
+    'cross_cta' =>     [
+        'heading' => 'Need More Than SEO?',
+        'body'    => 'We’re a full-scale agency offering all of the services you need to rank higher and maximize your budget.',
+        'links'   => [
+            ['label' => 'Content Writing', 'url' => '/content-writing-at-any-scale/'],
+            ['label' => 'Interactive Content Marketing', 'url' => '/services/bespoke-content-experience/'],
+            ['label' => 'Visual Content & Design', 'url' => '/visual-content-and-design/'],
+            ['label' => 'Paid Advertising', 'url' => '/paid-advertising/'],
         ],
     ],
-    'why_heading' => 'Why Stretch?',
-    'why_intro'   => "Our SEO experts know the ins and outs of keyword research and data analysis. Our editorial team is tuned into the human ethos and user experience. Together, they're a perfect balance of science and art — and they scale from SEO-Lite engagements to full enterprise programs.",
-    'benefits'    => [
-        [
-            'title'       => 'SEO at Any Scale',
-            'description' => 'Whether you need a strategy for 10 pages or 10,000, our process is designed to scale. We use proven frameworks and efficient workflows that deliver consistent, high-quality SEO work — no matter the scope of your project.',
-        ],
-        [
-            'title'       => 'Precision Insights',
-            'description' => 'We go beyond surface-level keyword data. Our analysts uncover nuanced search intent patterns, competitive gaps, and content opportunities that most agencies miss — giving you a strategic edge in the SERPs.',
-        ],
-        [
-            'title'       => 'Holistic SEO Strategy',
-            'description' => "SEO isn't just about keywords. We take a holistic approach that encompasses content quality, user experience, technical optimization, and link-building strategy. Every recommendation is grounded in how search engines actually evaluate and rank content.",
-        ],
-        [
-            'title'       => 'Measurable Results',
-            'description' => 'We set clear KPIs from the start and track performance rigorously. You get regular reports showing exactly how your content is performing — traffic, rankings, conversions — along with actionable recommendations for continuous improvement.',
-        ],
+
+    // -------- Process (How It Works) --------
+    'process' => [
+        'overline' => 'Process',
+        'heading'  => 'How We Work',
+        'intro'    => 'SEO works best when it’s an ongoing process of improving your website, understanding your audience, and adapting to changes in search. Here’s how we work.',
+        'steps' =>             [
+                ['title' => 'Discovery', 'description' => 'We begin by learning about your business, audience, competitors, and goals before reviewing your existing website and search performance.'],
+                ['title' => 'Audit & Research', 'description' => 'Our team evaluates your site’s technical health, keyword opportunities, existing content, and competition to identify the best opportunities for improvement, usually starting with the low-hanging fruit.'],
+                ['title' => 'Strategy Development', 'description' => 'We develop a practical, detailed roadmap that prioritizes recommendations based on impact, effort, and your business objectives.'],
+                ['title' => 'Implementation', 'description' => 'Whether we’re optimizing existing pages, creating new content, or improving technical performance, we execute every recommendation with long-term success in mind.'],
+                ['title' => 'Ongoing Optimization', 'description' => 'Search is constantly changing. Through regular reporting, performance reviews, and strategic recommendations, we help your website continue to grow.'],
+            ],
     ],
-    'stats' => [
-        ['label' => 'Keywords Analyzed', 'value' => '500', 'suffix' => 'K+'],
-        ['label' => 'Results Timeline', 'value' => '3-6', 'suffix' => 'mo'],
-        ['label' => 'Strategy', 'value' => '100', 'suffix' => '%'],
-        ['label' => 'Approach', 'value' => 'Data-Driven', 'suffix' => ''],
+
+    // -------- Why Stretch / Benefits --------
+    'why_heading' => 'Why Stretch Creative?',
+    'benefits' =>     [
+        ['title' => 'SEO built to scale', 'description' => 'We use proven frameworks and efficient workflows that deliver consistent, high-quality SEO work, no matter the scope of your project.'],
+        ['title' => 'All of the services you need under one roof', 'description' => 'SEO, content, design, photography, video, and paid advertising work together to support your digital growth strategy. Add services as you need them, long-term or project-by-project.'],
+        ['title' => 'Holistic SEO and AEO', 'description' => 'We take a holistic approach to SEO and AEO that encompasses content quality, user experience, technical optimization, and link building. Every recommendation is grounded in how today’s search engines actually evaluate and rank content.'],
+        ['title' => 'Measurable Results', 'description' => 'We set clear KPIs from the start and track performance rigorously. You’ll get regular reports showing exactly how your content is performing—traffic, rankings, conversions—along with actionable recommendations for continuous improvement.'],
     ],
+
+    // -------- FAQ (unchanged) --------
     'faqs' => [
         [
             'question' => 'How is your SEO approach different from other agencies?',
@@ -563,68 +641,108 @@ $services['content-strategy'] = [
 // 6. Paid Advertising
 // ============================================================
 $services['paid-advertising'] = [
-    'headline'    => 'Paid Advertising That Actually Converts',
-    'subheadline' => "Stop wasting money on ads that miss the mark. We build and run Google, Meta, and social campaigns that reach your audience, boost conversions, and grow your revenue.",
-    'offerings'   => [
-        [
-            'title'       => 'Google Search Ads',
-            'description' => 'Intent-driven campaigns built around the keywords your customers actually use. We structure accounts for efficiency, write ad copy that earns the click, and manage bids to maximize every dollar.',
-        ],
-        [
-            'title'       => 'Google Display & YouTube',
-            'description' => 'Awareness and retargeting across the Google Display Network and YouTube. We pair smart audience targeting with on-brand creative to drive qualified impressions at efficient CPMs.',
-        ],
-        [
-            'title'       => 'Meta Ads (Facebook & Instagram)',
-            'description' => 'Full-funnel Meta campaigns from prospecting to retargeting. We handle audience research, creative direction, copywriting, and optimization — all in one place.',
-        ],
-        [
-            'title'       => 'LinkedIn Ads',
-            'description' => 'B2B campaigns tuned for decision-makers. We target by role, industry, and account, then build message variants that speak to each buyer stage.',
-        ],
-        [
-            'title'       => 'Retargeting Campaigns',
-            'description' => 'Bring back the visitors who already know you. We build sophisticated retargeting audiences and sequenced messaging that moves warm traffic toward conversion.',
-        ],
-        [
-            'title'       => 'Ad Creative & Copy',
-            'description' => 'Static, video, carousel — our in-house design and writing teams produce platform-native creative variants built for testing. No subcontractors, no handoff gaps.',
-        ],
-        [
-            'title'       => 'Landing Page Optimization',
-            'description' => "Ads don't fail in isolation — the landing page is half the equation. We audit, redesign, and test landing pages to close the gap between click and conversion.",
-        ],
-        [
-            'title'       => 'Reporting & Insights',
-            'description' => 'Weekly or monthly reporting tied to the metrics that matter to your business — CAC, ROAS, pipeline, revenue — not vanity metrics dressed up as performance.',
+    // -------- Hero --------
+    'headline'       => 'Paid Advertising Services',
+    'subheadline'    => 'Reach the right audience with campaigns built to perform.',
+    'hero_text'      => 'The best advertising reaches people with the right message at the right moment. Stretch Creative develops paid advertising campaigns backed by thoughtful strategy, compelling messaging and visuals, and continuous refining and optimization to help you connect with qualified audiences and make the most of your marketing budget.',
+    'hero_cta_label' => 'Let’s Build Your Next Campaign',
+    'hero_cta_url'   => '/contact-stretch-creative/',
+
+    // -------- Props (stat pills, not counters) --------
+    'props' =>     [
+        'Search, Shopping & Social Ads',
+        'Performance Tracking & Optimization',
+        'Ad Copywriting & Design',
+        'No Long-Term Contracts',
+    ],
+
+    // -------- Problem --------
+    'problem' => [
+        'overline' => 'The Reality',
+        'heading'  => 'Competition isn’t getting any cheaper.',
+        'text'     =>             [
+                'Paid advertising has become more competitive, more expensive, and more complex in recent years. Rising costs, changing privacy regulations, evolving algorithms, and increasing competition mean businesses can’t afford to rely on guesswork or “set it and forget it” campaigns.',
+                'The good news? Strong visuals, compelling messaging, thoughtful targeting, and ongoing optimization still make paid advertising one of the fastest ways to reach qualified customers. Success comes from combining smart strategy with messaging and visuals that give people a reason to click.',
+            ],
+    ],
+
+    // -------- Solution --------
+    'solution' => [
+        'overline'  => 'The Solution',
+        'heading'   => 'Effective campaigns don’t happen by accident.',
+        'text'      =>             [
+                'Clicks don’t happen because an ad exists—they happen because the message resonates with the right audience.',
+                'Here’s how Stretch Creative helps businesses get more from their advertising investment.',
+            ],
+        'cta_label' => 'Get in Touch',
+        'cta_url'   => '/contact-stretch-creative/',
+        'points' =>             [
+                ['title' => 'We build campaigns around your goals.', 'body' => 'Every campaign begins with your objectives, audience, and budget—never a templated media plan. Whether you’re driving sales, generating leads, or building awareness, we create strategies that support measurable business outcomes.'],
+                ['title' => 'We connect strategy with flawless execution.', 'body' => 'Successful advertising depends on more than targeting. Our writers, designers, photographers, and videographers work together to create ads and landing pages that feel cohesive and compelling from first impression to final conversion.'],
+                ['title' => 'We optimize continuously.', 'body' => 'The strongest campaigns improve over time. We monitor performance, test ads and landing pages, refine targeting, and make data-driven adjustments to improve efficiency and results.'],
+                ['title' => 'We make every click count.', 'body' => 'Driving traffic is only part of the equation. We help ensure the pages behind your ads deliver the information, experience, and calls to action needed to convert visitors into customers.'],
+                ['title' => 'We provide clear reporting.', 'body' => 'You shouldn’t have to interpret confusing dashboards. We provide transparent reporting and practical recommendations that help you understand what’s working and where to improve.'],
+            ],
+    ],
+
+    // -------- Capabilities (Offerings) --------
+    'offerings_overline'   => 'Capabilities',
+    'offerings_heading'    => 'Advertising Services We Offer',
+    'offerings' =>     [
+        ['title' => 'Search advertising', 'description' => 'Text-based search campaigns that connect your business with customers actively searching for your products or services.'],
+        ['title' => 'Google shopping ads', 'description' => 'Product-focused campaigns that help ecommerce businesses increase visibility and drive qualified traffic.'],
+        ['title' => 'Social media advertising', 'description' => 'Paid campaigns for Meta, LinkedIn, TikTok, Pinterest, and other social platforms designed to build awareness, generate leads, and drive conversions.'],
+        ['title' => 'Display advertising', 'description' => 'Visual banner ads that expand brand awareness, support remarketing efforts, and reach audiences across the web.'],
+        ['title' => 'Retargeting campaigns', 'description' => 'Targeted advertising that reconnects with previous website visitors and encourages them to return and take action.'],
+        ['title' => 'Landing pages', 'description' => 'Dedicated campaign landing pages optimized to support your advertising goals and improve conversion rates.'],
+        ['title' => 'Ad copy & design', 'description' => 'Compelling ad copy, graphics, photography, video, and other campaign assets developed specifically for paid advertising.'],
+        ['title' => 'Performance reporting & insights', 'description' => 'Campaign monitoring, performance analysis, budget tracking, and ongoing optimization recommendations.'],
+    ],
+
+    // -------- Add-On Services --------
+    'addons_heading' => 'Add-On Services',
+    'addons' =>     [
+        ['title' => 'SEO & Content Strategy', 'description' => 'SEO keyword research, content planning, landing page optimization, and supporting content designed to strengthen paid campaigns.'],
+        ['title' => 'Budget Management', 'description' => 'Campaign oversight, media budget tracking, vendor coordination, and performance monitoring.'],
+        ['title' => 'CMS Loading', 'description' => 'Landing page formatting, publishing, and quality assurance within your content management system.'],
+    ],
+
+    // -------- Cross-sell CTA --------
+    'cross_cta' =>     [
+        'heading' => 'Need more than paid advertising?',
+        'body'    => 'We’re a full-scale agency offering everything you need to improve visibility, create better content, and grow your business.',
+        'links'   => [
+            ['label' => 'SEO/AEO Services', 'url' => '/seo_content_strategy_services/'],
+            ['label' => 'Interactive Content Marketing', 'url' => '/services/bespoke-content-experience/'],
+            ['label' => 'Visual Content & Design', 'url' => '/visual-content-and-design/'],
+            ['label' => 'Content Writing', 'url' => '/content-writing-at-any-scale/'],
         ],
     ],
-    'why_heading' => 'Why Stretch?',
-    'why_intro'   => "Most paid shops treat creative and media as separate disciplines — and your CAC pays the price. We run them together, which is exactly why our campaigns compound.",
-    'benefits'    => [
-        [
-            'title'       => 'Creative + Media Under One Roof',
-            'description' => 'Your writers, designers, videographers, and media buyers are on the same team — so creative iterates as fast as the data demands, with no agency ping-pong.',
-        ],
-        [
-            'title'       => 'Transparent Reporting',
-            'description' => "You see the account. You see the spend. You see what's working. No black-box dashboards, no mystery line items — just clear reporting tied to your goals.",
-        ],
-        [
-            'title'       => 'Built for ROI',
-            'description' => "We optimize for business outcomes, not platform metrics. If an ad looks great but isn't converting, we kill it. If a scrappy variant is winning, we scale it.",
-        ],
-        [
-            'title'       => 'Always Testing',
-            'description' => 'Paid only stays efficient if you keep testing. We run structured creative and audience tests every cycle — so performance moves up instead of decaying over time.',
-        ],
+
+    // -------- Process (How It Works) --------
+    'process' => [
+        'overline' => 'Process',
+        'heading'  => 'How We Work',
+        'intro'    => 'Great advertising starts long before an ad goes live.',
+        'steps' =>             [
+                ['title' => 'Discovery', 'description' => 'We learn about your business, audience, competitors, goals, and budget to understand what success looks like.'],
+                ['title' => 'Campaign Strategy', 'description' => 'Our team develops audience targeting, messaging, creative concepts, platform recommendations, and campaign structure tailored to your objectives.'],
+                ['title' => 'Creative Development', 'description' => 'Writers, designers, photographers, and videographers collaborate to create advertising assets that capture attention and reinforce your brand.'],
+                ['title' => 'Campaign Launch', 'description' => 'We build, test, and launch campaigns while ensuring tracking, reporting, and landing pages are ready to support performance.'],
+                ['title' => 'Optimization', 'description' => 'Advertising isn’t static. We continuously monitor results, refine targeting, and optimize campaigns to improve performance over time.'],
+            ],
     ],
-    'stats' => [
-        ['label' => 'Platforms', 'value' => '6', 'suffix' => '+'],
-        ['label' => 'Reporting', 'value' => 'Transparent', 'suffix' => ''],
-        ['label' => 'Creative', 'value' => 'In-House', 'suffix' => ''],
-        ['label' => 'Focus', 'value' => 'ROI', 'suffix' => ''],
+
+    // -------- Why Stretch / Benefits --------
+    'why_heading' => 'Why Stretch Creative?',
+    'benefits' =>     [
+        ['title' => 'All of the services you need under one roof', 'description' => 'SEO, content, design, photography, video, and paid advertising working together to support your growth strategy.'],
+        ['title' => 'Human-created, expert-led', 'description' => 'Our strategists, writers, designers, and digital advertising specialists create campaigns built on thoughtful design, strong creative messaging, and measurable performance.'],
+        ['title' => 'Built to scale', 'description' => 'Whether you’re launching your first campaign or managing advertising across multiple markets, our team can scale alongside your business.'],
+        ['title' => 'A single point of contact', 'description' => 'Your dedicated project manager keeps campaigns moving, communication clear, and every deliverable aligned with your goals.'],
     ],
+
+    // -------- FAQ (unchanged) --------
     'faqs' => [
         [
             'question' => 'What platforms do you run ads on?',

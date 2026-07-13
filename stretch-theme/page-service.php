@@ -32,6 +32,29 @@ $faqs            = !empty($service['faqs'])            ? $service['faqs']       
 $stats           = !empty($service['stats'])           ? $service['stats']           : [];
 $cta             = !empty($service['cta'])             ? $service['cta']             : [];
 
+// Props (stat-bar pills rendered as plain strings, not animated counters)
+$props           = !empty($service['props'])           ? $service['props']           : [];
+$props_footnote  = !empty($service['props_footnote'])  ? $service['props_footnote']  : '';
+
+// Add-on services (used in place of, or alongside, the offerings list)
+$addons          = !empty($service['addons'])          ? $service['addons']          : [];
+$addons_heading  = !empty($service['addons_heading'])   ? $service['addons_heading']  : 'Add-On Services';
+
+// Cross-sell CTA (heading, body, list of links to other services)
+$cross_cta       = !empty($service['cross_cta'])        ? $service['cross_cta']       : [];
+
+// Renders one or more paragraphs from either a string or an array of strings.
+if (!function_exists('stretch_svc_paragraphs')) {
+    function stretch_svc_paragraphs($text, $class) {
+        if (empty($text)) return;
+        $paragraphs = is_array($text) ? $text : [$text];
+        foreach ($paragraphs as $paragraph) {
+            if ($paragraph === '') continue;
+            echo '<p class="' . esc_attr($class) . '">' . wp_kses_post($paragraph) . '</p>';
+        }
+    }
+}
+
 // Default stats by slug
 if (empty($stats)) {
     $default_stats = [
@@ -70,7 +93,7 @@ if (empty($stats)) {
 
 // Pull quote by slug
 $pull_quotes = [
-    'content-writing-at-any-scale' => 'Whether you need one piece or a thousand, <span class="svc-quote-accent">quality never compromises.</span>',
+    'content-writing-at-any-scale' => 'Most content bottlenecks aren\'t a volume problem — they\'re <span class="svc-quote-accent">a quality problem.</span>',
     'seo_content_strategy_services' => 'From enterprise audits to SEO-Lite — <span class="svc-quote-accent">you only pay for what you need.</span>',
     'graphic_design_services' => 'Design is not decoration. It is <span class="svc-quote-accent">communication, trust, and brand equity</span> made visible.',
     'video-content-services' => 'Every frame tells a story. We make sure <span class="svc-quote-accent">yours is unforgettable.</span>',
@@ -670,6 +693,135 @@ html, body { overflow-x: hidden; }
 }
 .svc-offering-row.svc-offering-even .svc-offering-body p {
   margin-left: auto;
+}
+
+/* ========================================
+   3.25 PROP PILLS (stat-bar alternative to counters)
+   ======================================== */
+.svc-props-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+}
+.svc-prop-pill {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: #fff;
+  padding: 10px 22px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.03);
+}
+.svc-props-footnote {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  margin: 24px auto 0;
+  max-width: 640px;
+}
+
+/* ========================================
+   3.75 SOLUTION POINTS
+   ======================================== */
+.svc-solution-points {
+  max-width: 760px;
+  margin: 40px auto 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.svc-solution-point h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 19px; font-weight: 600;
+  color: #252C3A; margin: 0 0 8px;
+}
+.svc-solution-point p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 300;
+  line-height: 1.7; color: #4a5066; margin: 0;
+}
+
+/* ========================================
+   5.1 ADDITIONAL SUPPORT — ADD-ONS + CROSS-SELL CTA
+   ======================================== */
+.svc-addons {
+  padding: 100px 0;
+  background: #f9f9fb;
+  position: relative;
+}
+.svc-addons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  max-width: 1000px;
+  margin: 0 auto 64px;
+}
+.svc-addon-card {
+  background: #fff;
+  border: 1px solid rgba(37,44,58,0.06);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 4px 16px rgba(37,44,58,0.05);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+}
+.svc-addon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(37,44,58,0.09);
+}
+.svc-addon-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px; font-weight: 600;
+  color: #252C3A; margin: 0 0 10px;
+}
+.svc-addon-card p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px; font-weight: 300;
+  line-height: 1.65; color: #555; margin: 0;
+}
+.svc-cross-cta {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px 40px;
+  background: linear-gradient(135deg, rgba(133,96,168,0.06), rgba(0,191,243,0.06));
+  border-radius: 16px;
+}
+.svc-cross-cta h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 600; color: #252C3A;
+  margin: 0 0 14px;
+}
+.svc-cross-cta p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 300;
+  color: #4a5066; line-height: 1.7;
+  margin: 0 0 28px;
+}
+.svc-cross-cta-links {
+  display: flex; flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.svc-cross-cta-link {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: #8560A8;
+  text-decoration: none;
+  padding: 10px 22px;
+  border: 1px solid rgba(133,96,168,0.3);
+  border-radius: 100px;
+  transition: all 0.3s ease;
+}
+.svc-cross-cta-link:hover {
+  background: rgba(133,96,168,0.06);
+  border-color: rgba(133,96,168,0.6);
+  color: #5674B9;
 }
 
 /* ========================================
@@ -1523,7 +1675,9 @@ html, body { overflow-x: hidden; }
         <p class="svc-subtitle svc-reveal svc-delay-3"><?php echo esc_html($subheadline); ?></p>
       <?php endif; ?>
       <?php if ($hero_text) : ?>
-        <p class="svc-hero-body svc-reveal svc-delay-3"><?php echo esc_html($hero_text); ?></p>
+        <?php foreach ((is_array($hero_text) ? $hero_text : [$hero_text]) as $hero_para) : ?>
+          <p class="svc-hero-body svc-reveal svc-delay-3"><?php echo esc_html($hero_para); ?></p>
+        <?php endforeach; ?>
       <?php endif; ?>
       <a href="<?php echo esc_url($hero_cta_url); ?>" class="svc-btn-primary svc-reveal svc-delay-4"><span><?php echo esc_html($hero_cta_label); ?> &rarr;</span></a>
     </div>
@@ -1548,22 +1702,33 @@ html, body { overflow-x: hidden; }
      ======================================== -->
 <section class="svc-section svc-stats-bar" aria-label="Key Statistics" id="svcStatsBar">
   <div class="svc-container">
-    <div class="svc-stats-inner">
-      <?php foreach ($stats as $stat) :
-        $is_numeric = is_numeric($stat['value']);
-      ?>
-        <div class="svc-stat-item svc-reveal svc-delay-<?php echo min(($stat === $stats[0] ? 1 : ($stat === $stats[1] ? 2 : ($stat === $stats[2] ? 3 : 4))), 4); ?>">
-          <div class="svc-stat-number">
-            <?php if ($is_numeric) : ?>
-              <span class="svc-count" data-target="<?php echo esc_attr($stat['value']); ?>">0</span><span class="svc-suffix"><?php echo esc_html($stat['suffix']); ?></span>
-            <?php else : ?>
-              <span style="font-size:0.6em;"><?php echo esc_html($stat['value']); ?></span>
-            <?php endif; ?>
+    <?php if (!empty($props)) : ?>
+      <div class="svc-props-row">
+        <?php foreach ($props as $i => $prop) : ?>
+          <span class="svc-prop-pill svc-reveal svc-delay-<?php echo min($i + 1, 4); ?>"><?php echo esc_html($prop); ?></span>
+        <?php endforeach; ?>
+      </div>
+      <?php if ($props_footnote) : ?>
+        <p class="svc-props-footnote svc-reveal svc-delay-4"><?php echo esc_html($props_footnote); ?></p>
+      <?php endif; ?>
+    <?php else : ?>
+      <div class="svc-stats-inner">
+        <?php foreach ($stats as $stat) :
+          $is_numeric = is_numeric($stat['value']);
+        ?>
+          <div class="svc-stat-item svc-reveal svc-delay-<?php echo min(($stat === $stats[0] ? 1 : ($stat === $stats[1] ? 2 : ($stat === $stats[2] ? 3 : 4))), 4); ?>">
+            <div class="svc-stat-number">
+              <?php if ($is_numeric) : ?>
+                <span class="svc-count" data-target="<?php echo esc_attr($stat['value']); ?>">0</span><span class="svc-suffix"><?php echo esc_html($stat['suffix']); ?></span>
+              <?php else : ?>
+                <span style="font-size:0.6em;"><?php echo esc_html($stat['value']); ?></span>
+              <?php endif; ?>
+            </div>
+            <div class="svc-stat-label"><?php echo esc_html($stat['label']); ?></div>
           </div>
-          <div class="svc-stat-label"><?php echo esc_html($stat['label']); ?></div>
-        </div>
-      <?php endforeach; ?>
-    </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   </div>
 </section>
 
@@ -1588,7 +1753,9 @@ html, body { overflow-x: hidden; }
         <p class="svc-problem-sub svc-reveal svc-delay-2"><?php echo esc_html($p_sub); ?></p>
       <?php endif; ?>
       <?php if ($p_text) : ?>
-        <p class="svc-problem-text svc-reveal svc-delay-3"><?php echo wp_kses_post($p_text); ?></p>
+        <div class="svc-problem-text-wrap svc-reveal svc-delay-3">
+          <?php stretch_svc_paragraphs($p_text, 'svc-problem-text'); ?>
+        </div>
       <?php endif; ?>
     </div>
   </div>
@@ -1621,7 +1788,19 @@ html, body { overflow-x: hidden; }
         <p class="svc-solution-sub svc-reveal svc-delay-2"><?php echo esc_html($s_sub); ?></p>
       <?php endif; ?>
       <?php if ($s_text) : ?>
-        <p class="svc-solution-text svc-reveal svc-delay-3"><?php echo wp_kses_post($s_text); ?></p>
+        <div class="svc-solution-text-wrap svc-reveal svc-delay-3">
+          <?php stretch_svc_paragraphs($s_text, 'svc-solution-text'); ?>
+        </div>
+      <?php endif; ?>
+      <?php if (!empty($solution['points'])) : ?>
+        <div class="svc-solution-points">
+          <?php foreach ($solution['points'] as $i => $point) : ?>
+            <div class="svc-solution-point svc-reveal svc-delay-<?php echo min($i + 1, 4); ?>">
+              <h3><?php echo esc_html($point['title']); ?></h3>
+              <p><?php echo esc_html($point['body']); ?></p>
+            </div>
+          <?php endforeach; ?>
+        </div>
       <?php endif; ?>
       <?php if ($s_cta_label) : ?>
         <a href="<?php echo esc_url($s_cta_url); ?>" class="svc-btn-primary svc-reveal svc-delay-4"><span><?php echo esc_html($s_cta_label); ?> &rarr;</span></a>
@@ -1706,6 +1885,49 @@ html, body { overflow-x: hidden; }
 
 
 <!-- ========================================
+     5.1 ADDITIONAL SUPPORT — ADD-ONS + CROSS-SELL CTA (optional)
+     ======================================== -->
+<?php if (!empty($addons) || !empty($cross_cta)) : ?>
+<section class="svc-section svc-addons" aria-label="Additional Support">
+  <div class="svc-container">
+    <?php if (!empty($addons)) : ?>
+      <div class="svc-section-heading">
+        <span class="svc-overline svc-reveal">Additional Support</span>
+        <h2 class="svc-reveal svc-delay-1"><?php echo esc_html($addons_heading); ?></h2>
+      </div>
+      <div class="svc-addons-grid">
+        <?php foreach ($addons as $i => $addon) : ?>
+          <div class="svc-addon-card svc-reveal svc-delay-<?php echo min($i + 1, 4); ?>">
+            <h3><?php echo esc_html($addon['title']); ?></h3>
+            <p><?php echo esc_html($addon['description']); ?></p>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+
+    <?php if (!empty($cross_cta)) :
+      $cc_heading = !empty($cross_cta['heading']) ? $cross_cta['heading'] : '';
+      $cc_body    = !empty($cross_cta['body'])    ? $cross_cta['body']    : '';
+      $cc_links   = !empty($cross_cta['links'])   ? $cross_cta['links']   : [];
+    ?>
+      <div class="svc-cross-cta svc-reveal">
+        <?php if ($cc_heading) : ?><h3><?php echo esc_html($cc_heading); ?></h3><?php endif; ?>
+        <?php if ($cc_body) : ?><p><?php echo esc_html($cc_body); ?></p><?php endif; ?>
+        <?php if (!empty($cc_links)) : ?>
+          <div class="svc-cross-cta-links">
+            <?php foreach ($cc_links as $link) : ?>
+              <a href="<?php echo esc_url($link['url']); ?>" class="svc-cross-cta-link"><?php echo esc_html($link['label']); ?></a>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
+  </div>
+</section>
+<?php endif; ?>
+
+
+<!-- ========================================
      5.25 PROCESS / HOW IT WORKS (optional)
      ======================================== -->
 <?php
@@ -1742,7 +1964,9 @@ $has_portfolio = !empty($service_portfolio);
       <p class="svc-process-sub svc-reveal svc-delay-2"><?php echo esc_html($pr_sub); ?></p>
     <?php endif; ?>
     <?php if ($pr_intro) : ?>
-      <p class="svc-process-intro svc-reveal svc-delay-3"><?php echo wp_kses_post($pr_intro); ?></p>
+      <div class="svc-process-intro-wrap svc-reveal svc-delay-3">
+        <?php stretch_svc_paragraphs($pr_intro, 'svc-process-intro'); ?>
+      </div>
     <?php endif; ?>
 
     <ol class="svc-process-steps">
