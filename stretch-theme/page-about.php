@@ -696,7 +696,7 @@ html, body { overflow-x: hidden; }
     <div class="about-hero-content">
       <span class="v2-overline v2-reveal v2-delay-1">Our Story</span>
       <h1 class="v2-reveal v2-delay-2">Because <span class="gradient-text">Stories Matter</span></h1>
-      <p class="v2-subtitle v2-reveal v2-delay-3">From two creatives with a vision to a community of more than 200, we&rsquo;ve been on a mission to change the way content gets made.</p>
+      <p class="v2-subtitle v2-reveal v2-delay-3">From two creatives with a vision to a community of more than 200, we’ve been on a mission to change the way content gets made.</p>
     </div>
   </div>
 
@@ -717,11 +717,11 @@ html, body { overflow-x: hidden; }
       <div class="about-story-text v2-reveal-left">
         <h2>Founded on a Belief</h2>
         <p>Stretch Creative was built on a set of core beliefs: that creators deserve fair compensation, that content should be publishable from the start, that freelancers need genuine support, and that long-term partnerships always outperform one-off transactions.</p>
-        <p>Chris Reid founded Stretch Creative at the dawn of the pandemic, seeing an opportunity to build something different &mdash; a creative agency that puts its people first while delivering exceptional content at scale.</p>
+        <p>Chris Reid founded Stretch Creative at the dawn of the pandemic, seeing an opportunity to build something different — a creative agency that puts its people first while delivering exceptional content at scale.</p>
         <div class="about-story-quote">
-          &ldquo;Our community of creatives has grown from two to more than 200.&rdquo;
+          “Our community of creatives has grown from two to more than 200.”
         </div>
-        <p>Today, we serve clients across industries &mdash; from ecommerce brands and publishers to agencies and enterprise marketing teams &mdash; with content that moves the needle.</p>
+        <p>Today, we serve clients across industries — from ecommerce brands and publishers to agencies and enterprise marketing teams — with content that moves the needle.</p>
       </div>
       <div class="about-story-image v2-reveal-right">
         <?php
@@ -748,7 +748,7 @@ html, body { overflow-x: hidden; }
 <section class="v2-section about-partner" aria-label="Why Partner With Us">
   <div class="v2-container">
     <div class="about-partner-heading">
-      <h2 class="v2-reveal">We&rsquo;re less a vendor, more a <span class="gradient-text">strategic content partner</span></h2>
+      <h2 class="v2-reveal">We’re less a vendor, more a <span class="gradient-text">strategic content partner</span></h2>
       <p class="about-partner-subtitle v2-reveal v2-delay-1">Our personalized approach and full menu of content services make us your one-stop partner for any or all of your SEO and content needs.</p>
     </div>
 
@@ -768,7 +768,7 @@ html, body { overflow-x: hidden; }
       <div class="about-partner-card v2-reveal v2-delay-3" style="--num-start:#448CCB;--num-end:#00BFF3;">
         <div class="about-partner-number">03</div>
         <h3>Integrated Services</h3>
-        <p>Our content services include writing, graphic design, video production, photography, SEO, and paid &mdash; all working together to ensure consistency across all of your channels.</p>
+        <p>Our content services include writing, graphic design, video production, photography, SEO, and paid — all working together to ensure consistency across all of your channels.</p>
       </div>
     </div>
   </div>
@@ -904,7 +904,7 @@ html, body { overflow-x: hidden; }
           <div>
             <div class="v2-timeline-detail-step">Step 01</div>
             <div class="v2-timeline-detail-title">Consultation</div>
-            <div class="v2-timeline-detail-desc">We start by listening. Every engagement begins with a deep-dive conversation to understand your brand, audience, goals, and content challenges. No templates &mdash; just genuine curiosity.</div>
+            <div class="v2-timeline-detail-desc">We start by listening. Every engagement begins with a deep-dive conversation to understand your brand, audience, goals, and content challenges. No templates — just genuine curiosity.</div>
           </div>
           <div class="v2-timeline-detail-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -914,7 +914,7 @@ html, body { overflow-x: hidden; }
           <div>
             <div class="v2-timeline-detail-step">Step 02</div>
             <div class="v2-timeline-detail-title">Brief &amp; Style Guide</div>
-            <div class="v2-timeline-detail-desc">We distill everything into a clear creative brief and style guide that ensures every word written sounds like you. Voice, tone, formatting &mdash; all documented and shared.</div>
+            <div class="v2-timeline-detail-desc">We distill everything into a clear creative brief and style guide that ensures every word written sounds like you. Voice, tone, formatting — all documented and shared.</div>
           </div>
           <div class="v2-timeline-detail-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -944,7 +944,7 @@ html, body { overflow-x: hidden; }
           <div>
             <div class="v2-timeline-detail-step">Step 05</div>
             <div class="v2-timeline-detail-title">Create</div>
-            <div class="v2-timeline-detail-desc">This is where the magic happens. Your curated team produces high-quality, publish-ready content at the volume and cadence you need &mdash; blogs, copy, ebooks, video, and more.</div>
+            <div class="v2-timeline-detail-desc">This is where the magic happens. Your curated team produces high-quality, publish-ready content at the volume and cadence you need — blogs, copy, ebooks, video, and more.</div>
           </div>
           <div class="v2-timeline-detail-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -978,7 +978,7 @@ html, body { overflow-x: hidden; }
 <section class="v2-section about-cta" aria-label="Call to Action">
   <div class="v2-container">
     <h2 class="v2-reveal">Join Our Team</h2>
-    <p class="v2-reveal v2-delay-1">We&rsquo;re always looking for talented creatives who care about craft. If that sounds like you, we&rsquo;d love to hear from you.</p>
+    <p class="v2-reveal v2-delay-1">We’re always looking for talented creatives who care about craft. If that sounds like you, we’d love to hear from you.</p>
     <a href="/the-team/" class="v2-btn-primary v2-reveal v2-delay-2">Meet the Team &rarr;</a>
   </div>
 </section>
