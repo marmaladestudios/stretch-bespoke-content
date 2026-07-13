@@ -184,7 +184,7 @@ $industries['service-providers'] = [
     ],
     'challenges_intro'  => [
         'When people need a service, they usually start with an online search.',
-        'Whether they\'re looking for a plumber, contractor, CPA, attorney, or wellness provider, customers expect to find accurate information quickly and easily. If your business isn\'t visible where they\'re searching, or if your website doesn\'t build trust once they click in, you may never get the opportunity to earn their business.',
+        'Whether they’re looking for a plumber, contractor, CPA, attorney, or wellness provider, customers expect to find accurate information quickly and easily. If your business isn’t visible where they’re searching, or if your website doesn’t build trust once they click in, you may never get the opportunity to earn their business.',
     ],
     'challenges'        => [
         'Limited visibility in local search results',
@@ -198,7 +198,7 @@ $industries['service-providers'] = [
     ],
     'solutions_heading' => 'Solutions Built for Service Providers',
     'solutions'         => [
-        ['icon' => 'map-pin',   'title' => 'Local SEO', 'body' => 'Local SEO helps customers find your business when they\'re actively looking for services. We support service providers with local keyword research, on-page optimization, Google Business Profile support, location page optimization, technical SEO, and content strategy.'],
+        ['icon' => 'map-pin',   'title' => 'Local SEO', 'body' => 'Local SEO helps customers find your business when they’re actively looking for services. We support service providers with local keyword research, on-page optimization, Google Business Profile support, location page optimization, technical SEO, and content strategy.'],
         ['icon' => 'file-text', 'title' => 'Service & Location Page Content', 'body' => 'Customers need clear information before they contact a business. We create service pages, location pages, FAQs, and supporting content that help potential customers understand what you do, where you work, and why they should choose your business.'],
         ['icon' => 'book-open', 'title' => 'Local Content Marketing', 'body' => 'Educational articles, resource centers, and service-focused blog content help answer customer questions, support local search visibility, and establish credibility within your market.'],
         ['icon' => 'camera',    'title' => 'Visual Content & Design', 'body' => 'Strong visual content helps customers understand who you are before they ever pick up the phone. We create graphics, photography, video content, and branded assets that support your website, social media presence, and advertising campaigns.'],
@@ -219,24 +219,24 @@ $industries['service-providers'] = [
     'why'               => [
         ['title' => 'All of the Services You Need Under One Roof', 'body' => 'SEO, content, design, photography, video, and paid advertising working together to help service providers attract and convert new customers.'],
         ['title' => 'Human-Created. Expert-Led.', 'body' => 'Every project is developed by experienced professionals who understand how customers search for and evaluate service providers.'],
-        ['title' => 'Built for Growth', 'body' => 'Whether you\'re expanding into new markets, opening new locations, or growing your service area, our team can scale alongside your business.'],
+        ['title' => 'Built for Growth', 'body' => 'Whether you’re expanding into new markets, opening new locations, or growing your service area, our team can scale alongside your business.'],
         ['title' => 'A True Extension of Your Team', 'body' => 'Work with strategists, writers, editors, creatives, and SEO specialists who understand your services, your customers, and your goals.'],
     ],
     'faqs'              => [
-        ['q' => 'What is local SEO?', 'a' => 'Local SEO is the process of improving a business\'s visibility in local search results through website optimization, Google Business Profile management, local content creation, and location-based SEO strategies.'],
+        ['q' => 'What is local SEO?', 'a' => 'Local SEO is the process of improving a business’s visibility in local search results through website optimization, Google Business Profile management, local content creation, and location-based SEO strategies.'],
         ['q' => 'Do service pages help SEO?', 'a' => 'Yes. Service pages help search engines understand the services you offer while providing customers with the information they need to evaluate your business.'],
         ['q' => 'Do I need separate location pages?', 'a' => 'If your business serves multiple cities, neighborhoods, or markets, dedicated location pages can help improve visibility for local searches in those areas.'],
         ['q' => 'Can Stretch Creative support franchises and multi-location businesses?', 'a' => 'Absolutely. We regularly support franchises and large organizations with multiple locations, various service offerings, and complex local SEO needs.'],
     ],
     'final_heading'     => 'Ready to Grow Your Service Business?',
-    'final_text'        => 'Stretch Creative provides local SEO, strategy, and content services that can help get—and keep—your phones ringing. Let\'s talk about how we can help you grow.',
+    'final_text'        => 'Stretch Creative provides local SEO, strategy, and content services that can help get—and keep—your phones ringing. Let’s talk about how we can help you grow.',
 ];
 
 $industries['saas'] = [
     'title'             => 'SaaS & Digital Platforms',
     'overline'          => 'SaaS & Digital Platforms',
     'h1'                => 'SaaS and Digital Platform SEO, Content & Creative Services',
-    'hero_text'         => 'Help your audience understand what you offer, why it matters, and whether it\'s the right fit.',
+    'hero_text'         => 'Help your audience understand what you offer, why it matters, and whether it’s the right fit.',
     'cta_label'         => 'Schedule a Discovery Call',
     'audiences'         => [
         ['label' => 'SaaS Companies', 'icon' => 'monitor'],
@@ -266,10 +266,10 @@ $industries['saas'] = [
     'solutions_heading' => 'Solutions Built for SaaS Companies and Digital Platforms',
     'solutions'         => [
         ['icon' => 'search',    'title' => 'SaaS SEO & Content Strategy', 'body' => 'Strong SaaS content starts with understanding how potential customers search for solutions. We develop AEO and SEO strategies, content plans, and search-optimized resources that help software companies and platforms attract qualified audiences throughout the buying process.'],
-        ['icon' => 'layout',    'title' => 'Product & Solution Pages', 'body' => 'Your website should help visitors understand what your product does, who it\'s for, and why it matters. We create product pages, solution pages, feature descriptions, landing pages, and supporting content that simplify complex offerings without oversimplifying them.'],
-        ['icon' => 'book-open', 'title' => 'Thought Leadership & Educational Content', 'body' => 'Many buyers need education before they\'re ready to commit. Blogs, guides, white papers, case studies, research reports, and other long-form content help establish authority, answer questions, and support informed decision-making.'],
+        ['icon' => 'layout',    'title' => 'Product & Solution Pages', 'body' => 'Your website should help visitors understand what your product does, who it’s for, and why it matters. We create product pages, solution pages, feature descriptions, landing pages, and supporting content that simplify complex offerings without oversimplifying them.'],
+        ['icon' => 'book-open', 'title' => 'Thought Leadership & Educational Content', 'body' => 'Many buyers need education before they’re ready to commit. Blogs, guides, white papers, case studies, research reports, and other long-form content help establish authority, answer questions, and support informed decision-making.'],
         ['icon' => 'shield',    'title' => 'Expert-Written & Expert-Reviewed Content', 'body' => 'Healthcare, finance, legal, and other YMYL industries require a higher standard of accuracy and credibility. We have a roster of subject matter experts across many industries who can write or review content that informs, educates, and builds trust—byline included.'],
-        ['icon' => 'camera',    'title' => 'Visual Content & Design', 'body' => 'Complex ideas are easier to understand when they\'re presented visually. We create infographics, diagrams, presentations, branded graphics, and other visual assets that help explain products, workflows, and value propositions.'],
+        ['icon' => 'camera',    'title' => 'Visual Content & Design', 'body' => 'Complex ideas are easier to understand when they’re presented visually. We create infographics, diagrams, presentations, branded graphics, and other visual assets that help explain products, workflows, and value propositions.'],
         ['icon' => 'sparkle',   'title' => 'Interactive Content Experiences', 'body' => 'Calculators, assessments, quizzes, benchmarks, and other interactive tools help users evaluate solutions, understand potential outcomes, and engage more deeply with your brand.'],
     ],
     'mid_cta_text'      => 'Need help explaining a complex product? Schedule a discovery call today.',
@@ -287,7 +287,7 @@ $industries['saas'] = [
     'why'               => [
         ['title' => 'All of the Services You Need Under One Roof', 'body' => 'SEO, content, design, photography, video, and paid advertising working together to support your growth strategy.'],
         ['title' => 'Human-Created. Expert-Led.', 'body' => 'Every project is developed by experienced professionals who understand how to communicate important, complex ideas clearly and accurately.'],
-        ['title' => 'Built for Growth', 'body' => 'Whether you\'re launching a new product, entering a new market, or expanding your content program, our team can scale alongside your business.'],
+        ['title' => 'Built for Growth', 'body' => 'Whether you’re launching a new product, entering a new market, or expanding your content program, our team can scale alongside your business.'],
         ['title' => 'A True Extension of Your Team', 'body' => 'Work with dedicated SEO specialists, editorial teams, and creatives to reach your audience through multiple channels.'],
     ],
     'faqs'              => [
@@ -298,7 +298,7 @@ $industries['saas'] = [
         ['q' => 'Can you support product launches?', 'a' => 'Yes. We help SaaS companies create launch content, landing pages, product messaging, educational resources, and supporting creative assets.'],
     ],
     'final_heading'     => 'Ready to Get Started?',
-    'final_text'        => 'Whether you need SaaS SEO services, thought leadership content, expert-reviewed articles, or a complete content strategy, Stretch Creative can help. Let\'s talk about your SEO and content needs and what we can do to help you achieve your goals.',
+    'final_text'        => 'Whether you need SaaS SEO services, thought leadership content, expert-reviewed articles, or a complete content strategy, Stretch Creative can help. Let’s talk about your SEO and content needs and what we can do to help you achieve your goals.',
 ];
 
 // ── Create/ensure child pages + assign template + seed options ─────────
