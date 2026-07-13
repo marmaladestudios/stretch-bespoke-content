@@ -36,6 +36,9 @@ COPY setup-page-images.php /opt/setup-page-images.php
 COPY page-images/ /opt/page-images/
 COPY portfolio-assets/ /opt/portfolio-assets/
 COPY static-sites/ /opt/static-sites/
+# AUD-030: wizard seed data lives outside the theme; staged here for setup-wizard.php's
+# stretch_wizard_data_dir() to find at /opt/wizard-data in production.
+COPY wizard-data/ /opt/wizard-data/
 
 # Ensure MySQL directories exist
 RUN mkdir -p /var/run/mysqld && chown mysql:mysql /var/run/mysqld
