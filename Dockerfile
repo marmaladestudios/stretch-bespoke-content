@@ -33,6 +33,7 @@ COPY setup-industries.php /opt/setup-industries.php
 COPY setup-seo.php /opt/setup-seo.php
 COPY sideload-old-domain-images.php /opt/sideload-old-domain-images.php
 COPY setup-page-images.php /opt/setup-page-images.php
+COPY page-images/ /opt/page-images/
 COPY portfolio-assets/ /opt/portfolio-assets/
 COPY static-sites/ /opt/static-sites/
 
