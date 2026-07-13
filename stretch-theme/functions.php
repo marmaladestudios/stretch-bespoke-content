@@ -185,11 +185,21 @@ function stretch_enqueue_assets() {
         null
     );
 
+    // Theme CSS/JS — version by file mtime so the ?ver= busts browser + CDN caches
+    // whenever the file changes. A static theme version (previously 1.0.0, never
+    // bumped) left stale theme.css cached and broke the nav dropdowns on returning
+    // visitors after the redesign. filemtime changes each deploy (theme copied → new
+    // mtime), so caches bust once per deploy and stay warm within one.
+    $css_path = get_template_directory() . '/assets/css/theme.css';
+    $js_path  = get_template_directory() . '/assets/js/theme.js';
+    $css_ver  = file_exists($css_path) ? filemtime($css_path) : wp_get_theme()->get('Version');
+    $js_ver   = file_exists($js_path)  ? filemtime($js_path)  : wp_get_theme()->get('Version');
+
     // Theme CSS
-    wp_enqueue_style('stretch-theme', get_template_directory_uri() . '/assets/css/theme.css', ['stretch-google-fonts'], wp_get_theme()->get('Version'));
+    wp_enqueue_style('stretch-theme', get_template_directory_uri() . '/assets/css/theme.css', ['stretch-google-fonts'], $css_ver);
 
     // Theme JS — loaded in footer, no jQuery
-    wp_enqueue_script('stretch-theme', get_template_directory_uri() . '/assets/js/theme.js', [], wp_get_theme()->get('Version'), true);
+    wp_enqueue_script('stretch-theme', get_template_directory_uri() . '/assets/js/theme.js', [], $js_ver, true);
 }
 add_action('wp_enqueue_scripts', 'stretch_enqueue_assets');
 
