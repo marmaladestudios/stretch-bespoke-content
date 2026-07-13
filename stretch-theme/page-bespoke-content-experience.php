@@ -1224,7 +1224,7 @@ html, body { overflow-x: hidden; }
     <div class="bce-container">
       <div class="hero-layout">
         <div class="hero-text">
-          <h1>Bespoke<br>Content<br><span class="accent">Experience</span></h1>
+          <h1>Interactive<br>Content<br><span class="accent">Marketing</span></h1>
           <p class="subtitle">The future of content is multi-modal, performance-driven, and impossible to ignore.</p>
           <p class="supporting">Not just content. A custom-built organic growth asset.</p>
           <a href="/contact-stretch-creative/" class="btn-primary">Let's Chat &rarr;</a>
