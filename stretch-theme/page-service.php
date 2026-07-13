@@ -20,6 +20,10 @@ $problem         = !empty($service['problem'])         ? $service['problem']    
 $solution        = !empty($service['solution'])        ? $service['solution']        : [];
 $offerings_intro      = !empty($service['offerings_intro'])      ? $service['offerings_intro']      : '';
 $offerings            = !empty($service['offerings'])            ? $service['offerings']            : [];
+// Optional grouped offerings (e.g. two anchored capability groups). Falls back
+// to the flat $offerings list above when absent, so other service pages are
+// unaffected.
+$offerings_groups     = !empty($service['offerings_groups'])     ? $service['offerings_groups']     : [];
 $offerings_overline   = !empty($service['offerings_overline'])   ? $service['offerings_overline']   : 'Services';
 $offerings_heading    = !empty($service['offerings_heading'])    ? $service['offerings_heading']    : 'What We Deliver';
 $offerings_subheading = !empty($service['offerings_subheading']) ? $service['offerings_subheading'] : '';
@@ -623,6 +627,22 @@ html, body { overflow-x: hidden; }
   color: #4a5066;
   margin: 16px auto 0;
   max-width: 700px;
+}
+
+.svc-offerings-group {
+  scroll-margin-top: 100px;
+}
+.svc-offerings-group + .svc-offerings-group {
+  margin-top: 48px;
+}
+.svc-offerings-group-heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 600;
+  color: #252C3A;
+  text-align: center;
+  margin: 0 0 24px;
+  padding-top: 8px;
 }
 
 .svc-offering-list {
@@ -1836,7 +1856,7 @@ html, body { overflow-x: hidden; }
 <!-- ========================================
      5. OFFERINGS — ALTERNATING SHOWCASE
      ======================================== -->
-<?php if (!empty($offerings)) : ?>
+<?php if (!empty($offerings) || !empty($offerings_groups)) : ?>
 <section class="svc-section svc-offerings" aria-label="What We Deliver">
   <div class="svc-container">
     <div class="svc-section-heading">
@@ -1858,21 +1878,51 @@ html, body { overflow-x: hidden; }
       <?php endif; ?>
     </div>
 
-    <div class="svc-offering-list">
-      <?php foreach ($offerings as $i => $item) :
-        $num    = str_pad($i + 1, 2, '0', STR_PAD_LEFT);
-        $is_even = ($i % 2 === 1);
-        $anim    = $is_even ? 'svc-reveal-right' : 'svc-reveal-left';
+    <?php if (!empty($offerings_groups)) : ?>
+      <?php $og_index = 0; foreach ($offerings_groups as $group) :
+        $g_anchor = !empty($group['anchor'])  ? $group['anchor']  : '';
+        $g_heading = !empty($group['heading']) ? $group['heading'] : '';
+        $g_items   = !empty($group['items'])   ? $group['items']   : [];
       ?>
-        <div class="svc-offering-row <?php echo $is_even ? 'svc-offering-even' : ''; ?> <?php echo $anim; ?>">
-          <div class="svc-offering-number"><?php echo $num; ?></div>
-          <div class="svc-offering-body">
-            <h3><?php echo esc_html($item['title']); ?></h3>
-            <p><?php echo esc_html($item['description']); ?></p>
+        <div class="svc-offerings-group"<?php echo $g_anchor ? ' id="' . esc_attr($g_anchor) . '"' : ''; ?>>
+          <?php if ($g_heading) : ?>
+            <h3 class="svc-offerings-group-heading svc-reveal"><?php echo esc_html($g_heading); ?></h3>
+          <?php endif; ?>
+          <div class="svc-offering-list">
+            <?php foreach ($g_items as $item) :
+              $og_index++;
+              $num     = str_pad($og_index, 2, '0', STR_PAD_LEFT);
+              $is_even = ($og_index % 2 === 0);
+              $anim    = $is_even ? 'svc-reveal-right' : 'svc-reveal-left';
+            ?>
+              <div class="svc-offering-row <?php echo $is_even ? 'svc-offering-even' : ''; ?> <?php echo $anim; ?>">
+                <div class="svc-offering-number"><?php echo $num; ?></div>
+                <div class="svc-offering-body">
+                  <h3><?php echo esc_html($item['title']); ?></h3>
+                  <p><?php echo esc_html($item['description']); ?></p>
+                </div>
+              </div>
+            <?php endforeach; ?>
           </div>
         </div>
       <?php endforeach; ?>
-    </div>
+    <?php else : ?>
+      <div class="svc-offering-list">
+        <?php foreach ($offerings as $i => $item) :
+          $num    = str_pad($i + 1, 2, '0', STR_PAD_LEFT);
+          $is_even = ($i % 2 === 1);
+          $anim    = $is_even ? 'svc-reveal-right' : 'svc-reveal-left';
+        ?>
+          <div class="svc-offering-row <?php echo $is_even ? 'svc-offering-even' : ''; ?> <?php echo $anim; ?>">
+            <div class="svc-offering-number"><?php echo $num; ?></div>
+            <div class="svc-offering-body">
+              <h3><?php echo esc_html($item['title']); ?></h3>
+              <p><?php echo esc_html($item['description']); ?></p>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   </div>
 
   <div class="svc-angle-divider">

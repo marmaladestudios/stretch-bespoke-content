@@ -767,6 +767,177 @@ $services['paid-advertising'] = [
     ],
 ];
 
+// ============================================================
+// 7. Visual Content & Design
+// (combines the former Graphic Design + Video Content pages)
+// ============================================================
+$services['visual-content-and-design'] = [
+    // -------- Hero --------
+    'headline'       => 'Visual Content and Design',
+    'subheadline'    => 'Show your audience what words alone can’t.',
+    'hero_text'      =>     [
+        'People process visuals faster than text, and first impressions happen in seconds. Great visual content helps you explain complex concepts, showcase products, or tell your brand story in a way your audience will remember.',
+        'Stretch Creative combines graphic design, photography, videography, and creative strategy under one roof to produce visual assets that support your website, social media, paid advertising, email marketing, and content initiatives.',
+    ],
+    'hero_cta_label' => 'Let’s Talk Visuals',
+    'hero_cta_url'   => '/contact-stretch-creative/',
+
+    // -------- Props (stat pills, not counters) --------
+    'props' =>     [
+        'In-House Creative Team',
+        'Photography & Video Production',
+        'Graphic Design & Branding',
+        'From Concept Through Delivery',
+    ],
+
+    // -------- Problem --------
+    'problem' => [
+        'overline'   => 'The Reality',
+        'heading'    => 'First impressions happen fast.',
+        'subheading' => 'Your content deserves better visuals.',
+        'text'       =>             [
+                'Today’s audiences are swamped with information. Long paragraphs of text, generic stock photography, and inconsistent branding make it harder than ever to capture attention and communicate your message.',
+                'At the same time, businesses are expected to produce high-quality visuals for websites, blogs, social media, advertising, email campaigns, sales materials, and more. For many marketing teams, keeping up with those demands is a real challenge.',
+                'Great visual content helps people understand what you do, remember your message, and feel more confident engaging with your business.',
+            ],
+    ],
+
+    // -------- Solution --------
+    'solution' => [
+        'overline'  => 'The Solution',
+        'heading'   => 'Creative content changes the equation.',
+        'text'      =>             [
+                'Effective visual content communicates, educates, and inspires action and loyalty.',
+                'Stretch Creative helps businesses create visuals that support real marketing goals.',
+            ],
+        'points' =>             [
+                ['title' => 'We design with purpose.', 'body' => 'Every graphic, photo, and video should solve a problem. Whether it’s simplifying complex information, highlighting product features, or reinforcing your brand identity, every visual asset is created with a clear objective in mind.'],
+                ['title' => 'We keep your brand consistent.', 'body' => 'Strong brands are recognizable across every touchpoint. We create visual content that meets your brand standards and feels cohesive across websites, social media, advertising, presentations, and print materials.'],
+                ['title' => 'We handle everything in-house.', 'body' => 'From creative direction, copywriting, and design to photography, videography, editing, and post-production, our in-house team manages the entire process collaboratively. We streamline the process, and you pay less for more.'],
+                ['title' => 'We create assets that work everywhere.', 'body' => 'One photoshoot or design project shouldn’t produce just one deliverable. We develop visual content that can be adapted across multiple channels so you get more value from every project.'],
+                ['title' => 'We collaborate from concept to completion.', 'body' => 'The best creative work happens through strong partnerships. We collaborate with you throughout the process to ensure every asset reflects your goals, your audience, and your brand.'],
+            ],
+    ],
+
+    // -------- Capabilities (Offerings, in two anchored groups) --------
+    'offerings_overline'   => 'Capabilities',
+    'offerings_heading'    => 'Creative Services',
+    'offerings_intro'      => 'Our in-house creative teams collaborate across assets to keep your visuals consistent and on-brand.',
+    'offerings_groups' =>     [
+        [
+            'anchor'  => 'graphic-design',
+            'heading' => 'Graphic Design',
+            'items'   =>                 [
+                    ['title' => 'Graphic Design', 'description' => 'Branded graphics, marketing collateral, brochures, sales sheets, presentations, digital ads, and other custom design assets.'],
+                    ['title' => 'Infographics', 'description' => 'Clear, engaging visual explanations that simplify complex ideas and make information easier to understand and share.'],
+                    ['title' => 'Social Media Creative', 'description' => 'Platform-ready graphics, videos, stories, reels, and campaign assets designed to support your social media strategy.'],
+                    ['title' => 'Email & Digital Marketing Assets', 'description' => 'Graphics, banners, headers, and supporting visuals that strengthen email campaigns and digital marketing initiatives.'],
+                    ['title' => 'Presentation & Sales Materials', 'description' => 'Pitch decks, trade show materials, sales presentations, one-pagers, and visual assets that help communicate your message clearly.'],
+                    ['title' => 'Brand Support', 'description' => 'Creative direction, visual storytelling, iconography, illustration, and other design services that strengthen your brand identity.'],
+                ],
+        ],
+        [
+            'anchor'  => 'photography-video',
+            'heading' => 'Videography & Photography',
+            'items'   =>                 [
+                    ['title' => 'Brand Stories', 'description' => 'Cinematic videos that capture your brand’s personality, values, and purpose through thoughtful storytelling and polished production.'],
+                    ['title' => 'Corporate Video Services', 'description' => 'Professional videos for training, recruiting, investor relations, internal communications, product demonstrations, and marketing initiatives.'],
+                    ['title' => 'Commercial Production', 'description' => 'Broadcast-quality television commercials produced entirely in-house, from concept development and scriptwriting through filming and post-production.'],
+                    ['title' => 'Social Media Content', 'description' => 'Short-form videos and paid social creative designed to capture attention, reinforce your brand, and engage audiences across social platforms.'],
+                    ['title' => 'Documentaries', 'description' => 'Authentic, story-driven films that inform, inspire, and highlight the people, organizations, or missions behind your brand.'],
+                    ['title' => 'Motion Graphics & Animation', 'description' => 'Custom animations and motion graphics that simplify complex ideas, enhance video productions, and create engaging visual content for digital channels.'],
+                    ['title' => 'Interviews', 'description' => 'Professionally produced interviews featuring employees, executives, customers, or industry experts, suitable for websites, social media, presentations, and marketing campaigns.'],
+                    ['title' => 'Pre-Production', 'description' => 'Creative planning and logistics, including concept development, scriptwriting, storyboarding, location scouting, talent coordination, and production planning.'],
+                    ['title' => 'Production', 'description' => 'Professional video production services, including directing, cinematography, lighting, audio recording, and on-set production management.'],
+                    ['title' => 'Post-Production', 'description' => 'Editing, color correction, audio enhancement, motion graphics, subtitles, visual effects, and final formatting for distribution across multiple channels.'],
+                    ['title' => 'Video Interviewing', 'description' => 'Remote or on-location interview recording, professionally edited into long-form videos, short clips, social content, or written marketing assets.'],
+                    ['title' => 'Product & Lifestyle Photography', 'description' => 'Product photography, lifestyle imagery, team photography, headshots, environmental photography, and branded visual storytelling.'],
+                ],
+        ],
+    ],
+
+    // -------- Add-On Services --------
+    'addons_heading' => 'Add-On Services',
+    'addons' =>     [
+        ['title' => 'Creative Ideation', 'description' => 'Campaign concepts, creative direction, mood boards, shot lists, storyboards, and visual planning sessions.'],
+        ['title' => 'Budget Management', 'description' => 'Coordinated production oversight, vendor management, scheduling, and budget tracking for larger creative initiatives.'],
+        ['title' => 'Copywriting', 'description' => 'Scriptwriting, infographic writing, whitepaper and ebook copy, and any other words you need in your design assets'],
+    ],
+
+    // -------- Cross-sell CTA --------
+    'cross_cta' =>     [
+        'heading' => 'Need more than written content?',
+        'body'    => 'We’re a full-scale agency offering all of the services you need to work smarter and rank higher.',
+        'links'   => [
+            ['label' => 'SEO/AEO Services', 'url' => '/seo_content_strategy_services/'],
+            ['label' => 'Content Writing', 'url' => '/content-writing-at-any-scale/'],
+            ['label' => 'Interactive Content Marketing', 'url' => '/services/bespoke-content-experience/'],
+            ['label' => 'Paid Advertising', 'url' => '/paid-advertising/'],
+        ],
+    ],
+
+    // -------- Why Stretch / Benefits --------
+    'why_heading' => 'Why Stretch Creative?',
+    'benefits' =>     [
+        ['title' => 'All of the services you need under one roof', 'description' => 'Content writing, SEO, design, photography, video, and paid advertising working together to support your growth strategy.'],
+        ['title' => 'Human-created, expert-led', 'description' => 'Our designers, photographers, videographers, editors, and creative strategists produce visual content that’s thoughtful, purposeful, and on brand.'],
+        ['title' => 'Built to scale', 'description' => 'Whether you need a handful of graphics or an ongoing creative partner, our team can grow alongside your business.'],
+        ['title' => 'A single point of contact', 'description' => 'Your dedicated project manager keeps production moving smoothly, coordinates creative resources, and ensures every deliverable stays on schedule.'],
+    ],
+
+    // -------- FAQ: merged from graphic_design_services (first) + video-content-services (second), deduped --------
+    'faqs' => [
+        [
+            'question' => 'Can your designers match our existing brand guidelines?',
+            'answer'   => 'Absolutely. We start every engagement by thoroughly reviewing your brand guidelines, style guides, and existing assets. Our designers internalize your visual identity — colors, typography, imagery style, tone — so that every deliverable is seamlessly on-brand.',
+        ],
+        [
+            'question' => 'What is the typical turnaround time for design projects?',
+            'answer'   => 'Turnaround varies by project scope. Simple assets like social graphics typically take 2-3 business days. More complex projects like infographics or publication design may take 1-2 weeks. We always provide a timeline upfront and communicate proactively about deadlines.',
+        ],
+        [
+            'question' => 'Do you provide source files?',
+            'answer'   => 'Yes. We deliver all design work with source files included — typically in Adobe Creative Suite formats (PSD, AI, INDD) or Figma, along with exported files in whatever formats you need (PNG, JPG, SVG, PDF, etc.).',
+        ],
+        [
+            'question' => 'Can you handle large volumes of design work?',
+            'answer'   => 'Yes — scale is one of our core strengths. We have a bench of experienced designers who can ramp up quickly to handle high-volume projects, from hundreds of product images to large-scale infographic libraries. Our project managers ensure quality stays consistent as volume increases.',
+        ],
+        [
+            'question' => 'Do you offer revisions?',
+            'answer'   => 'Yes. Every project includes revision rounds to ensure you are completely satisfied with the final deliverable. We work collaboratively through feedback, and our goal is always to get it right — not just get it done.',
+        ],
+        [
+            'question' => 'Can you work with our content and marketing teams directly?',
+            'answer'   => 'Of course. We regularly embed with client teams via Slack, Asana, Monday.com, or whatever project management and communication tools you prefer. Our designers participate in creative briefs, content planning sessions, and review cycles as if they were part of your team.',
+        ],
+        [
+            'question' => 'How much does video production cost?',
+            'answer'   => 'Video production costs vary widely based on scope, complexity, and deliverables. We offer flexible packages that range from lean social-first productions to full cinematic shoots. We always start with your budget and goals, then design a production plan that maximizes value. Contact us for a custom quote.',
+        ],
+        [
+            'question' => 'How long does a typical video project take?',
+            'answer'   => 'Most projects take 4 to 8 weeks from concept to final delivery, depending on complexity. Simple social video content can be turned around in as little as 1-2 weeks. We provide a detailed production timeline at the start of every project so you know exactly what to expect.',
+        ],
+        [
+            'question' => 'Do you handle everything in-house?',
+            'answer'   => 'Yes. Strategy, scripting, production, editing, motion graphics, sound design, and color grading are all handled by our in-house team. This keeps costs down, quality consistent, and communication streamlined. For specialized needs like aerial cinematography or large-scale productions, we bring in trusted partners from our vetted network.',
+        ],
+        [
+            'question' => 'Can you create video content for social media specifically?',
+            'answer'   => 'Absolutely. Social-first video is one of our specialties. We produce platform-native content optimized for Instagram Reels, TikTok, YouTube Shorts, LinkedIn, and Facebook — with the right aspect ratios, pacing, captions, and hooks that each platform demands. We can also repurpose longer-form content into social-ready cuts.',
+        ],
+    ],
+
+    // -------- Closing CTA --------
+    'cta' => [
+        'heading'      => 'Ready to Tell Your Story Visually?',
+        'button_label' => 'Get in Touch',
+        'button_url'   => '/contact-stretch-creative/',
+        'secondary'    => false,
+    ],
+];
+
 
 // ============================================================
 // Save options and update page templates
@@ -781,6 +952,13 @@ foreach ($services as $slug => &$data) {
 }
 unset($data);
 
+// Page titles for slugs this script creates from scratch (top-level pages).
+// Existing service pages (imported from the original site) already have their
+// own titles and are matched/updated by slug below without renaming them.
+$new_page_titles = [
+    'visual-content-and-design' => 'Visual Content & Design',
+];
+
 foreach ($services as $slug => $data) {
     // Save option
     update_option('stretch_service_' . $slug, $data, false);
@@ -788,11 +966,25 @@ foreach ($services as $slug => $data) {
 
     // Find the page by slug and set its template
     $page = get_page_by_path($slug);
-    if ($page) {
+    if (!$page) {
+        // Create as a top-level page (mirrors setup-industries.php's page-creation pattern)
+        $title = isset($new_page_titles[$slug]) ? $new_page_titles[$slug] : ucwords(str_replace('-', ' ', $slug));
+        $page_id = wp_insert_post([
+            'post_title'  => $title,
+            'post_name'   => $slug,
+            'post_type'   => 'page',
+            'post_status' => 'publish',
+            'post_parent' => 0,
+        ]);
+        if ($page_id && !is_wp_error($page_id)) {
+            update_post_meta($page_id, '_wp_page_template', 'page-service.php');
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Created page: {$slug} (ID {$page_id}) and set template"); } else { echo "Created page: {$slug} (ID {$page_id}) and set template" . "\n"; }
+        } else {
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Failed to create page for slug: {$slug}"); } else { echo 'Warning: ' . "Failed to create page for slug: {$slug}" . "\n"; }
+        }
+    } else {
         update_post_meta($page->ID, '_wp_page_template', 'page-service.php');
         if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("Set template for page: {$page->post_title} (ID: {$page->ID})"); } else { echo "Set template for page: {$page->post_title} (ID: {$page->ID})" . "\n"; }
-    } else {
-        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Page not found for slug: {$slug}"); } else { echo 'Warning: ' . "Page not found for slug: {$slug}" . "\n"; }
     }
 }
 

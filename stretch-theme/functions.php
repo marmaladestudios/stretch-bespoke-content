@@ -580,6 +580,8 @@ function stretch_get_portfolio_for_service($slug) {
         'graphic_design_services'      => ['quickbooks', 'remitly'],
         'video-content-services'       => ['vicis', 'meyers-product', 'meyers-life', 'open-road', 'monster', 'nhl'],
         'paid-advertising'             => ['monster', 'nhl'],
+        // Union of the former Graphic Design + Video Content pages' keys (Task 7)
+        'visual-content-and-design'    => ['quickbooks', 'remitly', 'vicis', 'meyers-product', 'meyers-life', 'open-road', 'monster', 'nhl'],
         // Content Writing (replaced by Add-On Services, AUD-039) and SEO +
         // Content Strategy left empty — strip hides automatically
     ];
