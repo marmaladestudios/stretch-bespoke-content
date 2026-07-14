@@ -41,6 +41,9 @@ global $wpdb;
 
 const AUD004_SOURCE_META = '_aud004_source_url';
 const AUD004_THROTTLE_US = 500000; // 0.5s between remote downloads
+const AUD004_DISK_RESERVE = 134217728; // 128 MiB for MySQL + attachment metadata
+
+$aud004_disk_pressure_abort = false;
 
 $media_ext = 'jpe?g|png|gif|webp|svg|mp4|mov|m4v|webm';
 // Plain URLs: https://stretchcreative.co/wp-content/uploads/....ext
@@ -105,6 +108,21 @@ function aud004_valid_download($tmp, $filename) {
 
 /** Download one candidate URL (throttled) and sideload it as $filename. */
 function aud004_download_and_sideload($candidate_url, $filename, $parent_post_id, $label) {
+    global $aud004_disk_pressure_abort;
+
+    // Never start another media import when the persistent volume is close to
+    // full. A previous run exhausted /data after writing the image but before
+    // WordPress could persist its attachment metadata, so every later seed run
+    // downloaded another numbered copy of the same asset.
+    $uploads = wp_get_upload_dir();
+    $free    = !empty($uploads['basedir']) ? @disk_free_space($uploads['basedir']) : false;
+    if ($free !== false && $free < AUD004_DISK_RESERVE) {
+        $aud004_disk_pressure_abort = true;
+        WP_CLI::warning('Persistent disk safety reserve reached (' . size_format($free)
+            . ' free); stopping old-domain media downloads before metadata writes fail.');
+        return 0;
+    }
+
     // Boot-time safety: this runs as a deploy seed on a small instance that also
     // hosts MySQL. Oversized media (the 64MB campaign video) starves the box and
     // can crash-loop the container — skip anything > 15MB and log it for a
@@ -347,4 +365,8 @@ WP_CLI::log("Featured images set:          {$stats['thumbnails_set']}");
 WP_CLI::log('Unrecoverable URLs:           ' . count($stats['unrecoverable']));
 foreach ($stats['unrecoverable'] as $u) WP_CLI::log("  - {$u}");
 WP_CLI::log("Audit LIKE query rows left:   {$remaining}");
+if ($aud004_disk_pressure_abort) {
+    WP_CLI::error('AUD-004 stopped because the persistent disk safety reserve was reached; free or expand the disk and retry.');
+}
+
 WP_CLI::success('AUD-004 old-domain media migration pass complete.');

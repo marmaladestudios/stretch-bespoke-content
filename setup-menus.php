@@ -22,23 +22,39 @@ function stretch_menu_rebuild($menu_name, $location, array $items) {
     if (is_wp_error($menu_id)) { WP_CLI::error("Menu {$menu_name}: " . $menu_id->get_error_message()); }
 
     $add = function ($menu_id, $title, $url, $parent = 0, $classes = '') {
-        return wp_update_nav_menu_item($menu_id, 0, [
+        $result = wp_update_nav_menu_item($menu_id, 0, [
             'menu-item-title'     => $title,
             'menu-item-url'       => home_url($url),
             'menu-item-status'    => 'publish',
             'menu-item-parent-id' => $parent,
             'menu-item-classes'   => $classes, // space-separated CSS classes (e.g. nav-cta button)
         ]);
+        if (is_wp_error($result)) {
+            WP_CLI::error("Menu {$menu_id}: failed to add {$title}: " . $result->get_error_message());
+        }
+        if (!(int) $result) {
+            WP_CLI::error("Menu {$menu_id}: failed to add {$title} (no item ID returned).");
+        }
+        return (int) $result;
     };
+    $expected_count = 0;
     foreach ($items as $item) {
         $parent_id = $add($menu_id, $item['title'], $item['url'], 0, $item['classes'] ?? '');
+        $expected_count++;
         foreach ($item['children'] ?? [] as $child) {
             $add($menu_id, $child['title'], $child['url'], $parent_id, $child['classes'] ?? '');
+            $expected_count++;
         }
     }
     $locations = get_theme_mod('nav_menu_locations', []);
     $locations[$location] = $menu_id;
     set_theme_mod('nav_menu_locations', $locations);
+
+    $saved_items     = wp_get_nav_menu_items($menu_id) ?: [];
+    $saved_locations = get_theme_mod('nav_menu_locations', []);
+    if (count($saved_items) !== $expected_count || (int) ($saved_locations[$location] ?? 0) !== (int) $menu_id) {
+        WP_CLI::error("Menu {$menu_name}: verification failed after write; refusing to record the seed version.");
+    }
     WP_CLI::log("  \xe2\x9c\x93 {$menu_name} \xe2\x86\x92 {$location} (" . count($items) . " top-level items)");
 }
 
@@ -103,5 +119,10 @@ stretch_menu_rebuild('About', 'footer-3', [
     ['title' => 'Contact',    'url' => '/contact-stretch-creative/'],
     ['title' => 'Pricing',    'url' => '/pricing/'],
 ]);
+
+wp_cache_flush();
+if (function_exists('wp_cache_clear_cache')) {
+    wp_cache_clear_cache();
+}
 
 WP_CLI::success('Menus rebuilt per site map.');

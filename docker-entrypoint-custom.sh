@@ -217,10 +217,14 @@ SEED_SCRIPTS=(
     /opt/content-fixes.php
     /opt/setup-industries.php
     /opt/setup-seo.php
-    /opt/sideload-old-domain-images.php
     /opt/setup-page-images.php
     /opt/setup-menus.php
 )
+# AUD-004 intentionally stays out of the automatic boot path. It performs
+# remote downloads plus image resizing on the same 512 MiB instance as MySQL;
+# an interrupted run previously killed MySQL and left hundreds of orphaned
+# upload copies. Keep /opt/sideload-old-domain-images.php available for a
+# monitored, manual migration after the database and disk are sized for it.
 SEED_VERSION="$(cat "${SEED_SCRIPTS[@]}" 2>/dev/null | sha256sum | awk '{print $1}')"
 
 if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
@@ -274,20 +278,30 @@ if wp --allow-root --path=/var/www/html core is-installed 2>/dev/null; then
     if [ -n "${SEED_VERSION}" ] && [ "${CURRENT_SEED}" = "${SEED_VERSION}" ]; then
         echo "Seed scripts unchanged (stretch_seed_version matches) — skipping idempotent setup."
     else
-        echo "Running idempotent setup scripts (seed version ${SEED_VERSION})..."
-        SEED_OK=1
-        for seed_script in "${SEED_SCRIPTS[@]}"; do
-            if ! wp --allow-root --path=/var/www/html eval-file "${seed_script}" 2>&1; then
-                echo "  ! $(basename "${seed_script}") failed (continuing)"
-                SEED_OK=0
-            fi
-        done
-        if [ "${SEED_OK}" -eq 1 ]; then
-            wp --allow-root --path=/var/www/html option update stretch_seed_version "${SEED_VERSION}" >/dev/null 2>&1 \
-                && echo "Idempotent setup complete — recorded stretch_seed_version." \
-                || echo "Idempotent setup complete, but failed to record stretch_seed_version (will re-run next boot)."
+        # Media seeds can leave orphaned files when the persistent disk fills
+        # between writing an upload and recording its attachment metadata. Keep
+        # a 128 MiB safety reserve so a low-disk deploy cannot amplify the
+        # problem by repeatedly sideloading the same asset on every boot.
+        DISK_FREE_KB="$(df -Pk /data 2>/dev/null | awk 'NR == 2 { print $4 }')"
+        DISK_MIN_FREE_KB=131072
+        if [ -n "${DISK_FREE_KB}" ] && [ "${DISK_FREE_KB}" -lt "${DISK_MIN_FREE_KB}" ]; then
+            echo "ERROR: Persistent disk has only ${DISK_FREE_KB} KiB free; skipping seed scripts to preserve a 128 MiB database safety reserve."
         else
-            echo "Idempotent setup finished with failures — not recording version; will retry on next boot."
+            echo "Running idempotent setup scripts (seed version ${SEED_VERSION})..."
+            SEED_OK=1
+            for seed_script in "${SEED_SCRIPTS[@]}"; do
+                if ! wp --allow-root --path=/var/www/html eval-file "${seed_script}" 2>&1; then
+                    echo "  ! $(basename "${seed_script}") failed (continuing)"
+                    SEED_OK=0
+                fi
+            done
+            if [ "${SEED_OK}" -eq 1 ]; then
+                wp --allow-root --path=/var/www/html option update stretch_seed_version "${SEED_VERSION}" >/dev/null 2>&1 \
+                    && echo "Idempotent setup complete — recorded stretch_seed_version." \
+                    || echo "Idempotent setup complete, but failed to record stretch_seed_version (will re-run next boot)."
+            else
+                echo "Idempotent setup finished with failures — not recording version; will retry on next boot."
+            fi
         fi
     fi
 else

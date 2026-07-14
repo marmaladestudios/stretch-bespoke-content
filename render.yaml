@@ -3,6 +3,11 @@ services:
     name: stretch-creative
     runtime: docker
     dockerfilePath: ./Dockerfile
+    # Render's default TCP probe only checks that Apache accepts connections.
+    # WordPress returns 500 when the in-container database is unavailable, so
+    # use a non-page-cached REST probe to make database failures restart the
+    # instance instead of leaving a permanently "healthy" error page online.
+    healthCheckPath: /wp-json/wp/v2/types/post
     disk:
       name: wp-data
       mountPath: /data
