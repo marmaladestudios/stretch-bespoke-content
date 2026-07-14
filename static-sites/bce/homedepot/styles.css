@@ -1,0 +1,256 @@
+/* ==========================================================================
+   The Home Depot Bathroom Project Planner — Base Styles
+   Pitch prototype styled around the retailer's orange, charcoal, and utility-first UI.
+   ========================================================================== */
+
+:root {
+  /* Legacy variable names are retained so the standalone prototype stays compact. */
+  --angi-coral:         #f96302;
+  --angi-coral-pressed: #c94f00;
+  --angi-coral-tint:    #fff3e8;
+  --angi-teal:          #333333;
+  --angi-teal-dark:     #202020;
+  --angi-link:          #286fad;
+  --angi-mint:          #ffd5ba;
+
+  /* --- Color: neutral retail surfaces --- */
+  --angi-text:          #222222;
+  --angi-text-muted:    #666666;
+  --angi-text-disabled: #bcb9b4; /* text-disabled */
+  --angi-bg:            #ffffff; /* bg-default */
+  --angi-bg-soft:       #f5f5f5;
+  --angi-bg-cream:      #fff3e8;
+  --angi-bg-mint:       #fff3e8;
+  --angi-bg-emphasis:   #ffd5ba;
+  --angi-border:        #d9d9d9;
+
+  /* --- Status colors --- */
+  --angi-success:       #06c778;
+  --angi-warning:       #ffc020;
+  --angi-error:         #d71100;
+
+  /* --- Typography --- */
+  --angi-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --fs-h1:    2.25rem;  /* ~36px hero */
+  --fs-h2:    1.625rem; /* ~26px section */
+  --fs-h3:    1.25rem;  /* ~20px */
+  --fs-body:  1.0625rem;/* ~17px */
+  --fs-small: 0.8125rem;/* ~13px caption */
+  --fs-eyebrow: 0.75rem;/* ~12px label */
+
+  --lh-tight: 1.2;
+  --lh-body:  1.6;
+
+  /* Home Depot's retail UI relies on strong, compact utility typography. */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+
+  /* --- Spacing scale --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 48px;
+  --sp-7: 64px;
+
+  /* --- Shape --- */
+  --radius:    16px; /* corner-loose — cards, tables, callouts */
+  --radius-sm: 4px;  /* corner-button/tight — buttons, inputs */
+  --shadow:    0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  /* --- Layout --- */
+  --content-width: 720px;
+  --wide-width:    1040px;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--angi-font);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--angi-text);
+  background: var(--angi-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-bold);
+  color: var(--angi-text);
+  margin: 0 0 var(--sp-3);
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); margin-top: var(--sp-6); }
+h3 { font-size: var(--fs-h3); margin-top: var(--sp-4); }
+
+p { margin: 0 0 var(--sp-3); }
+
+a {
+  color: var(--angi-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+.angi-content {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--sp-3);
+}
+
+.angi-band {            /* full-bleed colored band (hero/footer) */
+  background: var(--angi-teal);
+  color: #fff;
+}
+.angi-band h1,
+.angi-band h2,
+.angi-band h3 { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Eyebrow / category label
+   -------------------------------------------------------------------------- */
+.angi-eyebrow {
+  font-size: var(--fs-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--fw-bold);
+  color: var(--angi-coral);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — coral = action
+   -------------------------------------------------------------------------- */
+.angi-btn {
+  display: inline-block;
+  background: var(--angi-coral);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.angi-btn:hover { background: var(--angi-coral-pressed); text-decoration: none; }
+
+.angi-btn--teal { background: var(--angi-teal); }
+.angi-btn--teal:hover { background: var(--angi-teal-dark); }
+
+/* --------------------------------------------------------------------------
+   Inline services CTA card
+   -------------------------------------------------------------------------- */
+.angi-cta-card {
+  background: var(--angi-bg-mint);
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin: var(--sp-5) 0;
+}
+.angi-cta-card__text { font-weight: var(--fw-medium); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   Cost table — header + zebra striping
+   -------------------------------------------------------------------------- */
+.angi-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: var(--sp-4) 0;
+  font-size: var(--fs-body);
+}
+.angi-table thead th {
+  background: var(--angi-teal);
+  color: #fff;
+  text-align: left;
+  font-weight: var(--fw-bold);
+  padding: var(--sp-3);
+}
+.angi-table td {
+  padding: var(--sp-3);
+  border-top: 1px solid var(--angi-border);
+}
+.angi-table tbody tr:nth-child(even) { background: var(--angi-bg-soft); }
+
+/* --------------------------------------------------------------------------
+   Callout / checklist block
+   -------------------------------------------------------------------------- */
+.angi-callout {
+  background: var(--angi-bg-soft);
+  border: 1px solid var(--angi-border);
+  border-left: 4px solid var(--angi-coral);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  margin: var(--sp-4) 0;
+}
+
+/* --------------------------------------------------------------------------
+   Image + caption
+   -------------------------------------------------------------------------- */
+.angi-figure { margin: var(--sp-4) 0; }
+.angi-figure img { width: 100%; border-radius: var(--radius); display: block; }
+.angi-figure figcaption {
+  font-size: var(--fs-small);
+  color: var(--angi-text-muted);
+  margin-top: var(--sp-2);
+}
+
+/* --------------------------------------------------------------------------
+   Related-articles grid
+   -------------------------------------------------------------------------- */
+.angi-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  margin: var(--sp-5) 0;
+}
+.angi-card {
+  border: 1px solid var(--angi-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+}
+.angi-card img { width: 100%; display: block; }
+.angi-card__body { padding: var(--sp-3); }
+.angi-card__title { font-weight: var(--fw-bold); margin: var(--sp-1) 0 0; }
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.angi-footer {
+  background: var(--angi-teal-dark);
+  color: #fff;
+  padding: var(--sp-7) 0;
+}
+.angi-footer a { color: #fff; opacity: 0.85; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  :root { --fs-h1: 1.75rem; --fs-h2: 1.375rem; }
+  .angi-card-grid { grid-template-columns: 1fr; }
+  .angi-cta-card { flex-direction: column; align-items: flex-start; }
+}
