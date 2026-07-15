@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="./app.css?v=20260714-real-products">
 </head>
 <body>
+  <a class="skip-link" href="#cost-estimator">Skip to bathroom planner</a>
+  <a class="skip-link skip-link--article" href="#articleContent">Skip to article content</a>
   <svg aria-hidden="true" class="icon-sprite">
     <symbol id="ic-shower" viewBox="0 0 24 24"><path d="M3 13h18v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"></path><path d="M5 13V7a2.4 2.4 0 0 1 4.8 0"></path><path d="M9.8 7h.01"></path><path d="M7 19l-1 2M18 19l1 2"></path></symbol>
     <symbol id="ic-vanity" viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="1.6"></rect><ellipse cx="12" cy="12" rx="5" ry="2"></ellipse><path d="M12 6.4v2.6"></path><path d="M12 5a1.1 1.1 0 0 1 0 2.2"></path><path d="M4 14.5h16"></path></symbol>
@@ -35,7 +37,7 @@
       <a class="site-logo" href="https://www.homedepot.com/" aria-label="The Home Depot home">
         <img src="./assets/home-depot-logo.svg" alt="The Home Depot">
       </a>
-      <button class="store-chip" type="button"><span>Your store</span><strong>Vancouver Cambie</strong></button>
+      <button class="store-chip" type="button" aria-label="Current planning market"><span>Planning market</span><strong id="storeChipLabel">United States</strong></button>
       <form class="site-search" action="https://www.homedepot.com/s/" role="search">
         <label class="sr-only" for="siteSearch">What can we help you find?</label>
         <input id="siteSearch" name="keyword" type="search" placeholder="What can we help you find?">
@@ -101,14 +103,14 @@
     </div>
   </section>
 
-  <main class="article-shell">
+  <main id="articleContent" class="article-shell">
     <article class="article-main">
       <p class="updated-date">Last updated July 14, 2026</p>
 
       <p class="tool-lede">Start with the default room, then drag fixtures, doors, and windows into place. The estimate updates as you size each item, choose a finish level, add options, or switch metro pricing.</p>
     </article>
 
-    <section id="cost-estimator" class="builder-app article-tool" aria-live="polite">
+    <section id="cost-estimator" class="builder-app article-tool">
       <header class="builder-hero">
         <div>
           <p class="builder-eyebrow"><span></span> Project planning tool</p>
@@ -124,7 +126,7 @@
             <p>Drag fixtures, adjust dimensions, and build a store-ready scope.</p>
             <div class="plan-toolbar">
               <div class="location-picker">
-                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <button id="locationToggle" class="location-button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="locationMenu">
                   <span class="pin-icon"><svg><use href="#ic-pin"></use></svg></span>
                   <span id="locationLabel">National pricing</span>
                   <span class="chevron">v</span>
@@ -133,19 +135,26 @@
               </div>
               <button id="locateButton" class="locate-button" type="button">
                 <span class="pin-icon"><svg><use href="#ic-target"></use></svg></span>
-                Use my store
+                Choose market
               </button>
               <p id="locationNote" class="location-note">Showing planning ranges. Select a market to reflect local product and installation costs.</p>
             </div>
           </div>
-          <div class="module-view-tabs" aria-label="Planner views">
-            <button type="button" class="is-active" data-action="view" data-view="plan">Plan</button>
-            <button type="button" data-action="view" data-view="estimate">Estimate</button>
-            <button type="button" data-action="view" data-view="guides">Shop &amp; learn</button>
+          <div class="module-view-tabs" role="tablist" aria-label="Planner views">
+            <button id="planTab" type="button" class="is-active" role="tab" aria-controls="planView" aria-selected="true" data-action="view" data-view="plan">Plan</button>
+            <button id="estimateTab" type="button" role="tab" aria-controls="estimateView" aria-selected="false" data-action="view" data-view="estimate">Estimate &amp; materials</button>
+            <button id="guidesTab" type="button" role="tab" aria-controls="guidesView" aria-selected="false" data-action="view" data-view="guides">Ideas &amp; guides</button>
           </div>
         </div>
 
-        <section id="planView" class="studio-grid module-view module-view--plan is-active" aria-label="Bathroom builder">
+        <div class="mobile-planner-modes" role="tablist" aria-label="Mobile planner controls">
+          <button type="button" role="tab" aria-selected="true" data-action="mobile-mode" data-mobile-mode="items">Items</button>
+          <button type="button" role="tab" aria-selected="false" data-action="mobile-mode" data-mobile-mode="room">Room</button>
+          <button type="button" role="tab" aria-selected="false" data-action="mobile-mode" data-mobile-mode="details">Details</button>
+          <button type="button" role="tab" aria-selected="false" data-action="mobile-mode" data-mobile-mode="summary">Summary</button>
+        </div>
+
+        <section id="planView" class="studio-grid module-view module-view--plan is-active" role="tabpanel" aria-labelledby="planTab" aria-label="Bathroom builder">
           <aside class="panel palette-panel" aria-labelledby="paletteTitle">
             <div class="panel-title" id="paletteTitle">Project items</div>
             <p class="panel-subtitle">Drag onto your plan — add as many as you need</p>
@@ -173,7 +182,8 @@
             </div>
 
             <div class="canvas-wrap">
-              <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas">
+              <p id="plannerKeyboardHint" class="sr-only">Use the project item buttons to add fixtures. Select a fixture, then use the arrow keys to move it by half a foot. Hold Shift to move by one foot. Focus the resize handle and use the arrow keys to change its width or depth.</p>
+              <div id="planCanvas" class="plan-canvas" tabindex="0" aria-label="Bathroom floor plan canvas" aria-describedby="plannerKeyboardHint">
                 <span id="canvasHeightLabel" class="canvas-measure canvas-measure--height">8 ft</span>
                 <span id="canvasWidthLabel" class="canvas-measure canvas-measure--width">10 ft</span>
                 <div id="roomOpenings" class="room-openings"></div>
@@ -184,22 +194,25 @@
                 </div>
               </div>
             </div>
+            <p id="plannerStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+            <div id="layoutWarnings" class="layout-warnings" hidden></div>
           </section>
 
           <aside class="panel inspector-panel" aria-labelledby="estimateTitle">
-            <div id="inspectorContent" class="inspector-content"></div>
+            <div id="inspectorContent" class="inspector-content" tabindex="-1"></div>
           </aside>
         </section>
 
-        <section id="estimateView" class="module-view estimate-screen" aria-labelledby="estimateViewTitle" hidden>
+        <section id="estimateView" class="module-view estimate-screen" role="tabpanel" aria-labelledby="estimateTab estimateViewTitle" hidden>
           <div class="estimate-screen__summary">
             <div>
               <p class="mini-eyebrow">Estimate</p>
-              <h2 id="estimateViewTitle">Project estimate breakdown</h2>
-              <p id="estimateViewIntro">See how your selected fixtures, finishes, room size, and location affect the current project range.</p>
+              <h2 id="estimateViewTitle">Project estimate &amp; materials</h2>
+              <p id="estimateViewIntro">Review your selected products, material quantities, and installation planning range.</p>
             </div>
             <div class="estimate-screen__actions">
-              <button id="estimateQuoteButton" class="quote-button" type="button" disabled aria-disabled="true">Build project list</button>
+              <button id="cartHandoffButton" class="quote-button" type="button" data-action="cart-handoff" disabled aria-disabled="true">Prepare cart handoff</button>
+              <p id="cartHandoffStatus" class="cart-handoff-status" role="status" aria-live="polite" hidden></p>
               <button id="estimateDownloadButton" class="download-button" type="button">Download project plan</button>
             </div>
           </div>
@@ -213,39 +226,47 @@
               <div id="estimateDrivers" class="estimate-driver-list"></div>
             </aside>
           </div>
+          <section class="materials-workspace" aria-labelledby="materialsWorkspaceTitle">
+            <div class="materials-workspace__heading">
+              <div>
+                <p class="mini-eyebrow">Project materials</p>
+                <h3 id="materialsWorkspaceTitle">Selected products and coordinated options</h3>
+                <p>Choose products for your plan, compare compatible alternatives, and keep the room look together.</p>
+              </div>
+            </div>
+            <section class="complete-room" aria-labelledby="completeRoomTitle">
+              <div class="complete-room__head">
+                <div>
+                  <p class="mini-eyebrow">Complete the room</p>
+                  <h3 id="completeRoomTitle">A coordinated set, built from your selection</h3>
+                  <p id="completeRoomIntro">Choose a product to see fixtures and finishes that share its palette.</p>
+                </div>
+                <span class="match-badge">Smart match</span>
+              </div>
+              <div id="coordinatedRoom" class="coordinated-room-grid"></div>
+            </section>
+            <section class="product-catalog" aria-labelledby="productCatalogTitle">
+              <div class="product-catalog__head">
+                <div>
+                  <p class="mini-eyebrow">Compatible products</p>
+                  <h3 id="productCatalogTitle">Options for every item in your plan</h3>
+                </div>
+                <p>Sample prices checked July 14, 2026. Local price and availability may vary.</p>
+              </div>
+              <div id="productCollections" class="product-collections"></div>
+            </section>
+          </section>
         </section>
 
-        <section id="guidesView" class="module-view guides-screen" aria-labelledby="guidesViewTitle" hidden>
+        <section id="guidesView" class="module-view guides-screen" role="tabpanel" aria-labelledby="guidesTab guidesViewTitle" hidden>
           <div class="guides-screen__header">
             <div>
-              <p class="mini-eyebrow">Shop &amp; learn</p>
-              <h2 id="guidesViewTitle">Products and guides matched to your remodel</h2>
+              <p class="mini-eyebrow">Ideas &amp; guides</p>
+              <h2 id="guidesViewTitle">Ideas and guides for your remodel</h2>
               <p id="guidesViewIntro">Recommendations update based on the items currently in your plan.</p>
             </div>
             <a href="https://www.homedepot.com/c/alp/home-decor-ideas-bathroom-ideas-projects/vy9i-jg0j-Zb9bd/4" target="_blank" rel="noreferrer">Browse bathroom projects</a>
           </div>
-          <section class="complete-room" aria-labelledby="completeRoomTitle">
-            <div class="complete-room__head">
-              <div>
-                <p class="mini-eyebrow">Complete the room</p>
-                <h3 id="completeRoomTitle">A coordinated set, built from your selection</h3>
-                <p id="completeRoomIntro">Choose a product to see fixtures and finishes that share its palette.</p>
-              </div>
-              <span class="match-badge">Smart match</span>
-            </div>
-            <div id="coordinatedRoom" class="coordinated-room-grid"></div>
-          </section>
-          <section class="product-catalog" aria-labelledby="productCatalogTitle">
-            <div class="product-catalog__head">
-              <div>
-                <p class="mini-eyebrow">Real products</p>
-                <h3 id="productCatalogTitle">Options for every item in your plan</h3>
-              </div>
-              <p>Online prices checked July 14, 2026. Local price and availability may vary.</p>
-            </div>
-            <div id="productCollections" class="product-collections"></div>
-          </section>
-          <div class="guides-divider"><span>How-to guides</span></div>
           <div id="guideCollections" class="guide-collections"></div>
         </section>
 
@@ -259,21 +280,9 @@
             <span id="estimateNote">Showing planning ranges. Select a market to reflect local product and installation costs.</span>
           </div>
           <div class="estimate-bar__actions">
-            <button id="quoteButton" class="quote-button" type="button">Build project list</button>
+            <button id="quoteButton" class="quote-button" type="button">Download project plan</button>
             <button id="downloadPlanButton" class="download-button download-button--on-dark" type="button">Download project plan</button>
           </div>
-        </section>
-
-        <section class="recommendation-band" aria-labelledby="recommendedGuidesTitle">
-          <div class="recommendation-band__heading">
-            <div>
-              <p class="mini-eyebrow">Next aisle</p>
-              <h2 id="recommendedGuidesTitle">Guides and know-how for your project</h2>
-              <p id="recommendationIntro">Recommendations update as you add fixtures, finishes, and scope.</p>
-            </div>
-            <a href="https://www.homedepot.com/b/Bath/N-5yc1vZbzb3" target="_blank" rel="noreferrer">Shop bath</a>
-          </div>
-          <div id="recommendedGuides" class="recommended-guides"></div>
         </section>
 
         <section class="pro-handoff" aria-labelledby="proHandoffTitle">
@@ -291,6 +300,18 @@
             </div>
             <p>Free consultation. Product and service availability varies by market.</p>
           </form>
+        </section>
+
+        <section class="recommendation-band" aria-labelledby="recommendedGuidesTitle">
+          <div class="recommendation-band__heading">
+            <div>
+              <p class="mini-eyebrow">Next aisle</p>
+              <h2 id="recommendedGuidesTitle">Guides and know-how for your project</h2>
+              <p id="recommendationIntro">Recommendations update as you add fixtures, finishes, and scope.</p>
+            </div>
+            <a href="https://www.homedepot.com/b/Bath/N-5yc1vZbzb3" target="_blank" rel="noreferrer">Browse bathroom projects</a>
+          </div>
+          <div id="recommendedGuides" class="recommended-guides"></div>
         </section>
       </div>
     </section>
@@ -435,21 +456,23 @@
   </footer>
 
   <div id="briefModal" class="modal" hidden>
-    <div class="modal-box">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="briefModalTitle" aria-describedby="briefSummary" tabindex="-1">
       <button id="modalClose" type="button" class="modal-close" aria-label="Close">&times;</button>
-      <p class="builder-eyebrow"><span></span> My project</p>
-      <h2>Save your bathroom project</h2>
-      <p id="briefSummary">Add fixtures to generate a store-ready project plan.</p>
+      <p class="builder-eyebrow"><span></span> Project plan</p>
+      <h2 id="briefModalTitle">Download your project plan</h2>
+      <p id="briefSummary">Add fixtures to generate a project plan.</p>
       <form id="downloadLeadForm" class="lead-form">
         <label for="leadName">
-          Name
-          <input id="leadName" name="name" type="text" autocomplete="name" required>
+          Prepared for <span class="form-optional">Optional</span>
+          <input id="leadName" name="name" type="text" autocomplete="name">
         </label>
         <label for="leadEmail">
-          Email
-          <input id="leadEmail" name="email" type="email" autocomplete="email" required>
+          Email <span class="form-optional">Optional</span>
+          <input id="leadEmail" name="email" type="email" autocomplete="email">
         </label>
-        <button id="downloadBrief" type="submit" class="quote-button">Save &amp; Download Plan</button>
+        <p class="form-note">This prototype downloads a local PDF. It does not save your details or create a Home Depot list.</p>
+        <p id="downloadError" class="form-error" role="alert" hidden></p>
+        <button id="downloadBrief" type="submit" class="quote-button">Download project plan</button>
       </form>
     </div>
   </div>

@@ -116,6 +116,11 @@ const PRODUCTS = [
   { id: 'shower-alliance', type: 'shower', tier: 'good', brand: 'DreamLine', title: 'Alliance Pro BG 60 in. Semi-Frameless Sliding Shower Door', price: '$350.00', model: 'SDAB60A700VXX09', url: 'https://www.homedepot.com/p/321168371', image: './assets/products/shower-alliance.jpg', styles: ['modern-black', 'clean-white'], why: 'Matte black framing gives the room a crisp modern anchor.' },
   { id: 'shower-essence', type: 'shower', tier: 'better', brand: 'DreamLine', title: 'Essence 56–60 in. Frameless Sliding Shower Door', price: '$637.49', model: 'SHDR-6360760-09', url: 'https://www.homedepot.com/p/316239133', image: './assets/products/shower-essence.jpg', styles: ['modern-black', 'soft-carrara'], why: 'The clear glass keeps Carrara and white wall tile visible.' },
   { id: 'shower-encore', type: 'shower', tier: 'best', brand: 'DreamLine', title: 'Encore 56–60 in. Semi-Frameless Sliding Shower Door', price: '$713.00', model: 'SHDR-1660760-09', url: 'https://www.homedepot.com/p/302273336', image: './assets/products/shower-encore.jpg', styles: ['modern-black', 'warm-oak'], why: 'The strong black outline balances warm wood and pale stone.' },
+  { id: 'tub-mustee-durawall', type: 'shower', tier: 'good', brand: 'MUSTEE', title: 'Durawall 60 in. Rectangular Tub / Shower Combo Unit in White', price: '$789.00', model: 'K-3060R-53WHT', url: 'https://www.homedepot.com/p/323185149', image: './assets/bathroom-double-vanity-bathtub-shower.jpg', styles: ['clean-white'], why: 'The one-piece white tub and wall set keeps a compact bath clean and practical.' },
+  { id: 'tub-delta-classic', type: 'shower', tier: 'better', brand: 'Delta', title: 'Classic 500 60 in. Alcove Bathtub and Shower Combo in High Gloss White', price: '$678.00', model: 'BVS2-C522-WH', url: 'https://www.homedepot.com/p/321602830', image: './assets/bathroom-double-vanity-bathtub-shower.jpg', styles: ['clean-white', 'soft-carrara'], why: 'The bright white alcove kit pairs easily with pale stone and tile finishes.' },
+  { id: 'tub-cantora', type: 'shower', tier: 'good', brand: 'Home Decorators Collection', title: 'Cantora 60 in. Freestanding Flatbottom Soaking Bathtub in White', price: '$599.00', model: 'GBBA013', url: 'https://www.homedepot.com/p/304905712', image: './assets/interior-small-bathroom.jpg', styles: ['clean-white', 'soft-carrara'], why: 'Its clean freestanding silhouette gives a light, spa-like focal point.' },
+  { id: 'tub-aldrich', type: 'shower', tier: 'better', brand: 'Home Decorators Collection', title: 'Aldrich 59 in. Freestanding Flatbottom Soaking Bathtub in White', price: '$576.40', model: 'GBBA016', url: 'https://www.homedepot.com/p/313951286', image: './assets/interior-small-bathroom.jpg', styles: ['clean-white', 'brushed-nickel'], why: 'The centered-drain soaking tub works well with simple nickel and white finishes.' },
+  { id: 'tub-coniston', type: 'shower', tier: 'best', brand: 'Home Decorators Collection', title: 'Coniston 60 in. Acrylic Single Slipper Soaking Bathtub in White', price: '$799.00', model: 'GBBA019', url: 'https://www.homedepot.com/p/321198959', image: './assets/interior-small-bathroom.jpg', styles: ['clean-white', 'brushed-nickel'], why: 'The slipper shape and included brushed-nickel hardware make a more finished focal point.' },
   { id: 'vanity-everdean', type: 'vanity', tier: 'good', brand: 'Glacier Bay', title: 'Everdean 37 in. White Vanity with Cultured Marble Top', price: '$389.00', model: 'EV36P2-WH', url: 'https://www.homedepot.com/p/311606052', image: './assets/products/vanity-everdean.jpg', styles: ['clean-white', 'brushed-nickel'], why: 'The included white top makes an easy base for subway tile.' },
   { id: 'vanity-sonoma', type: 'vanity', tier: 'better', brand: 'Home Decorators Collection', title: 'Sonoma 36 in. Pebble Gray Vanity with Carrara Marble Top', price: '$1,349.00', model: 'Sonoma 36PG', url: 'https://www.homedepot.com/p/300711784', image: './assets/products/vanity-sonoma.jpg', styles: ['soft-carrara', 'brushed-nickel', 'coastal-gray'], why: 'Its included Carrara top establishes the stone palette for the room.' },
   { id: 'vanity-aberdeen', type: 'vanity', tier: 'best', brand: 'Home Decorators Collection', title: 'Aberdeen 48 in. Antique Oak Vanity with Carrara Marble Top', price: '$1,899.00', model: 'Aberdeen 48AO', url: 'https://www.homedepot.com/p/312613755', image: './assets/products/vanity-aberdeen.jpg', styles: ['warm-oak', 'soft-carrara', 'brushed-nickel'], why: 'Warm oak adds depth while the Carrara top ties into pale tile.' },
@@ -123,7 +128,7 @@ const PRODUCTS = [
   { id: 'tile-restore-4x12', type: 'tile', tier: 'better', brand: 'Daltile', title: 'Restore Bright White 4 x 12 Ceramic Subway Tile', price: '$2.05 / sq. ft.', model: 'RE15412MODHD1P2', url: 'https://www.homedepot.com/p/311781598', image: './assets/products/tile-restore-4x12.jpg', styles: ['clean-white', 'brushed-nickel'], why: 'The longer format feels updated and stays neutral with nickel.' },
   { id: 'tile-carrara-penny', type: 'tile', tier: 'best', brand: 'MSI', title: 'Carrara Penny Round Matte Porcelain Mosaic Tile', price: '$11.52 / sq. ft.', model: 'PT-PENRD-CARMC', url: 'https://www.homedepot.com/p/315654369', image: './assets/products/tile-carrara-penny.jpg', styles: ['soft-carrara', 'brushed-nickel'], why: 'The marble look repeats a Carrara vanity top without competing with it.' },
   { id: 'floor-breaksea', type: 'floor', tier: 'good', brand: 'TrafficMaster', title: 'Breaksea Island Waterproof Click Lock Vinyl Plank', price: '$1.49 / sq. ft.', model: 'VTRHDBREAIS6X36', url: 'https://www.homedepot.com/p/324087709', image: './assets/products/floor-breaksea.jpg', styles: ['coastal-gray', 'clean-white'], why: 'A cool gray plank works with white cabinetry and pebble-gray finishes.' },
-  { id: 'floor-dusk-cherry', type: 'floor', tier: 'better', brand: 'Lifeproof', title: 'Dusk Cherry Waterproof Luxury Vinyl Plank', price: '$3.28 / sq. ft.', model: 'I06204LP', url: 'https://www.homedepot.com/p/311573441', image: './assets/products/floor-dusk-cherry.jpg', styles: ['warm-oak', 'modern-black'], why: 'The warm grain supports oak cabinetry and softens black metal.' },
+  { id: 'floor-dusk-cherry', type: 'floor', tier: 'better', brand: 'Lifeproof', title: 'Dusk Cherry Waterproof Luxury Vinyl Plank', price: '$2.98 / sq. ft.', model: 'I06204LP', url: 'https://www.homedepot.com/p/311573441', image: './assets/products/floor-dusk-cherry.jpg', styles: ['warm-oak', 'modern-black'], why: 'The warm grain supports oak cabinetry and softens black metal.' },
   { id: 'floor-carrara', type: 'floor', tier: 'best', brand: 'MSI', title: 'Carrara 24 x 24 Matte Porcelain Marble Look Tile', price: '$3.55 / sq. ft.', model: 'NCAR2424-N', url: 'https://www.homedepot.com/p/316119204', image: './assets/products/floor-carrara.jpg', styles: ['soft-carrara', 'clean-white'], why: 'Large pale tiles continue the Carrara palette with fewer grout lines.' },
   { id: 'toilet-powerflush', type: 'toilet', tier: 'good', brand: 'Glacier Bay', title: 'Power Flush 2-Piece Round Toilet with Seat', price: '$129.00', model: 'N2450R-17', url: 'https://www.homedepot.com/p/338019410', image: './assets/products/toilet-powerflush.jpg', styles: ['clean-white'], why: 'A neutral white fixture fits every coordinated palette.' },
   { id: 'toilet-powerflush-tall', type: 'toilet', tier: 'better', brand: 'Glacier Bay', title: 'Power Flush Extra Tall Round Front Toilet', price: '$179.00', model: 'N2450R-19', url: 'https://www.homedepot.com/p/333499067', image: './assets/products/toilet-powerflush-tall.jpg', styles: ['clean-white'], why: 'The taller profile adds comfort without changing the finish story.' },
@@ -139,6 +144,37 @@ const VANITY_ACCESSORIES = [
   { label: 'Compatible 4 in. faucet', title: 'Glacier Bay Constructor Centerset Faucet in Brushed Nickel', price: '$29.98', url: 'https://www.homedepot.com/p/300687495', styles: ['brushed-nickel', 'clean-white'], forProduct: 'vanity-everdean' },
   { label: 'Compatible 8 in. faucet', title: 'Pfister Ladera Widespread Faucet in Brushed Nickel', price: '$127.71', url: 'https://www.homedepot.com/p/300721647', styles: ['brushed-nickel', 'soft-carrara'], forProduct: ['vanity-sonoma', 'vanity-aberdeen'] },
 ];
+
+const PRODUCT_METADATA = {
+  'shower-alliance': { amount: 350, unit: 'each', variants: ['Walk-in shower'], includes: ['glassDoor'] },
+  'shower-essence': { amount: 637.49, unit: 'each', variants: ['Walk-in shower'], includes: ['glassDoor'] },
+  'shower-encore': { amount: 713, unit: 'each', variants: ['Walk-in shower'], includes: ['glassDoor'] },
+  'tub-mustee-durawall': { amount: 789, unit: 'each', variants: ['Tub / shower combo'], includes: [] },
+  'tub-delta-classic': { amount: 678, unit: 'each', variants: ['Tub / shower combo'], includes: [] },
+  'tub-cantora': { amount: 599, unit: 'each', variants: ['Freestanding tub'], includes: [] },
+  'tub-aldrich': { amount: 576.4, unit: 'each', variants: ['Freestanding tub'], includes: [] },
+  'tub-coniston': { amount: 799, unit: 'each', variants: ['Freestanding tub'], includes: [] },
+  'vanity-everdean': { amount: 389, unit: 'each', variants: ['Single vanity'], minWidth: 2.75, maxWidth: 3.25, includes: ['countertop', 'sink'] },
+  'vanity-sonoma': { amount: 1349, unit: 'each', variants: ['Single vanity'], minWidth: 2.75, maxWidth: 3.25, includes: ['countertop', 'sink'] },
+  'vanity-aberdeen': { amount: 1899, unit: 'each', variants: ['Single vanity'], minWidth: 3.75, maxWidth: 4.25, includes: ['countertop', 'sink'] },
+  'tile-restore-3x6': { amount: 1.2, unit: 'sq. ft.', variants: ['Shower surround', 'Floor tile', 'Backsplash', 'Accent wall'], includes: [] },
+  'tile-restore-4x12': { amount: 2.05, unit: 'sq. ft.', variants: ['Shower surround', 'Floor tile', 'Backsplash', 'Accent wall'], includes: [] },
+  'tile-carrara-penny': { amount: 11.52, unit: 'sq. ft.', variants: ['Shower surround', 'Floor tile', 'Backsplash', 'Accent wall'], includes: [] },
+  'floor-breaksea': { amount: 1.49, unit: 'sq. ft.', variants: ['Main floor'], includes: [] },
+  'floor-dusk-cherry': { amount: 2.98, unit: 'sq. ft.', caseAmount: 59.97, coverageSqFt: 20.1, variants: ['Main floor'], includes: [] },
+  'floor-carrara': { amount: 3.55, unit: 'sq. ft.', variants: ['Main floor'], includes: [] },
+  'toilet-powerflush': { amount: 129, unit: 'each', variants: ['Standard'], includes: [] },
+  'toilet-powerflush-tall': { amount: 179, unit: 'each', variants: ['Standard'], includes: [] },
+  'toilet-cadet3': { amount: 259, unit: 'each', variants: ['Standard'], includes: [] },
+  'light-ayelen': { amount: 59.97, unit: 'each', variants: ['Vanity lights'], includes: [] },
+  'light-halyn': { amount: 109.97, unit: 'each', variants: ['Vanity lights'], includes: [] },
+  'light-regan': { amount: 119.97, unit: 'each', variants: ['Vanity lights'], includes: [] },
+};
+
+const ADDON_INCLUDES = {
+  glass: 'glassDoor',
+  stone: 'countertop',
+};
 
 const ORDER = ['shower', 'vanity', 'tile', 'floor', 'toilet', 'lighting'];
 const TIER_LABEL = { good: 'Essential', better: 'Upgraded', best: 'Premium' };
@@ -190,16 +226,16 @@ const DEFAULT_OPENINGS = {
 };
 
 const LOCATIONS = [
-  { key: 'national', label: 'United States', st: '', mult: 1.00 },
-  { key: 'seattle', label: 'Seattle', st: 'WA', mult: 1.18 },
-  { key: 'la', label: 'Los Angeles', st: 'CA', mult: 1.22 },
-  { key: 'phoenix', label: 'Phoenix', st: 'AZ', mult: 0.98 },
-  { key: 'denver', label: 'Denver', st: 'CO', mult: 1.06 },
-  { key: 'austin', label: 'Austin', st: 'TX', mult: 1.02 },
-  { key: 'chicago', label: 'Chicago', st: 'IL', mult: 1.08 },
-  { key: 'atlanta', label: 'Atlanta', st: 'GA', mult: 0.96 },
-  { key: 'miami', label: 'Miami', st: 'FL', mult: 1.05 },
-  { key: 'ny', label: 'New York', st: 'NY', mult: 1.35 },
+  { key: 'national', label: 'United States', st: '', mult: 1.00, currency: 'USD', storeLabel: 'United States' },
+  { key: 'seattle', label: 'Seattle', st: 'WA', mult: 1.18, currency: 'USD', storeLabel: 'Seattle, WA sample market' },
+  { key: 'la', label: 'Los Angeles', st: 'CA', mult: 1.22, currency: 'USD', storeLabel: 'Los Angeles, CA sample market' },
+  { key: 'phoenix', label: 'Phoenix', st: 'AZ', mult: 0.98, currency: 'USD', storeLabel: 'Phoenix, AZ sample market' },
+  { key: 'denver', label: 'Denver', st: 'CO', mult: 1.06, currency: 'USD', storeLabel: 'Denver, CO sample market' },
+  { key: 'austin', label: 'Austin', st: 'TX', mult: 1.02, currency: 'USD', storeLabel: 'Austin, TX sample market' },
+  { key: 'chicago', label: 'Chicago', st: 'IL', mult: 1.08, currency: 'USD', storeLabel: 'Chicago, IL sample market' },
+  { key: 'atlanta', label: 'Atlanta', st: 'GA', mult: 0.96, currency: 'USD', storeLabel: 'Atlanta, GA sample market' },
+  { key: 'miami', label: 'Miami', st: 'FL', mult: 1.05, currency: 'USD', storeLabel: 'Miami, FL sample market' },
+  { key: 'ny', label: 'New York', st: 'NY', mult: 1.35, currency: 'USD', storeLabel: 'New York, NY sample market' },
 ];
 
 const DEFAULT_RECOMMENDATIONS = [
@@ -249,21 +285,33 @@ const state = {
     { id: 2, type: 'window', wall: 'top', offset: 0.70, length: 3 },
   ],
   selectedOpeningId: null,
-  selectedProducts: {},
-  location: 'national',
+  location: sessionStorage.getItem('bathroomPlannerMarket') || 'national',
   locOpen: false,
+  mobileMode: 'items',
+  recommendationAnchor: null,
+  comparison: null,
   view: new URLSearchParams(window.location.search).get('view') === 'guides' ? 'guides' : 'plan',
 };
 
 let uid = 2;
 let openingUid = 3;
 let drag = null;
+let suppressPaletteClick = false;
 
 const $ = selector => document.querySelector(selector);
 const fmtMoney = n => '$' + Math.round(n).toLocaleString('en-US');
 const fmtNum = n => Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100);
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const snap = (n, step = 0.25) => Math.round(n / step) * step;
+
+function announce(message) {
+  const status = $('#plannerStatus');
+  if (status) status.textContent = message;
+}
+
+function restorePlannerFocus(selector) {
+  window.requestAnimationFrame(() => $(selector)?.focus());
+}
 
 function iconSvg(iconKey) {
   return `<svg aria-hidden="true"><use href="#ic-${iconKey}"></use></svg>`;
@@ -287,11 +335,103 @@ function productById(id) {
   return PRODUCTS.find(product => product.id === id) || null;
 }
 
-function selectedProductFor(type) {
-  const chosen = productById(state.selectedProducts[type]);
-  if (chosen) return chosen;
-  const plannedItem = state.placed.find(item => item.type === type);
-  return productsForType(type, plannedItem?.tier || 'better')[0];
+function productMeta(product) {
+  return {
+    amount: 0,
+    unit: 'each',
+    caseAmount: null,
+    coverageSqFt: null,
+    checkedOn: '2026-07-14',
+    source: 'static-snapshot',
+    variants: [],
+    minWidth: null,
+    maxWidth: null,
+    includes: [],
+    ...(PRODUCT_METADATA[product.id] || {}),
+  };
+}
+
+function productPriceText(product) {
+  const meta = productMeta(product);
+  const casePrice = meta.caseAmount ? ` (${fmtMoney(meta.caseAmount)} / case)` : '';
+  return `${fmtMoney(meta.amount)} / ${meta.unit}${casePrice}`;
+}
+
+function validateProductData() {
+  return PRODUCTS.flatMap(product => {
+    const meta = productMeta(product);
+    const missing = [];
+    if (!product.model) missing.push('model');
+    if (!product.url.startsWith('https://www.homedepot.com/')) missing.push('Home Depot URL');
+    if (!product.image) missing.push('image');
+    if (!Number.isFinite(meta.amount) || meta.amount <= 0) missing.push('numeric price');
+    if (!meta.unit) missing.push('unit');
+    if (!meta.checkedOn || !meta.source) missing.push('price provenance');
+    if (!Array.isArray(meta.variants) || !Array.isArray(meta.includes)) missing.push('compatibility metadata');
+    return missing.length ? [`${product.id}: missing ${missing.join(', ')}`] : [];
+  });
+}
+
+function isProductCompatible(product, item) {
+  if (!product || !item || product.type !== item.type) return false;
+  const meta = productMeta(product);
+  const variantMatches = !meta.variants.length || meta.variants.includes(item.name);
+  const widthMatches = (meta.minWidth === null || item.w >= meta.minWidth)
+    && (meta.maxWidth === null || item.w <= meta.maxWidth);
+  return variantMatches && widthMatches;
+}
+
+function productsForItem(item) {
+  return productsForType(item.type, item.tier).filter(product => isProductCompatible(product, item));
+}
+
+function selectedProductFor(subject) {
+  const item = typeof subject === 'object'
+    ? subject
+    : state.placed.find(candidate => candidate.type === subject);
+  if (!item) return null;
+  const chosen = productById(item.productId);
+  return chosen && isProductCompatible(chosen, item) ? chosen : null;
+}
+
+function recommendedProductFor(subject) {
+  const item = typeof subject === 'object'
+    ? subject
+    : state.placed.find(candidate => candidate.type === subject);
+  return item ? productsForItem(item)[0] || null : null;
+}
+
+function selectedProducts() {
+  return state.placed
+    .map(item => ({ item, product: selectedProductFor(item) }))
+    .filter(entry => entry.product);
+}
+
+function productIncludes(product, addon) {
+  if (!product) return false;
+  const capability = ADDON_INCLUDES[addon.key];
+  return !!capability && productMeta(product).includes.includes(capability);
+}
+
+function selectProduct(item, product) {
+  if (!item || !product || !isProductCompatible(product, item)) return false;
+  item.productId = product.id;
+  state.recommendationAnchor = { itemId: item.id, productId: product.id };
+  Object.keys(item.addons).forEach(key => {
+    const addon = COMPONENTS[item.type].addons.find(candidate => candidate.key === key);
+    if (addon && productIncludes(product, addon)) delete item.addons[key];
+  });
+  return true;
+}
+
+function clearIncompatibleProduct(item) {
+  if (item?.productId && !isProductCompatible(productById(item.productId), item)) {
+    const cleared = productById(item.productId);
+    item.productId = null;
+    if (state.recommendationAnchor?.itemId === item.id) state.recommendationAnchor = null;
+    return cleared;
+  }
+  return null;
 }
 
 function matchingProducts(base, limit = 4) {
@@ -306,7 +446,8 @@ function matchingProducts(base, limit = 4) {
   }[base.type] || ORDER.filter(type => type !== base.type);
 
   return preferredOrder.map(type => {
-    const candidates = productsForType(type);
+    const plannedItem = state.placed.find(item => item.type === type);
+    const candidates = plannedItem ? productsForItem(plannedItem) : productsForType(type);
     return candidates.sort((a, b) => {
       const score = product => product.styles.filter(style => base.styles.includes(style)).length * 10 + Number(product.tier === base.tier) * 2;
       return score(b) - score(a);
@@ -327,7 +468,7 @@ function sharedStyleLabel(a, b) {
   return shared ? labels[shared] : 'a balanced neutral palette';
 }
 
-function productOptionMarkup(product, active = false) {
+function productOptionMarkup(product, item, active = false) {
   return `
     <article class="product-option${active ? ' is-selected' : ''}">
       <a class="product-option__image" href="${product.url}" target="_blank" rel="noreferrer" aria-label="Shop ${escapeHtml(product.title)}">
@@ -336,16 +477,16 @@ function productOptionMarkup(product, active = false) {
       <div class="product-option__body">
         <span class="product-option__tier">${escapeHtml(TIER_LABEL[product.tier])} product</span>
         <a href="${product.url}" target="_blank" rel="noreferrer"><strong>${escapeHtml(product.title)}</strong></a>
-        <span class="product-option__price">${escapeHtml(product.price)}</span>
+        <span class="product-option__price">${escapeHtml(productPriceText(product))}</span>
         <small>${escapeHtml(product.brand)} · Model ${escapeHtml(product.model)}</small>
-        <button type="button" data-action="choose-product" data-product-id="${product.id}"${active ? ' aria-pressed="true"' : ''}>${active ? 'Selected for this look' : 'Use this look'}</button>
+        <button type="button" data-action="choose-product" data-product-id="${product.id}" data-item-id="${item.id}"${active ? ' aria-pressed="true"' : ''}>${active ? 'Selected for this item' : 'Use this product'}</button>
       </div>
     </article>
   `;
 }
 
-function fullProductCardMarkup(product, base = null) {
-  const selected = state.selectedProducts[product.type] === product.id;
+function fullProductCardMarkup(product, base = null, item = null) {
+  const selected = !!item && selectedProductFor(item)?.id === product.id;
   const matchReason = base && base.id !== product.id
     ? `Matches through ${sharedStyleLabel(base, product)}.`
     : product.why;
@@ -359,8 +500,11 @@ function fullProductCardMarkup(product, base = null) {
         <a href="${product.url}" target="_blank" rel="noreferrer"><h4>${escapeHtml(product.title)}</h4></a>
         <p class="shop-product-card__match">${escapeHtml(matchReason)}</p>
         <div class="shop-product-card__buy">
-          <div><strong>${escapeHtml(product.price)}</strong><small>${escapeHtml(product.brand)} · ${escapeHtml(product.model)}</small></div>
-          <button type="button" data-action="choose-product" data-product-id="${product.id}">${selected ? 'Selected' : 'Use this look'}</button>
+          <div><strong>${escapeHtml(productPriceText(product))}</strong><small>${escapeHtml(product.brand)} · ${escapeHtml(product.model)}</small></div>
+          <div class="shop-product-card__actions">
+            <button type="button" data-action="choose-product" data-product-id="${product.id}"${item ? ` data-item-id="${item.id}"` : ' disabled'}>${selected ? 'Selected' : item ? 'Use this product' : 'Add this item to choose'}</button>
+            ${item ? `<button type="button" class="button-secondary" data-action="compare-product" data-product-id="${product.id}" data-item-id="${item.id}">Compare</button>` : ''}
+          </div>
         </div>
       </div>
     </article>
@@ -372,15 +516,15 @@ function currentLocation() {
 }
 
 function locationLabel(loc = currentLocation()) {
-  return loc.key === 'national' ? 'National pricing' : `${loc.label}, ${loc.st}`;
+  return loc.key === 'national' ? 'United States planning market' : `${loc.label}, ${loc.st} planning market`;
 }
 
 function locationNote(loc = currentLocation()) {
   if (loc.key === 'national') {
-    return 'Showing planning ranges. Select a market to reflect local product and installation costs.';
+    return 'Sample United States planning range. Prices are static snapshots; local price, availability, taxes, and delivery may vary.';
   }
   const pct = Math.round(Math.abs(loc.mult - 1) * 100);
-  return `Planning costs in ${loc.label} run about ${pct}% ${loc.mult >= 1 ? 'above' : 'below'} the national range.`;
+  return `Sample ${loc.label} market: installation planning allowances run about ${pct}% ${loc.mult >= 1 ? 'above' : 'below'} the national baseline. Product prices remain static snapshots.`;
 }
 
 function isAreaDriven(type) {
@@ -400,12 +544,13 @@ function baseRange(item) {
   return [tier[0] * sizeMult, tier[1] * sizeMult];
 }
 
-function itemRange(item, withLocation = true) {
+function addonRange(item, withLocation = true) {
   const c = COMPONENTS[item.type];
   const mult = withLocation ? currentLocation().mult : 1;
-  const range = baseRange(item);
+  const range = [0, 0];
+  const product = selectedProductFor(item);
   c.addons.forEach(addon => {
-    if (item.addons[addon.key]) {
+    if (item.addons[addon.key] && !productIncludes(product, addon)) {
       range[0] += addon.lo;
       range[1] += addon.hi;
     }
@@ -413,11 +558,49 @@ function itemRange(item, withLocation = true) {
   return [range[0] * mult, range[1] * mult];
 }
 
+function materialQuantity(item, product) {
+  const meta = productMeta(product);
+  if (!['tile', 'floor'].includes(item.type)) return { count: 1, label: '1 each', subtotal: meta.amount };
+  const coverage = item.type === 'floor' ? state.roomW * state.roomH : item.w * item.h;
+  const requiredSqFt = Math.ceil(coverage * 1.1);
+  if (meta.coverageSqFt && meta.caseAmount) {
+    const cases = Math.ceil(requiredSqFt / meta.coverageSqFt);
+    return { count: cases, label: `${cases} case${cases === 1 ? '' : 's'} · ${requiredSqFt} sq. ft. with 10% waste`, subtotal: cases * meta.caseAmount };
+  }
+  return { count: requiredSqFt, label: `${requiredSqFt} sq. ft. with 10% waste`, subtotal: requiredSqFt * meta.amount };
+}
+
+function materialLine(item) {
+  const product = selectedProductFor(item);
+  if (!product) return null;
+  const quantity = materialQuantity(item, product);
+  return { item, product, ...quantity };
+}
+
+function itemRange(item, withLocation = true) {
+  const mult = withLocation ? currentLocation().mult : 1;
+  const material = materialLine(item)?.subtotal || 0;
+  const [addonLo, addonHi] = addonRange(item, withLocation);
+  const [baseLo, baseHi] = baseRange(item);
+  return [material + baseLo * mult + addonLo, material + baseHi * mult + addonHi];
+}
+
+function projectCostModel() {
+  const lines = state.placed.map(item => ({
+    item,
+    material: materialLine(item),
+    installation: baseRange(item).map(value => value * currentLocation().mult),
+    addons: addonRange(item),
+  }));
+  const materials = lines.reduce((total, line) => total + (line.material?.subtotal || 0), 0);
+  const installLo = lines.reduce((total, line) => total + line.installation[0] + line.addons[0], 0);
+  const installHi = lines.reduce((total, line) => total + line.installation[1] + line.addons[1], 0);
+  return { lines, materials, installLo, installHi, lo: materials + installLo, hi: materials + installHi };
+}
+
 function estimateRange() {
-  return state.placed.reduce((sum, item) => {
-    const [lo, hi] = itemRange(item);
-    return [sum[0] + lo, sum[1] + hi];
-  }, [0, 0]);
+  const model = projectCostModel();
+  return [model.lo, model.hi];
 }
 
 function rangeText(lo, hi) {
@@ -442,6 +625,75 @@ function selectedItem() {
 
 function selectedOpening() {
   return state.openings.find(opening => opening.id === state.selectedOpeningId) || null;
+}
+
+function itemDisplayName(item) {
+  const siblings = state.placed.filter(candidate => candidate.type === item.type);
+  if (siblings.length < 2) return item.name;
+  return `${COMPONENTS[item.type].label} ${siblings.findIndex(candidate => candidate.id === item.id) + 1}`;
+}
+
+function itemBounds(item) {
+  return {
+    left: item.nx * state.roomW - item.w / 2,
+    right: item.nx * state.roomW + item.w / 2,
+    top: item.ny * state.roomH - item.h / 2,
+    bottom: item.ny * state.roomH + item.h / 2,
+  };
+}
+
+function itemsOverlap(a, b) {
+  const aa = itemBounds(a);
+  const bb = itemBounds(b);
+  return aa.left < bb.right && aa.right > bb.left && aa.top < bb.bottom && aa.bottom > bb.top;
+}
+
+function layoutWarnings() {
+  const warnings = [];
+  state.placed.forEach((item, index) => {
+    state.placed.slice(index + 1).forEach(other => {
+      if (itemsOverlap(item, other)) warnings.push(`${itemDisplayName(item)} overlaps ${itemDisplayName(other)}.`);
+    });
+    const bounds = itemBounds(item);
+    if (bounds.left < 0 || bounds.top < 0 || bounds.right > state.roomW || bounds.bottom > state.roomH) {
+      warnings.push(`${itemDisplayName(item)} does not fit within the room.`);
+    }
+  });
+  state.openings.filter(opening => opening.type === 'door').forEach(opening => {
+    const wall = opening.wall;
+    const offset = openingOffsetFt(opening);
+    state.placed.forEach(item => {
+      const bounds = itemBounds(item);
+      const nearWall = wall === 'top' ? bounds.top < 1.5 : wall === 'bottom' ? state.roomH - bounds.bottom < 1.5 : wall === 'left' ? bounds.left < 1.5 : state.roomW - bounds.right < 1.5;
+      const center = (wall === 'top' || wall === 'bottom') ? item.nx * state.roomW : item.ny * state.roomH;
+      if (nearWall && Math.abs(center - offset) < opening.length / 2 + 0.75) warnings.push(`${itemDisplayName(item)} may block ${openingName(opening)} clearance.`);
+    });
+  });
+  return [...new Set(warnings)];
+}
+
+function findOpenPosition(item, occupied = state.placed.filter(candidate => candidate.id !== item.id)) {
+  for (let y = 0.5; y <= state.roomH - 0.5; y += 0.5) {
+    for (let x = 0.5; x <= state.roomW - 0.5; x += 0.5) {
+      const candidate = { ...item, nx: x / state.roomW, ny: y / state.roomH };
+      clampItem(candidate);
+      if (!occupied.some(other => itemsOverlap(candidate, other))) return { nx: candidate.nx, ny: candidate.ny };
+    }
+  }
+  return null;
+}
+
+function resolveOverlaps() {
+  const placed = [];
+  state.placed.forEach(item => {
+    if (placed.some(other => itemsOverlap(item, other))) {
+      const target = findOpenPosition(item, placed);
+      if (target) Object.assign(item, target);
+    }
+    placed.push(item);
+  });
+  renderAll();
+  announce(layoutWarnings().length ? 'Some layout warnings still need your review.' : 'Overlapping fixtures were moved to open space.');
 }
 
 function wallLabel(wall) {
@@ -560,6 +812,7 @@ function createItem(type, nx, ny) {
     h: c.size.h,
     tier: 'better',
     addons: {},
+    productId: null,
   };
   return clampItem(item);
 }
@@ -584,10 +837,14 @@ function addItem(type, nx, ny) {
     nx ?? clamp(fallback.x + offset, 0.12, 0.88),
     ny ?? clamp(fallback.y + offset, 0.12, 0.88),
   );
+  const openPosition = findOpenPosition(item);
+  if (openPosition && state.placed.some(existing => itemsOverlap(item, existing))) Object.assign(item, openPosition);
   state.placed.push(item);
   state.selectedId = item.id;
   state.selectedOpeningId = null;
   renderAll();
+  announce(`${item.name} added to your plan.`);
+  return item;
 }
 
 function addOpening(type) {
@@ -596,6 +853,8 @@ function addOpening(type) {
   state.selectedOpeningId = opening.id;
   state.selectedId = null;
   renderAll();
+  announce(`${OPENINGS[type].label} marked on your plan.`);
+  return opening;
 }
 
 function removeItem(id) {
@@ -604,6 +863,7 @@ function removeItem(id) {
     state.selectedId = state.placed.length ? state.placed[state.placed.length - 1].id : null;
   }
   renderAll();
+  announce('Project item removed from your plan.');
 }
 
 function removeOpening(id) {
@@ -612,6 +872,7 @@ function removeOpening(id) {
     state.selectedOpeningId = state.openings.length ? state.openings[state.openings.length - 1].id : null;
   }
   renderAll();
+  announce('Opening removed from your plan.');
 }
 
 function canvasRect() {
@@ -673,34 +934,28 @@ function renderPalette() {
   $('#componentPalette').innerHTML = ORDER.map(type => {
     const c = COMPONENTS[type];
     const count = componentCount(type);
-    const status = count
-      ? `<span class="palette-count">${count > 1 ? `${count} on plan` : 'On plan'}</span>`
-      : '<span class="palette-action">+ Add</span>';
-    return `
-      <button class="palette-card${count ? ' is-active' : ''}" type="button" data-action="palette" data-type="${type}">
-        <span class="palette-icon">${iconSvg(c.iconKey)}</span>
-        <span class="palette-label">${escapeHtml(c.label)}</span>
-        ${status}
-      </button>
-    `;
+    const status = count ? `<span class="palette-count">${count} on plan</span>` : '<span class="palette-action">+ Add</span>';
+    const card = `<button class="palette-card${count ? ' is-active' : ''}" type="button" data-action="${count ? 'palette-select' : 'palette'}" data-type="${type}">
+      <span class="palette-icon">${iconSvg(c.iconKey)}</span>
+      <span class="palette-label">${escapeHtml(c.label)}</span>
+      ${status}
+    </button>`;
+    return count ? `<div class="palette-entry">${card}<button class="palette-add" type="button" data-action="palette" data-type="${type}" aria-label="Add another ${escapeHtml(c.label)}">+</button></div>` : card;
   }).join('');
 
   $('#openingPalette').innerHTML = OPENING_ORDER.map(type => {
     const opening = OPENINGS[type];
     const count = openingCount(type);
-    const status = count
-      ? `<span class="palette-count">${count > 1 ? `${count} marked` : 'Marked'}</span>`
-      : '<span class="palette-action">+ Mark</span>';
-    return `
-      <button class="palette-card opening-card${count ? ' is-active' : ''}" type="button" data-action="opening-add" data-opening-type="${type}">
+    const status = count ? `<span class="palette-count">${count} marked</span>` : '<span class="palette-action">+ Mark</span>';
+    const card = `<button class="palette-card opening-card${count ? ' is-active' : ''}" type="button" data-action="${count ? 'opening-palette-select' : 'opening-add'}" data-opening-type="${type}">
         <span class="opening-icon opening-icon--${type}" aria-hidden="true"></span>
         <span>
           <span class="palette-label">${escapeHtml(opening.label)}</span>
           <span class="opening-blurb">${escapeHtml(opening.blurb)}</span>
         </span>
         ${status}
-      </button>
-    `;
+      </button>`;
+    return count ? `<div class="palette-entry">${card}<button class="palette-add" type="button" data-action="opening-add" data-opening-type="${type}" aria-label="Add another ${escapeHtml(opening.label)}">+</button></div>` : card;
   }).join('');
 }
 
@@ -715,8 +970,11 @@ function renderLocations() {
   const loc = currentLocation();
   $('#locationLabel').textContent = locationLabel(loc);
   $('#locationNote').textContent = locationNote(loc);
+  $('#storeChipLabel').textContent = loc.storeLabel;
   $('#locationToggle').setAttribute('aria-expanded', String(state.locOpen));
   $('#locationMenu').hidden = !state.locOpen;
+  $('#locationMenu').setAttribute('role', 'listbox');
+  $('#locationMenu').setAttribute('aria-label', 'Planning market');
   $('#locationMenu').innerHTML = LOCATIONS.map(option => {
     const pct = Math.round(Math.abs(option.mult - 1) * 100);
     const sub = option.key === 'national'
@@ -762,6 +1020,8 @@ function renderCanvas() {
   renderOpenings();
   $('#placedItems').innerHTML = state.placed.map((item, index) => {
     const c = COMPONENTS[item.type];
+    const label = itemDisplayName(item);
+    const product = selectedProductFor(item);
     const selected = item.id === state.selectedId;
     const wPct = (item.w / state.roomW) * 100;
     const hPct = (item.h / state.roomH) * 100;
@@ -772,31 +1032,43 @@ function renderCanvas() {
         data-id="${item.id}"
         data-type="${item.type}"
         tabindex="0"
+        aria-label="${escapeHtml(`${label}, ${fmtNum(item.w)} by ${fmtNum(item.h)} feet${product ? `, selected product ${product.title}` : ''}`)}"
         style="--x:${item.nx * 100};--y:${item.ny * 100};--w:${wPct};--h:${hPct};z-index:${z}">
-        <span class="item-icon">${iconSvg(c.iconKey)}</span>
-        <span class="item-name">${escapeHtml(item.name)}</span>
+        ${product ? `<img class="plan-item__product-thumb" src="${product.image}" alt="" aria-hidden="true">` : `<span class="item-icon">${iconSvg(c.iconKey)}</span>`}
+        <span class="item-name">${escapeHtml(label)}</span>
         <span class="item-dims">${fmtNum(item.w)} x ${fmtNum(item.h)} ft</span>
-        <button class="item-remove" type="button" data-action="remove" data-id="${item.id}" aria-label="Remove ${escapeHtml(item.name)}">&times;</button>
-        <button class="resize-handle" type="button" data-action="resize" data-id="${item.id}" aria-label="Resize ${escapeHtml(item.name)}"></button>
+        <button class="item-remove" type="button" data-action="remove" data-id="${item.id}" aria-label="Remove ${escapeHtml(label)}">&times;</button>
+        <button class="resize-handle" type="button" data-action="resize" data-id="${item.id}" aria-label="Resize ${escapeHtml(label)}"></button>
       </article>
     `;
   }).join('');
+  const warnings = layoutWarnings();
+  const warningTarget = $('#layoutWarnings');
+  warningTarget.hidden = !warnings.length;
+  warningTarget.innerHTML = warnings.length ? `<strong>Layout review needed</strong><span>${escapeHtml(warnings.join(' '))}</span><button type="button" data-action="resolve-overlaps">Resolve overlaps</button>` : '';
 }
 
 function renderEstimate() {
-  const [lo, hi] = estimateRange();
+  const model = projectCostModel();
+  const [lo, hi] = [model.lo, model.hi];
   const n = state.placed.length;
   const loc = currentLocation();
   $('#estimateTotal').textContent = n ? rangeText(lo, hi) : 'Add fixtures to start';
   $('#placedCount').textContent = `${n} item${n === 1 ? '' : 's'} on your plan${state.openings.length ? ` + ${state.openings.length} opening marker${state.openings.length === 1 ? '' : 's'}` : ''}`;
   $('#estimateLocation').textContent = locationLabel(loc);
   $('#estimateNote').textContent = locationNote(loc);
-  $('#quoteButton').textContent = n > 2 ? 'Build list from this plan' : 'Build project list';
-  const listButton = $('#estimateQuoteButton');
-  if (listButton) {
-    listButton.disabled = n === 0;
-    listButton.setAttribute('aria-disabled', String(n === 0));
-    listButton.textContent = n > 2 ? 'Build list from this plan' : 'Build project list';
+  $('#quoteButton').textContent = 'Download project plan';
+  const cartButton = $('#cartHandoffButton');
+  const cartStatus = $('#cartHandoffStatus');
+  if (cartStatus) {
+    cartStatus.hidden = true;
+    cartStatus.textContent = '';
+  }
+  if (cartButton) {
+    const selectedCount = selectedProducts().length;
+    cartButton.disabled = selectedCount === 0;
+    cartButton.setAttribute('aria-disabled', String(selectedCount === 0));
+    cartButton.textContent = selectedCount ? `Prepare ${selectedCount} selected product${selectedCount === 1 ? '' : 's'} for cart` : 'Select products to prepare cart handoff';
   }
 }
 
@@ -810,6 +1082,12 @@ function renderViewTabs() {
     const active = view.id === `${state.view}View`;
     view.hidden = !active;
     view.classList.toggle('is-active', active);
+  });
+  const planView = $('#planView');
+  if (planView) planView.dataset.mobileMode = state.mobileMode;
+  document.querySelectorAll('[data-action="mobile-mode"]').forEach(button => {
+    const active = state.view === 'plan' && button.dataset.mobileMode === state.mobileMode;
+    button.setAttribute('aria-selected', String(active));
   });
 }
 
@@ -849,6 +1127,12 @@ function costDriverItems() {
       text: 'Marked openings help a consultant understand usable wall space, fixture placement, and swing clearance before a walkthrough.',
     });
   }
+  if (layoutWarnings().length) {
+    drivers.unshift({
+      title: 'Layout review needed',
+      text: `${layoutWarnings().length} layout warning${layoutWarnings().length === 1 ? '' : 's'} should be resolved before product ordering or installation pricing.`,
+    });
+  }
   if (!drivers.length) {
     drivers.push({
       title: 'Scope completeness',
@@ -868,14 +1152,34 @@ function renderEstimateScreen() {
   const intro = $('#estimateViewIntro');
   if (!breakdown || !drivers || !intro) return;
 
-  const [lo, hi] = estimateRange();
+  const model = projectCostModel();
+  const [lo, hi] = [model.lo, model.hi];
   intro.textContent = state.placed.length
     ? `${scopeItemsText()} in a ${fmtNum(state.roomW * state.roomH)} sq ft bathroom near ${locationLabel()}. Current range: ${rangeText(lo, hi)}.`
     : 'Add components to generate an itemized project estimate.';
 
-  breakdown.innerHTML = state.placed.length ? state.placed.map(item => {
+  breakdown.innerHTML = state.placed.length ? `
+    <p class="estimate-section-label">Selected materials · ${fmtMoney(model.materials)}</p>
+    ${model.lines.map(line => {
+      const { item, material } = line;
+      const component = COMPONENTS[item.type];
+      return material ? `<article class="estimate-line-item estimate-material-item">
+        <a class="estimate-material-item__image" href="${material.product.url}" target="_blank" rel="noreferrer" aria-label="Shop ${escapeHtml(material.product.title)}"><img src="${material.product.image}" alt=""></a>
+        <div>
+          <p class="estimate-material-item__fixture">${escapeHtml(itemDisplayName(item))}</p>
+          <a class="estimate-material-item__name" href="${material.product.url}" target="_blank" rel="noreferrer">${escapeHtml(material.product.title)}</a>
+          <p>${escapeHtml(material.product.brand)} · Model ${escapeHtml(material.product.model)}<br>${escapeHtml(material.label)} · ${escapeHtml(productPriceText(material.product))}</p>
+          <div class="estimate-material-item__actions"><button type="button" class="button-secondary" data-action="select-item" data-item-id="${item.id}">Replace</button><button type="button" class="text-button" data-action="remove-product" data-item-id="${item.id}">Remove</button></div>
+        </div>
+        <strong>${fmtMoney(material.subtotal)}</strong>
+      </article>` : `<article class="estimate-line-item estimate-material-item estimate-material-item--empty"><span class="estimate-line-item__icon">${iconSvg(component.iconKey)}</span><div><h4>${escapeHtml(itemDisplayName(item))}</h4><p>No product is selected for this configuration.</p><button type="button" class="button-secondary" data-action="select-item" data-item-id="${item.id}">Choose a product</button></div><strong>—</strong></article>`;
+    }).join('')}
+    <p class="estimate-section-label">Installation, preparation & scope allowance · ${rangeText(model.installLo, model.installHi)}</p>
+    ${state.placed.map(item => {
     const component = COMPONENTS[item.type];
-    const [itemLo, itemHi] = itemRange(item);
+    const installation = baseRange(item).map(value => value * currentLocation().mult);
+    const addonCosts = addonRange(item);
+    const [itemLo, itemHi] = [installation[0] + addonCosts[0], installation[1] + addonCosts[1]];
     const addons = component.addons
       .filter(addon => item.addons[addon.key])
       .map(addon => addon.label);
@@ -883,13 +1187,15 @@ function renderEstimateScreen() {
       <article class="estimate-line-item">
         <span class="estimate-line-item__icon">${iconSvg(component.iconKey)}</span>
         <div>
-          <h4>${escapeHtml(item.name)}</h4>
-          <p>${escapeHtml(TIER_LABEL[item.tier])} finish - ${fmtNum(item.w)} x ${fmtNum(item.h)} ft${addons.length ? ` - ${escapeHtml(addons.join(', '))}` : ''}</p>
+          <h4>${escapeHtml(itemDisplayName(item))}</h4>
+          <p>${escapeHtml(TIER_LABEL[item.tier])} planning range · ${fmtNum(item.w)} x ${fmtNum(item.h)} ft${addons.length ? ` · ${escapeHtml(addons.join(', '))}` : ''}</p>
         </div>
         <strong>${rangeText(itemLo, itemHi)}</strong>
       </article>
     `;
-  }).join('') : `
+  }).join('')}
+    <p class="estimate-assumptions">Planning total includes selected-product snapshots plus installation, preparation, and scope allowances. Taxes, delivery, permits, demolition discoveries, and local availability are not included until a qualified quote is confirmed.</p>
+  ` : `
     <section class="estimate-empty">
       <h4>No scope added yet</h4>
       <p>Add fixtures from the Plan tab to build an itemized estimate.</p>
@@ -935,33 +1241,51 @@ function renderGuidesScreen() {
 
   const types = placedTypes();
   intro.textContent = types.length
-    ? `Showing real product choices and guides for ${projectScopeLabel()} in your current plan.`
-    : 'Start with curated product choices, then add project items to personalize the set.';
+    ? `Home Depot guides and project ideas selected for ${projectScopeLabel()} in your current plan.`
+    : 'Add project items to receive more relevant Home Depot guides and ideas.';
 
   const collectionTypes = types.length ? types : ['shower', 'vanity', 'tile'];
   const selected = selectedItem();
-  const base = selectedProductFor(selected?.type || collectionTypes[0]);
+  const anchorItem = findItem(state.recommendationAnchor?.itemId);
+  const anchorProduct = productById(state.recommendationAnchor?.productId);
+  const base = anchorProduct || selectedProductFor(anchorItem || selected || state.placed[0]) || recommendedProductFor(selected || state.placed[0]) || PRODUCTS[0];
   const matches = matchingProducts(base, 4);
-  if (coordinatedIntro) coordinatedIntro.textContent = `${base.title} sets the direction. These picks repeat ${base.styles.map(style => sharedStyleLabel(base, { styles: [style] })).slice(0, 2).join(' and ')}.`;
+  if (coordinatedIntro) coordinatedIntro.textContent = `${base.title} is your current anchor. These picks repeat ${base.styles.map(style => sharedStyleLabel(base, { styles: [style] })).slice(0, 2).join(' and ')}.`;
+  const roomLook = selectedProducts();
+  const comparisonProduct = productById(state.comparison?.productId);
+  const comparisonItem = findItem(state.comparison?.itemId);
+  const currentProduct = comparisonItem ? selectedProductFor(comparisonItem) : null;
+  const comparison = comparisonProduct && comparisonItem ? `
+    <section class="product-comparison" aria-live="polite">
+      <div><span>Comparing</span><strong>${escapeHtml(currentProduct?.title || 'No product selected')}</strong><em>${escapeHtml(currentProduct ? productPriceText(currentProduct) : 'Choose a product first')}</em></div>
+      <div><span>With</span><strong>${escapeHtml(comparisonProduct.title)}</strong><em>${escapeHtml(productPriceText(comparisonProduct))}</em></div>
+      <button type="button" class="button-secondary" data-action="clear-comparison">Close comparison</button>
+    </section>` : '';
   coordinatedTarget.innerHTML = `
+    <section class="room-look-summary" aria-label="My room look">
+      <h4>My room look</h4>
+      <p>${roomLook.length ? 'Your selected products stay together as you compare coordinated alternatives.' : 'Choose a compatible product to start your room look.'}</p>
+      ${roomLook.map(({ item, product }) => `<div class="room-look-summary__item"><span><strong>${escapeHtml(itemDisplayName(item))}</strong><br>${escapeHtml(product.title)}</span><button type="button" data-action="remove-product" data-item-id="${item.id}">Remove</button></div>`).join('')}
+    </section>
+    ${comparison}
     <article class="room-anchor-card">
       <span>Your starting point</span>
       <img src="${base.image}" alt="${escapeHtml(base.title)}">
-      <div><strong>${escapeHtml(base.title)}</strong><em>${escapeHtml(base.price)}</em></div>
+      <div><strong>${escapeHtml(base.title)}</strong><em>${escapeHtml(productPriceText(base))}</em></div>
     </article>
-    ${matches.map(product => fullProductCardMarkup(product, base)).join('')}
+    ${matches.map(product => fullProductCardMarkup(product, base, state.placed.find(item => item.type === product.type) || null)).join('')}
   `;
 
   productsTarget.innerHTML = collectionTypes.map(type => {
     const plannedItem = state.placed.find(item => item.type === type);
-    const options = productsForType(type, plannedItem?.tier || 'better');
+    const options = plannedItem ? productsForItem(plannedItem) : productsForType(type);
     return `
       <section class="product-collection">
         <div class="product-collection__head">
           <span class="guide-collection__icon">${iconSvg(COMPONENTS[type].iconKey)}</span>
           <div><h4>${escapeHtml(COMPONENTS[type].label)}</h4><p>Value, upgraded, and premium choices</p></div>
         </div>
-        <div class="product-card-row">${options.map(product => fullProductCardMarkup(product, base)).join('')}</div>
+        <div class="product-card-row">${options.length ? options.map(product => fullProductCardMarkup(product, base, plannedItem)).join('') : '<p class="product-empty">No compatible sample product is available for this configuration yet. Adjust the configuration or add a real assortment record.</p>'}</div>
       </section>
     `;
   }).join('');
@@ -1026,7 +1350,7 @@ function renderProHandoff() {
 function renderOpeningInspector(opening, wrap) {
   const spec = OPENINGS[opening.type];
   const walls = WALLS.map(wall => `
-    <button class="pill-button${opening.wall === wall.key ? ' is-active' : ''}" type="button" data-action="opening-wall" data-opening-id="${opening.id}" data-wall="${wall.key}">${escapeHtml(wall.label.replace(' wall', ''))}</button>
+    <button class="pill-button${opening.wall === wall.key ? ' is-active' : ''}" type="button" data-action="opening-wall" data-opening-id="${opening.id}" data-wall="${wall.key}" aria-pressed="${opening.wall === wall.key}">${escapeHtml(wall.label.replace(' wall', ''))}</button>
   `).join('');
   const maxLength = Math.min(spec.max, wallLength(opening.wall));
   const offsetFt = openingOffsetFt(opening);
@@ -1104,27 +1428,28 @@ function renderInspector() {
   const c = COMPONENTS[item.type];
   const [lo, hi] = itemRange(item);
   const spotlight = primaryRecommendation();
-  const activeProduct = selectedProductFor(item.type);
-  const productOptions = productsForType(item.type, item.tier);
-  const accessoryMatches = item.type === 'vanity' ? VANITY_ACCESSORIES.filter(accessory => !accessory.forProduct || (Array.isArray(accessory.forProduct) ? accessory.forProduct.includes(activeProduct.id) : accessory.forProduct === activeProduct.id)) : [];
+  const activeProduct = selectedProductFor(item);
+  const productOptions = productsForItem(item);
+  const accessoryMatches = item.type === 'vanity' && activeProduct ? VANITY_ACCESSORIES.filter(accessory => !accessory.forProduct || (Array.isArray(accessory.forProduct) ? accessory.forProduct.includes(activeProduct.id) : accessory.forProduct === activeProduct.id)) : [];
   const variants = c.variants.map(variant => `
-    <button class="pill-button${item.name === variant ? ' is-active' : ''}" type="button" data-action="variant" data-id="${item.id}" data-value="${escapeHtml(variant)}">${escapeHtml(variant)}</button>
+    <button class="pill-button${item.name === variant ? ' is-active' : ''}" type="button" data-action="variant" data-id="${item.id}" data-value="${escapeHtml(variant)}" aria-pressed="${item.name === variant}">${escapeHtml(variant)}</button>
   `).join('');
   const tiers = ['good', 'better', 'best'].map(tier => `
-    <button class="tier-button${item.tier === tier ? ' is-active' : ''}" type="button" data-action="tier" data-id="${item.id}" data-tier="${tier}">
+    <button class="tier-button${item.tier === tier ? ' is-active' : ''}" type="button" data-action="tier" data-id="${item.id}" data-tier="${tier}" aria-pressed="${item.tier === tier}">
       <span class="tier-label">${TIER_LABEL[tier]}</span>
       <span class="tier-short">${TIER_SHORT[tier]}</span>
     </button>
   `).join('');
   const addons = c.addons.length ? c.addons.map(addon => {
-    const active = !!item.addons[addon.key];
+    const included = productIncludes(activeProduct, addon);
+    const active = !!item.addons[addon.key] && !included;
     const price = rangeText(addon.lo * currentLocation().mult, addon.hi * currentLocation().mult);
     return `
-      <button class="addon-row${active ? ' is-active' : ''}" type="button" data-action="addon" data-id="${item.id}" data-addon="${addon.key}">
+      <button class="addon-row${active ? ' is-active' : ''}" type="button" data-action="addon" data-id="${item.id}" data-addon="${addon.key}"${included ? ' disabled aria-describedby="includedAddonNote"' : ''}>
         <span class="addon-check">${active ? '&#10003;' : ''}</span>
         <span>
           <span class="addon-title">${escapeHtml(addon.label)}</span>
-          <span class="addon-desc">${escapeHtml(addon.desc)}</span>
+          <span class="addon-desc">${included ? 'Included with your selected product' : escapeHtml(addon.desc)}</span>
         </span>
         <span class="addon-price">+${price}</span>
       </button>
@@ -1135,7 +1460,7 @@ function renderInspector() {
       <div class="selected-head">
         <span class="item-icon">${iconSvg(c.iconKey)}</span>
         <div>
-          <h2>${escapeHtml(item.name)}</h2>
+          <h2>${escapeHtml(itemDisplayName(item))}</h2>
           <p>${escapeHtml(c.label)}</p>
         </div>
       </div>
@@ -1143,38 +1468,6 @@ function renderInspector() {
       <section class="inspector-section inspector-section--variants" aria-label="Configuration">
         <div class="variant-row">${variants}</div>
       </section>
-
-      <p class="selected-range"><span>This item</span><strong>${rangeText(lo, hi)}</strong></p>
-
-      <section class="product-match-panel" aria-labelledby="productMatchTitle">
-        <div class="product-match-panel__head">
-          <div>
-            <span>Real products at The Home Depot</span>
-            <h3 id="productMatchTitle">Options in this finish range</h3>
-          </div>
-          <span class="match-badge">3 choices</span>
-        </div>
-        <div class="product-option-list">
-          ${productOptions.map(product => productOptionMarkup(product, activeProduct.id === product.id)).join('')}
-        </div>
-        ${accessoryMatches.length ? `
-          <div class="vanity-pairings">
-            <strong>Complete this vanity</strong>
-            <p>The ${escapeHtml(activeProduct.title)} includes its countertop. Add these coordinated pieces:</p>
-            ${accessoryMatches.map(accessory => `<a href="${accessory.url}" target="_blank" rel="noreferrer"><span>${escapeHtml(accessory.label)}</span><strong>${escapeHtml(accessory.title)}</strong><em>${escapeHtml(accessory.price)}</em></a>`).join('')}
-          </div>
-        ` : ''}
-        <p class="product-price-note">Online product prices checked July 14, 2026. Local price and availability may vary; installation is included separately in the planning range above.</p>
-      </section>
-
-      <a class="guide-spotlight" href="${spotlight.url || HOME_DEPOT_BATHROOM_HUB}" target="_blank" rel="noreferrer">
-        <span class="guide-spotlight__thumb"><img src="${spotlight.image}" alt=""></span>
-        <span class="guide-spotlight__body">
-          <span class="guide-spotlight__kicker">Recommended guide</span>
-          <strong>${escapeHtml(spotlight.title)}</strong>
-          <span>${escapeHtml(spotlight.reason)}</span>
-        </span>
-      </a>
 
       <section class="inspector-section inspector-section--compact inspector-section--finish">
         <h3>Finish level</h3>
@@ -1207,10 +1500,42 @@ function renderInspector() {
         <p class="coverage-note">${fmtNum(item.w * item.h)} sq ft footprint${isAreaDriven(item.type) ? ' updates this cost range.' : '.'}</p>
       </section>
 
+      <p class="selected-range"><span>This item</span><strong>${rangeText(lo, hi)}</strong></p>
+
+      <section class="product-match-panel" aria-labelledby="productMatchTitle">
+        <div class="product-match-panel__head">
+          <div>
+            <span>Real products at The Home Depot</span>
+            <h3 id="productMatchTitle">Compatible products for this configuration</h3>
+          </div>
+          <span class="match-badge">${productOptions.length} compatible choice${productOptions.length === 1 ? '' : 's'}</span>
+        </div>
+        <div class="product-option-list">
+          ${productOptions.length ? productOptions.map(product => productOptionMarkup(product, item, activeProduct?.id === product.id)).join('') : `<p class="product-empty">No compatible sample product is available for this ${escapeHtml(item.name.toLowerCase())} configuration. Choose another configuration or browse the related Home Depot category.</p>`}
+        </div>
+        ${accessoryMatches.length ? `
+          <div class="vanity-pairings">
+            <strong>Complete this vanity</strong>
+          <p>The ${escapeHtml(activeProduct.title)} includes its countertop. Add these coordinated pieces:</p>
+            ${accessoryMatches.map(accessory => `<a href="${accessory.url}" target="_blank" rel="noreferrer"><span>${escapeHtml(accessory.label)}</span><strong>${escapeHtml(accessory.title)}</strong><em>${escapeHtml(accessory.price)}</em></a>`).join('')}
+          </div>
+        ` : ''}
+        <p id="includedAddonNote" class="product-price-note">Sample prices checked July 14, 2026. Local price and availability may vary; included product parts are not added twice to the planning range.</p>
+      </section>
+
       <section class="inspector-section">
         <h3>Add-ons</h3>
         <div class="addon-list">${addons}</div>
       </section>
+
+      <a class="guide-spotlight" href="${spotlight.url || HOME_DEPOT_BATHROOM_HUB}" target="_blank" rel="noreferrer">
+        <span class="guide-spotlight__thumb"><img src="${spotlight.image}" alt=""></span>
+        <span class="guide-spotlight__body">
+          <span class="guide-spotlight__kicker">Recommended guide</span>
+          <strong>${escapeHtml(spotlight.title)}</strong>
+          <span>${escapeHtml(spotlight.reason)}</span>
+        </span>
+      </a>
 
       <button class="danger-button" type="button" data-action="remove" data-id="${item.id}">Remove from plan</button>
     </section>
@@ -1245,7 +1570,9 @@ function setItemDimension(id, axis, value) {
   const max = axis === 'w' ? state.roomW : state.roomH;
   item[axis] = clamp(snap(value), 0.5, max);
   clampItem(item);
+  const cleared = clearIncompatibleProduct(item);
   renderAll();
+  if (cleared) announce(`${cleared.title} was removed because the updated dimensions are not compatible.`);
 }
 
 function setOpeningLength(id, value) {
@@ -1281,6 +1608,7 @@ function commitRoomDimensions() {
   state.roomW = clamp(snap(roomW, 0.5), 4, 40);
   state.roomH = clamp(snap(roomH, 0.5), 4, 40);
   state.placed.forEach(clampItem);
+  state.placed.forEach(clearIncompatibleProduct);
   state.openings.forEach(clampOpening);
   renderAll();
 }
@@ -1353,6 +1681,12 @@ function cleanupDrag() {
   $('#planCanvas').classList.remove('is-over');
 }
 
+function capturePointer(target, pointerId) {
+  if (target instanceof Element && target.setPointerCapture) {
+    try { target.setPointerCapture(pointerId); } catch (_) { /* A detached target cannot retain capture. */ }
+  }
+}
+
 function handlePointerMove(e) {
   if (!drag) return;
   const dx = e.clientX - drag.startX;
@@ -1403,6 +1737,7 @@ function handlePointerMove(e) {
     item.h = clamp(snap((fy - drag.tly) * state.roomH), 0.5, maxH);
     item.nx = drag.tlx + (item.w / state.roomW) / 2;
     item.ny = drag.tly + (item.h / state.roomH) / 2;
+    clearIncompatibleProduct(item);
     renderAll();
   }
 }
@@ -1410,14 +1745,14 @@ function handlePointerMove(e) {
 function handlePointerUp(e) {
   if (!drag) return;
   if (drag.mode === 'palette') {
+    suppressPaletteClick = true;
+    window.setTimeout(() => {
+      suppressPaletteClick = false;
+    }, 400);
     if (drag.moved && isInsideCanvas(e.clientX, e.clientY)) {
       const item = createItem(drag.type, 0.5, 0.5);
       const pos = pointToNorm(e.clientX, e.clientY, item);
-      item.nx = clamp(snapNormX(pos.nx), (item.w / state.roomW) / 2, 1 - (item.w / state.roomW) / 2);
-      item.ny = clamp(snapNormY(pos.ny), (item.h / state.roomH) / 2, 1 - (item.h / state.roomH) / 2);
-      state.placed.push(item);
-      state.selectedId = item.id;
-      renderAll();
+      addItem(drag.type, pos.nx, pos.ny);
     } else if (!drag.moved) {
       addItem(drag.type);
     }
@@ -1426,7 +1761,6 @@ function handlePointerUp(e) {
 }
 
 document.addEventListener('pointerdown', e => {
-  if (e.pointerType === 'touch') return;
   const openingMarker = e.target.closest('.room-feature');
   if (openingMarker) {
     const opening = findOpening(openingMarker.dataset.openingId);
@@ -1434,6 +1768,7 @@ document.addEventListener('pointerdown', e => {
     state.selectedOpeningId = opening.id;
     state.selectedId = null;
     beginOpeningDrag(opening, e);
+    capturePointer(openingMarker, e.pointerId);
     e.preventDefault();
     renderAll();
     return;
@@ -1446,6 +1781,7 @@ document.addEventListener('pointerdown', e => {
     state.selectedId = item.id;
     state.selectedOpeningId = null;
     beginResizeDrag(item, e);
+    capturePointer(resize, e.pointerId);
     e.preventDefault();
     e.stopPropagation();
     renderAll();
@@ -1459,6 +1795,7 @@ document.addEventListener('pointerdown', e => {
     state.selectedId = item.id;
     state.selectedOpeningId = null;
     beginMoveDrag(item, e);
+    capturePointer(planItem, e.pointerId);
     e.preventDefault();
     renderAll();
     return;
@@ -1467,6 +1804,7 @@ document.addEventListener('pointerdown', e => {
   const palette = e.target.closest('[data-action="palette"]');
   if (palette) {
     beginPaletteDrag(palette.dataset.type, e);
+    capturePointer(palette, e.pointerId);
     e.preventDefault();
   }
 });
@@ -1479,24 +1817,82 @@ document.addEventListener('click', e => {
   const actionTarget = e.target.closest('[data-action]');
   if (actionTarget) {
     const action = actionTarget.dataset.action;
+    if (action === 'palette') {
+      if (!suppressPaletteClick) addItem(actionTarget.dataset.type);
+      return;
+    }
     if (action === 'choose-product') {
       const product = productById(actionTarget.dataset.productId);
-      if (!product) return;
-      state.selectedProducts[product.type] = product.id;
-      const plannedItem = state.placed.find(item => item.type === product.type);
-      if (plannedItem) plannedItem.tier = product.tier;
+      const item = findItem(actionTarget.dataset.itemId) || state.placed.find(candidate => candidate.type === product?.type);
+      if (!product || !item || !selectProduct(item, product)) return;
+      renderAll();
+      announce(`${product.title} selected for ${itemDisplayName(item)}.`);
+      return;
+    }
+    if (action === 'cart-handoff') {
+      const status = $('#cartHandoffStatus');
+      if (!status) return;
+      const count = selectedProducts().length;
+      status.hidden = false;
+      status.textContent = count
+        ? `This prototype has ${count} selected product${count === 1 ? '' : 's'} ready, but it is not connected to an approved Home Depot cart API. Use the exact product links below to shop them.`
+        : 'Choose products before preparing a cart handoff.';
+      return;
+    }
+    if (action === 'compare-product') {
+      const product = productById(actionTarget.dataset.productId);
+      const item = findItem(actionTarget.dataset.itemId);
+      if (!product || !item) return;
+      state.comparison = { itemId: item.id, productId: product.id };
+      renderAll();
+      announce(`Comparing ${product.title} for ${itemDisplayName(item)}.`);
+      return;
+    }
+    if (action === 'clear-comparison') {
+      state.comparison = null;
       renderAll();
       return;
     }
     if (action === 'location') {
       state.location = actionTarget.dataset.location;
+      sessionStorage.setItem('bathroomPlannerMarket', state.location);
       state.locOpen = false;
       renderAll();
+      announce(`${locationLabel()} selected.`);
       return;
     }
     if (action === 'view') {
       state.view = actionTarget.dataset.view;
       renderAll();
+      return;
+    }
+    if (action === 'mobile-mode') {
+      const mode = actionTarget.dataset.mobileMode;
+      if (mode === 'summary') {
+        state.view = 'estimate';
+      } else {
+        state.view = 'plan';
+        state.mobileMode = mode;
+      }
+      renderAll();
+      return;
+    }
+    if (action === 'palette-select') {
+      const item = state.placed.find(candidate => candidate.type === actionTarget.dataset.type);
+      if (!item) return;
+      state.selectedId = item.id;
+      state.selectedOpeningId = null;
+      renderAll();
+      announce(`${itemDisplayName(item)} selected on your plan.`);
+      return;
+    }
+    if (action === 'opening-palette-select') {
+      const opening = state.openings.find(candidate => candidate.type === actionTarget.dataset.openingType);
+      if (!opening) return;
+      state.selectedOpeningId = opening.id;
+      state.selectedId = null;
+      renderAll();
+      announce(`${openingName(opening)} selected on your plan.`);
       return;
     }
     if (action === 'opening-add') {
@@ -1529,13 +1925,41 @@ document.addEventListener('click', e => {
       removeOpening(Number(actionTarget.dataset.openingId));
       return;
     }
+    if (action === 'resolve-overlaps') {
+      resolveOverlaps();
+      return;
+    }
+    if (action === 'remove-product') {
+      const item = findItem(actionTarget.dataset.itemId);
+      if (!item) return;
+      item.productId = null;
+      if (state.recommendationAnchor?.itemId === item.id) state.recommendationAnchor = null;
+      renderAll();
+      announce(`Product removed from ${itemDisplayName(item)}.`);
+      return;
+    }
+    if (action === 'select-item') {
+      const item = findItem(actionTarget.dataset.itemId);
+      if (!item) return;
+      state.selectedId = item.id;
+      state.selectedOpeningId = null;
+      state.view = 'plan';
+      state.mobileMode = 'details';
+      renderAll();
+      restorePlannerFocus(`#inspectorContent`);
+      return;
+    }
     if (action === 'remove') {
       removeItem(Number(actionTarget.dataset.id));
       return;
     }
     if (action === 'variant') {
       const item = findItem(actionTarget.dataset.id);
-      if (item) item.name = actionTarget.dataset.value;
+      if (item) {
+        item.name = actionTarget.dataset.value;
+        const cleared = clearIncompatibleProduct(item);
+        if (cleared) announce(`${cleared.title} was removed because it does not fit the ${item.name.toLowerCase()} configuration.`);
+      }
       renderAll();
       return;
     }
@@ -1543,14 +1967,14 @@ document.addEventListener('click', e => {
       const item = findItem(actionTarget.dataset.id);
       if (item) {
         item.tier = actionTarget.dataset.tier;
-        delete state.selectedProducts[item.type];
       }
       renderAll();
       return;
     }
     if (action === 'addon') {
       const item = findItem(actionTarget.dataset.id);
-      if (item) item.addons[actionTarget.dataset.addon] = !item.addons[actionTarget.dataset.addon];
+      const addon = item && COMPONENTS[item.type].addons.find(candidate => candidate.key === actionTarget.dataset.addon);
+      if (item && addon && !productIncludes(selectedProductFor(item), addon)) item.addons[actionTarget.dataset.addon] = !item.addons[actionTarget.dataset.addon];
       renderAll();
       return;
     }
@@ -1596,6 +2020,104 @@ document.addEventListener('input', e => {
 });
 
 document.addEventListener('keydown', e => {
+  const tab = e.target.closest('[role="tab"][data-action="view"], [role="tab"][data-action="mobile-mode"]');
+  if (tab && ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
+    const tabs = [...tab.parentElement.querySelectorAll('[role="tab"]')];
+    const index = tabs.indexOf(tab);
+    const nextIndex = e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : (index + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+    e.preventDefault();
+    tabs[nextIndex].focus();
+    tabs[nextIndex].click();
+    return;
+  }
+
+  if (e.target.id === 'locationToggle' && ['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
+    e.preventDefault();
+    state.locOpen = true;
+    renderAll();
+    window.requestAnimationFrame(() => $('#locationMenu [role="option"]')?.focus());
+    return;
+  }
+
+  if (state.locOpen) {
+    const options = [...document.querySelectorAll('#locationMenu [role="option"]')];
+    const currentIndex = options.indexOf(document.activeElement);
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      state.locOpen = false;
+      renderAll();
+      $('#locationToggle').focus();
+      return;
+    }
+    if (['ArrowDown', 'ArrowUp'].includes(e.key) && currentIndex >= 0) {
+      e.preventDefault();
+      const next = (currentIndex + (e.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+      options[next].focus();
+      return;
+    }
+    if ((e.key === 'Enter' || e.key === ' ') && currentIndex >= 0) {
+      e.preventDefault();
+      options[currentIndex].click();
+      return;
+    }
+  }
+
+  const palette = e.target.closest('[data-action="palette"]');
+  if (palette && (e.key === 'Enter' || e.key === ' ')) {
+    e.preventDefault();
+    addItem(palette.dataset.type);
+    restorePlannerFocus(`[data-action="palette"][data-type="${palette.dataset.type}"]`);
+    return;
+  }
+
+  const resize = e.target.closest('[data-action="resize"]');
+  if (resize && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+    const item = findItem(resize.dataset.id);
+    if (!item) return;
+    const step = e.shiftKey ? 1 : 0.5;
+    const axis = ['ArrowLeft', 'ArrowRight'].includes(e.key) ? 'w' : 'h';
+    const delta = ['ArrowLeft', 'ArrowUp'].includes(e.key) ? -step : step;
+    e.preventDefault();
+    item[axis] = clamp(snap(item[axis] + delta), 0.5, axis === 'w' ? state.roomW : state.roomH);
+    clampItem(item);
+    renderAll();
+    restorePlannerFocus(`[data-action="resize"][data-id="${item.id}"]`);
+    announce(`${item.name} ${axis === 'w' ? 'width' : 'depth'} is now ${fmtNum(item[axis])} feet.`);
+    return;
+  }
+
+  const planItem = e.target.closest('.plan-item');
+  const onCanvas = e.target.id === 'planCanvas';
+  if ((planItem || onCanvas) && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+    const item = planItem ? findItem(planItem.dataset.id) : selectedItem();
+    if (!item) return;
+    const step = e.shiftKey ? 1 : 0.5;
+    const dx = e.key === 'ArrowLeft' ? -step : e.key === 'ArrowRight' ? step : 0;
+    const dy = e.key === 'ArrowUp' ? -step : e.key === 'ArrowDown' ? step : 0;
+    e.preventDefault();
+    item.nx += dx / state.roomW;
+    item.ny += dy / state.roomH;
+    clampItem(item);
+    state.selectedId = item.id;
+    state.selectedOpeningId = null;
+    renderAll();
+    restorePlannerFocus(planItem ? `.plan-item[data-id="${item.id}"]` : '#planCanvas');
+    announce(`${item.name} moved ${Math.abs(dx || dy)} feet.`);
+    return;
+  }
+
+  if (planItem && (e.key === 'Enter' || e.key === ' ')) {
+    e.preventDefault();
+    const item = findItem(planItem.dataset.id);
+    if (!item) return;
+    state.selectedId = item.id;
+    state.selectedOpeningId = null;
+    renderAll();
+    restorePlannerFocus(`.plan-item[data-id="${item.id}"]`);
+    announce(`${item.name} selected. Use arrow keys to move it.`);
+    return;
+  }
+
   if (e.key === 'Enter' && e.target.matches('input')) {
     if (e.target.id === 'roomWidth' || e.target.id === 'roomHeight') {
       commitRoomDimensions();
@@ -1617,44 +2139,91 @@ document.addEventListener('click', e => {
 });
 
 $('#locateButton').addEventListener('click', () => {
-  state.location = state.location === 'national' ? 'seattle' : 'national';
-  state.locOpen = false;
+  state.locOpen = !state.locOpen;
   renderAll();
 });
 
-function openDownloadModal() {
+let lastModalTrigger = null;
+
+function setDownloadError(message = '') {
+  const target = $('#downloadError');
+  if (!target) return;
+  target.hidden = !message;
+  target.textContent = message;
+}
+
+function setModalBackground(isInert) {
+  [...document.body.children]
+    .filter(child => child.id !== 'briefModal')
+    .forEach(child => child.toggleAttribute('inert', isInert));
+}
+
+function closeDownloadModal() {
+  $('#briefModal').hidden = true;
+  setDownloadError();
+  setModalBackground(false);
+  lastModalTrigger?.focus();
+  lastModalTrigger = null;
+}
+
+function openDownloadModal(trigger = document.activeElement) {
   const [lo, hi] = estimateRange();
   const modal = $('#briefModal');
+  lastModalTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
+  setDownloadError();
   $('#briefSummary').textContent = state.placed.length
-    ? `${state.placed.length} project item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom for ${locationLabel()}. Planning range: ${rangeText(lo, hi)}. Enter your info to save the project plan.`
+    ? `${state.placed.length} project item${state.placed.length === 1 ? '' : 's'} in a ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft bathroom for ${locationLabel()}. Planning range: ${rangeText(lo, hi)}. Add optional details to label your local PDF.`
     : 'Add fixtures to generate a store-ready project plan.';
   modal.hidden = false;
+  setModalBackground(true);
   $('#leadName').focus();
 }
 
-$('#quoteButton').addEventListener('click', openDownloadModal);
-$('#estimateQuoteButton').addEventListener('click', openDownloadModal);
-$('#downloadPlanButton').addEventListener('click', openDownloadModal);
-$('#estimateDownloadButton').addEventListener('click', openDownloadModal);
-
-$('#modalClose').addEventListener('click', () => {
-  $('#briefModal').hidden = true;
+['quoteButton', 'downloadPlanButton', 'estimateDownloadButton'].forEach(id => {
+  $(`#${id}`)?.addEventListener('click', event => openDownloadModal(event.currentTarget));
 });
 
+$('#modalClose').addEventListener('click', closeDownloadModal);
+
 $('#briefModal').addEventListener('click', e => {
-  if (e.target.id === 'briefModal') $('#briefModal').hidden = true;
+  if (e.target.id === 'briefModal') closeDownloadModal();
+});
+
+document.addEventListener('keydown', e => {
+  const modal = $('#briefModal');
+  if (modal.hidden) return;
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    closeDownloadModal();
+    return;
+  }
+  if (e.key !== 'Tab') return;
+  const focusable = [...modal.querySelectorAll('button:not([disabled]), input:not([disabled]), [href]')]
+    .filter(element => !element.hidden);
+  const current = focusable.indexOf(document.activeElement);
+  if (e.shiftKey && (current <= 0 || document.activeElement === modal)) {
+    e.preventDefault();
+    focusable.at(-1)?.focus();
+  } else if (!e.shiftKey && current === focusable.length - 1) {
+    e.preventDefault();
+    focusable[0]?.focus();
+  }
 });
 
 function planPdfLines(lead) {
-  const [lo, hi] = estimateRange();
+  const model = projectCostModel();
+  const [lo, hi] = [model.lo, model.hi];
+  const preparedFor = [lead.name, lead.email].filter(Boolean).join(' · ');
   return [
     'BATHROOM REMODEL PROJECT PLAN',
     'Prepared with The Home Depot Project Planner',
-    `Prepared for: ${lead.name} (${lead.email})`,
+    `Prepared for: ${preparedFor || 'Not provided'}`,
     '',
     `Room: ${fmtNum(state.roomW)} x ${fmtNum(state.roomH)} ft (${fmtNum(state.roomW * state.roomH)} sq ft)`,
     `Location: ${locationLabel()}`,
     `Estimated range: ${state.placed.length ? rangeText(lo, hi) : '$0'}`,
+    `Selected products: ${fmtMoney(model.materials)}`,
+    `Installation, preparation & scope allowance: ${rangeText(model.installLo, model.installHi)}`,
     '',
     'ROOM OPENINGS',
     ...(state.openings.length
@@ -1666,14 +2235,24 @@ function planPdfLines(lead) {
       const [itemLo, itemHi] = itemRange(item);
       const c = COMPONENTS[item.type];
       const addonLabels = c.addons.filter(addon => item.addons[addon.key]).map(addon => addon.label);
-      return `- ${item.name}: ${fmtNum(item.w)} x ${fmtNum(item.h)} ft, ${TIER_LABEL[item.tier]} tier, ${rangeText(itemLo, itemHi)}${addonLabels.length ? `, add-ons: ${addonLabels.join(', ')}` : ''}`;
+      return `- ${itemDisplayName(item)}: ${fmtNum(item.w)} x ${fmtNum(item.h)} ft, ${TIER_LABEL[item.tier]} tier, ${rangeText(itemLo, itemHi)}${addonLabels.length ? `, add-ons: ${addonLabels.join(', ')}` : ''}`;
     }),
     '',
     'PRODUCT SELECTIONS',
     ...state.placed.map(item => {
-      const product = selectedProductFor(item.type);
-      return `- ${COMPONENTS[item.type].label}: ${product.brand} ${product.title}, ${product.price}, model ${product.model} - ${product.url}`;
+      const product = selectedProductFor(item);
+      const quantity = product ? materialQuantity(item, product) : null;
+      return product
+        ? `- ${itemDisplayName(item)}: ${product.brand} ${product.title}, ${productPriceText(product)}, ${quantity.label}, model ${product.model} - ${product.url}`
+        : `- ${itemDisplayName(item)}: no compatible sample product selected`;
     }),
+    '',
+    'LAYOUT REVIEW',
+    ...(layoutWarnings().length ? layoutWarnings().map(warning => `- ${warning}`) : ['- No overlap or fit warnings detected']),
+    '',
+    'ESTIMATE ASSUMPTIONS',
+    '- Sample prices checked July 14, 2026. Local price and availability may vary.',
+    '- Taxes, delivery, permits, demolition discoveries, and final installation scope are not included.',
     '',
     'RECOMMENDED GUIDES',
     ...recommendationItems(3).map(article => `- ${article.title}`),
@@ -1740,7 +2319,7 @@ function createPlanPdfBlob(lead) {
       addLine(line, { size: 20, bold: true, leading: 28, maxChars: 42 });
       return;
     }
-    if (line === 'ROOM OPENINGS' || line === 'SCOPE' || line === 'PRODUCT SELECTIONS' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
+    if (line === 'ROOM OPENINGS' || line === 'SCOPE' || line === 'PRODUCT SELECTIONS' || line === 'LAYOUT REVIEW' || line === 'ESTIMATE ASSUMPTIONS' || line === 'RECOMMENDED GUIDES' || line === 'NEXT STEP') {
       addLine('');
       addLine(line, { size: 13, bold: true, leading: 18, maxChars: 60 });
       return;
@@ -1783,6 +2362,7 @@ function createPlanPdfBlob(lead) {
 
 function downloadPlanPdf(lead) {
   const blob = createPlanPdfBlob(lead);
+  if (!(blob instanceof Blob) || blob.size === 0) throw new Error('The project plan could not be created.');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'home-depot-bathroom-project-plan.pdf';
@@ -1797,11 +2377,19 @@ function downloadPlanPdf(lead) {
 $('#downloadLeadForm').addEventListener('submit', e => {
   e.preventDefault();
   if (!e.currentTarget.reportValidity()) return;
-  downloadPlanPdf({
-    name: $('#leadName').value.trim(),
-    email: $('#leadEmail').value.trim(),
-  });
-  $('#briefModal').hidden = true;
+  try {
+    downloadPlanPdf({
+      name: $('#leadName').value.trim(),
+      email: $('#leadEmail').value.trim(),
+    });
+    closeDownloadModal();
+  } catch (error) {
+    console.error('Project plan download failed.', error);
+    setDownloadError('The project plan could not be downloaded. Please try again.');
+  }
 });
+
+const productDataErrors = validateProductData();
+if (productDataErrors.length) console.error(`Product data validation failed: ${productDataErrors.join('; ')}`);
 
 renderAll();
