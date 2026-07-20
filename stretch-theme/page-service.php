@@ -12,6 +12,7 @@ $service = get_option('stretch_service_' . $slug, []);
 
 // Defaults
 $headline        = !empty($service['headline'])        ? $service['headline']        : get_the_title();
+$headline_accent = !empty($service['headline_accent']) ? $service['headline_accent'] : '';
 $subheadline     = !empty($service['subheadline'])     ? $service['subheadline']     : '';
 $hero_text       = !empty($service['hero_text'])       ? $service['hero_text']       : '';
 $hero_cta_label  = !empty($service['hero_cta_label'])  ? $service['hero_cta_label']  : 'Get Started';
@@ -143,6 +144,38 @@ $testimonial = isset($testimonials[$slug]) ? $testimonials[$slug] : $testimonial
 
 // Benefit icons (SVG circles with initials or abstract shapes)
 $benefit_colors = ['#8560A8', '#5674B9', '#448CCB', '#00BFF3'];
+
+// Portfolio strip presence (also drives divider logic below)
+$service_portfolio = function_exists('stretch_get_portfolio_for_service')
+    ? stretch_get_portfolio_for_service($slug)
+    : [];
+$has_portfolio = !empty($service_portfolio);
+
+// Ordered top-of-section background colors for the sections this page will
+// actually render. Every angled divider pulls its fill from the NEXT rendered
+// section, so optional sections can't leave a wedge stranded on the wrong
+// background (e.g. a light wedge over the dark Why section).
+$svc_flow = ['stats' => '#1a1f2e'];
+if (!empty($problem))                                 { $svc_flow['problem']   = '#f7f6fc'; }
+if (!empty($solution))                                { $svc_flow['solution']  = '#ffffff'; }
+$svc_flow['quote'] = '#f9f9fb';
+if (!empty($offerings) || !empty($offerings_groups))  { $svc_flow['offerings'] = '#ffffff'; }
+if (!empty($addons) || !empty($cross_cta))            { $svc_flow['addons']    = '#f9f9fb'; }
+if (!empty($process) && !empty($process['steps']))    { $svc_flow['process']   = '#f9f9fb'; }
+if ($has_portfolio)                                   { $svc_flow['work']      = '#f9f9fb'; }
+if (!empty($benefits))                                { $svc_flow['why']       = '#1a1f2e'; }
+$svc_flow['testimonial'] = '#ffffff';
+if (!empty($faqs))                                    { $svc_flow['faq']       = '#f9f9fb'; }
+$svc_flow['cta'] = '#8560A8';
+
+if (!function_exists('stretch_svc_next_fill')) {
+    /** Background color of the section rendered after $key (null when last). */
+    function stretch_svc_next_fill($flow, $key) {
+        $keys = array_keys($flow);
+        $i = array_search($key, $keys, true);
+        return ($i !== false && isset($keys[$i + 1])) ? $flow[$keys[$i + 1]] : null;
+    }
+}
 ?>
 
 <style>
@@ -210,14 +243,7 @@ html, body { overflow-x: hidden; }
 }
 .svc-angle-divider-top svg { display: block; width: 100%; height: 60px; }
 
-/* ---------- GRAIN TEXTURE ---------- */
-@keyframes svc-grainShift {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-2%, -3%); }
-  50% { transform: translate(3%, 1%); }
-  75% { transform: translate(-1%, 3%); }
-  100% { transform: translate(0, 0); }
-}
+/* ---------- GRAIN TEXTURE — STATIC (matches premium-fx: compositor cost > visual value) ---------- */
 .svc-grain-overlay {
   position: absolute; inset: 0;
   overflow: hidden; pointer-events: none; z-index: 0;
@@ -229,7 +255,6 @@ html, body { overflow-x: hidden; }
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 128px 128px;
-  animation: svc-grainShift 0.8s steps(4) infinite;
 }
 
 /* ========================================
@@ -396,7 +421,7 @@ html, body { overflow-x: hidden; }
    ======================================== */
 .svc-stats-bar {
   background: #1a1f2e;
-  padding: 60px 0;
+  padding: 60px 0 96px;
   position: relative;
 }
 .svc-stats-bar::before {
@@ -1690,7 +1715,7 @@ html, body { overflow-x: hidden; }
   <div class="svc-container">
     <div class="svc-hero-content">
       <span class="svc-hero-overline svc-reveal svc-delay-1">Our Services</span>
-      <h1 class="svc-reveal svc-delay-2"><?php echo wp_kses_post($headline); ?></h1>
+      <h1 class="svc-reveal svc-delay-2"><?php echo stretch_accent_title($headline, $headline_accent, 'svc-gradient-text'); ?></h1>
       <?php if ($subheadline) : ?>
         <p class="svc-subtitle svc-reveal svc-delay-3"><?php echo esc_html($subheadline); ?></p>
       <?php endif; ?>
@@ -1750,6 +1775,12 @@ html, body { overflow-x: hidden; }
       </div>
     <?php endif; ?>
   </div>
+
+  <div class="svc-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'stats')); ?>"/>
+    </svg>
+  </div>
 </section>
 
 
@@ -1782,7 +1813,7 @@ html, body { overflow-x: hidden; }
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'problem')); ?>"/>
     </svg>
   </div>
 </section>
@@ -1830,7 +1861,7 @@ html, body { overflow-x: hidden; }
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/>
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'solution')); ?>"/>
     </svg>
   </div>
 </section>
@@ -1847,7 +1878,7 @@ html, body { overflow-x: hidden; }
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#ffffff"/>
+      <polygon points="0,0 1440,60 1440,60 0,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'quote')); ?>"/>
     </svg>
   </div>
 </section>
@@ -1927,7 +1958,7 @@ html, body { overflow-x: hidden; }
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/>
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'offerings')); ?>"/>
     </svg>
   </div>
 </section>
@@ -1973,6 +2004,15 @@ html, body { overflow-x: hidden; }
       </div>
     <?php endif; ?>
   </div>
+
+  <?php $addons_fill = stretch_svc_next_fill($svc_flow, 'addons'); ?>
+  <?php if ($addons_fill && strcasecmp($addons_fill, '#f9f9fb') !== 0) : ?>
+  <div class="svc-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr($addons_fill); ?>"/>
+    </svg>
+  </div>
+  <?php endif; ?>
 </section>
 <?php endif; ?>
 
@@ -1980,13 +2020,6 @@ html, body { overflow-x: hidden; }
 <!-- ========================================
      5.25 PROCESS / HOW IT WORKS (optional)
      ======================================== -->
-<?php
-// Pre-compute portfolio existence for divider logic below
-$service_portfolio = function_exists('stretch_get_portfolio_for_service')
-    ? stretch_get_portfolio_for_service($slug)
-    : [];
-$has_portfolio = !empty($service_portfolio);
-?>
 <?php if (!empty($process) && !empty($process['steps'])) :
   $pr_heading  = !empty($process['heading'])  ? $process['heading']  : 'How It Works';
   $pr_sub      = !empty($process['subheading']) ? $process['subheading'] : '';
@@ -2035,10 +2068,11 @@ $has_portfolio = !empty($service_portfolio);
     </ol>
   </div>
 
-  <?php if (!$has_portfolio) : ?>
+  <?php $process_fill = stretch_svc_next_fill($svc_flow, 'process'); ?>
+  <?php if ($process_fill && strcasecmp($process_fill, '#f9f9fb') !== 0) : ?>
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#1a1f2e"/>
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr($process_fill); ?>"/>
     </svg>
   </div>
   <?php endif; ?>
@@ -2095,7 +2129,7 @@ if ($has_portfolio) :
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#1a1f2e"/>
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'work')); ?>"/>
     </svg>
   </div>
 </section>
@@ -2140,7 +2174,7 @@ if ($has_portfolio) :
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#ffffff"/>
+      <polygon points="0,0 1440,60 1440,60 0,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'why')); ?>"/>
     </svg>
   </div>
 </section>
@@ -2197,7 +2231,7 @@ $has_multi_testimonials = is_array($testimonials_list) && count($testimonials_li
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/>
+      <polygon points="0,60 1440,0 1440,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'testimonial')); ?>"/>
     </svg>
   </div>
 </section>
@@ -2237,7 +2271,7 @@ $has_multi_testimonials = is_array($testimonials_list) && count($testimonials_li
 
   <div class="svc-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#8560A8"/>
+      <polygon points="0,0 1440,60 1440,60 0,60" fill="<?php echo esc_attr(stretch_svc_next_fill($svc_flow, 'faq')); ?>"/>
     </svg>
   </div>
 </section>

@@ -12,6 +12,7 @@ $d    = get_option('stretch_industry_' . $slug, []);
 $contact_url = '/contact-stretch-creative/';
 $overline    = !empty($d['overline'])          ? $d['overline']          : get_the_title();
 $h1          = !empty($d['h1'])                ? $d['h1']                : get_the_title();
+$h1_accent   = !empty($d['h1_accent'])         ? $d['h1_accent']         : '';
 $hero_text   = !empty($d['hero_text'])         ? $d['hero_text']         : '';
 $cta_label   = !empty($d['cta_label'])         ? $d['cta_label']         : 'Schedule a Discovery Call';
 $audiences   = !empty($d['audiences'])         ? $d['audiences']         : [];
@@ -66,9 +67,10 @@ html, body { overflow-x: hidden; }
 .ind-section h2 { font-family: 'Poppins', sans-serif; font-size: clamp(28px, 3.4vw, 42px); font-weight: 600; line-height: 1.15; margin: 0 0 28px; letter-spacing: -0.5px; color: #1a1f2e; }
 
 .ind-hero { min-height: 64vh; padding: 170px 0 120px; }
-.ind-hero-content { position: relative; z-index: 2; max-width: 840px; }
+/* Centered like the home + service heroes (was left-aligned pre-polish) */
+.ind-hero-content { position: relative; z-index: 2; max-width: 840px; margin: 0 auto; text-align: center; }
 .ind-hero-content h1 { font-family: 'Poppins', sans-serif; font-size: clamp(34px, 4.4vw, 56px); font-weight: 600; line-height: 1.1; color: #fff; margin: 0 0 22px; letter-spacing: -1px; }
-.ind-hero-content p { font-family: 'Assistant', sans-serif; font-size: 20px; font-weight: 300; line-height: 1.6; color: #cfd6e4; margin: 0 0 36px; max-width: 680px; }
+.ind-hero-content p { font-family: 'Assistant', sans-serif; font-size: 20px; font-weight: 300; line-height: 1.6; color: #cfd6e4; margin: 0 auto 36px; max-width: 680px; }
 
 .ind-audiences { background: #fff; padding: 90px 0; position: relative; }
 .ind-chips { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
@@ -124,7 +126,10 @@ html, body { overflow-x: hidden; }
 .ind-why-card h3 { font-family: 'Poppins', sans-serif; font-size: 19px; font-weight: 600; color: #fff; margin: 0 0 10px; }
 .ind-why-card p { font-family: 'Assistant', sans-serif; font-size: 16px; line-height: 1.65; color: #b9c2d4; margin: 0; }
 
-.ind-faqs { background: #fff; padding: 100px 0; }
+.ind-faqs { background: #fff; padding: 100px 0; position: relative; }
+
+/* Keep the trusted-brands logos clear of the angled wedge below them */
+.ind-logos-band .pfx-logos--compact { padding-bottom: 130px; }
 
 .ind-finalcta { position: relative; overflow: hidden; background: linear-gradient(170deg, #8560A8, #3d2d66 30%, #252C3A 70%, #1a1f2e); padding: 120px 0; text-align: center; }
 .ind-finalcta h2 { color: #fff; margin-bottom: 18px; }
@@ -135,13 +140,13 @@ html, body { overflow-x: hidden; }
 </style>
 
 <!-- HERO -->
-<section class="pfx-hero pfx-hero--left ind-hero ind-section" data-grain aria-label="Intro">
+<section class="pfx-hero ind-hero ind-section" data-grain aria-label="Intro">
   <div class="pfx-hero-mesh"></div>
   <div class="pfx-hero-grid"></div>
   <div class="pfx-container">
     <div class="ind-hero-content">
       <span class="pfx-overline pfx-reveal pfx-delay-1"><?php echo esc_html($overline); ?></span>
-      <h1 class="pfx-reveal pfx-delay-2"><?php echo esc_html($h1); ?></h1>
+      <h1 class="pfx-reveal pfx-delay-2"><?php echo stretch_accent_title($h1, $h1_accent); ?></h1>
       <?php if ($hero_text) : ?><p class="pfx-reveal pfx-delay-3"><?php echo esc_html($hero_text); ?></p><?php endif; ?>
       <a href="<?php echo esc_url($contact_url); ?>" class="pfx-btn-primary pfx-reveal pfx-delay-4"><span><?php echo esc_html($cta_label); ?> &rarr;</span></a>
     </div>
@@ -263,7 +268,7 @@ html, body { overflow-x: hidden; }
 <?php endif; ?>
 
 <!-- TRUSTED BRANDS STRIP -->
-<div style="position:relative;">
+<div class="ind-logos-band" style="position:relative;">
   <?php stretch_pfx_logo_marquee(true); ?>
   <div class="pfx-angle-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="0,60 1440,0 1440,60" fill="#1a1f2e"/></svg></div>
 </div>
@@ -284,6 +289,7 @@ html, body { overflow-x: hidden; }
       <?php endforeach; ?>
     </div>
   </div>
+  <div class="pfx-angle-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="0,0 1440,60 1440,60 0,60" fill="<?php echo $faqs ? '#ffffff' : '#8560A8'; ?>"/></svg></div>
 </section>
 <?php endif; ?>
 
@@ -304,6 +310,7 @@ html, body { overflow-x: hidden; }
       </div>
     <?php endforeach; ?>
   </div>
+  <div class="pfx-angle-divider"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="0,0 1440,60 1440,60 0,60" fill="#8560A8"/></svg></div>
 </section>
 <?php
     $faq_ld = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => []];

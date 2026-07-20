@@ -623,3 +623,29 @@ function stretch_get_portfolio_for_service($slug) {
     }
     return $out;
 }
+
+/**
+ * Render a heading with its accent phrase wrapped in a gradient span, matching
+ * the home-page hero treatment. $accent is the seeded phrase to highlight; when
+ * absent (or not found in $text) the last word is highlighted instead, the same
+ * rule the service-template section headings already use. Text that ships its
+ * own markup is passed through untouched.
+ */
+function stretch_accent_title($text, $accent = '', $class = 'gradient-text') {
+    if (strpos($text, '<') !== false) {
+        return wp_kses_post($text);
+    }
+    if ($accent !== '' && ($pos = stripos($text, $accent)) !== false) {
+        $match = substr($text, $pos, strlen($accent));
+        return esc_html(substr($text, 0, $pos))
+            . '<span class="' . esc_attr($class) . '">' . esc_html($match) . '</span>'
+            . esc_html(substr($text, $pos + strlen($accent)));
+    }
+    $words = explode(' ', trim($text));
+    if (count($words) >= 2) {
+        $last = array_pop($words);
+        return esc_html(implode(' ', $words))
+            . ' <span class="' . esc_attr($class) . '">' . esc_html($last) . '</span>';
+    }
+    return esc_html($text);
+}

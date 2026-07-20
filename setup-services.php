@@ -22,6 +22,7 @@ $services = [];
 $services['content-writing-at-any-scale'] = [
     // -------- Hero --------
     'headline'       => 'Content Writing at Any Scale',
+    'headline_accent' => 'Any Scale',
     'subheadline'    => 'High-quality content solves problems.',
     'hero_text'      =>     [
         'Your audience is looking for helpful, trustworthy information to support their next steps. Google and AI-based search are prioritizing great content that explains offerings and answers questions in a clear, organized, and engaging way.',
@@ -217,6 +218,7 @@ $shared_testimonials = [
 $services['seo_content_strategy_services'] = [
     // -------- Hero --------
     'headline'       => 'SEO + AEO Strategy & Services',
+    'headline_accent' => 'Strategy & Services',
     'subheadline'    => 'Get found today, stay visible tomorrow.',
     'hero_text'      =>     [
         'Search has changed. Ranking well on Google is still important, but it’s no longer the only way people discover businesses online.',
@@ -544,6 +546,7 @@ $services['video-content-services'] = [
 // ============================================================
 $services['content-strategy'] = [
     'headline'    => 'Content Strategy That Drives Results',
+    'headline_accent' => 'Drives Results',
     'subheadline' => "Whether you're starting from zero or scaling what's already working, we plug in wherever you need strategic support — from SEO-backed roadmaps to winning editorial briefs.",
     'offerings'   => [
         [
@@ -643,6 +646,7 @@ $services['content-strategy'] = [
 $services['paid-advertising'] = [
     // -------- Hero --------
     'headline'       => 'Paid Advertising Services',
+    'headline_accent' => 'Advertising Services',
     'subheadline'    => 'Reach the right audience with campaigns built to perform.',
     'hero_text'      => 'The best advertising reaches people with the right message at the right moment. Stretch Creative develops paid advertising campaigns backed by thoughtful strategy, compelling messaging and visuals, and continuous refining and optimization to help you connect with qualified audiences and make the most of your marketing budget.',
     'hero_cta_label' => 'Let’s Build Your Next Campaign',
@@ -774,6 +778,7 @@ $services['paid-advertising'] = [
 $services['visual-content-and-design'] = [
     // -------- Hero --------
     'headline'       => 'Visual Content and Design',
+    'headline_accent' => 'Design',
     'subheadline'    => 'Show your audience what words alone can’t.',
     'hero_text'      =>     [
         'People process visuals faster than text, and first impressions happen in seconds. Great visual content helps you explain complex concepts, showcase products, or tell your brand story in a way your audience will remember.',
