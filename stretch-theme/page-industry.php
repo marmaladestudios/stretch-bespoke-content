@@ -67,10 +67,9 @@ html, body { overflow-x: hidden; }
 .ind-section h2 { font-family: 'Poppins', sans-serif; font-size: clamp(28px, 3.4vw, 42px); font-weight: 600; line-height: 1.15; margin: 0 0 28px; letter-spacing: -0.5px; color: #1a1f2e; }
 
 .ind-hero { min-height: 64vh; padding: 170px 0 120px; }
-/* Centered like the home + service heroes (was left-aligned pre-polish) */
-.ind-hero-content { position: relative; z-index: 2; max-width: 840px; margin: 0 auto; text-align: center; }
+.ind-hero-content { position: relative; z-index: 2; max-width: 840px; }
 .ind-hero-content h1 { font-family: 'Poppins', sans-serif; font-size: clamp(34px, 4.4vw, 56px); font-weight: 600; line-height: 1.1; color: #fff; margin: 0 0 22px; letter-spacing: -1px; }
-.ind-hero-content p { font-family: 'Assistant', sans-serif; font-size: 20px; font-weight: 300; line-height: 1.6; color: #cfd6e4; margin: 0 auto 36px; max-width: 680px; }
+.ind-hero-content p { font-family: 'Assistant', sans-serif; font-size: 20px; font-weight: 300; line-height: 1.6; color: #cfd6e4; margin: 0 0 36px; max-width: 680px; }
 
 .ind-audiences { background: #fff; padding: 90px 0; position: relative; }
 .ind-chips { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
@@ -140,7 +139,7 @@ html, body { overflow-x: hidden; }
 </style>
 
 <!-- HERO -->
-<section class="pfx-hero ind-hero ind-section" data-grain aria-label="Intro">
+<section class="pfx-hero pfx-hero--left ind-hero ind-section" data-grain aria-label="Intro">
   <div class="pfx-hero-mesh"></div>
   <div class="pfx-hero-grid"></div>
   <div class="pfx-container">

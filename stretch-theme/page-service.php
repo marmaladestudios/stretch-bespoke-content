@@ -330,7 +330,7 @@ html, body { overflow-x: hidden; }
 .svc-hero-grid::after {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 55% 50% at 50% 50%, rgba(37,44,58,0.95) 0%, rgba(37,44,58,0.7) 30%, transparent 60%);
+  background: radial-gradient(ellipse 52% 55% at 32% 50%, rgba(37,44,58,0.95) 0%, rgba(37,44,58,0.7) 30%, transparent 62%);
   pointer-events: none;
   z-index: 1;
 }
@@ -341,8 +341,7 @@ html, body { overflow-x: hidden; }
 
 .svc-hero-content {
   position: relative; z-index: 2;
-  text-align: center;
-  max-width: 780px; margin: 0 auto;
+  max-width: 840px;
 }
 .svc-hero-overline {
   font-family: 'Montserrat', sans-serif;
@@ -360,13 +359,13 @@ html, body { overflow-x: hidden; }
   font-family: 'Assistant', sans-serif;
   font-size: 19px; font-weight: 300; line-height: 1.7;
   color: rgba(255,255,255,0.7);
-  max-width: 620px; margin: 0 auto 20px;
+  max-width: 620px; margin: 0 0 20px;
 }
 .svc-hero-content .svc-hero-body {
   font-family: 'Assistant', sans-serif;
   font-size: 16px; font-weight: 300; line-height: 1.75;
   color: rgba(255,255,255,0.55);
-  max-width: 680px; margin: 0 auto 40px;
+  max-width: 680px; margin: 0 0 40px;
 }
 .svc-cta-content .svc-cta-sub {
   font-family: 'Poppins', sans-serif;
