@@ -397,7 +397,12 @@ $team_sections = [
     ],
 ];
 
-stretch_create_page('Our Team', 'the-team', $team_sections);
+// Our Team merged into the single About page (/about-stretch-creative/#our-team,
+// punch-list #12). No longer created as a standalone /the-team/ page; existing
+// installs are drafted by content-fixes.php FIX 5 and 301-redirected in
+// functions.php (stretch_redirect_merged_about_pages). $team_sections retained
+// above for reference/history.
+// stretch_create_page('Our Team', 'the-team', $team_sections);
 
 // ────────────────────────────────────────
 // SOLUTIONS (parent page)

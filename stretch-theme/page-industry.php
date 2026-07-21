@@ -90,7 +90,7 @@ html, body { overflow-x: hidden; }
 .ind-hero-wedge { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; background: #fff; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 1; pointer-events: none; }
 
 /* ===== WEDGE DIVIDERS (standalone) ===== */
-.ind-wedge { height: 60px; position: relative; line-height: 0; }
+.ind-wedge { height: 60px; position: relative; line-height: 0; margin-bottom: -1px; }
 .ind-wedge > div { position: absolute; inset: 0; }
 
 /* ===== SHARED HEADS ===== */

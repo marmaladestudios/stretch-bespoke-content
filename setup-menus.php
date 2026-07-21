@@ -73,11 +73,9 @@ $primary = [
         ['title' => 'Service Providers',         'url' => '/industries/service-providers/'],
         ['title' => 'SaaS & Digital Platforms',  'url' => '/industries/saas/'],
     ]],
-    ['title' => 'About', 'url' => '/about-stretch-creative/', 'children' => [
-        ['title' => 'Our Story', 'url' => '/about-stretch-creative/'],
-        ['title' => 'Our Team',  'url' => '/the-team/'],
-        ['title' => 'Our Work',  'url' => '/our-work/'],
-    ]],
+    // About is now a single merged page (/about-stretch-creative/ with #our-story
+    // / #our-team / #our-work anchors) — no dropdown children (punch-list #12).
+    ['title' => 'About', 'url' => '/about-stretch-creative/'],
     ['title' => 'Blog',    'url' => '/blog/'],
     // Contact renders as the right-aligned CTA button (theme.css .nav-links .nav-cta).
     ['title' => 'Contact', 'url' => '/contact-stretch-creative/', 'classes' => 'nav-cta'],
@@ -112,9 +110,9 @@ stretch_menu_rebuild('Industries', 'footer-2', [
 // mirror the primary nav, then keeps Blog, Contact, and Pricing reachable in the
 // footer (a 3-column footer can't 1:1 mirror a 5-item nav; Pricing lives only here).
 stretch_menu_rebuild('About', 'footer-3', [
-    ['title' => 'Our Story',  'url' => '/about-stretch-creative/'],
-    ['title' => 'Our Team',   'url' => '/the-team/'],
-    ['title' => 'Our Work',   'url' => '/our-work/'],
+    ['title' => 'Our Story',  'url' => '/about-stretch-creative/#our-story'],
+    ['title' => 'Our Team',   'url' => '/about-stretch-creative/#our-team'],
+    ['title' => 'Our Work',   'url' => '/about-stretch-creative/#our-work'],
     ['title' => 'Blog',       'url' => '/blog/'],
     ['title' => 'Contact',    'url' => '/contact-stretch-creative/'],
     ['title' => 'Pricing',    'url' => '/pricing/'],

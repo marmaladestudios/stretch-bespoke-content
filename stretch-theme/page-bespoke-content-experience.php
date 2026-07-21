@@ -6,6 +6,7 @@
  * Scoped under .bce-page wrapper to avoid clashing with theme globals.
  */
 get_header();
+get_template_part('template-parts/premium-fx');
 ?>
 
 <style>
@@ -17,7 +18,7 @@ html, body { overflow-x: hidden; }
 @media (max-width: 782px) { .admin-bar .site-nav { top: 46px; } }
 /* Scoped reset for BCE template */
 .bce-page, .bce-page *, .bce-page *::before, .bce-page *::after { box-sizing: border-box; }
-.bce-page { font-family: 'Assistant', sans-serif; font-weight: 300; font-size: 18px; line-height: 1.6; color: #323A51; background: #fff; }
+.bce-page { font-family: 'Assistant', sans-serif; font-weight: 300; font-size: 18px; line-height: 1.6; color: #4a5364; background: #fff; }
 .bce-page img { max-width: 100%; display: block; }
 .bce-page a { text-decoration: none; color: inherit; }
 
@@ -27,9 +28,9 @@ html, body { overflow-x: hidden; }
     section { width: 100%; position: relative; }
 
     /* ===== TYPOGRAPHY ===== */
-    .overline { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; margin-bottom: 16px; display: block; }
+    .overline { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #00BFF3; margin-bottom: 18px; display: block; }
     .bce-page h1, .bce-page h2, .bce-page h3 { font-family: 'Poppins', sans-serif; }
-    .bce-page h2 { font-size: 44px; font-weight: 600; color: #323A51; line-height: 1.1; margin-bottom: 32px; letter-spacing: -0.8px; }
+    .bce-page h2 { font-size: clamp(30px, 3.4vw, 44px); font-weight: 600; color: #1a1f2e; line-height: 1.15; margin-bottom: 32px; letter-spacing: -1px; }
     .bce-page h3 { font-size: 22px; font-weight: 600; color: #8560A8; line-height: 1.4; margin-bottom: 10px; }
     .bce-page p { margin-bottom: 24px; }
     .bce-page p:last-child { margin-bottom: 0; }
@@ -62,17 +63,17 @@ html, body { overflow-x: hidden; }
 .site-nav .logo { display: block; line-height: 0; }
 .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; transition: 0.3s; }
 .nav-links a { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 400; color: #fff; transition: opacity 0.2s; }
-/* ===== MODULE 1 — HERO ===== */
-    .hero { position: relative; background: #252C3A; overflow: hidden; padding: 200px 0 140px; min-height: 85vh; display: flex; align-items: center; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(86, 116, 185, 0.4), rgb(0, 191, 243) 80%); z-index: 1; }
+/* ===== MODULE 1 — HERO (design-system pfx grid hero, left-aligned) ===== */
+    .hero { position: relative; overflow: hidden; padding: 190px 0 150px; min-height: 82vh; display: flex; align-items: center; background: linear-gradient(170deg, #1a1f2e 0%, #252C3A 40%, #1e2333 100%); }
     .hero .bce-container { position: relative; z-index: 2; }
-    .hero-layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .hero-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
     .hero-text { }
-    .hero .overline { color: rgba(255,255,255,0.7); letter-spacing: 2px; text-transform: uppercase; font-size: 13px; }
-    .hero h1 { font-size: 80px; font-weight: 400; color: #fff; line-height: 1.05; margin-bottom: 28px; }
-    .hero h1 .accent { background: linear-gradient(90deg, #fff 40%, #00BFF3 90%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero .subtitle { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 400; color: rgba(255,255,255,0.92); line-height: 1.5; margin-bottom: 16px; }
-    .hero .supporting { font-family: 'Assistant', sans-serif; font-size: 20px; font-weight: 300; color: rgba(255,255,255,0.7); margin-bottom: 44px; }
+    .hero .overline { color: #00BFF3; margin-bottom: 20px; }
+    .hero h1 { font-family: 'Poppins', sans-serif; font-size: clamp(38px, 5vw, 64px); font-weight: 600; color: #fff; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px; }
+    .hero .subtitle { font-family: 'Poppins', sans-serif; font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; color: rgba(255,255,255,0.95); line-height: 1.45; margin-bottom: 14px; }
+    .hero .supporting { font-family: 'Assistant', sans-serif; font-size: clamp(17px, 1.5vw, 20px); font-weight: 300; color: rgba(255,255,255,0.7); margin-bottom: 40px; line-height: 1.7; }
+    /* in-hero clip-path wedge (1px overlap into the next band) */
+    .hero-wedge { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 2; pointer-events: none; }
 
     /* Hero visual */
     .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; min-height: 420px; }
@@ -212,13 +213,13 @@ html, body { overflow-x: hidden; }
 
     /* ===== SECTION STYLES ===== */
     .section-white { background: #fff; padding: 100px 0; }
-    .section-white .overline { color: #8560A8; }
+    .section-white .overline { color: #00BFF3; }
     .section-white .body-content { max-width: 780px; }
 
     .pull-highlight { font-size: 22px; font-weight: 400; color: #252C3A; line-height: 1.55; padding: 32px 0 32px 28px; border-left: 3px solid #00BFF3; margin: 36px 0; font-family: 'Poppins', sans-serif; }
 
     .section-light { background: #f9f9fb; padding: 100px 0; }
-    .section-light .overline { color: #8560A8; }
+    .section-light .overline { color: #00BFF3; }
     .section-light .body-content { max-width: 780px; }
 
     /* ===== ILLUSTRATED MOCKUP — WHAT IS IT ===== */
@@ -702,17 +703,17 @@ html, body { overflow-x: hidden; }
     .feature-icon { width: 44px; height: 44px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
     .feature-icon svg { width: 100%; height: 100%; }
     .feature-card h3 { font-size: 19px; margin-bottom: 12px; }
-    .feature-card p { font-size: 16px; line-height: 1.6; margin-bottom: 0; color: #323A51; }
+    .feature-card p { font-size: 16px; line-height: 1.6; margin-bottom: 0; color: #4a5364; }
 
     /* ===== DARK SECTION — BENEFITS ===== */
-    .section-dark { background: #282829; padding: 100px 0; position: relative; overflow: hidden; }
+    .section-dark { background: #1a1f2e; padding: 100px 0; position: relative; overflow: hidden; }
     .section-dark::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(133, 96, 168, 0.08), transparent 70%); pointer-events: none; }
     .section-dark::after { content: ''; position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0, 191, 243, 0.06), transparent 70%); pointer-events: none; }
     .section-dark .bce-container { position: relative; z-index: 1; }
-    .section-dark .overline { color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 2px; font-size: 13px; }
+    .section-dark .overline { color: #00BFF3; }
     .section-dark h2 { color: #fff; }
     .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 48px; background: rgba(255,255,255,0.04); }
-    .benefit-item { padding: 36px 32px; background: #282829; position: relative; transition: all 0.4s ease; }
+    .benefit-item { padding: 36px 32px; background: #1a1f2e; position: relative; transition: all 0.4s ease; }
     .benefit-item:hover { background: rgba(255,255,255,0.03); }
     .benefit-icon { width: 40px; height: 40px; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; }
     .benefit-icon svg { width: 100%; height: 100%; }
@@ -724,7 +725,7 @@ html, body { overflow-x: hidden; }
     .use-case-scenario p { font-size: 18px; }
     .scenario-label { display: inline-block; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #8560A8; background: rgba(133, 96, 168, 0.08); padding: 6px 14px; margin-bottom: 20px; }
     .use-case-components { display: flex; flex-direction: column; gap: 8px; }
-    .component-item { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; background: #fff; border: 1px solid rgba(133, 96, 168, 0.08); transition: all 0.35s ease; }
+    .component-item { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; background: #fff; border: 1px solid #e9e9f1; border-radius: 12px; transition: all 0.35s ease; }
     .section-light .component-item { background: #fff; }
     .component-item:hover { border-color: rgba(133, 96, 168, 0.2); transform: translateX(4px); }
     .check-icon { flex-shrink: 0; width: 22px; height: 22px; margin-top: 1px; }
@@ -745,20 +746,23 @@ html, body { overflow-x: hidden; }
     .section-light .step-number { background: #f9f9fb; }
     .step-content { padding-top: 12px; }
     .process-step h3 { font-size: 20px; margin-bottom: 6px; }
-    .process-step .step-desc { color: #323A51; font-weight: 300; font-size: 17px; line-height: 1.6; }
+    .process-step .step-desc { color: #4a5364; font-weight: 300; font-size: 17px; line-height: 1.6; }
 
     /* ===== AUDIENCE ===== */
     .audience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 44px; }
-    .audience-card { display: flex; gap: 18px; align-items: flex-start; padding: 28px 24px; background: #fff; transition: all 0.4s ease; border: 1px solid transparent; }
-    .audience-card:hover { border-color: rgba(133, 96, 168, 0.12); box-shadow: 0 8px 32px rgba(133, 96, 168, 0.06); transform: translateY(-3px); }
+    .audience-card { display: flex; gap: 18px; align-items: flex-start; padding: 28px 24px; background: #fff; transition: all 0.4s ease; border: 1px solid #e9e9f1; border-radius: 14px; }
+    .audience-card:hover { border-color: rgba(133, 96, 168, 0.2); box-shadow: 0 16px 34px rgba(26, 31, 46, 0.08); transform: translateY(-4px); }
     .audience-icon { flex-shrink: 0; width: 36px; height: 36px; margin-top: 2px; }
     .audience-card p { font-size: 17px; line-height: 1.55; margin-bottom: 0; }
 
     /* ===== CTA CLOSE ===== */
-    .cta-close { background: #8560A8; padding: 110px 0; text-align: center; position: relative; overflow: hidden; }
-    .cta-close::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 400px 400px at 20% 50%, rgba(86, 116, 185, 0.3), transparent), radial-gradient(ellipse 350px 350px at 80% 30%, rgba(0, 191, 243, 0.2), transparent); pointer-events: none; }
+    .cta-close { background: linear-gradient(170deg, #8560A8 0%, #3d2d66 30%, #252C3A 70%, #1a1f2e 100%); padding: 120px 0; text-align: center; position: relative; overflow: hidden; }
     .cta-close .bce-container { position: relative; z-index: 1; }
-    .cta-close h2 { color: #fff; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; font-size: 40px; }
+    .cta-orb-a { position: absolute; width: 420px; height: 420px; left: -120px; top: -80px; border-radius: 50%; background: radial-gradient(circle, rgba(0,191,243,0.16), transparent 70%); animation: bceFloatA 14s ease-in-out infinite; pointer-events: none; }
+    .cta-orb-b { position: absolute; width: 540px; height: 540px; right: -170px; bottom: -150px; border-radius: 50%; background: radial-gradient(circle, rgba(133,96,168,0.3), transparent 70%); animation: bceFloatB 17s ease-in-out infinite; pointer-events: none; }
+    @keyframes bceFloatA { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(28px, -26px); } }
+    @keyframes bceFloatB { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-24px, 22px); } }
+    .cta-close h2 { color: #fff; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; font-size: clamp(34px, 4vw, 52px); letter-spacing: -1.2px; }
     .cta-close p { color: rgba(255,255,255,0.85); font-size: 18px; max-width: 580px; margin: 0 auto 40px; }
 
     /* ===== FOOTER ===== */
@@ -914,33 +918,10 @@ html, body { overflow-x: hidden; }
    UPGRADE PASS — new systems
    ===================================================== */
 
-/* HERO — grid texture + colored edge cells + mouse parallax */
+/* HERO — grid cells, vignette and mouse parallax are generated by the shared
+   premium-fx kit via the .pfx-hero / .pfx-hero-grid hooks (reuse, don't fork). */
 .bce-page .hero { min-height: 88vh; padding: 200px 0 140px; }
-.bce-page .hero::before {
-  background: linear-gradient(160deg, rgba(37, 44, 58, 0.85) 0%, rgba(26, 31, 46, 0.92) 100%);
-}
-.bce-page .hero-grid {
-  position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  background-position: center center;
-  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.9) 55%, rgba(0,0,0,1) 100%);
-  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.9) 55%, rgba(0,0,0,1) 100%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.bce-page .hero-cells { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.bce-page .hero-cell { position: absolute; width: 60px; height: 60px; border-radius: 2px; opacity: 0.15; }
-.bce-page .hero-cell.c1 { top: 12%;  left: 6%;  background: #8560A8; animation: bcePulse 7s ease-in-out infinite; }
-.bce-page .hero-cell.c2 { top: 70%;  left: 12%; background: #00BFF3; animation: bcePulse 9s ease-in-out infinite 1s; }
-.bce-page .hero-cell.c3 { top: 22%;  right: 9%; background: #448CCB; animation: bcePulse 8s ease-in-out infinite 0.5s; }
-.bce-page .hero-cell.c4 { top: 58%;  right: 5%; background: #5674B9; animation: bcePulse 10s ease-in-out infinite 2s; }
-.bce-page .hero-cell.c5 { top: 38%;  left: 38%; background: #00BFF3; width: 48px; height: 48px; opacity: 0.08; animation: bcePulse 12s ease-in-out infinite; }
-@keyframes bcePulse {
-  0%, 100% { opacity: 0.08; transform: scale(1); }
-  50%      { opacity: 0.22; transform: scale(1.15); }
-}
+.bce-page .hero .hero-visual { position: relative; z-index: 2; }
 
 /* ANGLED SVG DIVIDERS between sections */
 .bce-page .bce-angle {
@@ -1091,6 +1072,7 @@ html, body { overflow-x: hidden; }
   transition: box-shadow 0.4s ease;
 }
 .bce-page .case-card:hover { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12); }
+.bce-page .case-card .pfx-sweep-bar--top { z-index: 4; border-radius: 16px 16px 0 0; }
 .bce-page .case-thumb {
   aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, var(--case-color, #8560A8) 0%, #1a1f2e 120%);
@@ -1211,23 +1193,17 @@ html, body { overflow-x: hidden; }
 
 <div class="bce-page">
 <!-- NAV -->
-  <!-- MODULE 1 — HERO -->
-  <section class="hero" aria-label="Hero">
-    <div class="hero-grid" id="bceHeroGrid"></div>
-    <div class="hero-cells">
-      <span class="hero-cell c1"></span>
-      <span class="hero-cell c2"></span>
-      <span class="hero-cell c3"></span>
-      <span class="hero-cell c4"></span>
-      <span class="hero-cell c5"></span>
-    </div>
+  <!-- MODULE 1 — HERO (pfx grid hero, left-aligned) -->
+  <section class="pfx-hero pfx-hero--left hero" data-grain aria-label="Hero">
+    <div class="pfx-hero-grid"></div>
     <div class="bce-container">
       <div class="hero-layout">
         <div class="hero-text">
-          <h1>Interactive<br>Content<br><span class="accent">Marketing</span></h1>
-          <p class="subtitle">The future of content is multi-modal, performance-driven, and impossible to ignore.</p>
-          <p class="supporting">Not just content. A custom-built organic growth asset.</p>
-          <a href="/contact-stretch-creative/" class="btn-primary">Let's Chat &rarr;</a>
+          <span class="overline pfx-reveal">Our Services</span>
+          <h1 class="pfx-reveal pfx-delay-1">Interactive<br>Content<br><span class="gradient-text">Marketing</span></h1>
+          <p class="subtitle pfx-reveal pfx-delay-2">The future of content is multi-modal, performance-driven, and impossible to ignore.</p>
+          <p class="supporting pfx-reveal pfx-delay-2">Not just content. A custom-built organic growth asset.</p>
+          <a href="/contact-stretch-creative/" class="pfx-btn-primary pfx-reveal pfx-delay-3"><span>Let's Chat &rarr;</span></a>
         </div>
         <div class="hero-visual">
           <!-- Browser mockup -->
@@ -1366,12 +1342,13 @@ html, body { overflow-x: hidden; }
         </div>
       </div>
     </div>
+    <div class="hero-wedge" aria-hidden="true" style="background:#252C3A"></div>
   </section>
 
-  <div class="hero-accent-bar"></div>
+  <div class="pfx-accent-bar" aria-hidden="true"></div>
 
   <!-- PULL QUOTE BANNER -->
-  <div class="pull-quote-banner">
+  <div class="pull-quote-banner" data-grain>
     <div class="bce-container">
       <blockquote>
         A single content asset that <span class="quote-accent">ranks</span>, earns backlinks, gets shared, generates leads, and positions the brand as the authority on the topic.
@@ -1741,7 +1718,7 @@ html, body { overflow-x: hidden; }
   
 
   <!-- MODULE 5 — WHY IT WORKS -->
-  <section class="section-dark" aria-label="Why it works">
+  <section class="section-dark" data-grain aria-label="Why it works">
     <span class="bce-chapter" aria-hidden="true">04</span>
     <div class="bce-container">
       <span class="overline reveal">The Results</span>
@@ -1917,7 +1894,8 @@ html, body { overflow-x: hidden; }
         <p style="font-size: 17px; color: #5a6276;">A few recent Bespoke Content Experiences we've built for clients. Click any to walk through the strategy, design decisions, and results.</p>
       </div>
       <div class="case-grid">
-        <a href="#" class="case-card reveal reveal-delay-1" data-tilt style="--case-color: #8560A8;">
+        <a href="#" class="case-card pfx-sweep reveal reveal-delay-1" data-tilt style="--case-color: #8560A8;">
+          <span class="pfx-sweep-bar pfx-sweep-bar--top" aria-hidden="true"></span>
           <div class="case-thumb">
             <div class="case-thumb-browser">
               <div class="case-thumb-bar">
@@ -1943,7 +1921,8 @@ html, body { overflow-x: hidden; }
             <span class="case-link">View case study &rarr;</span>
           </div>
         </a>
-        <a href="#" class="case-card reveal reveal-delay-2" data-tilt style="--case-color: #00BFF3;">
+        <a href="#" class="case-card pfx-sweep reveal reveal-delay-2" data-tilt style="--case-color: #00BFF3;">
+          <span class="pfx-sweep-bar pfx-sweep-bar--top" aria-hidden="true"></span>
           <div class="case-thumb">
             <div class="case-thumb-browser">
               <div class="case-thumb-bar">
@@ -2029,11 +2008,13 @@ html, body { overflow-x: hidden; }
   </section>
 
   <!-- MODULE 9 — CTA CLOSE -->
-  <section class="cta-close" aria-label="Get in touch">
+  <section class="cta-close" data-grain aria-label="Get in touch">
+    <div class="cta-orb-a" aria-hidden="true"></div>
+    <div class="cta-orb-b" aria-hidden="true"></div>
     <div class="bce-container">
       <h2 class="reveal">Ready to build something<br>worth ranking for?</h2>
       <p class="reveal">Every Bespoke Content Experience starts with a conversation about your goals, your audience, and the topics that matter most to your business.</p>
-      <a href="/contact-stretch-creative/" class="btn-white reveal">Get in touch &rarr;</a>
+      <a href="/contact-stretch-creative/" class="pfx-btn-primary reveal"><span>Get in touch &rarr;</span></a>
     </div>
   </section>
 </div>
@@ -2063,22 +2044,6 @@ html, body { overflow-x: hidden; }
         ticking = true;
       }
     });
-
-  // Hero grid parallax (mouse-follow)
-  (function () {
-    var heroGrid = document.getElementById('bceHeroGrid');
-    if (!heroGrid) return;
-    var hero = heroGrid.parentElement;
-    hero.addEventListener('mousemove', function (e) {
-      var rect = hero.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-      var y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-      heroGrid.style.transform = 'translate(' + (-x).toFixed(1) + 'px, ' + (-y).toFixed(1) + 'px)';
-    });
-    hero.addEventListener('mouseleave', function () {
-      heroGrid.style.transform = '';
-    });
-  })();
 
   // 3D tilt + cursor glow on [data-tilt]
   (function () {

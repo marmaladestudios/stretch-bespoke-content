@@ -105,8 +105,8 @@ $flow = [];
 if ($props)                                             { $flow['props']       = '#252C3A'; }
 if ($intro_paras || $intro_image)                       { $flow['intro']       = '#ffffff'; }
 if ($reality_sub || $reality_paras)                     { $flow['reality']     = '#f7f6fc'; }
-if ($solution_points || !empty($solution['heading']))   { $flow['solution']    = '#ffffff'; }
 if (!empty($pull_quote['text']))                        { $flow['pullquote']   = '#f7f6fc'; }
+if ($solution_points || !empty($solution['heading']))   { $flow['solution']    = '#ffffff'; }
 if ($offerings)                                         { $flow['write']       = '#ffffff'; }
 if ($addons || $cross_cta)                              { $flow['addons']      = '#f9f9fb'; }
 if ($process_steps)                                     { $flow['process']     = '#f9f9fb'; }
@@ -146,6 +146,19 @@ if (!function_exists('stretch_svc_image')) {
     }
 }
 
+/* Initials monogram from a person's name ("Kristen Haney" => "KH"). */
+if (!function_exists('stretch_svc_initials')) {
+    function stretch_svc_initials($name) {
+        $parts = preg_split('/\s+/', trim((string) $name), -1, PREG_SPLIT_NO_EMPTY);
+        $ini = '';
+        foreach ($parts as $p) {
+            $ini .= mb_strtoupper(mb_substr($p, 0, 1));
+            if (mb_strlen($ini) >= 2) { break; }
+        }
+        return $ini;
+    }
+}
+
 // Why-card stroke icons (roof / person / growth chart / chat bubble), cycled by index.
 $why_icons = [
     '<path d="M4 10.5L11 4l7 6.5"></path><path d="M6 9.5V18h10V9.5"></path>',
@@ -171,8 +184,10 @@ html, body { overflow-x: hidden; }
 .svc-hero-wedge { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 1; pointer-events: none; }
 
 /* ===== WEDGE DIVIDERS (standalone) ===== */
-.svc-wedge { height: 60px; position: relative; line-height: 0; }
-.svc-wedge > div { position: absolute; inset: 0; }
+.svc-wedge { height: 60px; position: relative; line-height: 0; margin-bottom: -1px; }
+/* Overlap the wedge's clipped triangle 1px into the following section so no
+   sub-pixel seam shows at the clip-path boundary at any zoom level. */
+.svc-wedge > div { position: absolute; top: 0; left: 0; right: 0; bottom: -1px; }
 
 /* ===== PROPS BAR ===== */
 .svc-props { background: #252C3A; padding: 44px clamp(24px, 4vw, 40px); }
@@ -201,8 +216,9 @@ html, body { overflow-x: hidden; }
 /* ===== SOLUTION ===== */
 .svc-solution { background: #fff; padding: 96px clamp(24px, 4vw, 40px) 100px; }
 .svc-solution-inner { max-width: 840px; margin: 0 auto; text-align: center; }
-.svc-solution-inner .svc-h2 { margin-bottom: 26px; }
-.svc-solution-intro { margin: 0 0 56px; font-family: 'Assistant', sans-serif; font-size: 17px; font-weight: 300; line-height: 1.8; color: #4a5364; }
+.svc-solution-inner .svc-h2 { margin-bottom: 20px; }
+.svc-solution-intro { margin: 0 0 20px; font-family: 'Assistant', sans-serif; font-size: 17px; font-weight: 300; line-height: 1.8; color: #4a5364; }
+.svc-solution-intro:last-child { margin-bottom: 44px; }
 .svc-solution-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; text-align: left; }
 .svc-solution-card { position: relative; overflow: hidden; background: #fff; border: 1px solid #e9e9f1; border-radius: 14px; padding: 28px 28px 26px 34px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .svc-solution-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(26,31,46,0.08); }
@@ -275,14 +291,15 @@ html, body { overflow-x: hidden; }
 /* ===== TESTIMONIALS ===== */
 .svc-testimonials { background: #fff; padding: 96px clamp(24px, 4vw, 40px) 100px; }
 .svc-testimonials-inner { max-width: 1200px; margin: 0 auto; }
-.svc-testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start; }
-.svc-tcard { background: #fff; border: 1px solid #e9e9f1; border-radius: 16px; padding: 34px; transition: box-shadow 0.35s ease; }
+.svc-testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch; }
+.svc-tcard { display: flex; flex-direction: column; height: 100%; background: #fff; border: 1px solid #e9e9f1; border-radius: 16px; padding: 34px; transition: box-shadow 0.35s ease; }
 .svc-tcard:hover { box-shadow: 0 20px 42px rgba(26,31,46,0.1); }
 .svc-tcard-mark { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 56px; line-height: 0.6; color: rgba(133,96,168,0.3); margin-bottom: 20px; }
-.svc-tcard-quote { margin: 0 0 22px; font-style: italic; font-family: 'Assistant', sans-serif; font-size: 15.5px; line-height: 1.75; color: #3c4354; }
-.svc-tcard-person { display: flex; align-items: center; gap: 14px; }
-.svc-tcard-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #e9e9f1; background: linear-gradient(135deg, #f0eef7, #e7f3fb); }
+.svc-tcard-quote { flex: 1 1 auto; margin: 0 0 22px; font-style: italic; font-family: 'Assistant', sans-serif; font-size: 15.5px; line-height: 1.75; color: #3c4354; }
+.svc-tcard-person { display: flex; align-items: center; gap: 14px; margin-top: auto; }
+.svc-tcard-avatar { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #e9e9f1; background: linear-gradient(135deg, #f0eef7, #e7f3fb); }
 .svc-tcard-avatar .svc-photo-img--empty { background: linear-gradient(135deg, #f0eef7, #e7f3fb); }
+.svc-tcard-mono { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: linear-gradient(135deg, #8560A8 0%, #5674B9 30%, #448CCB 60%, #00BFF3 100%); color: #fff; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.5px; }
 .svc-tcard-name { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: #1a1f2e; }
 .svc-tcard-role { font-family: 'Assistant', sans-serif; font-size: 13px; color: #7a8194; margin-top: 2px; }
 
@@ -381,6 +398,23 @@ html, body { overflow-x: hidden; }
 </section>
 <?php endif; ?>
 
+<?php if (!empty($pull_quote['text'])) : ?>
+<!-- ============ PULL QUOTE (gradient band) — attached to the Reality area ============ -->
+<section class="svc-pullquote" aria-label="Quote">
+  <div class="svc-pullquote-mark" aria-hidden="true">&ldquo;</div>
+  <p class="pfx-reveal"><?php
+    $pq_text = (string) $pull_quote['text'];
+    $pq_hl   = (string) ($pull_quote['highlight'] ?? '');
+    if ($pq_hl !== '' && strpos($pq_text, $pq_hl) !== false) {
+        $parts = explode($pq_hl, $pq_text, 2);
+        echo esc_html($parts[0]) . '<span class="svc-pq-accent">' . esc_html($pq_hl) . '</span>' . esc_html($parts[1]);
+    } else {
+        echo esc_html($pq_text);
+    }
+  ?></p>
+</section>
+<?php endif; ?>
+
 <?php if ($solution_points || !empty($solution['heading'])) : ?>
 <!-- ============ THE SOLUTION (white, 5 accent-bar cards) ============ -->
 <section class="svc-solution" aria-label="The Solution">
@@ -412,23 +446,6 @@ html, body { overflow-x: hidden; }
     </div>
     <?php endif; ?>
   </div>
-</section>
-<?php endif; ?>
-
-<?php if (!empty($pull_quote['text'])) : ?>
-<!-- ============ PULL QUOTE (gradient band) ============ -->
-<section class="svc-pullquote" aria-label="Quote">
-  <div class="svc-pullquote-mark" aria-hidden="true">&ldquo;</div>
-  <p class="pfx-reveal"><?php
-    $pq_text = (string) $pull_quote['text'];
-    $pq_hl   = (string) ($pull_quote['highlight'] ?? '');
-    if ($pq_hl !== '' && strpos($pq_text, $pq_hl) !== false) {
-        $parts = explode($pq_hl, $pq_text, 2);
-        echo esc_html($parts[0]) . '<span class="svc-pq-accent">' . esc_html($pq_hl) . '</span>' . esc_html($parts[1]);
-    } else {
-        echo esc_html($pq_text);
-    }
-  ?></p>
 </section>
 <?php endif; ?>
 
@@ -564,7 +581,20 @@ html, body { overflow-x: hidden; }
         <div class="svc-tcard-mark" aria-hidden="true">&ldquo;</div>
         <p class="svc-tcard-quote"><?php echo wp_kses_post($t['quote'] ?? ''); ?></p>
         <div class="svc-tcard-person">
-          <div class="svc-tcard-avatar"><?php echo stretch_svc_image(!empty($t['image']) ? (int) $t['image'] : 0, ($t['name'] ?? 'Client') . ' photo'); ?></div>
+          <div class="svc-tcard-avatar"><?php
+            $t_img   = !empty($t['image']) ? (int) $t['image'] : 0;
+            $t_photo = $t_img ? wp_get_attachment_image($t_img, 'thumbnail', false, [
+                'loading' => 'lazy', 'alt' => ($t['name'] ?? 'Client') . ' photo', 'class' => 'svc-photo-img',
+            ]) : '';
+            if ($t_photo) {
+                echo $t_photo;
+            } else {
+                $t_ini = stretch_svc_initials($t['name'] ?? '');
+                if ($t_ini !== '') {
+                    echo '<span class="svc-tcard-mono" aria-hidden="true">' . esc_html($t_ini) . '</span>';
+                }
+            }
+          ?></div>
           <div>
             <div class="svc-tcard-name"><?php echo esc_html($t['name'] ?? ''); ?></div>
             <?php if (!empty($t['title'])) : ?><div class="svc-tcard-role"><?php echo esc_html($t['title']); ?></div><?php endif; ?>

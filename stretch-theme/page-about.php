@@ -678,6 +678,406 @@ html, body { overflow-x: hidden; }
     gap: 20px;
   }
 }
+
+/* ========================================
+   ANCHOR SCROLL OFFSET (fixed nav)
+   ======================================== */
+#our-story, #our-team, #our-work { scroll-margin-top: 90px; }
+
+/* ========================================
+   4.5 TEAM GRID  (merged from /the-team/)
+   ======================================== */
+.team-grid-section {
+  padding: 120px 0;
+  background: #fff;
+  position: relative;
+}
+.team-grid-heading {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.team-grid-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; color: #00BFF3;
+  display: block; margin-bottom: 16px;
+}
+.team-grid-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 600; color: #252C3A; margin: 0;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+.team-card {
+  position: relative;
+  background: #f9f9fb;
+  border-radius: 12px;
+  padding: 40px 24px 32px;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(37,44,58,0.12);
+}
+.team-avatar {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px; font-weight: 600;
+  color: #fff;
+  margin: 0 auto 20px;
+  position: relative;
+  z-index: 1;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 20px rgba(133,96,168,0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.team-card:hover .team-avatar {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(133,96,168,0.25);
+}
+.team-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px; font-weight: 600;
+  color: #252C3A; margin: 0 0 6px;
+  position: relative; z-index: 1;
+}
+.team-card .team-role {
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px; color: #888;
+  position: relative; z-index: 1;
+}
+
+/* ========================================
+   4.6 HIRING QUALITIES  (merged from /the-team/)
+   ======================================== */
+.team-qualities {
+  padding: 120px 0;
+  background: #f9f9fb;
+  position: relative;
+}
+.team-qualities-heading {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.team-qualities-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; color: #00BFF3;
+  display: block; margin-bottom: 16px;
+}
+.team-qualities-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 600; color: #252C3A; margin: 0;
+}
+.team-qualities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.team-quality-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px 36px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.team-quality-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(37,44,58,0.1);
+}
+.team-quality-icon {
+  width: 56px; height: 56px; min-width: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(133,96,168,0.08), rgba(0,191,243,0.08));
+}
+.team-quality-icon svg { width: 28px; height: 28px; }
+.team-quality-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; font-weight: 600;
+  color: #252C3A; margin: 0 0 8px;
+}
+.team-quality-card p {
+  font-family: 'Assistant', sans-serif;
+  font-size: 16px; font-weight: 300;
+  line-height: 1.7; color: #666; margin: 0;
+}
+
+/* ========================================
+   4.7 SELECTED WORK  (merged from /our-work/)
+   ======================================== */
+.pf-grid-section {
+  padding: 120px 0;
+  background: #fff;
+  position: relative;
+}
+.pf-work-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.pf-work-heading .v2-overline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 3px;
+  text-transform: uppercase; color: #00BFF3;
+  display: block; margin-bottom: 16px;
+}
+.pf-work-heading h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 600; color: #252C3A; margin: 0 0 16px;
+}
+.pf-work-intro {
+  font-family: 'Assistant', sans-serif;
+  font-size: 18px; font-weight: 300; line-height: 1.7;
+  color: #555; max-width: 620px; margin: 0 auto;
+}
+.pf-filters {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.pf-filter-btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: #555;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 10px 22px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+.pf-filter-btn:hover {
+  color: #8560A8;
+  border-color: rgba(133,96,168,0.4);
+  background: rgba(133,96,168,0.04);
+}
+.pf-filter-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, #8560A8, #5674B9);
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(133,96,168,0.25);
+}
+.pf-filter-count {
+  display: inline-block;
+  margin-left: 6px;
+  opacity: 0.6;
+  font-size: 12px;
+  font-weight: 400;
+}
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.pf-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f9f9fb;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease;
+}
+.pf-card.hidden { display: none; }
+.pf-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(37,44,58,0.14);
+}
+.pf-card-img-wrap {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.pf-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  display: block;
+}
+.pf-card:hover img { transform: scale(1.06); }
+.pf-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(37,44,58,0.92) 0%, rgba(37,44,58,0.4) 50%, transparent 100%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.pf-card:hover .pf-card-overlay { opacity: 1; }
+.pf-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 24px;
+  z-index: 2;
+  transform: translateY(24px);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  opacity: 0;
+}
+.pf-card:hover .pf-card-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+.pf-card-tag {
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #00BFF3;
+  border: 1px solid rgba(0,191,243,0.4);
+  padding: 4px 10px;
+  margin-bottom: 12px;
+  border-radius: 100px;
+}
+.pf-card-client {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px; font-weight: 500;
+  color: #fff; line-height: 1.2;
+  margin: 0;
+}
+.pf-card-vimeo {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 3;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: scale(0.8);
+}
+.pf-card:hover .pf-card-vimeo {
+  opacity: 1;
+  transform: scale(1);
+}
+.pf-card-vimeo svg { width: 16px; height: 16px; fill: #fff; margin-left: 2px; }
+
+/* Work lightbox */
+.pf-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,18,28,0.94);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.pf-lightbox.open {
+  display: flex;
+  opacity: 1;
+}
+.pf-lightbox-inner {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pf-lightbox img,
+.pf-lightbox iframe {
+  max-width: 100%;
+  max-height: 75vh;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  display: block;
+}
+.pf-lightbox iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+.pf-lightbox-meta {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+.pf-lightbox-client {
+  font-size: 22px; font-weight: 500;
+  margin: 0 0 6px;
+}
+.pf-lightbox-tag {
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #00BFF3;
+  opacity: 0.85;
+}
+.pf-lightbox-close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  font-size: 22px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10000;
+}
+.pf-lightbox-close:hover {
+  background: rgba(255,255,255,0.2);
+  transform: rotate(90deg);
+}
+
+/* ---------- MERGED-SECTION RESPONSIVE ---------- */
+@media (max-width: 960px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-qualities-grid { grid-template-columns: 1fr; }
+  .pf-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .team-grid-section { padding: 80px 0; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-qualities { padding: 80px 0; }
+  .pf-grid-section { padding: 80px 0; }
+  .pf-grid { grid-template-columns: 1fr; gap: 16px; }
+  .pf-card { aspect-ratio: 16 / 10; }
+  .pf-card-overlay { opacity: 1; background: linear-gradient(0deg, rgba(37,44,58,0.85) 0%, rgba(37,44,58,0.2) 60%, transparent 100%); }
+  .pf-card-content { opacity: 1; transform: translateY(0); padding: 18px; }
+  .pf-lightbox { padding: 20px; }
+}
+@media (max-width: 480px) {
+  .team-grid { grid-template-columns: 1fr; }
+  .pf-filter-btn { font-size: 13px; padding: 9px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-card, .pf-card img, .pf-card-content, .pf-card-overlay { transition: none !important; }
+}
 </style>
 
 
@@ -711,7 +1111,7 @@ html, body { overflow-x: hidden; }
 <!-- ========================================
      2. STORY CONTENT
      ======================================== -->
-<section class="v2-section about-story" aria-label="Our Story">
+<section class="v2-section about-story" id="our-story" aria-label="Our Story">
   <div class="v2-container">
     <div class="about-story-inner">
       <div class="about-story-text v2-reveal-left">
@@ -966,10 +1366,205 @@ html, body { overflow-x: hidden; }
 
   <div class="v2-angle-divider">
     <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,0 1440,60 1440,60 0,60" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ========================================
+     4.5 TEAM GRID  (merged from /the-team/)
+     ======================================== -->
+<section class="v2-section team-grid-section" id="our-team" aria-label="Team Members">
+  <div class="v2-container">
+    <div class="team-grid-heading">
+      <span class="v2-overline v2-reveal">The People Behind the Work</span>
+      <h2 class="v2-reveal v2-delay-1">Meet the <span class="gradient-text">Team</span></h2>
+    </div>
+
+    <div class="team-grid">
+      <?php
+      $team_members = get_option('stretch_team_members', []);
+      if (empty($team_members)) {
+          // Fallback if option not set
+          $team_members = [
+              ['name' => 'Chris Reid', 'title' => 'CEO', 'photo_id' => 0, 'url' => ''],
+              ['name' => 'Kelsi Carrell', 'title' => 'Head of Operations', 'photo_id' => 0, 'url' => ''],
+          ];
+      }
+
+      $colors = ['#8560A8', '#5674B9', '#448CCB', '#00BFF3'];
+      $delay = 1;
+      foreach ($team_members as $i => $member) :
+        $d = ($delay % 6) + 1;
+        $color = $colors[$i % count($colors)];
+        $initials = implode('', array_map(function($w) { return strtoupper(substr($w, 0, 1)); }, explode(' ', $member['name'])));
+        $has_photo = !empty($member['url']);
+      ?>
+      <div class="team-card v2-reveal v2-delay-<?php echo $d; ?>">
+        <?php if ($has_photo) : ?>
+          <div class="team-avatar" style="background: url('<?php echo esc_url($member['url']); ?>') center/cover; font-size: 0;"></div>
+        <?php else : ?>
+          <div class="team-avatar" style="background: <?php echo $color; ?>;">
+            <?php echo $initials; ?>
+          </div>
+        <?php endif; ?>
+        <h3><?php echo esc_html($member['name']); ?></h3>
+        <span class="team-role"><?php echo esc_html($member['title']); ?></span>
+      </div>
+      <?php
+        $delay++;
+      endforeach;
+      ?>
+    </div>
+  </div>
+
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ========================================
+     4.6 HIRING QUALITIES  (merged from /the-team/)
+     ======================================== -->
+<section class="v2-section team-qualities" aria-label="What We Look For">
+  <div class="v2-container">
+    <div class="team-qualities-heading">
+      <span class="v2-overline v2-reveal">Join Us</span>
+      <h2 class="v2-reveal v2-delay-1">What We <span class="gradient-text">Look For</span></h2>
+    </div>
+
+    <div class="team-qualities-grid">
+      <div class="team-quality-card v2-reveal v2-delay-1">
+        <div class="team-quality-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div>
+          <h3>Empathy</h3>
+          <p>You love to tell a good story. You understand that behind every brief is a human audience that deserves authentic, meaningful content.</p>
+        </div>
+      </div>
+
+      <div class="team-quality-card v2-reveal v2-delay-2">
+        <div class="team-quality-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </div>
+        <div>
+          <h3>Intuition</h3>
+          <p>You really know how to read a room. You pick up on tone, context, and audience signals instinctively and adapt your voice accordingly.</p>
+        </div>
+      </div>
+
+      <div class="team-quality-card v2-reveal v2-delay-3">
+        <div class="team-quality-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#448CCB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div>
+          <h3>Curious</h3>
+          <p>You go down the rabbit hole. You research thoroughly, ask great questions, and bring genuine interest to every topic you tackle.</p>
+        </div>
+      </div>
+
+      <div class="team-quality-card v2-reveal v2-delay-4">
+        <div class="team-quality-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00BFF3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <h3>Growth-Minded</h3>
+          <p>You want to be a better writer. You welcome feedback, seek out learning opportunities, and constantly push to refine your craft.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ========================================
+     4.7 SELECTED WORK  (merged from /our-work/)
+     ======================================== -->
+<?php
+$portfolio = stretch_get_portfolio();
+$counts = [
+    'all'     => count($portfolio),
+    'writing' => count(array_filter($portfolio, fn($p) => $p['category'] === 'writing')),
+    'design'  => count(array_filter($portfolio, fn($p) => $p['category'] === 'design')),
+    'video'   => count(array_filter($portfolio, fn($p) => $p['category'] === 'video')),
+];
+?>
+<section class="v2-section pf-grid-section" id="our-work" aria-label="Selected Work">
+  <div class="v2-container">
+    <div class="pf-work-heading">
+      <span class="v2-overline v2-reveal">Selected Work</span>
+      <h2 class="v2-reveal v2-delay-1">Our <span class="gradient-text">Work</span></h2>
+      <p class="pf-work-intro v2-reveal v2-delay-2">A snapshot of recent projects across writing, design, photography, and video &mdash; for brands we&rsquo;re proud to work with.</p>
+    </div>
+
+    <?php // AUD-035: plain toggle buttons (aria-pressed) — not a tabs widget. ?>
+    <div class="pf-filters v2-reveal v2-delay-2" role="group" aria-label="Portfolio filters">
+      <button type="button" class="pf-filter-btn active" data-filter="all" aria-pressed="true">All <span class="pf-filter-count"><?php echo $counts['all']; ?></span></button>
+      <button type="button" class="pf-filter-btn" data-filter="writing" aria-pressed="false">Writing <span class="pf-filter-count"><?php echo $counts['writing']; ?></span></button>
+      <button type="button" class="pf-filter-btn" data-filter="design" aria-pressed="false">Graphic Design <span class="pf-filter-count"><?php echo $counts['design']; ?></span></button>
+      <button type="button" class="pf-filter-btn" data-filter="video" aria-pressed="false">Video &amp; Photography <span class="pf-filter-count"><?php echo $counts['video']; ?></span></button>
+    </div>
+
+    <div class="pf-grid" id="pfGrid">
+      <?php foreach ($portfolio as $i => $item) :
+        $img_full = wp_get_attachment_image_url($item['id'], 'full');
+        $alt      = get_post_meta($item['id'], '_wp_attachment_image_alt', true);
+        // AUD-031: full <img> markup with srcset/sizes instead of a bare src.
+        $img_html = wp_get_attachment_image($item['id'], 'large', false, [
+            'loading' => 'lazy',
+            'alt'     => $alt ?: $item['client'] . ' ' . $item['subcat'],
+        ]);
+        if (!$img_html) continue;
+      ?>
+        <a href="#"
+           class="pf-card v2-reveal v2-delay-<?php echo (($i % 4) + 1); ?>"
+           data-category="<?php echo esc_attr($item['category']); ?>"
+           data-img="<?php echo esc_url($img_full); ?>"
+           data-client="<?php echo esc_attr($item['client']); ?>"
+           data-tag="<?php echo esc_attr($item['subcat']); ?>"
+           <?php if (!empty($item['vimeo'])) : ?>data-vimeo="<?php echo esc_attr($item['vimeo']); ?>"<?php endif; ?>
+           aria-label="<?php echo esc_attr($item['client'] . ' — ' . $item['subcat']); ?>">
+          <div class="pf-card-img-wrap">
+            <?php echo $img_html; ?>
+          </div>
+          <?php if (!empty($item['vimeo'])) : ?>
+          <div class="pf-card-vimeo" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <?php endif; ?>
+          <div class="pf-card-overlay"></div>
+          <div class="pf-card-content">
+            <span class="pf-card-tag"><?php echo esc_html($item['subcat']); ?></span>
+            <h3 class="pf-card-client"><?php echo esc_html($item['client']); ?></h3>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+  <div class="v2-angle-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
       <polygon points="0,0 1440,60 1440,60 0,60" fill="#8560A8"/>
     </svg>
   </div>
 </section>
+
+<!-- Lightbox (for clicking work cards) -->
+<div class="pf-lightbox" id="pfLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="pf-lightbox-close" id="pfLightboxClose" aria-label="Close">&times;</button>
+  <div class="pf-lightbox-inner" id="pfLightboxInner"></div>
+</div>
 
 
 <!-- ========================================
@@ -979,7 +1574,7 @@ html, body { overflow-x: hidden; }
   <div class="v2-container">
     <h2 class="v2-reveal">Join Our Team</h2>
     <p class="v2-reveal v2-delay-1">We’re always looking for talented creatives who care about craft. If that sounds like you, we’d love to hear from you.</p>
-    <a href="/the-team/" class="v2-btn-primary v2-reveal v2-delay-2">Meet the Team &rarr;</a>
+    <a href="#our-team" class="v2-btn-primary v2-reveal v2-delay-2">Meet the Team &rarr;</a>
   </div>
 </section>
 
@@ -1047,6 +1642,155 @@ html, body { overflow-x: hidden; }
   });
 
   setActiveStep(0);
+})();
+</script>
+
+<script>
+(function() {
+  /* ---------- 3D TILT ON TEAM CARDS (merged from /the-team/) ---------- */
+  var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!isTouchDevice && !reducedMotion) {
+    var tiltCards = document.querySelectorAll('.team-card');
+    tiltCards.forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = (e.clientX - cx) / (rect.width / 2);
+        var dy = (e.clientY - cy) / (rect.height / 2);
+        card.style.transform = 'perspective(800px) rotateY(' + (dx * 6) + 'deg) rotateX(' + (-dy * 6) + 'deg) translateY(-8px)';
+        card.style.transition = 'box-shadow 0.4s ease';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease';
+      });
+    });
+  }
+
+  /* ---------- WORK FILTERS (merged from /our-work/) ---------- */
+  var filterBtns = document.querySelectorAll('.pf-filter-btn');
+  var cards = document.querySelectorAll('.pf-card');
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var filter = btn.dataset.filter;
+
+      filterBtns.forEach(function(b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      cards.forEach(function(card) {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.classList.remove('hidden');
+          card.classList.add('visible');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  /* ---------- WORK LIGHTBOX (merged from /our-work/) ----------
+     AUD-024: content built with createElement/textContent; vimeo id validated
+     as digits-only. AUD-025: focus moves to close button, Tab trapped, focus
+     returns to the invoking card on close. */
+  var lightbox = document.getElementById('pfLightbox');
+  var lightboxInner = document.getElementById('pfLightboxInner');
+  var lightboxClose = document.getElementById('pfLightboxClose');
+  if (lightbox && lightboxInner && lightboxClose) {
+    var lightboxInvoker = null;
+
+    var openLightbox = function(card) {
+      var imgUrl = card.dataset.img || '';
+      var client = card.dataset.client || '';
+      var tag    = card.dataset.tag || '';
+      var vimeo  = card.dataset.vimeo || '';
+
+      var media;
+      if (/^\d+$/.test(vimeo)) {
+        media = document.createElement('iframe');
+        media.src = 'https://player.vimeo.com/video/' + vimeo + '?h=0&title=0&byline=0&portrait=0';
+        media.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        media.setAttribute('allowfullscreen', '');
+      } else {
+        media = document.createElement('img');
+        media.src = imgUrl;
+        media.alt = client;
+      }
+
+      var meta = document.createElement('div');
+      meta.className = 'pf-lightbox-meta';
+      var clientEl = document.createElement('p');
+      clientEl.className = 'pf-lightbox-client';
+      clientEl.textContent = client;
+      var tagEl = document.createElement('span');
+      tagEl.className = 'pf-lightbox-tag';
+      tagEl.textContent = tag;
+      meta.appendChild(clientEl);
+      meta.appendChild(tagEl);
+
+      lightboxInner.textContent = '';
+      lightboxInner.appendChild(media);
+      lightboxInner.appendChild(meta);
+
+      lightboxInvoker = card;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus();
+    };
+
+    var closeLightbox = function() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxInner.textContent = '';
+      document.body.style.overflow = '';
+      if (lightboxInvoker && typeof lightboxInvoker.focus === 'function') {
+        lightboxInvoker.focus();
+      }
+      lightboxInvoker = null;
+    };
+
+    cards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        openLightbox(card);
+      });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        closeLightbox();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var focusables = lightbox.querySelectorAll('button, a[href], iframe, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (!lightbox.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
 })();
 </script>
 

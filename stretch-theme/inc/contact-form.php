@@ -19,6 +19,22 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Recipient for lead-notification emails. Defaults to cole@stretchcreative.co.
+ * Override with the STRETCH_LEAD_NOTIFY_EMAIL constant (e.g. in wp-config.php)
+ * or the `stretch_lead_notify_email` filter; falls back to the WordPress admin
+ * email if the configured value isn't a valid address.
+ */
+if (!defined('STRETCH_LEAD_NOTIFY_EMAIL')) {
+    define('STRETCH_LEAD_NOTIFY_EMAIL', 'cole@stretchcreative.co');
+}
+
+function stretch_lead_notify_email() {
+    $default = STRETCH_LEAD_NOTIFY_EMAIL ?: get_option('admin_email');
+    $email   = (string) apply_filters('stretch_lead_notify_email', $default);
+    return is_email($email) ? $email : get_option('admin_email');
+}
+
+/**
  * Register the Leads post type. Not publicly queryable — admin-only storage.
  */
 function stretch_register_lead_cpt() {
@@ -130,7 +146,7 @@ function stretch_capture_lead(array $data) {
     $headers   = ['Content-Type: text/plain; charset=UTF-8'];
     $headers[] = sprintf('Reply-To: %s <%s>', $who, $email);
 
-    $mail_sent = wp_mail(get_option('admin_email'), $subject, $body, $headers);
+    $mail_sent = wp_mail(stretch_lead_notify_email(), $subject, $body, $headers);
     update_post_meta($lead_id, 'stretch_mail_sent', $mail_sent ? '1' : '0');
 
     return $lead_id;

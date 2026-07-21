@@ -162,4 +162,28 @@ foreach ($retired_page_slugs as $slug) {
     }
 }
 
+// --------------------------------------------------------------------
+// FIX 5 — Draft retired Our Team / Our Work pages (punch-list #12)
+// Our Story + Our Team + Our Work merged into the single About page at
+// /about-stretch-creative/ (301s live in functions.php,
+// stretch_redirect_merged_about_pages). Draft the standalone /the-team/ and
+// /our-work/ pages here so any install — fresh or existing — ends up in the
+// same state and the old URLs no longer resolve to a published page.
+// --------------------------------------------------------------------
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Drafting retired Team/Work pages ==="); } else { echo "\n=== Drafting retired Team/Work pages ===" . "\n"; }
+$retired_about_slugs = ['the-team', 'our-work'];
+foreach ($retired_about_slugs as $slug) {
+    $retired_page = get_page_by_path($slug);
+    if (!$retired_page) {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ skip (not found): {$slug}"); } else { echo "  ○ skip (not found): {$slug}" . "\n"; }
+        continue;
+    }
+    if ($retired_page->post_status === 'publish') {
+        wp_update_post(['ID' => $retired_page->ID, 'post_status' => 'draft']);
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ drafted: {$retired_page->post_title} (ID {$retired_page->ID})"); } else { echo "  ✓ drafted: {$retired_page->post_title} (ID {$retired_page->ID})" . "\n"; }
+    } else {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ already {$retired_page->post_status} — no change needed: {$slug} (ID {$retired_page->ID})"); } else { echo "  ○ already {$retired_page->post_status} — no change needed: {$slug} (ID {$retired_page->ID})" . "\n"; }
+    }
+}
+
 if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('Content fixes complete.'); } else { echo 'Success: ' . 'Content fixes complete.' . "\n"; }

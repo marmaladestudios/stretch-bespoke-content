@@ -102,10 +102,23 @@ function stretch_pfx_logo_marquee($compact = false) {
 .pfx-hero::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 60%; height: 80%; background: radial-gradient(ellipse at center, rgba(133,96,168,0.06) 0%, transparent 70%); pointer-events: none; }
 .pfx-hero-mesh { position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 20% 50%, rgba(133,96,168,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(0,191,243,0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(86,116,185,0.05) 0%, transparent 50%); }
 .pfx-hero-grid { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-.pfx-grid-container { position: absolute; inset: -60px; display: grid; grid-template-columns: repeat(auto-fill, 60px); grid-auto-rows: 60px; transition: transform 0.3s ease-out; }
+/* Continuous grid-line layer — always visible across the whole hero, independent of the
+   JS-generated colored cells (design draws lines this way; per-cell borders alone can vanish
+   below the covered region if cell generation under-fills the hero). Aligned to the same 60px
+   lattice as .pfx-grid-container (inset:-60px) so lines coincide. */
+.pfx-hero-grid::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.pfx-grid-container { position: absolute; inset: -60px; z-index: 0; display: grid; grid-template-columns: repeat(auto-fill, 60px); grid-auto-rows: 60px; transition: transform 0.3s ease-out; }
 .pfx-grid-cell { border: 1px solid rgba(255,255,255,0.05); }
 .pfx-grid-cell.colored { background: var(--cell-color); animation: pfx-cellPulse var(--cell-dur, 8s) ease-in-out var(--cell-delay, 0s) infinite; }
-@keyframes pfx-cellPulse { 0%, 100% { opacity: 0.15; } 50% { opacity: 1; } }
+/* Rest at 0.4 (not 0.15) so colored cells stay legibly present through the pulse instead of
+   dropping to near-invisible between peaks. */
+@keyframes pfx-cellPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 .pfx-hero-grid::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 62% 58% at 50% 46%, rgba(26,31,46,0.95) 0%, rgba(26,31,46,0.55) 52%, rgba(26,31,46,0) 78%); }
 .pfx-hero--left .pfx-hero-grid::after { background: radial-gradient(ellipse 62% 58% at 28% 46%, rgba(26,31,46,0.95) 0%, rgba(26,31,46,0.55) 52%, rgba(26,31,46,0) 78%); }
 
@@ -282,7 +295,10 @@ document.addEventListener('DOMContentLoaded', function () {
     gridWrap.appendChild(gridContainer);
     var cellSize = 60;
     var cols = Math.ceil((window.innerWidth + 120) / cellSize);
-    var rows = Math.ceil((Math.max(heroSection.offsetHeight, 400) + 120) / cellSize);
+    // Use the larger of the measured hero height and the viewport height as a floor, so the
+    // colored cells cover the full hero even if layout/fonts haven't settled when this runs
+    // (the hero is min-height:92vh, so innerHeight is a safe lower bound).
+    var rows = Math.ceil((Math.max(heroSection.offsetHeight, window.innerHeight, 400) + 120) / cellSize);
     var totalCells = cols * rows;
     var coloredCount = Math.floor(totalCells * 0.18);
     var colors = ['rgba(133,96,168,0.13)', 'rgba(86,116,185,0.13)', 'rgba(68,140,203,0.13)', 'rgba(0,191,243,0.13)'];

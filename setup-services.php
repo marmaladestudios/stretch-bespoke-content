@@ -293,8 +293,8 @@ $services['seo_content_strategy_services'] = [
 
     // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
     'pull_quote' => [
-        'text'      => 'SEO reports shouldn’t require a translator.',
-        'highlight' => 'require a translator',
+        'text'      => 'Search is changing faster than businesses can keep up.',
+        'highlight' => 'faster than businesses can keep up',
     ],
 
     // -------- Capabilities (Offerings) --------
@@ -310,13 +310,15 @@ $services['seo_content_strategy_services'] = [
         ['title' => 'SEO audits', 'description' => 'Comprehensive evaluations of your website’s technical health, content quality, user experience, and search visibility, along with prioritized recommendations.'],
         ['title' => 'SEO and AEO content optimization', 'description' => 'Optimize existing content for SEO and AEO, from blogs and category pages to location and service pages, to make them more visible to today’s search engines.'],
         ['title' => 'Performance tracking & reporting', 'description' => 'Transparent, business-focused reporting focused on meaningful metrics like rankings, organic traffic, and click-through rates translated into actionable recommendations.'],
-    ],
-
-    // -------- Add-On Services --------
-    'addons_heading' => 'Add-On Services',
-    'addons' =>     [
         ['title' => 'Budget management', 'description' => 'Coordinated production oversight and budget tracking for larger SEO and content initiatives.'],
     ],
+
+    // -------- Cross-sell area (repurposed from Add-On Services; Budget management
+    // moved into the offerings grid above as card #09). Now a "more than SEO"
+    // cross-sell to the sibling solution pages, mirroring content-writing. --------
+    'addons_overline' => 'Beyond Search',
+    'addons_heading'  => 'A Full-Service Creative Agency',
+    'addons'          => [],
 
     // -------- Cross-sell CTA --------
     'cross_cta' =>     [

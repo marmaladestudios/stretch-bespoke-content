@@ -149,6 +149,24 @@ function stretch_redirect_merged_visual_pages() {
 }
 
 /**
+ * Our Team + Our Work merged into the single About page (/about-stretch-creative/,
+ * punch-list #12). Path-matched (not is_page) so the 301 survives unpublishing the
+ * retired /the-team/ and /our-work/ pages.
+ */
+add_action('template_redirect', 'stretch_redirect_merged_about_pages', 1);
+function stretch_redirect_merged_about_pages() {
+    $path = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    if (preg_match('#^/the-team(/|$)#', $path)) {
+        wp_safe_redirect(home_url('/about-stretch-creative/#our-team'), 301);
+        exit;
+    }
+    if (preg_match('#^/our-work(/|$)#', $path)) {
+        wp_safe_redirect(home_url('/about-stretch-creative/#our-work'), 301);
+        exit;
+    }
+}
+
+/**
  * The Solutions page content is now the homepage. 301-redirect the retired
  * /stretch-creative-solutions/ URL to the site root.
  */

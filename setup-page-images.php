@@ -189,15 +189,42 @@ if ($option !== $before) {
 WP_CLI::log('=== AUD-014b: Sideloading Solution + Industry slot images ===');
 
 $stretch_slot_sources = [
+    // --- Per-page solution INTRO photos (one per solution page) ---
     'solution-intro-editorial-workspace' => [
         'url'   => 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1600&q=80&fit=crop',
         'title' => 'solution-intro-editorial-workspace',
         'alt'   => 'Editorial content workspace with a laptop, notebook and coffee',
     ],
+    'solution-intro-seo-analytics' => [
+        'url'   => 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1600&q=80&fit=crop',
+        'title' => 'solution-intro-seo-analytics',
+        'alt'   => 'Laptop displaying a search and audience analytics dashboard',
+    ],
+    'solution-intro-paid-media-planning' => [
+        'url'   => 'https://images.unsplash.com/photo-1533750516457-a7f992034fec?w=1600&q=80&fit=crop',
+        'title' => 'solution-intro-paid-media-planning',
+        'alt'   => 'Marketer planning an advertising campaign at a desk with notes and a laptop',
+    ],
+    'solution-intro-visual-design-studio' => [
+        'url'   => 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1600&q=80&fit=crop',
+        'title' => 'solution-intro-visual-design-studio',
+        'alt'   => 'Creative design studio desk with design software, tablet and a graphic design book',
+    ],
+    // --- Per-page solution PROCESS photos ---
     'solution-process-team-collaboration' => [
         'url'   => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=80&fit=crop',
         'title' => 'solution-process-team-collaboration',
         'alt'   => 'Content team collaborating around a table of laptops',
+    ],
+    'solution-process-seo-strategy' => [
+        'url'   => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80&fit=crop',
+        'title' => 'solution-process-seo-strategy',
+        'alt'   => 'Two people mapping out an SEO strategy on paper beside their laptops',
+    ],
+    'solution-process-paid-campaign' => [
+        'url'   => 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1600&q=80&fit=crop',
+        'title' => 'solution-process-paid-campaign',
+        'alt'   => 'Reviewing a marketing strategy framework while planning a campaign',
     ],
     'industry-ecommerce-storefront' => [
         'url'   => 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80&fit=crop',
@@ -261,10 +288,12 @@ if (!function_exists('stretch_slot_set')) {
 
 // --- Solution pages: intro_image + process_image (only where the slot renders) ---
 $service_slot_map = [
-    'content-writing-at-any-scale'  => ['intro_image' => 'solution-intro-editorial-workspace', 'process_image' => 'solution-process-team-collaboration'],
-    'seo_content_strategy_services' => ['intro_image' => 'solution-intro-editorial-workspace', 'process_image' => 'solution-process-team-collaboration'],
-    'paid-advertising'              => ['intro_image' => 'solution-intro-editorial-workspace', 'process_image' => 'solution-process-team-collaboration'],
-    'visual-content-and-design'     => ['intro_image' => 'solution-intro-editorial-workspace'], // no process section (no process steps)
+    // Each solution page gets a contextually distinct intro; process photos are
+    // differentiated where a strong, brand-/face-clean stock image exists.
+    'content-writing-at-any-scale'  => ['intro_image' => 'solution-intro-editorial-workspace',  'process_image' => 'solution-process-team-collaboration'],
+    'seo_content_strategy_services' => ['intro_image' => 'solution-intro-seo-analytics',        'process_image' => 'solution-process-seo-strategy'],
+    'paid-advertising'              => ['intro_image' => 'solution-intro-paid-media-planning',  'process_image' => 'solution-process-paid-campaign'],
+    'visual-content-and-design'     => ['intro_image' => 'solution-intro-visual-design-studio'], // no process section (no process steps)
 ];
 foreach ($service_slot_map as $slug => $fields) {
     $opt = get_option('stretch_service_' . $slug, null);
