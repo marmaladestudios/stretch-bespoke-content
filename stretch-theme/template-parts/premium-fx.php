@@ -102,19 +102,23 @@ function stretch_pfx_logo_marquee($compact = false) {
 .pfx-hero::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 60%; height: 80%; background: radial-gradient(ellipse at center, rgba(133,96,168,0.06) 0%, transparent 70%); pointer-events: none; }
 .pfx-hero-mesh { position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 20% 50%, rgba(133,96,168,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(0,191,243,0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(86,116,185,0.05) 0%, transparent 50%); }
 .pfx-hero-grid { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-/* Continuous grid-line layer — always visible across the whole hero, independent of the
-   JS-generated colored cells (design draws lines this way; per-cell borders alone can vanish
-   below the covered region if cell generation under-fills the hero). Aligned to the same 60px
-   lattice as .pfx-grid-container (inset:-60px) so lines coincide. */
-.pfx-hero-grid::before {
-  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+/* SINGLE lattice line source (#20): the grid-line background lives on the parallax-translating
+   .pfx-grid-container itself, so lines move WITH the cells on mousemove — no second static
+   lattice to slide over and double up. The background covers the container's full inset area
+   (inset:-60px = 60px overhang each side), guaranteeing full-hero coverage independent of the
+   JS row math / cell count. 60px pitch is anchored to the container's top-left, exactly the
+   origin of the 60px grid cells, so colored cells sit squarely inside the lattice squares.
+   Cells no longer carry a border — they exist only to host the colored pulses. */
+.pfx-grid-container {
+  position: absolute; inset: -60px; z-index: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, 60px); grid-auto-rows: 60px;
+  transition: transform 0.3s ease-out;
   background-image:
     linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
   background-size: 60px 60px;
+  background-position: 0 0;
 }
-.pfx-grid-container { position: absolute; inset: -60px; z-index: 0; display: grid; grid-template-columns: repeat(auto-fill, 60px); grid-auto-rows: 60px; transition: transform 0.3s ease-out; }
-.pfx-grid-cell { border: 1px solid rgba(255,255,255,0.05); }
 .pfx-grid-cell.colored { background: var(--cell-color); animation: pfx-cellPulse var(--cell-dur, 8s) ease-in-out var(--cell-delay, 0s) infinite; }
 /* Rest at 0.4 (not 0.15) so colored cells stay legibly present through the pulse instead of
    dropping to near-invisible between peaks. */
@@ -137,6 +141,30 @@ function stretch_pfx_logo_marquee($compact = false) {
 .pfx-btn-primary:focus-visible, .pfx-btn-outline:focus-visible { outline: 2px solid #00BFF3; outline-offset: 2px; }
 .pfx-btn-outline { display: inline-block; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 500; color: #fff; border: 1px solid rgba(255,255,255,0.35); padding: 16px 40px; border-radius: 6px; text-decoration: none; transition: background 0.3s ease, border-color 0.3s ease; white-space: nowrap; }
 .pfx-btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); }
+/* #18 — button labels are ALWAYS white, in every state, on every page. Some templates carry
+   page-level anchor rules (e.g. `.bce-page a { color: inherit }`, specificity 0,1,1) that render
+   AFTER this kit's <style> in source order, so an equal-specificity kit rule (a.pfx-btn-*, also
+   0,1,1) would tie and lose. The white label is a terminal invariant of the button — not a
+   themable value — so a targeted !important scoped to `color` only is the correct, robust win
+   here (leaves backgrounds/borders/hover transitions untouched). Inner <span> covered too. */
+.pfx-btn-primary,
+.pfx-btn-primary span,
+.pfx-btn-primary:hover,
+.pfx-btn-primary:visited,
+.pfx-btn-primary:focus,
+a.pfx-btn-primary,
+a.pfx-btn-primary:hover,
+a.pfx-btn-primary:visited,
+a.pfx-btn-primary span,
+.pfx-btn-outline,
+.pfx-btn-outline span,
+.pfx-btn-outline:hover,
+.pfx-btn-outline:visited,
+.pfx-btn-outline:focus,
+a.pfx-btn-outline,
+a.pfx-btn-outline:hover,
+a.pfx-btn-outline:visited,
+a.pfx-btn-outline span { color: #fff !important; }
 
 /* Animated accent bar — mirrored stops sliding 0%->200%, linear */
 .pfx-accent-bar { height: 4px; background: linear-gradient(90deg, #8560A8, #5674B9, #448CCB, #00BFF3, #448CCB, #5674B9, #8560A8); background-size: 200% 100%; animation: pfx-gradientSlide 6.5s linear infinite; }

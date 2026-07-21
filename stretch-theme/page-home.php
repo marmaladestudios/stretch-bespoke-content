@@ -27,9 +27,13 @@ html, body { overflow-x: hidden; }
 .home-hero-lede { font-family: 'Assistant', sans-serif; font-weight: 300; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 660px; margin: 0 0 40px; }
 .home-hero-wedge { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; background: #fff; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 1; pointer-events: none; }
 
-/* ===== WEDGE DIVIDERS (standalone) ===== */
-.home-wedge { height: 60px; position: relative; line-height: 0; margin-bottom: -1px; }
-.home-wedge > div { position: absolute; inset: 0; }
+/* ===== WEDGE DIVIDERS (standalone) =====
+   Systemic seam fix (#14): container bg = PREVIOUS section color (set inline),
+   clipped triangle = NEXT section color (inline) and extends 1px past BOTH
+   edges so no anti-aliased hairline shows; container overlaps the next
+   section by 1px (margin-bottom) and the previous section by 1px (margin-top). */
+.home-wedge { height: 60px; position: relative; line-height: 0; margin-top: -1px; margin-bottom: -1px; }
+.home-wedge > div { position: absolute; left: 0; right: 0; top: -1px; bottom: -1px; }
 
 /* ===== SECTION HEADERS ===== */
 .home-head { text-align: center; max-width: 720px; margin: 0 auto 60px; }

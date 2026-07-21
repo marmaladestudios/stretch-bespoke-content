@@ -62,11 +62,33 @@ function stretch_industry_icon($key) {
         'monitor'    => '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
         'heart'      => '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
         'graduation' => '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+        // ── #23 additions: explicit, semantically-apt slugs (24-grid, 1.7 stroke, round caps) ──
+        'sliders'    => '<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>', // flexible / adjustable production
+        'award'      => '<circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/>', // expertise / credential
+        'tooth'      => '<path d="M12 5.5C10.5 4 8.5 3.2 6.8 4 4.6 5 3.6 7.6 4.2 10.4c.4 1.9.5 2.6.7 4 .3 2 .6 5.6 2.1 6 1.4.3 1.7-2.6 2.4-4.6.4-1.2.9-1.6 1.6-1.6s1.2.4 1.6 1.6c.7 2 1 4.9 2.4 4.6 1.5-.4 1.8-4 2.1-6 .2-1.4.3-2.1.7-4C20.4 7.6 19.4 5 17.2 4c-1.7-.8-3.7 0-5.2 1.5Z"/>', // dental
+        'scale'      => '<line x1="12" y1="3" x2="12" y2="21"/><path d="M7 7h10"/><path d="M7 7 4 14a3 3 0 0 0 6 0z"/><path d="M17 7l3 7a3 3 0 0 1-6 0z"/><path d="M8 21h8"/>', // law / justice
+        'hard-hat'   => '<path d="M4 15a8 8 0 0 1 16 0"/><path d="M10 8.5V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3.5"/><path d="M2 18h20"/><path d="M4 15h16v3H4z"/>', // restoration / construction
+        'coins'      => '<circle cx="8" cy="8" r="5"/><path d="M13.3 4.3a5 5 0 0 1 0 7.4"/><path d="M15.5 6.1a5 5 0 0 1 0 3.8"/><path d="M5.5 8h1.2v3M8.8 8H10"/>', // fintech / finance
+        'app-window' => '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="6" cy="6.5" r="0.6"/><circle cx="8.3" cy="6.5" r="0.6"/>', // product / solution pages
+        'cursor'     => '<path d="M4 3l7 17 2.5-6.5L20 11z"/><path d="M14 14l5 5"/>', // interactive experiences
     ];
-    return isset($icons[$key]) ? $icons[$key] : '';
+    if (isset($icons[$key])) { return $icons[$key]; }
+    // #23 — neutral asterisk fallback: a miss is obvious in QA but inoffensive
+    // (no card should ever hit this once the seed assigns explicit slugs).
+    return '<path d="M12 4v16"/><path d="M4 12h16"/><path d="M6 6l12 12"/><path d="M18 6 6 18"/>';
 }
 $stretch_default_icon_rotation = ['storefront', 'box', 'sparkle', 'cart', 'globe', 'users', 'chart', 'target'];
 $stretch_sol_icon_rotation     = ['search', 'file-text', 'book-open', 'camera', 'target', 'chart'];
+
+/* Ghost section-number emitter (#17). Static counter increments only when a
+   section renders, so numbering is sequential with no gaps. Dark sections use
+   the outline style. */
+function stretch_ind_chapter($dark = false) {
+    static $n = 0;
+    $n++;
+    return '<span class="ind-chapter' . ($dark ? ' ind-chapter--dark' : '') . '" aria-hidden="true">'
+         . sprintf('%02d', $n) . '</span>';
+}
 
 /** Attachment image or neutral gradient placeholder (no external requests). */
 function stretch_industry_media($id, $alt) {
@@ -88,10 +110,26 @@ html, body { overflow-x: hidden; }
 .ind-hero-title { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: clamp(38px, 5vw, 64px); letter-spacing: -1.5px; line-height: 1.1; color: #fff; margin: 0 0 22px; max-width: 860px; }
 .ind-hero-lede { font-family: 'Assistant', sans-serif; font-weight: 300; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 620px; margin: 0 0 38px; }
 .ind-hero-wedge { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; background: #fff; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 1; pointer-events: none; }
+/* #15 — the industry in-hero wedge is white (already high-contrast against the
+   dark hero); a faint 1px glow along the diagonal top edge reinforces it. */
+.ind-hero-wedge { filter: drop-shadow(0 -1px 0 rgba(255,255,255,0.22)); }
 
-/* ===== WEDGE DIVIDERS (standalone) ===== */
+/* ===== WEDGE DIVIDERS (standalone) — systemic seam fix (#14) =====
+   container bg = PREVIOUS section color (top-edge gap blends); clipped child =
+   NEXT section color extended 1px beyond BOTH edges (top:-1px/bottom:-1px) so
+   the diagonal AA hairline blends; container overlaps next section by 1px. */
 .ind-wedge { height: 60px; position: relative; line-height: 0; margin-bottom: -1px; }
-.ind-wedge > div { position: absolute; inset: 0; }
+.ind-wedge > div { position: absolute; top: -1px; bottom: -1px; left: 0; right: 0; }
+
+/* ===== GHOST SECTION NUMBERS (#17 — BCE chapter treatment) =====
+   Oversized outline/ghost numeral top-right of each major section, behind
+   content, aria-hidden. Auto-numbered from the rendered flow via
+   stretch_ind_chapter() so skipped sections never leave a gap. Anchored by
+   `right`; html/body already clip overflow-x. */
+.ind-chapter { position: absolute; top: 18px; right: clamp(12px, 3vw, 46px); z-index: 1; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: clamp(150px, 19vw, 240px); line-height: 0.8; letter-spacing: -8px; color: rgba(26,31,46,0.05); pointer-events: none; user-select: none; }
+.ind-chapter--dark { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.10); }
+.ind-audiences, .ind-challenges, .ind-popular, .ind-faqs { position: relative; }
+.ind-audiences-inner, .ind-challenges-inner, .ind-popular-inner, .ind-faqs-inner, .ind-why-inner, .ind-cta-inner { position: relative; z-index: 2; }
 
 /* ===== SHARED HEADS ===== */
 .ind-head { text-align: center; margin: 0 auto 56px; }
@@ -229,6 +267,7 @@ html, body { overflow-x: hidden; }
 <?php if ($audiences) : ?>
 <!-- WHO WE WORK WITH -->
 <section class="ind-audiences" aria-label="Who We Work With">
+  <?php echo stretch_ind_chapter(); ?>
   <div class="ind-audiences-inner">
     <div class="pfx-reveal">
       <span class="pfx-overline">Who We Work With</span>
@@ -254,6 +293,7 @@ html, body { overflow-x: hidden; }
 <?php if ($ch_intro || $challenges) : ?>
 <!-- CHALLENGES -->
 <section class="ind-challenges" aria-label="Challenges">
+  <?php echo stretch_ind_chapter(); ?>
   <div class="ind-challenges-inner">
     <div class="pfx-reveal-left">
       <span class="pfx-overline">The Reality</span>
@@ -339,6 +379,7 @@ html, body { overflow-x: hidden; }
 <?php if ($popular) : ?>
 <!-- POPULAR SERVICES -->
 <section class="ind-popular" aria-label="Popular Services">
+  <?php echo stretch_ind_chapter(); ?>
   <div class="ind-popular-inner">
     <div class="ind-head pfx-reveal">
       <span class="pfx-overline">Services</span>
@@ -366,6 +407,7 @@ html, body { overflow-x: hidden; }
 
 <!-- WHY STRETCH (dark) -->
 <section class="ind-why" data-grain aria-label="Why Stretch Creative">
+  <?php echo stretch_ind_chapter(true); ?>
   <div class="ind-why-inner">
     <div class="ind-head pfx-reveal">
       <span class="pfx-overline">Why Stretch</span>
@@ -392,6 +434,7 @@ html, body { overflow-x: hidden; }
 <?php endif; ?>
 <!-- FAQ -->
 <section class="ind-faqs" aria-label="FAQs">
+  <?php echo stretch_ind_chapter(); ?>
   <div class="ind-faqs-inner">
     <div class="ind-head pfx-reveal">
       <span class="pfx-overline">FAQs</span>
@@ -423,6 +466,7 @@ html, body { overflow-x: hidden; }
 
 <!-- FINAL CTA -->
 <section class="ind-finalcta" data-grain aria-label="Contact">
+  <?php echo stretch_ind_chapter(true); ?>
   <div class="ind-cta-orb-a"></div>
   <div class="ind-cta-orb-b"></div>
   <div class="ind-cta-inner">

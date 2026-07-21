@@ -67,14 +67,19 @@ html, body { overflow-x: hidden; }
 .v2-delay-6 { transition-delay: 0.6s; }
 
 /* ---------- ANGLED SECTION DIVIDERS ---------- */
+/* Systemic seam fix (#14): the divider overlays the CURRENT (previous) section,
+   so behind the transparent area is the previous color; the clipped child is the
+   NEXT section color and extends 1px past the bottom so no AA hairline shows. */
 .v2-angle-divider {
   position: absolute;
   bottom: -1px;
   left: 0; right: 0;
+  height: 60px;
   z-index: 2;
   pointer-events: none;
   line-height: 0;
 }
+.v2-angle-divider > div { position: absolute; left: 0; right: 0; top: 0; bottom: -1px; }
 .v2-angle-divider svg { display: block; width: 100%; height: 60px; }
 .v2-angle-divider-top {
   position: absolute;
@@ -1101,9 +1106,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
-    </svg>
+    <div style="background:#ffffff;clip-path:polygon(0 100%,100% 0,100% 100%)"></div>
   </div>
 </section>
 
@@ -1135,9 +1138,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#fafbfd"/>
-    </svg>
+    <div style="background:#fafbfd;clip-path:polygon(0 0,100% 100%,0 100%)"></div>
   </div>
 </section>
 
@@ -1174,9 +1175,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/>
-    </svg>
+    <div style="background:#f9f9fb;clip-path:polygon(0 0,100% 100%,0 100%)"></div>
   </div>
 </section>
 
@@ -1202,7 +1201,7 @@ html, body { overflow-x: hidden; }
 
       <div class="about-value-card v2-reveal v2-delay-2" style="--accent:#5674B9;--accent-end:#448CCB;--icon-bg:rgba(86,116,185,0.1);--icon-bg-end:rgba(68,140,203,0.1);">
         <div class="about-value-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></svg>
         </div>
         <h3>Flexibility</h3>
         <p>No two projects are the same. We adapt our approach, team composition, and processes to match exactly what each client needs.</p>
@@ -1226,7 +1225,7 @@ html, body { overflow-x: hidden; }
 
       <div class="about-value-card v2-reveal v2-delay-5" style="--accent:#8560A8;--accent-end:#00BFF3;--icon-bg:rgba(133,96,168,0.1);--icon-bg-end:rgba(0,191,243,0.1);">
         <div class="about-value-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8560A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
         </div>
         <h3>Social Responsibility</h3>
         <p>We care about the world beyond content. From fair wages to sustainable practices, we strive to make a positive impact.</p>
@@ -1243,9 +1242,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
-    </svg>
+    <div style="background:#ffffff;clip-path:polygon(0 100%,100% 0,100% 100%)"></div>
   </div>
 </section>
 
@@ -1365,9 +1362,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#ffffff"/>
-    </svg>
+    <div style="background:#ffffff;clip-path:polygon(0 0,100% 100%,0 100%)"></div>
   </div>
 </section>
 
@@ -1420,9 +1415,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/>
-    </svg>
+    <div style="background:#f9f9fb;clip-path:polygon(0 0,100% 100%,0 100%)"></div>
   </div>
 </section>
 
@@ -1450,7 +1443,7 @@ html, body { overflow-x: hidden; }
 
       <div class="team-quality-card v2-reveal v2-delay-2">
         <div class="team-quality-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5674B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a6.5 6.5 0 1 1 13 0c0 6-6 6-6 10a3.5 3.5 0 1 1-7 0"/><path d="M15 8.5a2.5 2.5 0 0 0-5 0v1a2 2 0 1 1 0 4"/></svg>
         </div>
         <div>
           <h3>Intuition</h3>
@@ -1481,9 +1474,7 @@ html, body { overflow-x: hidden; }
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,60 1440,0 1440,60" fill="#ffffff"/>
-    </svg>
+    <div style="background:#ffffff;clip-path:polygon(0 100%,100% 0,100% 100%)"></div>
   </div>
 </section>
 
@@ -1554,9 +1545,7 @@ $counts = [
   </div>
 
   <div class="v2-angle-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <polygon points="0,0 1440,60 1440,60 0,60" fill="#8560A8"/>
-    </svg>
+    <div style="background:#8560A8;clip-path:polygon(0 0,100% 100%,0 100%)"></div>
   </div>
 </section>
 

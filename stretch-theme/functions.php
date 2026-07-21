@@ -167,6 +167,22 @@ function stretch_redirect_merged_about_pages() {
 }
 
 /**
+ * AEO content cluster retired from the blog (punch-list #24). The /blog/aeo/
+ * category landing (the "AEO hub") and its 13 spoke posts (all URLs live under
+ * /blog/aeo/…) are drafted in content-fixes.php. Path-matched (not is_category)
+ * so the 301 fires before redirect_canonical would 404-guess a drafted post URL
+ * to a random post — every /blog/aeo/* URL collapses to the blog index.
+ */
+add_action('template_redirect', 'stretch_redirect_retired_aeo', 1);
+function stretch_redirect_retired_aeo() {
+    $path = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    if (preg_match('#^/blog/aeo(/|$)#', $path)) {
+        wp_safe_redirect(home_url('/blog/'), 301);
+        exit;
+    }
+}
+
+/**
  * The Solutions page content is now the homepage. 301-redirect the retired
  * /stretch-creative-solutions/ URL to the site root.
  */

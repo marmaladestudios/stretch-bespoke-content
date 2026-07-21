@@ -855,8 +855,7 @@ $services['visual-content-and-design'] = [
         'overline'  => 'The Solution',
         'heading'   => 'Creative content changes the equation.',
         'text'      =>             [
-                'Effective visual content communicates, educates, and inspires action and loyalty.',
-                'Stretch Creative helps businesses create visuals that support real marketing goals.',
+                'Effective visual content communicates, educates, and inspires action and loyalty. Stretch Creative helps businesses create visuals that support real marketing goals.',
             ],
         'points' =>             [
                 ['title' => 'We design with purpose.', 'body' => 'Every graphic, photo, and video should solve a problem. Whether it’s simplifying complex information, highlighting product features, or reinforcing your brand identity, every visual asset is created with a clear objective in mind.'],

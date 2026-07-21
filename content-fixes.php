@@ -186,4 +186,50 @@ foreach ($retired_about_slugs as $slug) {
     }
 }
 
+// --------------------------------------------------------------------
+// FIX 6 — Retire the AEO content cluster from the blog (punch-list #24)
+// The "AEO hub" is the /blog/aeo/ category landing rendered by category.php
+// from the stretch_hub_aeo option (not a post), plus its 13 spoke/cornerstone
+// posts in the "aeo" category. Draft every AEO post here (reversible) so the
+// category empties out — the blog-home topic card auto-drops (hide_empty) and
+// the related-posts rails stop surfacing them. The hub landing URL itself and
+// the now-dead post URLs (all under /blog/aeo/) are 301'd to /blog/ by
+// stretch_redirect_retired_aeo() in functions.php (path-matched, survives
+// unpublishing). No published content or nav item links to these slugs, so no
+// per-post link removal is needed. To restore the cluster: republish the posts
+// and drop the redirect.
+// --------------------------------------------------------------------
+if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("\n=== Drafting retired AEO cluster posts ==="); } else { echo "\n=== Drafting retired AEO cluster posts ===" . "\n"; }
+$aeo_post_slugs = [
+    'the-complete-guide-to-answer-engine-optimization-aeo-in-2026', // cornerstone/pillar post
+    'what-is-answer-engine-optimization-beginners-guide',
+    'aeo-vs-seo',
+    'how-ai-answer-engines-choose-brands-to-cite',
+    'structure-content-for-ai',
+    'schema-markup-for-aeo-technical-guide',
+    'building-topical-authority-content-cluster-strategy-aeo',
+    'featured-snippets-bridge-to-aeo',
+    'eeat-signals-ai-answer-engines-evaluate',
+    'original-research-data-aeo-competitive-advantage',
+    'measuring-aeo-success-metrics-tools-reporting',
+    'brand-visibility-crisis-aeo',
+    '5-quick-wins-aeo',
+];
+foreach ($aeo_post_slugs as $slug) {
+    $candidates = get_posts([
+        'post_type'        => 'post',
+        'post_status'      => ['publish', 'pending', 'future'],
+        'name'             => $slug,
+        'numberposts'      => 1,
+        'suppress_filters' => true,
+    ]);
+    if (empty($candidates)) {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ○ skip (not published): {$slug}"); } else { echo "  ○ skip (not published): {$slug}" . "\n"; }
+        continue;
+    }
+    $post = $candidates[0];
+    wp_update_post(['ID' => $post->ID, 'post_status' => 'draft']);
+    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ drafted: {$post->post_title} (ID {$post->ID})"); } else { echo "  ✓ drafted: {$post->post_title} (ID {$post->ID})" . "\n"; }
+}
+
 if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('Content fixes complete.'); } else { echo 'Success: ' . 'Content fixes complete.' . "\n"; }

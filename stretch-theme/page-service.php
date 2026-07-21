@@ -161,17 +161,73 @@ if (!function_exists('stretch_svc_initials')) {
     }
 }
 
-// Why-card stroke icons (roof / person / growth chart / chat bubble), cycled by index.
-$why_icons = [
-    '<path d="M4 10.5L11 4l7 6.5"></path><path d="M6 9.5V18h10V9.5"></path>',
-    '<circle cx="11" cy="7.5" r="3.5"></circle><path d="M4.5 18.5a6.5 6.5 0 0113 0"></path>',
-    '<path d="M4 18h14"></path><path d="M5.5 14.5l4-4 3 2.5L17 8"></path><path d="M13.5 8H17v3.5"></path>',
-    '<path d="M4 5h14v9.5H10L5.5 18v-3.5H4z"></path>',
+/* Ghost section-number emitter (#17). A static counter increments only when a
+   section actually renders, so numbering is sequential with no gaps regardless
+   of which optional sections are skipped. Dark sections use the outline style. */
+if (!function_exists('stretch_svc_chapter')) {
+    function stretch_svc_chapter($dark = false) {
+        static $n = 0;
+        $n++;
+        return '<span class="svc-chapter' . ($dark ? ' svc-chapter--dark' : '') . '" aria-hidden="true">'
+             . sprintf('%02d', $n) . '</span>';
+    }
+}
+
+/* ---------- Why-card icons (#23 semantic sweep) ----------
+ * 24-grid (viewBox 0 0 22 22), 1.7 stroke, round caps — matches the site set.
+ * Picked by keyword from each benefit heading so the icon always fits, even
+ * when benefit order differs page to page (index cycling used to mismatch the
+ * SEO page). Falls back to a rotation, never to a blank tile. */
+$why_icon_lib = [
+    'roof'   => '<path d="M4 10.5L11 4l7 6.5"></path><path d="M6 9.5V18h10V9.5"></path>',                                   // under one roof
+    'person' => '<circle cx="11" cy="7.5" r="3.5"></circle><path d="M4.5 18.5a6.5 6.5 0 0113 0"></path>',                    // human / expert-led
+    'growth' => '<path d="M4 18h14"></path><path d="M5.5 14.5l4-4 3 2.5L17 8"></path><path d="M13.5 8H17v3.5"></path>',       // scale / grow / boost
+    'chat'   => '<path d="M4 5h13v8.5H9L5.5 17v-3.5H4z"></path>',                                                            // point of contact / comms
+    'target' => '<circle cx="11" cy="11" r="7"></circle><circle cx="11" cy="11" r="3"></circle>',                            // results / execute / strategy
+    'layers' => '<path d="M11 3l7 4-7 4-7-4 7-4z"></path><path d="M4 11l7 4 7-4"></path><path d="M4 14.8l7 4 7-4"></path>',   // holistic / integrated / formats
+    'search' => '<circle cx="9.5" cy="9.5" r="5.5"></circle><path d="M13.7 13.7l4 4"></path>',                               // SEO / research / AEO
 ];
+/** Choose a why-card icon by keyword; fall back to a rotation (never blank). */
+if (!function_exists('stretch_svc_why_icon')) {
+    function stretch_svc_why_icon($lib, $title, $i) {
+        $t = mb_strtolower((string) $title);
+        // Order matters: more-specific themes resolve before the generic
+        // "seo/search" catch so headings like "SEO built to scale" or
+        // "Holistic SEO and AEO" pick the distinctive icon, not the magnifier.
+        $rules = [
+            'roof'   => ['one roof', 'under one'],
+            'person' => ['human', 'expert-led', 'expert led', 'hand-pick', 'people'],
+            'growth' => ['scale', 'grow', 'boost', 'long-term'],
+            'layers' => ['holistic', 'integrat', 'end-to-end', 'format', 'multiple', 'plug in', 'full-service', 'end to end'],
+            'target' => ['result', 'measurable', 'execute', 'strateg', 'effective', 'brand', 'roi', 'data', 'performance'],
+            'search' => ['seo', 'aeo', 'research', 'root'],
+            'chat'   => ['contact', 'point of', 'extension', 'collab', 'communication', 'storytelling', 'story'],
+        ];
+        foreach ($rules as $icon => $needles) {
+            foreach ($needles as $needle) {
+                if (strpos($t, $needle) !== false) { return $lib[$icon]; }
+            }
+        }
+        $rotation = ['roof', 'person', 'growth', 'chat'];
+        return $lib[$rotation[$i % count($rotation)]];
+    }
+}
 ?>
 
 <style>
 html, body { overflow-x: hidden; }
+
+/* ===== GHOST SECTION NUMBERS (#17 — BCE chapter treatment) =====
+   Oversized outline/ghost numeral, top-right of each major section, behind
+   content, aria-hidden. Auto-numbered from the rendered section flow via
+   stretch_svc_chapter() so optional sections never leave a gap. Anchored by
+   `right` (never overflows the viewport; html/body clip overflow-x anyway). */
+.svc-chapter { position: absolute; top: 18px; right: clamp(12px, 3vw, 46px); z-index: 1; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: clamp(150px, 19vw, 240px); line-height: 0.8; letter-spacing: -8px; color: rgba(26,31,46,0.05); pointer-events: none; user-select: none; }
+.svc-chapter--dark { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.10); }
+/* Numbered sections get a positioning context; their inner wrappers ride above
+   the ghost numeral. */
+.svc-intro, .svc-reality, .svc-solution, .svc-addons, .svc-process, .svc-testimonials, .svc-faq { position: relative; }
+.svc-intro-grid, .svc-reality-inner, .svc-reality-grid, .svc-solution-inner, .svc-addons-inner, .svc-process-inner, .svc-testimonials-inner, .svc-faq-inner, .svc-pullquote p, .svc-why-inner, .svc-cta-inner { position: relative; z-index: 2; }
 
 /* ===== SHARED ===== */
 .svc-h2 { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: clamp(30px, 3.4vw, 44px); letter-spacing: -1px; line-height: 1.15; margin: 0; color: #1a1f2e; }
@@ -184,12 +240,24 @@ html, body { overflow-x: hidden; }
 .svc-hero-title { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: clamp(38px, 5vw, 64px); letter-spacing: -1.5px; line-height: 1.1; color: #fff; margin: 0 0 22px; max-width: 840px; }
 .svc-hero-lede { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.4; color: rgba(255,255,255,0.95); margin: 0 0 36px; }
 .svc-hero-wedge { position: absolute; left: 0; right: 0; bottom: -1px; height: 60px; clip-path: polygon(0 100%, 100% 0, 100% 100%); z-index: 1; pointer-events: none; }
+/* #15 — make the in-hero diagonal legible. The wedge fill equals the next
+   section (a near-identical dark), so the diagonal reads via a 1px light edge
+   cast along the clip-path top boundary (drop-shadow follows the clipped shape)
+   plus a faint top-lit gradient sheen inside the wedge itself. */
+.svc-hero-wedge { filter: drop-shadow(0 -1px 0 rgba(255,255,255,0.16)); }
+.svc-hero-wedge::before { content: ''; position: absolute; inset: 0; clip-path: polygon(0 100%, 100% 0, 100% 100%); background: linear-gradient(200deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 34%, rgba(255,255,255,0) 60%); pointer-events: none; }
 
-/* ===== WEDGE DIVIDERS (standalone) ===== */
+/* ===== WEDGE DIVIDERS (standalone) — systemic seam fix (#14) =====
+   Pattern (identical on every wedge, both templates):
+   • container bg  = the PREVIOUS section's color, so any sub-pixel gap at the
+     TOP edge (previous section → wedge) shows the correct color and vanishes.
+   • clipped child = the NEXT section's color, extended 1px BEYOND both the top
+     and bottom edges (top:-1px / bottom:-1px), so the diagonal's anti-aliased
+     hairline always blends into a matching fill instead of a grey sliver.
+   • container overlaps the following section by 1px (margin-bottom:-1px) so the
+     BOTTOM edge (wedge → next) has no rounding gap at any zoom level. */
 .svc-wedge { height: 60px; position: relative; line-height: 0; margin-bottom: -1px; }
-/* Overlap the wedge's clipped triangle 1px into the following section so no
-   sub-pixel seam shows at the clip-path boundary at any zoom level. */
-.svc-wedge > div { position: absolute; top: 0; left: 0; right: 0; bottom: -1px; }
+.svc-wedge > div { position: absolute; top: -1px; left: 0; right: 0; bottom: -1px; }
 
 /* ===== PROPS BAR ===== */
 .svc-props { background: #252C3A; padding: 44px clamp(24px, 4vw, 40px); }
@@ -384,6 +452,7 @@ html, body { overflow-x: hidden; }
 <?php if ($intro_paras || $intro_image) : ?>
 <!-- ============ INTRO (white, 2-col) ============ -->
 <section class="svc-intro" aria-label="Introduction">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-intro-grid">
     <div class="pfx-reveal">
       <?php foreach ($intro_paras as $p) : if ($p === '') continue; ?>
@@ -414,6 +483,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($reality_sub || $reality_paras) : ?>
 <!-- ============ THE REALITY — 2-col when a pull quote exists: copy left, quote card right ============ -->
 <section class="svc-reality" aria-label="The Reality">
+  <?php echo stretch_svc_chapter(); ?>
   <?php if ($pq_html !== '') : ?>
   <div class="svc-reality-grid">
     <div class="pfx-reveal">
@@ -445,6 +515,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($pq_html !== '' && !($reality_sub || $reality_paras)) : ?>
 <!-- ============ PULL QUOTE (standalone band fallback when no Reality section) ============ -->
 <section class="svc-pullquote" aria-label="Quote">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-pullquote-mark" aria-hidden="true">&ldquo;</div>
   <p class="pfx-reveal"><?php echo $pq_html; ?></p>
 </section>
@@ -453,6 +524,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($solution_points || !empty($solution['heading'])) : ?>
 <!-- ============ THE SOLUTION (white, 5 accent-bar cards) ============ -->
 <section class="svc-solution" aria-label="The Solution">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-solution-inner">
     <div class="pfx-reveal">
       <?php if (!empty($solution['overline'])) : ?><span class="pfx-overline"><?php echo esc_html($solution['overline']); ?></span><?php endif; ?>
@@ -512,6 +584,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($addons || $cross_cta) : ?>
 <!-- ============ ADD-ON SERVICES (Light bg 1) ============ -->
 <section class="svc-addons" aria-label="<?php echo esc_attr($addons_heading); ?>">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-addons-inner">
     <div class="svc-head pfx-reveal">
       <span class="pfx-overline"><?php echo esc_html($addons_overline); ?></span>
@@ -547,6 +620,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($process_steps) : ?>
 <!-- ============ HOW WE WORK (timeline + sticky photo) ============ -->
 <section class="svc-process" aria-label="How We Work">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-process-inner">
     <div class="svc-process-head pfx-reveal">
       <?php if (!empty($process['overline'])) : ?><span class="pfx-overline"><?php echo esc_html($process['overline']); ?></span><?php endif; ?>
@@ -580,6 +654,7 @@ if (!empty($pull_quote['text'])) {
 <div class="svc-wedge" aria-hidden="true" style="background:<?php echo esc_attr(stretch_svc_prev_fill($flow, 'why', '#f9f9fb')); ?>"><div style="background:#1a1f2e;clip-path:polygon(0 0,100% 100%,0 100%)"></div></div>
 <!-- ============ WHY STRETCH (Ink + grain) ============ -->
 <section class="svc-why" data-grain aria-label="<?php echo esc_attr($why_heading); ?>">
+  <?php echo stretch_svc_chapter(true); ?>
   <div class="svc-why-inner">
     <div class="svc-head svc-why-head pfx-reveal">
       <span class="pfx-overline"><?php echo esc_html($why_overline); ?></span>
@@ -589,7 +664,7 @@ if (!empty($pull_quote['text'])) {
       <?php foreach ($benefits as $i => $benefit) : ?>
       <div class="svc-why-card pfx-reveal<?php echo $i ? ' pfx-delay-' . min($i * 2, 6) : ''; ?>">
         <div class="svc-why-bar" aria-hidden="true"></div>
-        <div class="svc-why-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" style="fill:none;stroke:#00BFF3;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><?php echo $why_icons[$i % count($why_icons)]; ?></svg></div>
+        <div class="svc-why-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" style="fill:none;stroke:#00BFF3;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><?php echo stretch_svc_why_icon($why_icon_lib, $benefit['title'] ?? '', $i); ?></svg></div>
         <h3><?php echo esc_html($benefit['title'] ?? ''); ?></h3>
         <p><?php echo wp_kses_post($benefit['description'] ?? ''); ?></p>
       </div>
@@ -604,6 +679,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($testimonials) : ?>
 <!-- ============ TESTIMONIALS (white, tilt cards) ============ -->
 <section class="svc-testimonials" aria-label="<?php echo esc_attr($testimonials_heading); ?>">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-testimonials-inner">
     <div class="svc-head pfx-reveal">
       <span class="pfx-overline"><?php echo esc_html($testimonials_overline); ?></span>
@@ -645,6 +721,7 @@ if (!empty($pull_quote['text'])) {
 <?php if ($faqs) : ?>
 <!-- ============ FAQ (Light bg 1, native details) ============ -->
 <section class="svc-faq" aria-label="<?php echo esc_attr($faq_heading); ?>">
+  <?php echo stretch_svc_chapter(); ?>
   <div class="svc-faq-inner">
     <div class="svc-faq-head pfx-reveal">
       <span class="pfx-overline"><?php echo esc_html($faq_overline); ?></span>
@@ -667,6 +744,7 @@ if (!empty($pull_quote['text'])) {
 
 <!-- ============ FINAL CTA (gradient + orbs) ============ -->
 <section class="svc-cta" data-grain aria-label="Call to Action">
+  <?php echo stretch_svc_chapter(true); ?>
   <div class="svc-cta-orb-a" aria-hidden="true"></div>
   <div class="svc-cta-orb-b" aria-hidden="true"></div>
   <div class="svc-cta-inner">

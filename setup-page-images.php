@@ -216,10 +216,14 @@ $stretch_slot_sources = [
         'title' => 'solution-process-team-collaboration',
         'alt'   => 'Content team collaborating around a table of laptops',
     ],
+    // Round 2 #19: replaced the ubiquitous "hands sketching a wireframe by a laptop"
+    // stock shot (photo-1454165804606) Cole flagged as a duplicate. New image is a
+    // site-architecture / journey-mapping board — distinct from the SEO intro's
+    // analytics-dashboard photo and from every meeting/planning shot on the site.
     'solution-process-seo-strategy' => [
-        'url'   => 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80&fit=crop',
+        'url'   => 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1600&q=80&fit=crop',
         'title' => 'solution-process-seo-strategy',
-        'alt'   => 'Two people mapping out an SEO strategy on paper beside their laptops',
+        'alt'   => 'Mapping out a site architecture and user journey on a planning board',
     ],
     'solution-process-paid-campaign' => [
         'url'   => 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=1600&q=80&fit=crop',
@@ -253,15 +257,26 @@ $stretch_slot_sources = [
         'title' => 'ecommerce-gallery-product-photography',
         'alt'   => 'Styled product photography flat lay for an ecommerce brand',
     ],
+    // Round 2 #22: the "Lifestyle & Social" tile now holds the Reef surf-barrel
+    // social-content shot (moved up from the campaign tile); the Meyer's lilac
+    // flat-lay it previously held was product photography (already covered by tile 1)
+    // and has been retired. The bundle file page-images/ecommerce-gallery-lifestyle-social.jpg
+    // now contains the surf image; the URL token is bumped so the sideloader
+    // re-imports the new file instead of returning the retired attachment.
     'ecommerce-gallery-lifestyle-social' => [
-        'url'   => 'https://assets.stretchcreative.co/portfolio/ecommerce-gallery-lifestyle-social.jpg',
+        'url'   => 'https://assets.stretchcreative.co/portfolio/reef-surf-barrel-social-content.jpg',
         'title' => 'ecommerce-gallery-lifestyle-social',
-        'alt'   => 'Lifestyle social product photography for an ecommerce brand',
+        'alt'   => 'Surfer riding inside a wave barrel — Reef lifestyle social content',
     ],
+    // Round 2 #22: the "Campaign Creative" tile now holds a real Stretch campaign
+    // piece — the Monster Energy X Games Aspen social ad (branded step-and-repeat
+    // shoot) — replacing the surf image, which read as lifestyle, not campaign.
+    // Bundle file page-images/ecommerce-gallery-campaign-creative.jpg now contains
+    // the Monster Energy shot; URL token bumped to force a fresh re-import.
     'ecommerce-gallery-campaign-creative' => [
-        'url'   => 'https://assets.stretchcreative.co/portfolio/ecommerce-gallery-campaign-creative.jpg',
+        'url'   => 'https://assets.stretchcreative.co/portfolio/monster-energy-x-games-aspen-social-ad.jpg',
         'title' => 'ecommerce-gallery-campaign-creative',
-        'alt'   => 'Dynamic action campaign creative photography',
+        'alt'   => 'Monster Energy athlete at the X Games Aspen branded backdrop — campaign creative',
     ],
 ];
 

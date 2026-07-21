@@ -20,7 +20,10 @@ html, body { overflow-x: hidden; }
 .bce-page, .bce-page *, .bce-page *::before, .bce-page *::after { box-sizing: border-box; }
 .bce-page { font-family: 'Assistant', sans-serif; font-weight: 300; font-size: 18px; line-height: 1.6; color: #4a5364; background: #fff; }
 .bce-page img { max-width: 100%; display: block; }
-.bce-page a { text-decoration: none; color: inherit; }
+/* #18: don't force color:inherit onto kit buttons — let the premium-fx kit own
+   the .pfx-btn-* label color (white) so the page no longer fights it. */
+.bce-page a { text-decoration: none; }
+.bce-page a:not(.pfx-btn-primary):not(.pfx-btn-outline) { color: inherit; }
 
     /* ===== RESET & BASE ===== */
 /* ===== LAYOUT ===== */
@@ -923,14 +926,19 @@ html, body { overflow-x: hidden; }
 .bce-page .hero { min-height: 88vh; padding: 200px 0 140px; }
 .bce-page .hero .hero-visual { position: relative; z-index: 2; }
 
-/* ANGLED SVG DIVIDERS between sections */
+/* ANGLED DIVIDERS between sections —
+   Systemic seam fix (#14): container bg = PREVIOUS section color (inline),
+   clipped triangle child = NEXT section color (inline) extended 1px past both
+   edges, container overlaps neighbours 1px each side. Mirrors .home-wedge. */
 .bce-page .bce-angle {
   position: relative;
   height: 60px;
   margin-top: -1px;
+  margin-bottom: -1px;
   line-height: 0;
   z-index: 5;
 }
+.bce-page .bce-angle > div { position: absolute; left: 0; right: 0; top: -1px; bottom: -1px; }
 .bce-page .bce-angle svg { display: block; width: 100%; height: 100%; }
 
 /* SECTION POSITIONING for chapter marks */
@@ -1356,9 +1364,9 @@ html, body { overflow-x: hidden; }
     </div>
   </div>
 
-  <div class="bce-angle"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#fff"/></svg></div>
+  <div class="bce-angle" style="background:#252C3A"><div style="background:#fff;clip-path:polygon(0 100%,100% 0,100% 100%)"></div></div>
 
-  
+
 
   <!-- MODULE 2 — THE SHIFT -->
   <section class="section-white" aria-label="The landscape has changed">
@@ -1378,28 +1386,28 @@ html, body { overflow-x: hidden; }
         <div class="audience-card reveal reveal-delay-1">
           <div class="audience-icon">
             <!-- Rocket: outgrown basic content -->
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40h8v-8h8v-8h8v-8h8"/><path d="M40 4v12h-12"/><path d="M4 20h6"/><path d="M14 20h8" stroke-opacity="0.4"/><path d="M26 20h10" stroke-opacity="0.4"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
           </div>
           <p>Brands that have outgrown commodity blog content and need something that actually moves the needle</p>
         </div>
         <div class="audience-card reveal reveal-delay-2">
           <div class="audience-icon">
             <!-- Flag/plant: own a topic -->
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
           </div>
           <p>Teams that want to own a topic in organic search — not just rank for a few keywords</p>
         </div>
         <div class="audience-card reveal reveal-delay-3">
           <div class="audience-icon">
             <!-- Upward trend: content as growth -->
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M6 40V10"/><path d="M10 36 18 32 26 26 32 18 40 8"/><path d="M40 8l-5 0M40 8l0 5"/><path d="M36 14l2-2m0 2l-2-2" stroke-width="1.2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
           </div>
           <p>Organizations investing in content as a growth channel, not a checkbox</p>
         </div>
         <div class="audience-card reveal reveal-delay-4">
           <div class="audience-icon">
             <!-- Multi-channel: search + AI + social -->
-            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="6"/><circle cx="24" cy="8"  r="3"/><circle cx="40" cy="24" r="3"/><circle cx="24" cy="40" r="3"/><circle cx="8"  cy="24" r="3"/><path d="M24 14v-3M24 34v3M30 24h7M18 24h-7" stroke-opacity="0.55"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>
           </div>
           <p>Companies that need content performing across traditional search, AI answer engines, and social</p>
         </div>
@@ -1407,9 +1415,9 @@ html, body { overflow-x: hidden; }
     </div>
   </section>
 
-  <div class="bce-angle"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#f9f9fb"/></svg></div>
+  <div class="bce-angle" style="background:#fff"><div style="background:#f9f9fb;clip-path:polygon(0 100%,100% 0,100% 100%)"></div></div>
 
-  
+
 
   <!-- MODULE 3 — WHAT IS IT -->
   <section class="section-light" aria-label="What is a Bespoke Content Experience">
@@ -1578,17 +1586,17 @@ html, body { overflow-x: hidden; }
       <!-- Trio visual -->
       <div class="trio-visual reveal">
         <div class="trio-item">
-          <div class="trio-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h18l8 8v28H10z"/><path d="M28 6v8h8"/><path d="M16 22h16M16 28h16M16 34h10"/></svg></div>
+          <div class="trio-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg></div>
           <div class="trio-label">Part Article</div>
           <div class="trio-sub">Editorial depth</div>
         </div>
         <div class="trio-item">
-          <div class="trio-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="30" rx="2"/><path d="M6 18h36"/><circle cx="11" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1" fill="currentColor" stroke="none"/><path d="M12 28h24" stroke-opacity="0.35"/><circle cx="26" cy="28" r="2.5" fill="#fff"/><path d="M14 34h20" stroke-opacity="0.3"/></svg></div>
+          <div class="trio-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg></div>
           <div class="trio-label">Part Application</div>
           <div class="trio-sub">Interactive tools</div>
         </div>
         <div class="trio-item">
-          <div class="trio-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg></div>
+          <div class="trio-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div>
           <div class="trio-label">Part Brand Experience</div>
           <div class="trio-sub">Strategic design</div>
         </div>
@@ -1601,7 +1609,7 @@ html, body { overflow-x: hidden; }
     </div>
   </section>
 
-  <div class="bce-angle"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#fff"/></svg></div>
+  <div class="bce-angle" style="background:#f9f9fb"><div style="background:#fff;clip-path:polygon(0 0,100% 100%,0 100%)"></div></div>
 
   
 
@@ -1680,32 +1688,32 @@ html, body { overflow-x: hidden; }
       <!-- Remaining features grid -->
       <div class="features-grid" style="margin-top: 24px;">
         <div class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="12"/><path d="m29 29 11 11"/><path d="M20 15l1.2 3 3 0.8-3 0.8-1.2 3-1.2-3-3-0.8 3-0.8z" stroke-width="1.2"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
           <h3>Strategic SEO &amp; AEO Foundation</h3>
           <p>Keyword research, search intent mapping, and Answer Engine Optimization so the piece is built to rank in both traditional search and AI-powered results.</p>
         </div>
         <div class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6l10 10-20 20-10 2 2-10z"/><path d="M24 14l10 10"/><path d="M6 42h20"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></div>
           <h3>Long-Form Editorial</h3>
           <p>Expert-level written content that establishes authority and covers the topic with genuine depth.</p>
         </div>
         <div class="feature-card reveal reveal-delay-3">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="28" height="20" rx="1"/><path d="M6 15h28"/><path d="M11 21h14M11 25h10" stroke-opacity="0.5"/><path d="M30 30l4 4 3-1-3 8-4-11z" fill="currentColor" stroke="currentColor" stroke-width="1"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
           <h3>Custom Design &amp; UX</h3>
           <p>Bespoke layout and visual design tailored to the topic — not a generic blog template.</p>
         </div>
         <div class="feature-card reveal reveal-delay-4">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="24" height="22" rx="2"/><path d="m16 18 8 5-8 5z" fill="currentColor" stroke="none"/><path d="M36 18c2 2 2 10 0 12M40 15c3 3 3 15 0 18" stroke-opacity="0.7"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></div>
           <h3>Embedded Media</h3>
           <p>Original video production, data visualizations, or infographics woven into the experience.</p>
         </div>
         <div class="feature-card reveal reveal-delay-5">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
           <h3>Conversion Architecture</h3>
           <p>Strategic CTAs, lead capture, and user journeys designed to turn attention into action.</p>
         </div>
         <div class="feature-card reveal reveal-delay-6">
-          <div class="feature-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 42h36"/><path d="M6 42V6"/><path d="M12 34l8-6 6 4 10-14 6 4"/><circle cx="42" cy="22" r="2.5" fill="currentColor" stroke="none"/><path d="M12 22h2M12 12h2" stroke-opacity="0.3"/></svg></div>
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
           <h3>Performance Analytics</h3>
           <p>Purpose-built for measurable outcomes — every application is structured to track engagement, demonstrate ROI, and prove its impact on rankings and traffic.</p>
         </div>
@@ -1713,9 +1721,9 @@ html, body { overflow-x: hidden; }
     </div>
   </section>
 
-  <div class="bce-angle"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,60 1440,0 1440,60" fill="#252C3A"/></svg></div>
+  <div class="bce-angle" style="background:#fff"><div style="background:#1a1f2e;clip-path:polygon(0 100%,100% 0,100% 100%)"></div></div>
 
-  
+
 
   <!-- MODULE 5 — WHY IT WORKS -->
   <section class="section-dark" data-grain aria-label="Why it works">
@@ -1725,32 +1733,32 @@ html, body { overflow-x: hidden; }
       <h2 class="reveal">Engineered to Strengthen the<br>Signals That Matter</h2>
       <div class="benefits-grid">
         <div class="benefit-item reveal reveal-delay-1">
-          <div class="benefit-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 4"/><path d="M24 8v2M24 38v2M8 24h2M38 24h2" stroke-opacity="0.4"/></svg></div>
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <strong>Dwell Time &amp; Engagement Depth</strong>
           <span>Interactive, media-rich content keeps users on the page longer, sending strong quality signals to search engines.</span>
         </div>
         <div class="benefit-item reveal reveal-delay-2">
-          <div class="benefit-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><circle cx="36" cy="12" r="4"/><circle cx="24" cy="36" r="4"/><path d="M15 14l6 18M33 14l-6 18" stroke-opacity="0.55"/></svg></div>
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></div>
           <strong>Social Sharing &amp; Distribution</strong>
           <span>Unique, visually compelling content gives people a reason to share — fueling organic reach beyond search.</span>
         </div>
         <div class="benefit-item reveal reveal-delay-3">
-          <div class="benefit-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 18h-4a6 6 0 0 0 0 12h4"/><path d="M28 18h4a6 6 0 0 1 0 12h-4"/><path d="M18 24h12"/></svg></div>
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
           <strong>Backlinks &amp; Earned Media</strong>
           <span>High-value content assets attract links naturally and give your outreach team something genuinely worth pitching.</span>
         </div>
         <div class="benefit-item reveal reveal-delay-4">
-          <div class="benefit-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10h32a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H24l-8 8v-8H8a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2z"/><path d="M17 21l4 4 10-10" stroke-width="1.5"/></svg></div>
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
           <strong>AEO Visibility</strong>
           <span>Structured, authoritative content is more likely to be cited by AI answer engines like ChatGPT, Gemini, and Perplexity.</span>
         </div>
         <div class="benefit-item reveal reveal-delay-5">
-          <div class="benefit-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4l16 6v12c0 10-8 18-16 22-8-4-16-12-16-22V10z"/><path d="M18 24l4 4 10-10" stroke-width="1.5"/></svg></div>
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
           <strong>Brand Authority &amp; Trust</strong>
           <span>A single flagship piece can reposition your brand as the definitive resource on a topic.</span>
         </div>
         <div class="benefit-item reveal reveal-delay-6">
-          <div class="benefit-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="24" r="14"/><circle cx="22" cy="24" r="8"/><circle cx="22" cy="24" r="2.5" fill="currentColor" stroke="none"/><path d="M36 10L22 24"/><path d="M36 10h-6M36 10v6" stroke-opacity="0.7"/></svg></div>
+          <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13V2l8 4-8 4"/><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"/><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"/></svg></div>
           <strong>Conversions</strong>
           <span>Content designed with user journeys in mind doesn't just attract traffic — it converts it.</span>
         </div>
@@ -1758,9 +1766,9 @@ html, body { overflow-x: hidden; }
     </div>
   </section>
 
-  <div class="bce-angle"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#f9f9fb"/></svg></div>
+  <div class="bce-angle" style="background:#1a1f2e"><div style="background:#f9f9fb;clip-path:polygon(0 0,100% 100%,0 100%)"></div></div>
 
-  
+
 
   <!-- MODULE 6 — EXAMPLE USE CASE -->
   <section class="section-light" aria-label="Example use case">
@@ -1882,7 +1890,7 @@ html, body { overflow-x: hidden; }
   </section>
 
   <!-- ANGLED DIVIDER -->
-  <div class="bce-angle"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><polygon points="0,0 1440,60 1440,60 0,60" fill="#fff"/></svg></div>
+  <div class="bce-angle" style="background:#f9f9fb"><div style="background:#fff;clip-path:polygon(0 0,100% 100%,0 100%)"></div></div>
 
   <!-- MODULE 6.5 — CASE STUDIES -->
   <section class="case-studies" aria-label="Case studies">
