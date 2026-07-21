@@ -167,6 +167,158 @@ if ($option !== $before) {
     WP_CLI::log('Option stretch_page_images unchanged: ' . wp_json_encode($option));
 }
 
+/* ============================================================
+ * AUD-014b — Solution + Industry page image slots.
+ *
+ * Fills the intro/process editorial photos on the Solutions
+ * (page-service.php) pages and the "Challenges" photo + Work-Gallery
+ * tiles on the Industry (page-industry.php) pages. Uses the same
+ * sideload/dedupe/bundle path as above; the resulting attachment IDs are
+ * written into the per-page options seeded by setup-services.php and
+ * setup-industries.php (both run earlier in the entrypoint SEED_SCRIPTS),
+ * so writing IDs into them here is safe.
+ *
+ * Sources: the 6 challenge/intro/process images are client-approved
+ * Unsplash stock; the 3 ecommerce gallery tiles are real Stretch portfolio
+ * shots exported from the media library into page-images/ so prod and local
+ * converge through the bundle (Render cannot fetch the library file at boot).
+ *
+ * Idempotent: attachments dedupe by _stretch_source_url; each option field
+ * is only rewritten when its value actually changes.
+ * ============================================================ */
+WP_CLI::log('=== AUD-014b: Sideloading Solution + Industry slot images ===');
+
+$stretch_slot_sources = [
+    'solution-intro-editorial-workspace' => [
+        'url'   => 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1600&q=80&fit=crop',
+        'title' => 'solution-intro-editorial-workspace',
+        'alt'   => 'Editorial content workspace with a laptop, notebook and coffee',
+    ],
+    'solution-process-team-collaboration' => [
+        'url'   => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=80&fit=crop',
+        'title' => 'solution-process-team-collaboration',
+        'alt'   => 'Content team collaborating around a table of laptops',
+    ],
+    'industry-ecommerce-storefront' => [
+        'url'   => 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80&fit=crop',
+        'title' => 'industry-ecommerce-storefront',
+        'alt'   => 'Curated retail storefront display of apparel and accessories',
+    ],
+    'industry-agencies-team-meeting' => [
+        'url'   => 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=80&fit=crop',
+        'title' => 'industry-agencies-team-meeting',
+        'alt'   => 'Marketing agency team planning a campaign with sticky notes',
+    ],
+    'industry-service-providers-tradesperson' => [
+        'url'   => 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1600&q=80&fit=crop',
+        'title' => 'industry-service-providers-tradesperson',
+        'alt'   => 'Local service tradesperson working on-site in a hard hat',
+    ],
+    'industry-saas-analytics-dashboard' => [
+        'url'   => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&q=80&fit=crop',
+        'title' => 'industry-saas-analytics-dashboard',
+        'alt'   => 'SaaS product analytics dashboard on a laptop screen',
+    ],
+    // Real Stretch portfolio work — bundled from the media library (see page-images/).
+    // The URLs are stable dedupe tokens only; the bundled file is always used.
+    'ecommerce-gallery-product-photography' => [
+        'url'   => 'https://assets.stretchcreative.co/portfolio/ecommerce-gallery-product-photography.jpg',
+        'title' => 'ecommerce-gallery-product-photography',
+        'alt'   => 'Styled product photography flat lay for an ecommerce brand',
+    ],
+    'ecommerce-gallery-lifestyle-social' => [
+        'url'   => 'https://assets.stretchcreative.co/portfolio/ecommerce-gallery-lifestyle-social.jpg',
+        'title' => 'ecommerce-gallery-lifestyle-social',
+        'alt'   => 'Lifestyle social product photography for an ecommerce brand',
+    ],
+    'ecommerce-gallery-campaign-creative' => [
+        'url'   => 'https://assets.stretchcreative.co/portfolio/ecommerce-gallery-campaign-creative.jpg',
+        'title' => 'ecommerce-gallery-campaign-creative',
+        'alt'   => 'Dynamic action campaign creative photography',
+    ],
+];
+
+$slot_ids = [];
+foreach ($stretch_slot_sources as $key => $src) {
+    $id = stretch_page_image_sideload($src['url'], $src['title'], $src['alt'], $key);
+    if ($id) {
+        $slot_ids[$key] = $id;
+    } else {
+        $failed++;
+    }
+}
+
+/** Set $arr[$field] = $id only when it differs. Returns true if it changed. */
+if (!function_exists('stretch_slot_set')) {
+    function stretch_slot_set(&$arr, $field, $id) {
+        if (!$id) { return false; }
+        $current = isset($arr[$field]) ? (int) $arr[$field] : 0;
+        if ($current === (int) $id) { return false; }
+        $arr[$field] = (int) $id;
+        return true;
+    }
+}
+
+// --- Solution pages: intro_image + process_image (only where the slot renders) ---
+$service_slot_map = [
+    'content-writing-at-any-scale'  => ['intro_image' => 'solution-intro-editorial-workspace', 'process_image' => 'solution-process-team-collaboration'],
+    'seo_content_strategy_services' => ['intro_image' => 'solution-intro-editorial-workspace', 'process_image' => 'solution-process-team-collaboration'],
+    'paid-advertising'              => ['intro_image' => 'solution-intro-editorial-workspace', 'process_image' => 'solution-process-team-collaboration'],
+    'visual-content-and-design'     => ['intro_image' => 'solution-intro-editorial-workspace'], // no process section (no process steps)
+];
+foreach ($service_slot_map as $slug => $fields) {
+    $opt = get_option('stretch_service_' . $slug, null);
+    if (!is_array($opt)) {
+        WP_CLI::log("  … stretch_service_{$slug} option missing — skipping");
+        continue;
+    }
+    $changed = false;
+    foreach ($fields as $field => $bkey) {
+        if (isset($slot_ids[$bkey]) && stretch_slot_set($opt, $field, $slot_ids[$bkey])) { $changed = true; }
+    }
+    if ($changed) {
+        update_option('stretch_service_' . $slug, $opt, false);
+        WP_CLI::log("  ↳ Wired image slots into stretch_service_{$slug}");
+    } else {
+        WP_CLI::log("  ✓ stretch_service_{$slug} image slots already set — no-op");
+    }
+}
+
+// --- Industry pages: challenges_photo (+ ecommerce Work-Gallery tiles) ---
+$industry_challenge_map = [
+    'ecommerce'         => 'industry-ecommerce-storefront',
+    'agencies'          => 'industry-agencies-team-meeting',
+    'service-providers' => 'industry-service-providers-tradesperson',
+    'saas'              => 'industry-saas-analytics-dashboard',
+];
+$ecommerce_gallery_map = [
+    0 => 'ecommerce-gallery-product-photography', // "Product Photography" tile
+    1 => 'ecommerce-gallery-lifestyle-social',    // "Lifestyle & Social" tile
+    2 => 'ecommerce-gallery-campaign-creative',   // "Campaign Creative" tile
+];
+foreach ($industry_challenge_map as $slug => $bkey) {
+    $opt = get_option('stretch_industry_' . $slug, null);
+    if (!is_array($opt)) {
+        WP_CLI::log("  … stretch_industry_{$slug} option missing — skipping");
+        continue;
+    }
+    $changed = false;
+    if (isset($slot_ids[$bkey]) && stretch_slot_set($opt, 'challenges_photo', $slot_ids[$bkey])) { $changed = true; }
+    if ($slug === 'ecommerce' && !empty($opt['gallery']) && is_array($opt['gallery'])) {
+        foreach ($ecommerce_gallery_map as $i => $gkey) {
+            if (isset($opt['gallery'][$i]) && is_array($opt['gallery'][$i]) && isset($slot_ids[$gkey])) {
+                if (stretch_slot_set($opt['gallery'][$i], 'image', $slot_ids[$gkey])) { $changed = true; }
+            }
+        }
+    }
+    if ($changed) {
+        update_option('stretch_industry_' . $slug, $opt, false);
+        WP_CLI::log("  ↳ Wired image slots into stretch_industry_{$slug}");
+    } else {
+        WP_CLI::log("  ✓ stretch_industry_{$slug} image slots already set — no-op");
+    }
+}
+
 if ($failed) {
     // Exit non-zero so the deploy seed gate does NOT record this run as complete
     // and retries on the next boot (all seeds are idempotent no-ops once done).

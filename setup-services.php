@@ -291,6 +291,12 @@ $services['seo_content_strategy_services'] = [
             ],
     ],
 
+    // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
+    'pull_quote' => [
+        'text'      => 'SEO reports shouldn’t require a translator.',
+        'highlight' => 'require a translator',
+    ],
+
     // -------- Capabilities (Offerings) --------
     'offerings_overline'   => 'Capabilities',
     'offerings_heading'    => 'What We Deliver',
@@ -713,6 +719,12 @@ $services['paid-advertising'] = [
             ],
     ],
 
+    // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
+    'pull_quote' => [
+        'text'      => 'Clicks don’t happen because an ad exists—they happen because the message resonates with the right audience.',
+        'highlight' => 'resonates with the right audience',
+    ],
+
     // -------- Capabilities (Offerings) --------
     'offerings_overline'   => 'Capabilities',
     'offerings_heading'    => 'Advertising Services We Offer',
@@ -793,6 +805,11 @@ $services['paid-advertising'] = [
             'answer'   => 'You do. Always. We run in your ad accounts and tracking, so if we ever part ways, you keep the data, the creative, the pixels, and the learnings. No hostage accounts.',
         ],
     ],
+
+    // -------- Closing CTA --------
+    'cta' => [
+        'heading' => 'Ready to Get More Leads?',
+    ],
 ];
 
 // ============================================================
@@ -823,7 +840,7 @@ $services['visual-content-and-design'] = [
     'problem' => [
         'overline'   => 'The Reality',
         'heading'    => 'First impressions happen fast.',
-        'subheading' => 'Your content deserves better visuals.',
+        'sub'        => 'Your content deserves better visuals.',
         'text'       =>             [
                 'Today’s audiences are swamped with information. Long paragraphs of text, generic stock photography, and inconsistent branding make it harder than ever to capture attention and communicate your message.',
                 'At the same time, businesses are expected to produce high-quality visuals for websites, blogs, social media, advertising, email campaigns, sales materials, and more. For many marketing teams, keeping up with those demands is a real challenge.',
@@ -848,10 +865,39 @@ $services['visual-content-and-design'] = [
             ],
     ],
 
-    // -------- Capabilities (Offerings, in two anchored groups) --------
+    // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
+    'pull_quote' => [
+        'text'      => 'We streamline the process, and you pay less for more.',
+        'highlight' => 'pay less for more',
+    ],
+
+    // -------- Capabilities (Offerings) --------
+    // Flat list is what page-service.php renders. The two-group source (Graphic
+    // Design / Videography & Photography) is preserved in 'offerings_groups' below
+    // for a future grouped/anchored template pass; the template ignores it today.
     'offerings_overline'   => 'Capabilities',
     'offerings_heading'    => 'Creative Services',
     'offerings_intro'      => 'Our in-house creative teams collaborate across assets to keep your visuals consistent and on-brand.',
+    'offerings' =>     [
+        ['title' => 'Graphic Design', 'description' => 'Branded graphics, marketing collateral, brochures, sales sheets, presentations, digital ads, and other custom design assets.'],
+        ['title' => 'Infographics', 'description' => 'Clear, engaging visual explanations that simplify complex ideas and make information easier to understand and share.'],
+        ['title' => 'Social Media Creative', 'description' => 'Platform-ready graphics, videos, stories, reels, and campaign assets designed to support your social media strategy.'],
+        ['title' => 'Email & Digital Marketing Assets', 'description' => 'Graphics, banners, headers, and supporting visuals that strengthen email campaigns and digital marketing initiatives.'],
+        ['title' => 'Presentation & Sales Materials', 'description' => 'Pitch decks, trade show materials, sales presentations, one-pagers, and visual assets that help communicate your message clearly.'],
+        ['title' => 'Brand Support', 'description' => 'Creative direction, visual storytelling, iconography, illustration, and other design services that strengthen your brand identity.'],
+        ['title' => 'Brand Stories', 'description' => 'Cinematic videos that capture your brand’s personality, values, and purpose through thoughtful storytelling and polished production.'],
+        ['title' => 'Corporate Video Services', 'description' => 'Professional videos for training, recruiting, investor relations, internal communications, product demonstrations, and marketing initiatives.'],
+        ['title' => 'Commercial Production', 'description' => 'Broadcast-quality television commercials produced entirely in-house, from concept development and scriptwriting through filming and post-production.'],
+        ['title' => 'Social Media Content', 'description' => 'Short-form videos and paid social creative designed to capture attention, reinforce your brand, and engage audiences across social platforms.'],
+        ['title' => 'Documentaries', 'description' => 'Authentic, story-driven films that inform, inspire, and highlight the people, organizations, or missions behind your brand.'],
+        ['title' => 'Motion Graphics & Animation', 'description' => 'Custom animations and motion graphics that simplify complex ideas, enhance video productions, and create engaging visual content for digital channels.'],
+        ['title' => 'Interviews', 'description' => 'Professionally produced interviews featuring employees, executives, customers, or industry experts, suitable for websites, social media, presentations, and marketing campaigns.'],
+        ['title' => 'Pre-Production', 'description' => 'Creative planning and logistics, including concept development, scriptwriting, storyboarding, location scouting, talent coordination, and production planning.'],
+        ['title' => 'Production', 'description' => 'Professional video production services, including directing, cinematography, lighting, audio recording, and on-set production management.'],
+        ['title' => 'Post-Production', 'description' => 'Editing, color correction, audio enhancement, motion graphics, subtitles, visual effects, and final formatting for distribution across multiple channels.'],
+        ['title' => 'Video Interviewing', 'description' => 'Remote or on-location interview recording, professionally edited into long-form videos, short clips, social content, or written marketing assets.'],
+        ['title' => 'Product & Lifestyle Photography', 'description' => 'Product photography, lifestyle imagery, team photography, headshots, environmental photography, and branded visual storytelling.'],
+    ],
     'offerings_groups' =>     [
         [
             'anchor'  => 'graphic-design',

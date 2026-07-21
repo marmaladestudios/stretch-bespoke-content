@@ -116,17 +116,19 @@ $industries['agencies'] = [
     'hero_text' => 'Scale production, expand your capabilities, and deliver exceptional work without expanding your payroll.',
     'cta_label' => 'Schedule a Discovery Call',
     'audiences' => [
-        'SEO Agencies',
-        'Content Marketing Agencies',
-        'Digital Marketing Agencies',
-        'Creative Agencies',
-        'Publishers & Media Companies',
-        'In-House Marketing Teams',
+        ['label' => 'SEO Agencies', 'icon' => 'search'],
+        ['label' => 'Content Marketing Agencies', 'icon' => 'file-text'],
+        ['label' => 'Digital Marketing Agencies', 'icon' => 'target'],
+        ['label' => 'Creative Agencies', 'icon' => 'pen'],
+        ['label' => 'Publishers & Media Companies', 'icon' => 'book-open'],
+        ['label' => 'In-House Marketing Teams', 'icon' => 'users'],
     ],
     'challenges_intro' => [
         'Agency growth is exciting—until production becomes the bottleneck.',
-        'As client demands increase, many agencies find themselves balancing tight deadlines, fluctuating workloads, limited internal resources, and increasing pressure to maintain quality at scale. Hiring talent is expensive and time-consuming. Freelancers can help, but managing multiple contractors often creates administrative headaches and inconsistent results. Many agencies and strategic partners struggle with:',
+        'As client demands increase, many agencies find themselves balancing tight deadlines, fluctuating workloads, limited internal resources, and increasing pressure to maintain quality at scale. Hiring talent is expensive and time-consuming. Freelancers can help, but managing multiple contractors often creates administrative headaches and inconsistent results.',
     ],
+    'challenges_photo' => 0, // attachment ID; 0 => neutral gradient placeholder (isset => slot renders)
+    'challenges_list_title' => 'Many agencies and strategic partners struggle with:',
     'challenges' => [
         'Limited bandwidth during periods of rapid growth',
         'Difficulty scaling content production without adding headcount',
@@ -138,12 +140,13 @@ $industries['agencies'] = [
         'Expanding service offerings without expanding internal teams',
     ],
     'solutions_heading' => 'Solutions Built for Agencies & Partners',
+    'solutions_heading_accent' => 'Agencies & Partners',
     'solutions' => [
-        ['title' => 'White-Labeled Content Production', 'body' => 'Need additional production capacity without additional payroll? Stretch Creative works behind the scenes as an extension of your team, producing high-quality content that aligns with your clients\' goals, brand standards, and editorial requirements.'],
-        ['title' => 'Flexible Production Support', 'body' => 'Your clients\' needs can change quickly. Our team is built to scale production up or down as workloads fluctuate, helping agencies respond to new opportunities without disrupting their existing operations.'],
-        ['title' => 'SEO Content at Scale', 'body' => 'Whether you need ten articles or a thousand, our team supports both low- and high-volume content initiatives across a wide range of industries. We create SEO-focused content designed to help agencies meet publishing goals without sacrificing quality.'],
-        ['title' => 'Creative & Visual Content', 'body' => 'Content often performs best when it\'s supported by strong visuals. We provide graphic design, infographics, photography, video production, and other creative assets that help agencies expand their service offerings and deliver more value to clients.'],
-        ['title' => 'Subject Matter Expertise', 'body' => 'Our roster of credentialed subject matter experts supports agencies that work across complex industries and specialized subjects, from ecommerce and healthcare to SaaS and local service providers.'],
+        ['icon' => 'file-text', 'title' => 'White-Labeled Content Production', 'body' => 'Need additional production capacity without additional payroll? Stretch Creative works behind the scenes as an extension of your team, producing high-quality content that aligns with your clients\' goals, brand standards, and editorial requirements.'],
+        ['icon' => 'chart',     'title' => 'Flexible Production Support', 'body' => 'Your clients\' needs can change quickly. Our team is built to scale production up or down as workloads fluctuate, helping agencies respond to new opportunities without disrupting their existing operations.'],
+        ['icon' => 'search',    'title' => 'SEO Content at Scale', 'body' => 'Whether you need ten articles or a thousand, our team supports both low- and high-volume content initiatives across a wide range of industries. We create SEO-focused content designed to help agencies meet publishing goals without sacrificing quality.'],
+        ['icon' => 'camera',    'title' => 'Creative & Visual Content', 'body' => 'Content often performs best when it\'s supported by strong visuals. We provide graphic design, infographics, photography, video production, and other creative assets that help agencies expand their service offerings and deliver more value to clients.'],
+        ['icon' => 'shield',    'title' => 'Subject Matter Expertise', 'body' => 'Our roster of credentialed subject matter experts supports agencies that work across complex industries and specialized subjects, from ecommerce and healthcare to SaaS and local service providers.'],
     ],
     'mid_cta_text' => 'Need additional production capacity? Schedule a discovery call today.',
     'popular_heading' => 'Services Most Popular with Agencies & Partners',
@@ -197,6 +200,8 @@ $industries['service-providers'] = [
         'When people need a service, they usually start with an online search.',
         'Whether they’re looking for a plumber, contractor, CPA, attorney, or wellness provider, customers expect to find accurate information quickly and easily. If your business isn’t visible where they’re searching, or if your website doesn’t build trust once they click in, you may never get the opportunity to earn their business.',
     ],
+    'challenges_photo'  => 0, // attachment ID; 0 => neutral gradient placeholder (isset => slot renders)
+    'challenges_list_title' => 'Many service providers struggle with:',
     'challenges'        => [
         'Limited visibility in local search results',
         'Competing against larger businesses and national brands',
@@ -208,6 +213,7 @@ $industries['service-providers'] = [
         'Keeping up with changes in search and AI-powered discovery',
     ],
     'solutions_heading' => 'Solutions Built for Service Providers',
+    'solutions_heading_accent' => 'Service Providers',
     'solutions'         => [
         ['icon' => 'map-pin',   'title' => 'Local SEO', 'body' => 'Local SEO helps customers find your business when they’re actively looking for services. We support service providers with local keyword research, on-page optimization, Google Business Profile support, location page optimization, technical SEO, and content strategy.'],
         ['icon' => 'file-text', 'title' => 'Service & Location Page Content', 'body' => 'Customers need clear information before they contact a business. We create service pages, location pages, FAQs, and supporting content that help potential customers understand what you do, where you work, and why they should choose your business.'],
@@ -265,6 +271,8 @@ $industries['saas'] = [
         'Many software companies and digital platforms ask customers to learn new concepts, evaluate unfamiliar solutions, or trust technology with important decisions involving their businesses, finances, healthcare, education, or personal information.',
         'At the same time, buyers are conducting more independent research than ever before, often with the help of AI. They compare alternatives, read reviews, and explore educational content. They often arrive at sales conversations with a shortlist already in mind.',
     ],
+    'challenges_photo'  => 0, // attachment ID; 0 => neutral gradient placeholder (isset => slot renders)
+    'challenges_list_title' => 'Many SaaS companies and digital platforms struggle with:',
     'challenges'        => [
         'Explaining complex products clearly',
         'Long buying and decision-making cycles',
@@ -276,6 +284,7 @@ $industries['saas'] = [
         'Keeping up with changes in search and AI-powered discovery',
     ],
     'solutions_heading' => 'Solutions Built for SaaS Companies and Digital Platforms',
+    'solutions_heading_accent' => 'SaaS Companies and Digital Platforms',
     'solutions'         => [
         ['icon' => 'search',    'title' => 'SaaS SEO & Content Strategy', 'body' => 'Strong SaaS content starts with understanding how potential customers search for solutions. We develop AEO and SEO strategies, content plans, and search-optimized resources that help software companies and platforms attract qualified audiences throughout the buying process.'],
         ['icon' => 'layout',    'title' => 'Product & Solution Pages', 'body' => 'Your website should help visitors understand what your product does, who it’s for, and why it matters. We create product pages, solution pages, feature descriptions, landing pages, and supporting content that simplify complex offerings without oversimplifying them.'],
