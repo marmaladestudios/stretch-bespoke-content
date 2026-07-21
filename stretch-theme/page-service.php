@@ -105,7 +105,9 @@ $flow = [];
 if ($props)                                             { $flow['props']       = '#252C3A'; }
 if ($intro_paras || $intro_image)                       { $flow['intro']       = '#ffffff'; }
 if ($reality_sub || $reality_paras)                     { $flow['reality']     = '#f7f6fc'; }
-if (!empty($pull_quote['text']))                        { $flow['pullquote']   = '#f7f6fc'; }
+// Pull quote renders INSIDE the Reality 2-col grid when both exist; it is only
+// its own section (own flow entry) when there is no Reality copy.
+if (!empty($pull_quote['text']) && !($reality_sub || $reality_paras)) { $flow['pullquote'] = '#f7f6fc'; }
 if ($solution_points || !empty($solution['heading']))   { $flow['solution']    = '#ffffff'; }
 if ($offerings)                                         { $flow['write']       = '#ffffff'; }
 if ($addons || $cross_cta)                              { $flow['addons']      = '#f9f9fb'; }
@@ -212,6 +214,17 @@ html, body { overflow-x: hidden; }
 .svc-reality-sub { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 19px; color: #5674B9; margin: 0 0 26px; }
 .svc-reality-inner p.svc-body { margin: 0 0 18px; font-family: 'Assistant', sans-serif; font-size: 17px; font-weight: 300; line-height: 1.8; color: #4a5364; }
 .svc-reality-inner p.svc-body:last-child { margin-bottom: 0; }
+/* Two-column Reality: copy left, pull-quote card right (mirrors ind-challenges) */
+.svc-reality-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(36px, 5vw, 72px); align-items: center; text-align: left; }
+.svc-reality-grid .svc-h2 { margin: 0 0 18px; }
+.svc-reality-grid .svc-reality-sub { margin: 0 0 22px; }
+.svc-reality-grid p.svc-body { margin: 0 0 18px; font-family: 'Assistant', sans-serif; font-size: 16.5px; font-weight: 300; line-height: 1.8; color: #4a5364; }
+.svc-reality-grid p.svc-body:last-child { margin-bottom: 0; }
+.svc-pq-card { position: relative; background: #fff; border: 1px solid #e9e9f1; border-radius: 16px; padding: 54px 46px 50px 52px; box-shadow: 0 18px 40px rgba(26,31,46,0.08); overflow: hidden; }
+.svc-pq-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #8560A8, #00BFF3); }
+.svc-pq-card-mark { position: absolute; top: -26px; left: 22px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 150px; line-height: 1; color: rgba(133,96,168,0.10); pointer-events: none; }
+.svc-pq-card p { position: relative; margin: 0; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -0.5px; line-height: 1.4; color: #1a1f2e; }
+@media (max-width: 900px) { .svc-reality-grid { grid-template-columns: 1fr; gap: 36px; } }
 
 /* ===== SOLUTION ===== */
 .svc-solution { background: #fff; padding: 96px clamp(24px, 4vw, 40px) 100px; }
@@ -384,9 +397,39 @@ html, body { overflow-x: hidden; }
 </section>
 <?php endif; ?>
 
+<?php
+/* Pull-quote inner HTML (cyan highlight span) — shared by both layouts. */
+$pq_html = '';
+if (!empty($pull_quote['text'])) {
+    $pq_text = (string) $pull_quote['text'];
+    $pq_hl   = (string) ($pull_quote['highlight'] ?? '');
+    if ($pq_hl !== '' && strpos($pq_text, $pq_hl) !== false) {
+        $parts   = explode($pq_hl, $pq_text, 2);
+        $pq_html = esc_html($parts[0]) . '<span class="svc-pq-accent">' . esc_html($pq_hl) . '</span>' . esc_html($parts[1]);
+    } else {
+        $pq_html = esc_html($pq_text);
+    }
+}
+?>
 <?php if ($reality_sub || $reality_paras) : ?>
-<!-- ============ THE REALITY (Light bg 2, centered) ============ -->
+<!-- ============ THE REALITY — 2-col when a pull quote exists: copy left, quote card right ============ -->
 <section class="svc-reality" aria-label="The Reality">
+  <?php if ($pq_html !== '') : ?>
+  <div class="svc-reality-grid">
+    <div class="pfx-reveal">
+      <?php if (!empty($problem['overline'])) : ?><span class="pfx-overline"><?php echo esc_html($problem['overline']); ?></span><?php endif; ?>
+      <?php if (!empty($problem['heading'])) : ?><h2 class="svc-h2"><?php echo esc_html($problem['heading']); ?></h2><?php endif; ?>
+      <?php if ($reality_sub !== '') : ?><p class="svc-reality-sub"><?php echo esc_html($reality_sub); ?></p><?php endif; ?>
+      <?php foreach ($reality_paras as $p) : if ($p === '') continue; ?>
+        <p class="svc-body"><?php echo wp_kses_post($p); ?></p>
+      <?php endforeach; ?>
+    </div>
+    <div class="svc-pq-card pfx-reveal pfx-delay-1">
+      <div class="svc-pq-card-mark" aria-hidden="true">&ldquo;</div>
+      <p><?php echo $pq_html; ?></p>
+    </div>
+  </div>
+  <?php else : ?>
   <div class="svc-reality-inner pfx-reveal">
     <?php if (!empty($problem['overline'])) : ?><span class="pfx-overline"><?php echo esc_html($problem['overline']); ?></span><?php endif; ?>
     <?php if (!empty($problem['heading'])) : ?><h2 class="svc-h2"><?php echo esc_html($problem['heading']); ?></h2><?php endif; ?>
@@ -395,23 +438,15 @@ html, body { overflow-x: hidden; }
       <p class="svc-body"><?php echo wp_kses_post($p); ?></p>
     <?php endforeach; ?>
   </div>
+  <?php endif; ?>
 </section>
 <?php endif; ?>
 
-<?php if (!empty($pull_quote['text'])) : ?>
-<!-- ============ PULL QUOTE (gradient band) — attached to the Reality area ============ -->
+<?php if ($pq_html !== '' && !($reality_sub || $reality_paras)) : ?>
+<!-- ============ PULL QUOTE (standalone band fallback when no Reality section) ============ -->
 <section class="svc-pullquote" aria-label="Quote">
   <div class="svc-pullquote-mark" aria-hidden="true">&ldquo;</div>
-  <p class="pfx-reveal"><?php
-    $pq_text = (string) $pull_quote['text'];
-    $pq_hl   = (string) ($pull_quote['highlight'] ?? '');
-    if ($pq_hl !== '' && strpos($pq_text, $pq_hl) !== false) {
-        $parts = explode($pq_hl, $pq_text, 2);
-        echo esc_html($parts[0]) . '<span class="svc-pq-accent">' . esc_html($pq_hl) . '</span>' . esc_html($parts[1]);
-    } else {
-        echo esc_html($pq_text);
-    }
-  ?></p>
+  <p class="pfx-reveal"><?php echo $pq_html; ?></p>
 </section>
 <?php endif; ?>
 
