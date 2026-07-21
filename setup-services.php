@@ -22,7 +22,8 @@ $services = [];
 $services['content-writing-at-any-scale'] = [
     // -------- Hero --------
     'headline'       => 'Content Writing at Any Scale',
-    'headline_accent' => 'Any Scale',
+    'headline_accent' => 'at Any Scale',
+    'hero_overline'  => 'Our Services',
     'subheadline'    => 'High-quality content solves problems.',
     'hero_text'      =>     [
         'Your audience is looking for helpful, trustworthy information to support their next steps. Google and AI-based search are prioritizing great content that explains offerings and answers questions in a clear, organized, and engaging way.',
@@ -30,6 +31,9 @@ $services['content-writing-at-any-scale'] = [
     ],
     'hero_cta_label' => 'Let’s Talk Content',
     'hero_cta_url'   => '/contact-stretch-creative/',
+
+    // -------- Intro editorial photo (attachment ID; 0 => neutral placeholder) --------
+    'intro_image'    => 0,
 
     // -------- Props (stat pills, not counters) --------
     'props' =>     [
@@ -53,7 +57,8 @@ $services['content-writing-at-any-scale'] = [
     // -------- Solution --------
     'solution' => [
         'overline'  => 'The Solution',
-        'heading'   => 'We’re your strategic content-writing partner',
+        'heading'   => 'We’re your strategic',
+        'heading_accent' => 'content-writing partner',
         'text'      => 'If your business works with freelance writers, faceless agencies, or content mills, we’re betting the results are hit-and-miss—mostly miss. If the writers producing your content don’t understand your brand, audience, or goals, the results are bound to be inconsistent and disconnected from your bigger picture. And if you don’t know who your writers are, how can you be sure they’re human?',
         'cta_label' => 'Get in Touch',
         'cta_url'   => '/contact-stretch-creative/',
@@ -66,10 +71,17 @@ $services['content-writing-at-any-scale'] = [
             ],
     ],
 
+    // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
+    'pull_quote' => [
+        'text'      => 'Most content bottlenecks are a quality problem, not a volume issue.',
+        'highlight' => 'quality problem',
+    ],
+
     // -------- Capabilities (Offerings) --------
-    'offerings_overline'   => 'Capabilities',
-    'offerings_heading'    => 'What We Write',
-    'offerings_intro'      => 'Stretch Creative delivers whatever types of content you need, on brand, on time, and publish-ready.',
+    'offerings_overline'      => 'Capabilities',
+    'offerings_heading'       => 'What We',
+    'offerings_heading_accent' => 'Write',
+    'offerings_intro'         => 'Stretch Creative delivers whatever types of content you need, on brand, on time, and publish-ready.',
     'offerings' =>     [
         ['title' => 'Blog articles', 'description' => 'Educational, informative, inspirational, and search-optimized articles designed to answer questions and attract qualified audiences.'],
         ['title' => 'Buying guides', 'description' => 'The perfect balance of editorial romance and practical information, built to inspire confidence and drive buying decisions.'],
@@ -87,7 +99,8 @@ $services['content-writing-at-any-scale'] = [
     ],
 
     // -------- Add-On Services (replaces Selected Work strip) --------
-    'addons_heading' => 'Add-On Services',
+    'addons_overline' => 'Additional Support',
+    'addons_heading'  => 'Add-On Services',
     'addons' =>     [
         ['title' => 'SEO + Editorial', 'description' => 'SEO keyword research, topic ideation, content strategy, content briefs'],
         ['title' => 'Budget Management', 'description' => 'Coordinated production oversight and budget tracking'],
@@ -123,8 +136,12 @@ $services['content-writing-at-any-scale'] = [
             ],
     ],
 
+    // -------- Process team/collaboration photo (attachment ID; 0 => placeholder) --------
+    'process_image' => 0,
+
     // -------- Why Stretch / Benefits --------
-    'why_heading' => 'Why Stretch Creative?',
+    'why_overline' => 'The Difference',
+    'why_heading'  => 'Why Stretch Creative?',
     'benefits' =>     [
         ['title' => 'All of the services you need under one roof', 'description' => 'SEO, content, design, photography, video, and paid advertising working together to support your growth strategy.'],
         ['title' => 'Human-created, expert-led', 'description' => 'Every project is developed by experienced content writers who understand how to communicate important, complex ideas clearly and accurately.'],
@@ -132,59 +149,66 @@ $services['content-writing-at-any-scale'] = [
         ['title' => 'A single point of contact', 'description' => 'Your dedicated project manager supports your team with attention to the details and diligent communication so nothing falls through the cracks.'],
     ],
 
-    // -------- Testimonials (3 real) --------
+    // -------- Testimonials (3 real; image => avatar attachment ID, 0 => placeholder) --------
+    'testimonials_overline'   => 'Social Proof',
     'testimonials_heading'    => 'What Our Clients Say',
     'testimonials_subheading' => 'A few of the brands that trust us with their content.',
     'testimonials' => [
         [
-            'quote' => "Working with Stretch Creative has been the biggest difference-maker in scaling Grove Collaborative's SEO content operations. Not only that, the Stretch Creative team has been a pure joy to work with — they've been one of the best agencies I've worked with during my SEO career, and I cannot recommend them enough.",
+            'quote' => 'Working with Stretch Creative has been the biggest difference-maker in scaling Grove Collaborative’s SEO content operations. Not only that, the Stretch Creative team has been a pure joy to work with — they’ve been one of the best agencies I’ve worked with during my SEO career, and I cannot recommend them enough.',
             'name'  => 'Kristen Haney',
             'title' => 'Sr. Growth Manager SEO Content, Grove Collaborative',
+            'image' => 0,
         ],
         [
             'quote' => 'We have worked with Stretch on numerous projects across multiple channels and global markets. They were heavily involved in each project to get it across the line in a timely manner and strive to deliver the highest quality of work.',
             'name'  => 'Karen Hewitt',
             'title' => 'Sr. Marketing Manager Demand Generation, WeWork',
+            'image' => 0,
         ],
         [
             'quote' => 'Stretch is professional, punctual, and overall an amazing asset for us. No matter the task or turnaround time, they do a great job of bringing our brand identity to life and delivering assets on time.',
             'name'  => 'Keenan Wilson',
             'title' => 'Marketing Manager, Stance',
+            'image' => 0,
         ],
     ],
 
     // -------- FAQ --------
+    'faq_overline' => 'FAQ',
+    'faq_heading'  => 'Frequently Asked Questions',
     'faqs' => [
         [
-            'question' => 'What does "content at any scale" actually mean?',
+            'question' => 'What does “content at any scale” actually mean?',
             'answer'   => 'Whether you need five articles a month or five hundred product descriptions a week, we have the team and the process to handle it. Volume never comes at the expense of quality — our editorial workflow makes sure of that.',
         ],
         [
             'question' => 'Can you write for my industry?',
-            'answer'   => "Almost certainly. Our roster covers ecommerce, SaaS, health and wellness, finance, home and lifestyle, publishing, and more. We'll match you with writers who have real experience in your space — and if you need a credentialed expert byline for YMYL content, we have those, too.",
+            'answer'   => 'Almost certainly. Our roster covers ecommerce, SaaS, health and wellness, finance, home and lifestyle, publishing, and more. We’ll match you with writers who have real experience in your space — and if you need a credentialed expert byline for YMYL content, we have those, too.',
         ],
         [
             'question' => 'How do you handle large-scale projects?',
-            'answer'   => "With a dedicated project manager, detailed onboarding, collaborative tools, and a calibration phase before we ramp up production. By the time we're operating at full volume, your cohort knows your brand inside and out.",
+            'answer'   => 'With a dedicated project manager, detailed onboarding, collaborative tools, and a calibration phase before we ramp up production. By the time we’re operating at full volume, your cohort knows your brand inside and out.',
         ],
         [
             'question' => 'How does pricing work?',
-            'answer'   => "Our pricing is competitive, flexible, and built around your actual needs — the volume, complexity, and type of content you require. We'll put together a model that works for your budget and fairly compensates our writers, which means lower turnover and a team that stays invested in your brand long-term.",
+            'answer'   => 'Our pricing is competitive, flexible, and built around your actual needs — the volume, complexity, and type of content you require. We’ll put together a model that works for your budget and fairly compensates our writers, which means lower turnover and a team that stays invested in your brand long-term.',
         ],
         [
             'question' => 'Do you have monthly minimums?',
-            'answer'   => "No. We'll work with you at whatever pace makes sense for your business.",
+            'answer'   => 'No. We’ll work with you at whatever pace makes sense for your business.',
         ],
     ],
 
     // -------- Closing CTA --------
     'cta' => [
-        'heading'      => 'Ready to Scale Your Content?',
-        'subheading'   => "Let's build something great together.",
-        'text'         => "Whether you need a handful of pieces or a full content operation, we'll put together a team that knows your brand and delivers work you're proud to publish. No fluff. No chasing. Just great content — at any scale.",
-        'button_label' => 'Get in Touch',
-        'button_url'   => '/contact-stretch-creative/',
-        'secondary'    => false,
+        'heading'         => 'Ready to Scale Your Content?',
+        'subheading'      => 'Let’s build something great together.',
+        'text'            => 'Whether you need a handful of pieces or a full content operation, we’ll put together a team that knows your brand and delivers work you’re proud to publish. No fluff. No chasing. Just great content — at any scale.',
+        'button_label'    => 'Get in Touch',
+        'button_url'      => '/contact-stretch-creative/',
+        'secondary_label' => 'See Our Work',
+        'secondary_url'   => '/our-work/',
     ],
 ];
 
