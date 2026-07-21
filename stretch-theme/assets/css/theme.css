@@ -1176,7 +1176,7 @@ body.nav-open .site-nav {
 .footer-brand .logo { display: block; line-height: 0; margin-bottom: 12px; }
 .footer-brand .logo img { height: 38px; width: auto; }
 .footer-brand p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.5); margin-bottom: 0; max-width: 280px; }
-.footer-col h4 { font-family: var(--font-heading); font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 16px; }
+.footer-col h4 { font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
 .footer-col ul { list-style: none; }
 .footer-col li { margin-bottom: 8px; }
 .footer-col a { color: rgba(255,255,255,0.55); font-size: 14px; transition: color 0.2s; }
