@@ -50,6 +50,16 @@ $stretch_page_image_sources = [
         'title' => 'about-story-team-collaboration',
         'alt'   => 'Team collaboration at Stretch Creative',
     ],
+    // Contact page location card — brand-toned dark static map of Victoria, BC
+    // (CARTO Dark Matter / OpenStreetMap tiles, z12, ~48.4284,-123.3656). The
+    // URL is a stable dedupe token only; the bundled page-images/contact_map.jpg
+    // is always used (no runtime tile/API requests). Attribution is baked into
+    // the image ("© OpenStreetMap contributors  © CARTO").
+    'contact_map' => [
+        'url'   => 'https://assets.stretchcreative.co/page-images/contact-map-victoria-bc.jpg',
+        'title' => 'contact-map-victoria-bc',
+        'alt'   => 'Map of Victoria, BC — Stretch Creative location',
+    ],
 ];
 
 /**

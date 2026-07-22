@@ -6,6 +6,19 @@
  * Also invoked by the setup wizard, Step 8.
  */
 
+// RETIRED 2026-07-21 per client; see content-fixes.php FIX 6.
+// The AEO content cluster (hub landing + spoke posts) was retired: the hub URL
+// and post URLs are 301'd to /blog/ and the posts are drafted. This creation
+// seed is neutralized so a fresh install (or a wizard re-run of Step 8) cannot
+// resurrect the stretch_hub_aeo option. Kept intact (not deleted) so the cluster
+// remains restorable — remove this guard and the FIX 6 draft/redirect to revive.
+// `return` exits cleanly for both `wp eval-file` and the wizard's `include`,
+// without doing work and without failing any seed gate.
+if (defined('WP_CLI') && WP_CLI) {
+    WP_CLI::log('setup-aeo-hub.php: AEO cluster retired 2026-07-21 (content-fixes FIX 6) — no-op, skipping hub creation.');
+}
+return;
+
 $aeo_hub = [
     'headline' => 'Answer Engine Optimization (AEO)',
     'subtitle' => 'The complete guide to getting your content cited by AI-powered search engines like ChatGPT, Gemini, and Perplexity.',

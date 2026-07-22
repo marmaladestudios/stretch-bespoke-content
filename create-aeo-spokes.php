@@ -9,6 +9,15 @@ if (!defined('WP_CLI') || !WP_CLI) {
     exit;
 }
 
+// RETIRED 2026-07-21 per client; see content-fixes.php FIX 6.
+// The AEO content cluster (hub + spoke posts) was retired: the post URLs are
+// 301'd to /blog/ and the posts drafted. This creation seed is neutralized so a
+// fresh install cannot resurrect the spoke posts. Kept intact (not deleted) so
+// the cluster stays restorable — remove this guard and the FIX 6 draft/redirect
+// to revive. Exits cleanly as a no-op (return 0), never failing the seed gate.
+WP_CLI::log('create-aeo-spokes.php: AEO cluster retired 2026-07-21 (content-fixes FIX 6) — no-op, skipping spoke creation.');
+return;
+
 $aeo_category_id = 9;
 $author_id = 1;
 

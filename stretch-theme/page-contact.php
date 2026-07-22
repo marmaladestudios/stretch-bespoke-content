@@ -3,6 +3,13 @@
  * Template Name: Contact Us
  */
 get_header();
+
+// Location-card static map (Victoria, BC). Seeded by setup-page-images.php into
+// the stretch_page_images option; bundled file page-images/contact_map.jpg is a
+// brand-toned CARTO Dark Matter / OpenStreetMap render (no runtime tile/API
+// requests). Falls back to the pure-CSS gradient card when unseeded.
+$stretch_page_images = (array) get_option('stretch_page_images', []);
+$stretch_contact_map = wp_get_attachment_image_url((int) ($stretch_page_images['contact_map'] ?? 0), 'full');
 ?>
 
 <style>
@@ -340,6 +347,24 @@ html, body { overflow-x: hidden; }
   background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+/* Real static map of Victoria, BC — layered under the existing gradient/glow so
+   the map reads through while a dark scrim keeps the white pin/city legible. */
+.contact-map-placeholder.has-map {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.map-attr {
+  position: absolute;
+  bottom: 8px; right: 12px;
+  z-index: 2;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.2px;
+  color: rgba(255,255,255,0.35);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
 .map-pin {
   width: 48px; height: 48px;
   background: linear-gradient(135deg, #8560A8, #00BFF3);
@@ -507,7 +532,7 @@ html, body { overflow-x: hidden; }
           </div>
           <div>
             <h3>Email</h3>
-            <a href="mailto:hello@stretchcreative.com">hello@stretchcreative.com</a>
+            <a href="mailto:kristyn@stretchcreative.co">kristyn@stretchcreative.co</a>
           </div>
         </div>
 
@@ -532,7 +557,7 @@ html, body { overflow-x: hidden; }
           Thanks &mdash; your message has been sent. We&rsquo;ll get back to you within one business day.
         </div>
         <div class="form-status error<?php echo $stretch_form_error ? ' visible' : ''; ?>" id="contactFormError" role="alert">
-          Something went wrong and your message wasn&rsquo;t sent. Please try again, or email us directly at <a href="mailto:hello@stretchcreative.com">hello@stretchcreative.com</a>.
+          Something went wrong and your message wasn&rsquo;t sent. Please try again, or email us directly at <a href="mailto:kristyn@stretchcreative.co">kristyn@stretchcreative.co</a>.
         </div>
 
         <form class="contact-form" id="contactForm" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
@@ -576,12 +601,15 @@ html, body { overflow-x: hidden; }
      3. MAP / LOCATION
      ======================================== -->
 <section class="v2-section contact-map" aria-label="Location">
-  <div class="contact-map-placeholder v2-reveal">
+  <div class="contact-map-placeholder v2-reveal<?php echo $stretch_contact_map ? ' has-map' : ''; ?>"<?php if ($stretch_contact_map) : ?> role="img" aria-label="Map of Victoria, BC" style="background-image: linear-gradient(180deg, rgba(20,25,42,0.55) 0%, rgba(20,25,42,0.72) 100%), url('<?php echo esc_url($stretch_contact_map); ?>');"<?php endif; ?>>
     <div class="map-pin">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
     </div>
     <div class="map-city">Victoria, BC</div>
     <div class="map-coords">48.4284&deg; N &middot; 123.3656&deg; W</div>
+    <?php if ($stretch_contact_map) : ?>
+    <div class="map-attr">&copy; OpenStreetMap contributors &middot; &copy; CARTO</div>
+    <?php endif; ?>
   </div>
 </section>
 

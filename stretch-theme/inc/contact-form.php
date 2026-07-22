@@ -19,13 +19,13 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Recipient for lead-notification emails. Defaults to cole@stretchcreative.co.
+ * Recipient for lead-notification emails. Defaults to kristyn@stretchcreative.co.
  * Override with the STRETCH_LEAD_NOTIFY_EMAIL constant (e.g. in wp-config.php)
  * or the `stretch_lead_notify_email` filter; falls back to the WordPress admin
  * email if the configured value isn't a valid address.
  */
 if (!defined('STRETCH_LEAD_NOTIFY_EMAIL')) {
-    define('STRETCH_LEAD_NOTIFY_EMAIL', 'cole@stretchcreative.co');
+    define('STRETCH_LEAD_NOTIFY_EMAIL', 'kristyn@stretchcreative.co');
 }
 
 function stretch_lead_notify_email() {
