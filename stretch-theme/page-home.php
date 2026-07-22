@@ -134,10 +134,9 @@ a.home-svc-card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgb
 <section class="pfx-stats-bar pfx-stats-bar--ink2" aria-label="Statistics">
   <div class="pfx-container">
     <div class="pfx-stats-inner">
-      <div class="pfx-reveal"><div class="pfx-stat-number"><span class="pfx-count" data-target="200">200</span><span>+</span></div><div class="pfx-stat-label">Creatives</div></div>
-      <div class="pfx-reveal pfx-delay-1"><div class="pfx-stat-number"><span class="pfx-count" data-target="170">170</span><span>+</span></div><div class="pfx-stat-label">Enterprise Brands</div></div>
-      <div class="pfx-reveal pfx-delay-2"><div class="pfx-stat-number"><span class="pfx-count" data-target="15000">15,000</span><span>+</span></div><div class="pfx-stat-label">Content Pieces Delivered</div></div>
-      <div class="pfx-reveal pfx-delay-3"><div class="pfx-stat-number"><span class="pfx-count" data-target="96">96</span><span>%</span></div><div class="pfx-stat-label">On-Time Delivery</div></div>
+      <div class="pfx-reveal"><div class="pfx-stat-number"><span class="pfx-count" data-target="170">170</span><span>+</span></div><div class="pfx-stat-label">Enterprise Brands</div></div>
+      <div class="pfx-reveal pfx-delay-1"><div class="pfx-stat-number"><span class="pfx-count" data-target="15000">15,000</span><span>+</span></div><div class="pfx-stat-label">Content Pieces Delivered</div></div>
+      <div class="pfx-reveal pfx-delay-2"><div class="pfx-stat-number"><span class="pfx-count" data-target="96">96</span><span>%</span></div><div class="pfx-stat-label">On-Time Delivery</div></div>
     </div>
   </div>
 </section>
