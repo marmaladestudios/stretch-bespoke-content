@@ -66,7 +66,7 @@ $team = [
     ['Cole Vineyard', 'SEO & Marketing Manager', 'bundle:team-cole-vineyard.jpg'],
     ['Diane', 'Business Development Manager', 'bundle:team-diane.jpg'],
     ['MacKenzie Sanford', 'Editor + Resource Coordinator', 'https://stretchcreative.co/wp-content/uploads/2023/01/Mack.jpeg'],
-    ['Nicole', 'Production Coordinator', ''],
+    ['Nicole', 'Production Coordinator', 'bundle:team-nicole.jpg'],
     ['Jessica DeWolf', 'Lead Editor', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-22-e1641438472628.png'],
 ];
 
