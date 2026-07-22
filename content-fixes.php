@@ -231,5 +231,25 @@ foreach ($aeo_post_slugs as $slug) {
     wp_update_post(['ID' => $post->ID, 'post_status' => 'draft']);
     if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ drafted: {$post->post_title} (ID {$post->ID})"); } else { echo "  ✓ drafted: {$post->post_title} (ID {$post->ID})" . "\n"; }
 }
+// Prod's cluster predates some local slug renames (e.g. structure-content-ai vs
+// structure-content-for-ai), so a slug list alone misses posts there. The "aeo"
+// category IS the cluster — sweep any published post still in it.
+$aeo_term = get_term_by('slug', 'aeo', 'category');
+if ($aeo_term) {
+    $stragglers = get_posts([
+        'post_type'        => 'post',
+        'post_status'      => ['publish', 'pending', 'future'],
+        'category'         => $aeo_term->term_id,
+        'numberposts'      => -1,
+        'suppress_filters' => true,
+    ]);
+    foreach ($stragglers as $post) {
+        wp_update_post(['ID' => $post->ID, 'post_status' => 'draft']);
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ drafted (category sweep): {$post->post_title} (ID {$post->ID})"); } else { echo "  ✓ drafted (category sweep): {$post->post_title} (ID {$post->ID})" . "\n"; }
+    }
+    if (empty($stragglers)) {
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::log('  ○ category sweep: no published AEO posts remain'); } else { echo "  ○ category sweep: no published AEO posts remain\n"; }
+    }
+}
 
 if (defined('WP_CLI') && WP_CLI) { WP_CLI::success('Content fixes complete.'); } else { echo 'Success: ' . 'Content fixes complete.' . "\n"; }
