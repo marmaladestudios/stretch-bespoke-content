@@ -15,6 +15,35 @@ require_once ABSPATH . 'wp-admin/includes/image.php';
 function import_photo($url, $name) {
     $slug = 'team-photo-' . sanitize_title($name);
     $existing = get_posts(['post_type' => 'attachment', 'title' => $slug, 'numberposts' => 1]);
+
+    // "bundle:<file>" = repo-bundled photo (page-images/, staged to /opt/page-images
+    // on Render) — same prod-safe path as setup-page-images.php; no remote fetch.
+    // Deduped by CONTENT hash so swapping the bundled file re-imports everywhere.
+    if (strpos($url, 'bundle:') === 0) {
+        $file = substr($url, 7);
+        foreach (['/opt/page-images', dirname(ABSPATH) . '/page-images', ABSPATH . '../page-images'] as $dir) {
+            $path = rtrim($dir, '/') . '/' . $file;
+            if (!file_exists($path)) { continue; }
+            $md5 = md5_file($path);
+            if ($existing) {
+                if (get_post_meta($existing[0]->ID, '_stretch_bundle_md5', true) === $md5) {
+                    if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  - Exists (bundle current): {$name}"); } else { echo "  - Exists (bundle current): {$name}" . "\n"; }
+                    return $existing[0]->ID;
+                }
+                wp_delete_attachment($existing[0]->ID, true); // bundle changed — replace
+            }
+            $tmp_copy = wp_tempnam($file);
+            if (!copy($path, $tmp_copy)) { break; }
+            $id = media_handle_sideload(['name' => $slug . '.' . pathinfo($file, PATHINFO_EXTENSION), 'tmp_name' => $tmp_copy], 0, $slug);
+            if (is_wp_error($id)) { @unlink($tmp_copy); break; }
+            update_post_meta($id, '_stretch_bundle_md5', $md5);
+            if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  ✓ {$name} (bundle, ID: {$id})"); } else { echo "  ✓ {$name} (bundle, ID: {$id})" . "\n"; }
+            return $id;
+        }
+        if (defined('WP_CLI') && WP_CLI) { WP_CLI::warning("Bundle missing/failed: {$name} ({$file})"); } else { echo 'Warning: ' . "Bundle missing/failed: {$name} ({$file})" . "\n"; }
+        return 0;
+    }
+
     if ($existing) { if (defined('WP_CLI') && WP_CLI) { WP_CLI::log("  - Exists: {$name}"); } else { echo "  - Exists: {$name}" . "\n"; } return $existing[0]->ID; }
 
     $tmp = download_url($url, 30);
@@ -34,8 +63,8 @@ $team = [
     ['Kelsi Carrell', 'Head of Operations', 'https://stretchcreative.co/wp-content/uploads/2020/11/Kelsi-e1641439041685.jpeg'],
     ['Kristen Bailey', 'Editor-In-Chief', 'https://stretchcreative.co/wp-content/uploads/2020/09/kristen0.png'],
     ['Kristyn Pacione', 'Client Services Manager', 'https://stretchcreative.co/wp-content/uploads/2023/09/KP.jpeg'],
-    ['Cole Vineyard', 'SEO & Marketing Manager', ''],
-    ['Diane', 'Business Development Manager', ''],
+    ['Cole Vineyard', 'SEO & Marketing Manager', 'bundle:team-cole-vineyard.jpg'],
+    ['Diane', 'Business Development Manager', 'bundle:team-diane.jpg'],
     ['MacKenzie Sanford', 'Editor + Resource Coordinator', 'https://stretchcreative.co/wp-content/uploads/2023/01/Mack.jpeg'],
     ['Nicole', 'Production Coordinator', ''],
     ['Jessica DeWolf', 'Lead Editor', 'https://stretchcreative.co/wp-content/uploads/2021/02/Untitled-design-22-e1641438472628.png'],
