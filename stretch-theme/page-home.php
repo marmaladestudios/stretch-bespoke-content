@@ -135,8 +135,8 @@ a.home-svc-card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgb
   <div class="pfx-container">
     <div class="pfx-stats-inner">
       <div class="pfx-reveal"><div class="pfx-stat-number"><span class="pfx-count" data-target="200">200</span><span>+</span></div><div class="pfx-stat-label">Creatives</div></div>
-      <div class="pfx-reveal pfx-delay-1"><div class="pfx-stat-number"><span class="pfx-count" data-target="27">27</span><span>+</span></div><div class="pfx-stat-label">Enterprise Brands</div></div>
-      <div class="pfx-reveal pfx-delay-2"><div class="pfx-stat-number"><span class="pfx-count" data-target="500">500</span><span>K+</span></div><div class="pfx-stat-label">Content Pieces Delivered</div></div>
+      <div class="pfx-reveal pfx-delay-1"><div class="pfx-stat-number"><span class="pfx-count" data-target="170">170</span><span>+</span></div><div class="pfx-stat-label">Enterprise Brands</div></div>
+      <div class="pfx-reveal pfx-delay-2"><div class="pfx-stat-number"><span class="pfx-count" data-target="15000">15,000</span><span>+</span></div><div class="pfx-stat-label">Content Pieces Delivered</div></div>
       <div class="pfx-reveal pfx-delay-3"><div class="pfx-stat-number"><span class="pfx-count" data-target="98">98</span><span>%</span></div><div class="pfx-stat-label">Client Retention</div></div>
     </div>
   </div>

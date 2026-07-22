@@ -363,8 +363,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var duration = 1600, start = performance.now();
     function tick(now) {
       var p = Math.min((now - start) / duration, 1);
-      el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+      el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(tick); else el.textContent = target.toLocaleString('en-US');
     }
     requestAnimationFrame(tick);
   }
