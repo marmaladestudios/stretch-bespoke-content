@@ -75,7 +75,13 @@ $primary = [
     ]],
     // About is now a single merged page (/about-stretch-creative/ with #our-story
     // / #our-team / #our-work anchors) — no dropdown children (punch-list #12).
-    ['title' => 'About', 'url' => '/about-stretch-creative/'],
+    // About is a single merged page; dropdown children deep-link to its sections
+    // so Our Work is reachable from the top nav (Cole request 2026-07-22).
+    ['title' => 'About', 'url' => '/about-stretch-creative/', 'children' => [
+        ['title' => 'Our Story', 'url' => '/about-stretch-creative/#our-story'],
+        ['title' => 'Our Team',  'url' => '/about-stretch-creative/#our-team'],
+        ['title' => 'Our Work',  'url' => '/about-stretch-creative/#our-work'],
+    ]],
     ['title' => 'Blog',    'url' => '/blog/'],
     // Contact renders as the right-aligned CTA button (theme.css .nav-links .nav-cta).
     ['title' => 'Contact', 'url' => '/contact-stretch-creative/', 'classes' => 'nav-cta'],

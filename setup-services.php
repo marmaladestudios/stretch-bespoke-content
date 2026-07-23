@@ -96,6 +96,7 @@ $services['content-writing-at-any-scale'] = [
         ['title' => 'Thought leadership', 'description' => 'Expert articles, executive bylines, and other content that help your organization share expertise, build trust, and establish authority within your industry.'],
         ['title' => 'Case studies', 'description' => 'Engaging customer stories and success narratives that demonstrate results and build trust and credibility.'],
         ['title' => 'Optimizations and rewrites', 'description' => 'Blog articles, category pages, landing pages, and other website content can go stale after a while. We can optimize or rewrite existing content to improve visibility.'],
+        ['title' => 'AI editing', 'description' => 'Expert human editing that transforms AI-generated drafts into polished, accurate, and on-brand content that’s optimized for SEO and AEO and ready to publish.'],
     ],
 
     // -------- Add-On Services (replaces Selected Work strip) --------
