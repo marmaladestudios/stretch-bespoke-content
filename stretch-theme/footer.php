@@ -21,7 +21,7 @@
             <span style="font-family:'Montserrat',sans-serif;font-size:26px;font-weight:700;color:#fff;"><?php bloginfo('name'); ?></span>
           </div>
         <?php endif; ?>
-        <p><?php echo esc_html(get_theme_mod('stretch_footer_tagline', 'The trusted partner for producing publish-ready content at scale — your story, your voice, on time.')); ?></p>
+        <p><?php echo esc_html(get_theme_mod('stretch_footer_tagline', 'Your trusted behind-the-scenes SEO, content, and creative partner.')); ?></p>
       </div>
 
       <?php if (has_nav_menu('footer-1')) : ?>

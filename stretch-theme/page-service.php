@@ -54,6 +54,9 @@ $offerings_heading  = !empty($service['offerings_heading'])  ? $service['offerin
 $offerings_accent   = !empty($service['offerings_heading_accent']) ? $service['offerings_heading_accent'] : '';
 $offerings_intro    = !empty($service['offerings_intro'])   ? $service['offerings_intro']    : '';
 $offerings          = !empty($service['offerings'])         ? (array) $service['offerings']  : [];
+/* Grouped offerings (e.g. Visual page: Graphic Design / Videography & Photography)
+ * render as separate anchored sections; flat 'offerings' stays the single-section path. */
+$offerings_groups   = !empty($service['offerings_groups'])  ? (array) $service['offerings_groups'] : [];
 
 /* ---------- Add-On Services + cross-sell ---------- */
 $addons_overline = !empty($service['addons_overline']) ? $service['addons_overline'] : 'Additional Support';
@@ -75,7 +78,7 @@ $why_heading     = !empty($service['why_heading'])     ? $service['why_heading']
 $benefits        = !empty($service['benefits'])        ? (array) $service['benefits'] : [];
 
 /* ---------- Testimonials (tilt cards) ---------- */
-$testimonials_overline   = !empty($service['testimonials_overline'])   ? $service['testimonials_overline']   : 'Social Proof';
+$testimonials_overline   = !empty($service['testimonials_overline'])   ? $service['testimonials_overline']   : 'Testimonials';
 $testimonials_heading    = !empty($service['testimonials_heading'])    ? $service['testimonials_heading']    : 'What Our Clients Say';
 $testimonials_subheading = !empty($service['testimonials_subheading']) ? $service['testimonials_subheading'] : '';
 $testimonials    = !empty($service['testimonials'])    ? (array) $service['testimonials'] : [];
@@ -109,7 +112,7 @@ if ($reality_sub || $reality_paras)                     { $flow['reality']     =
 // its own section (own flow entry) when there is no Reality copy.
 if (!empty($pull_quote['text']) && !($reality_sub || $reality_paras)) { $flow['pullquote'] = '#f7f6fc'; }
 if ($solution_points || !empty($solution['heading']))   { $flow['solution']    = '#ffffff'; }
-if ($offerings)                                         { $flow['write']       = '#ffffff'; }
+if ($offerings || $offerings_groups)                    { $flow['write']       = '#ffffff'; }
 if ($addons || $cross_cta)                              { $flow['addons']      = '#f9f9fb'; }
 if ($process_steps)                                     { $flow['process']     = '#f9f9fb'; }
 if ($benefits)                                          { $flow['why']         = '#1a1f2e'; }
@@ -315,7 +318,7 @@ html, body { overflow-x: hidden; }
 .svc-pq-accent { color: #00BFF3; }
 
 /* ===== WHAT WE WRITE ===== */
-.svc-write { background: #fff; padding: 100px clamp(24px, 4vw, 40px); }
+.svc-write { scroll-margin-top: 90px; background: #fff; padding: 100px clamp(24px, 4vw, 40px); }
 .svc-write-inner { max-width: 1200px; margin: 0 auto; }
 .svc-write-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 @media (min-width: 1000px) { .svc-write-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -556,20 +559,37 @@ if (!empty($pull_quote['text'])) {
 </section>
 <?php endif; ?>
 
-<?php if ($offerings) : ?>
-<!-- ============ WHAT WE WRITE (white, ghost-number grid) ============ -->
-<section class="svc-write" aria-label="<?php echo esc_attr($offerings_heading); ?>">
+<?php
+/* Grouped path renders one anchored section per group; flat path is one section. */
+$write_sections = [];
+if ($offerings_groups) {
+    foreach ($offerings_groups as $gi => $g) {
+        $write_sections[] = [
+            'anchor'  => (string) ($g['anchor'] ?? ''),
+            'heading' => (string) ($g['heading'] ?? ''),
+            'accent'  => '',
+            'intro'   => $gi === 0 ? $offerings_intro : '',
+            'items'   => (array) ($g['items'] ?? []),
+        ];
+    }
+} elseif ($offerings) {
+    $write_sections[] = ['anchor' => '', 'heading' => $offerings_heading, 'accent' => $offerings_accent, 'intro' => $offerings_intro, 'items' => $offerings];
+}
+?>
+<?php foreach ($write_sections as $ws) : if (!$ws['items']) { continue; } ?>
+<!-- ============ OFFERINGS (white, ghost-number grid) ============ -->
+<section class="svc-write"<?php echo $ws['anchor'] !== '' ? ' id="' . esc_attr($ws['anchor']) . '"' : ''; ?> aria-label="<?php echo esc_attr($ws['heading']); ?>">
   <div class="svc-write-inner">
     <div class="svc-head pfx-reveal">
       <span class="pfx-overline"><?php echo esc_html($offerings_overline); ?></span>
       <h2 class="svc-h2"><?php
-        echo esc_html($offerings_heading);
-        if ($offerings_accent !== '') { echo ' <span class="gradient-text">' . esc_html($offerings_accent) . '</span>'; }
+        echo esc_html($ws['heading']);
+        if ($ws['accent'] !== '') { echo ' <span class="gradient-text">' . esc_html($ws['accent']) . '</span>'; }
       ?></h2>
-      <?php if ($offerings_intro !== '') : ?><p class="svc-lede"><?php echo wp_kses_post($offerings_intro); ?></p><?php endif; ?>
+      <?php if ($ws['intro'] !== '') : ?><p class="svc-lede"><?php echo wp_kses_post($ws['intro']); ?></p><?php endif; ?>
     </div>
     <div class="svc-write-grid">
-      <?php foreach ($offerings as $i => $item) : ?>
+      <?php foreach ($ws['items'] as $i => $item) : ?>
       <div class="svc-write-card pfx-reveal<?php echo $i ? ' pfx-delay-' . (($i % 3) + 1) : ''; ?>">
         <span class="svc-write-num" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $i + 1)); ?></span>
         <h3><?php echo esc_html($item['title'] ?? ''); ?></h3>
@@ -579,7 +599,7 @@ if (!empty($pull_quote['text'])) {
     </div>
   </div>
 </section>
-<?php endif; ?>
+<?php endforeach; ?>
 
 <?php if ($addons || $cross_cta) : ?>
 <!-- ============ ADD-ON SERVICES (Light bg 1) ============ -->

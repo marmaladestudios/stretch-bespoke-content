@@ -117,8 +117,8 @@ a.home-svc-card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgb
   <div class="pfx-hero-grid"></div>
   <div class="home-hero-inner">
     <span class="pfx-overline pfx-reveal">Stretch Creative</span>
-    <h1 class="home-hero-title pfx-reveal pfx-delay-1">Content Solutions for <span class="gradient-text">Modern Search &amp; Discoverability</span></h1>
-    <p class="home-hero-lede pfx-reveal pfx-delay-2">Rank smarter, not harder. Stretch Creative maximizes your marketing budget with SEO, AEO, and content services that fit your needs—nothing more, nothing less.</p>
+    <h1 class="home-hero-title pfx-reveal pfx-delay-1">Digital Marketing Solutions for <span class="gradient-text">Modern Search</span></h1>
+    <p class="home-hero-lede pfx-reveal pfx-delay-2">Stretch Creative provides SEO, AEO, and content services to increase brand visibility, earn attention, and inspire people toward action.</p>
     <a href="<?php echo esc_url('/contact-stretch-creative/'); ?>" class="pfx-btn-primary pfx-reveal pfx-delay-2"><span>Schedule a Discovery Call →</span></a>
   </div>
   <div class="home-hero-wedge" aria-hidden="true"></div>

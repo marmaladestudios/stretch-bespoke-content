@@ -1244,6 +1244,13 @@ body.nav-open .site-nav {
   .team-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* Nav collapses to the hamburger well before the links physically squeeze
+   against the logo (long labels + dropdown chevrons start wrapping ~1050px). */
+@media (max-width: 1080px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+}
+
 @media (max-width: 768px) {
   .hero { padding: 140px 0 70px; min-height: auto; }
   .hero h1 { font-size: 52px; }

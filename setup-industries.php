@@ -111,8 +111,8 @@ $industries['ecommerce'] = [
 $industries['agencies'] = [
     'title'    => 'Agencies & Strategic Partners',
     'overline' => 'Agencies & Strategic Partners',
-    'h1'       => 'White-Labeled Content & Creative Services for Agencies and Strategic Partners',
-    'h1_accent' => 'Agencies and Strategic Partners',
+    'h1'       => 'White-Labeled Content & Creative Solution',
+    'h1_accent' => 'Content & Creative Solution',
     'hero_text' => 'Scale production, expand your capabilities, and deliver exceptional work without expanding your payroll.',
     'cta_label' => 'Schedule a Discovery Call',
     'audiences' => [
@@ -186,13 +186,13 @@ $industries['service-providers'] = [
     'h1_accent'         => 'Service Providers',
     'hero_text'         => 'Help customers find your business, understand your services, and feel confident reaching out.',
     'cta_label'         => 'Schedule a Discovery Call',
+    'audiences_heading' => 'Who We Work With',
     'audiences'         => [
         ['label' => 'Home Service Businesses', 'icon' => 'wrench'],
-        ['label' => 'Healthcare Systems', 'icon' => 'heart'],
+        ['label' => 'Healthcare Systems & Providers', 'icon' => 'heart'],
         ['label' => 'Beauty & Wellness Practices', 'icon' => 'sparkle'],
-        ['label' => 'Dental Groups', 'icon' => 'tooth'],
-        ['label' => 'Multi-Office Law Firms', 'icon' => 'scale'],
-        ['label' => 'Restoration Companies', 'icon' => 'hard-hat'],
+        ['label' => 'Trades & Property Services', 'icon' => 'hard-hat'],
+        ['label' => 'Restoration Companies', 'icon' => 'shield'],
         ['label' => 'Franchises', 'icon' => 'storefront'],
         ['label' => 'Multi-Location Businesses', 'icon' => 'map-pin'],
     ],

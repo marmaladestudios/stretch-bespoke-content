@@ -95,7 +95,7 @@ function stretch_customize_register($wp_customize) {
     ]);
 
     $wp_customize->add_setting('stretch_footer_tagline', [
-        'default'           => 'The trusted partner for producing publish-ready content at scale — your story, your voice, on time.',
+        'default'           => 'Your trusted behind-the-scenes SEO, content, and creative partner.',
         'sanitize_callback' => 'sanitize_text_field',
     ]);
     $wp_customize->add_control('stretch_footer_tagline', [

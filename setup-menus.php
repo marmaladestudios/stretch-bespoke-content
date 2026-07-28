@@ -63,14 +63,13 @@ $primary = [
         ['title' => 'SEO/AEO Services',              'url' => '/seo_content_strategy_services/'],
         ['title' => 'Interactive Content Marketing', 'url' => '/services/bespoke-content-experience/'],
         ['title' => 'Content Writing',               'url' => '/content-writing-at-any-scale/'],
-        ['title' => 'Graphic Design',                'url' => '/visual-content-and-design/#graphic-design'],
-        ['title' => 'Photography & Videography',     'url' => '/visual-content-and-design/#photography-video'],
+        ['title' => 'Visual Content & Design',       'url' => '/visual-content-and-design/'],
         ['title' => 'Paid Advertising',               'url' => '/paid-advertising/'],
     ]],
     ['title' => 'Industries', 'url' => '/industries/ecommerce/', 'children' => [
         ['title' => 'Ecommerce',                 'url' => '/industries/ecommerce/'],
         ['title' => 'Agencies & Partners',       'url' => '/industries/agencies/'],
-        ['title' => 'Service Providers',         'url' => '/industries/service-providers/'],
+        ['title' => 'Local Service Providers',         'url' => '/industries/service-providers/'],
         ['title' => 'SaaS & Digital Platforms',  'url' => '/industries/saas/'],
     ]],
     // About is now a single merged page (/about-stretch-creative/ with #our-story
@@ -109,7 +108,7 @@ stretch_menu_rebuild('Solutions', 'footer-1', [
 stretch_menu_rebuild('Industries', 'footer-2', [
     ['title' => 'Ecommerce',                'url' => '/industries/ecommerce/'],
     ['title' => 'Agencies & Partners',      'url' => '/industries/agencies/'],
-    ['title' => 'Service Providers',        'url' => '/industries/service-providers/'],
+    ['title' => 'Local Service Providers',        'url' => '/industries/service-providers/'],
     ['title' => 'SaaS & Digital Platforms', 'url' => '/industries/saas/'],
 ]);
 // Footer col 3 leads with the About group (Our Story / Our Team / Our Work) to

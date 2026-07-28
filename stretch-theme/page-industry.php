@@ -271,7 +271,7 @@ html, body { overflow-x: hidden; }
   <div class="ind-audiences-inner">
     <div class="pfx-reveal">
       <span class="pfx-overline">Who We Work With</span>
-      <h2 class="ind-h2">Brands and teams we partner with</h2>
+      <h2 class="ind-h2"><?php echo esc_html(!empty($d['audiences_heading']) ? $d['audiences_heading'] : 'Brands and teams we partner with'); ?></h2>
     </div>
     <div class="ind-chips pfx-reveal pfx-delay-1">
       <?php foreach ($audiences as $i => $aud) :

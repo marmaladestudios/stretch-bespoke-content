@@ -48,7 +48,7 @@ $services['content-writing-at-any-scale'] = [
         'overline' => 'The Reality',
         'heading'  => 'We’re in strange times.',
         'text'     =>             [
-                'Search is changing faster than businesses can keep up.',
+                'Search is changing faster than businesses can adapt.',
                 'Traditional SEO is still central to getting discovered, but it’s no longer the only way people will find you online. AI-powered search experiences are changing how users ask questions, evaluate answers, and interact with websites, leaving many businesses wondering how to maintain visibility as AI becomes more prevalent in search.',
                 'The good news? The fundamentals haven’t changed—along with strong technical SEO and a well-structured website, your best bet for capturing organic traffic online is to publish helpful, optimized content.',
             ],
@@ -59,28 +59,31 @@ $services['content-writing-at-any-scale'] = [
         'overline'  => 'The Solution',
         'heading'   => 'We’re your strategic',
         'heading_accent' => 'content-writing partner',
-        'text'      => 'If your business works with freelance writers, faceless agencies, or content mills, we’re betting the results are hit-and-miss—mostly miss. If the writers producing your content don’t understand your brand, audience, or goals, the results are bound to be inconsistent and disconnected from your bigger picture. And if you don’t know who your writers are, how can you be sure they’re human?',
+        'text'      => [
+            'If your business works with freelance writers, faceless agencies, or content mills, the results can be hit-and-miss—mostly miss. When the writers producing your content don’t understand your brand, audience, or goals, the work quickly becomes inconsistent, disconnected, and harder to trust.',
+            'Stretch Creative’s editorial team is diligent about fact-checking and writing genuinely useful content that helps our fellow humans solve problems.',
+            'Here’s how Stretch Creative solves some of the content problems we hear about the most.',
+        ],
         'cta_label' => 'Get in Touch',
         'cta_url'   => '/contact-stretch-creative/',
         'points' =>             [
                 ['title' => 'We produce quality content at high volumes.', 'body' => 'Most content bottlenecks are a quality problem, not a volume issue. With a tight-knit, properly trained writing team, strong editorial oversight, and a world-class production workflow, large volumes of content can be cohesive, consistent, and well-written.'],
                 ['title' => 'We maintain consistent style and brand voice across assets.', 'body' => 'When you work with Stretch Creative, you work with a dedicated team of content professionals who get to know your audience, brand voice, and business goals. Content that flows from those foundations outperforms the rest every time.'],
                 ['title' => 'Everything we produce is AEO- and SEO-optimized.', 'body' => 'Agency-wide, Stretch Creative is plugged into the latest Google Updates and SEO/AEO best practices for content that ranks. Search may be changing, but accurate, helpful, and engaging written assets will always perform.'],
-                ['title' => 'We value accuracy and integrity.', 'body' => 'There’s a lot of terrible content on the Internet, and we’re committed to adding only words that bring value to the mix. Our editorial team is diligent about fact-checking and writing genuinely useful content that helps our fellow humans solve problems. No slop, no fluff.'],
                 ['title' => 'We hand-pick writers based on their expertise.', 'body' => 'Not every writer excels at every content type or writes knowledgably on all topics. We know every one of our writers, their areas of expertise, and what types of content they crush every time. Whatever content you need, we’ll handpick the perfect team.'],
             ],
     ],
 
     // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
     'pull_quote' => [
-        'text'      => 'Most content bottlenecks are a quality problem, not a volume issue.',
-        'highlight' => 'quality problem',
+        'text'      => 'The next advantage in search will come from content built for visibility beyond traditional rankings.',
+        'highlight' => 'visibility beyond traditional rankings',
     ],
 
     // -------- Capabilities (Offerings) --------
     'offerings_overline'      => 'Capabilities',
     'offerings_heading'       => 'What We',
-    'offerings_heading_accent' => 'Write',
+    'offerings_heading_accent' => 'Create',
     'offerings_intro'         => 'Stretch Creative delivers whatever types of content you need, on brand, on time, and publish-ready.',
     'offerings' =>     [
         ['title' => 'Blog articles', 'description' => 'Educational, informative, inspirational, and search-optimized articles designed to answer questions and attract qualified audiences.'],
@@ -151,7 +154,7 @@ $services['content-writing-at-any-scale'] = [
     ],
 
     // -------- Testimonials (3 real; image => avatar attachment ID, 0 => placeholder) --------
-    'testimonials_overline'   => 'Social Proof',
+    'testimonials_overline'   => 'Testimonials',
     'testimonials_heading'    => 'What Our Clients Say',
     'testimonials_subheading' => 'A few of the brands that trust us with their content.',
     'testimonials' => [
@@ -278,7 +281,8 @@ $services['seo_content_strategy_services'] = [
         'overline'  => 'The Solution',
         'heading'   => 'SEO isn’t about chasing algorithms.',
         'text'      =>             [
-                'Every Google update and AI leap forward seems to bring a new set of “must-follow” tactics. We focus on integrating new best practices thoughtfully into the fundamentals that have always mattered: understanding your audience, creating useful content, building technically sound websites, and adapting as search evolves.',
+                'Every Google update and AI leap forward seems to bring a new set of “must-follow” tactics.',
+                'We develop SEO and AEO strategies that reflect your goals, integrating new best practices thoughtfully into the fundamentals that have always mattered: understanding your audience, creating useful content, building technically sound websites, and adapting as search evolves.',
                 'Here’s how Stretch Creative helps businesses stay visible to search engines and AI-based search—without reinventing the wheel.',
             ],
         'cta_label' => 'Get in Touch',
@@ -294,8 +298,8 @@ $services['seo_content_strategy_services'] = [
 
     // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
     'pull_quote' => [
-        'text'      => 'Search is changing faster than businesses can keep up.',
-        'highlight' => 'faster than businesses can keep up',
+        'text'      => 'The way people discover information has changed, and we can help you change with it.',
+        'highlight' => 'we can help you change with it',
     ],
 
     // -------- Capabilities (Offerings) --------
@@ -303,12 +307,12 @@ $services['seo_content_strategy_services'] = [
     'offerings_heading'    => 'What We Deliver',
     'offerings_intro'      => 'Our strategic SEO support services improve visibility across modern-day search engines.',
     'offerings' =>     [
-        ['title' => 'Technical SEO', 'description' => 'Website audits, crawl analyses, indexing recommendations, site architecture reviews, Core Web Vitals guidance, and technical improvements to help search engines understand your website.'],
         ['title' => 'Keyword research', 'description' => 'Audience-focused keyword research that identifies ranking and conversion opportunities based on search demand, intent, competition, and your business goals.'],
         ['title' => 'SEO content strategy', 'description' => 'Topic planning, editorial mapping, and content recommendations designed to support long-term, organic growth.'],
         ['title' => 'Content briefs', 'description' => 'Your keywords and content strategy, embodied in SEO editorial briefs that help writers produce well-organized, helpful, and search-optimized articles.'],
-        ['title' => 'On-page SEO', 'description' => 'Title tags, meta descriptions, header hierarchy, internal linking, schema markup, and content structure—optimized across every page that matters.'],
+        ['title' => 'Technical SEO', 'description' => 'Website audits, crawl analyses, indexing recommendations, site architecture reviews, Core Web Vitals guidance, and technical improvements to help search engines understand your website.'],
         ['title' => 'SEO audits', 'description' => 'Comprehensive evaluations of your website’s technical health, content quality, user experience, and search visibility, along with prioritized recommendations.'],
+        ['title' => 'On-page SEO', 'description' => 'Title tags, meta descriptions, header hierarchy, internal linking, schema markup, and content structure—optimized across every page that matters.'],
         ['title' => 'SEO and AEO content optimization', 'description' => 'Optimize existing content for SEO and AEO, from blogs and category pages to location and service pages, to make them more visible to today’s search engines.'],
         ['title' => 'Performance tracking & reporting', 'description' => 'Transparent, business-focused reporting focused on meaningful metrics like rankings, organic traffic, and click-through rates translated into actionable recommendations.'],
         ['title' => 'Budget management', 'description' => 'Coordinated production oversight and budget tracking for larger SEO and content initiatives.'],
@@ -698,8 +702,8 @@ $services['paid-advertising'] = [
         'overline' => 'The Reality',
         'heading'  => 'Competition isn’t getting any cheaper.',
         'text'     =>             [
-                'Paid advertising has become more competitive, more expensive, and more complex in recent years. Rising costs, changing privacy regulations, evolving algorithms, and increasing competition mean businesses can’t afford to rely on guesswork or “set it and forget it” campaigns.',
-                'The good news? Strong visuals, compelling messaging, thoughtful targeting, and ongoing optimization still make paid advertising one of the fastest ways to reach qualified customers. Success comes from combining smart strategy with messaging and visuals that give people a reason to click.',
+                'Rising costs, tighter privacy rules and constant platform changes have made paid advertising more competitive and less forgiving. Campaigns need stronger strategy, sharper creative and ongoing optimization to justify the spend.',
+                'Paid media with strong visuals and compelling messaging is still one of the fastest ways to reach qualified audiences but only when the targeting, message and creative work together to give people a clear reason to act.',
             ],
     ],
 
@@ -717,7 +721,6 @@ $services['paid-advertising'] = [
                 ['title' => 'We build campaigns around your goals.', 'body' => 'Every campaign begins with your objectives, audience, and budget—never a templated media plan. Whether you’re driving sales, generating leads, or building awareness, we create strategies that support measurable business outcomes.'],
                 ['title' => 'We connect strategy with flawless execution.', 'body' => 'Successful advertising depends on more than targeting. Our writers, designers, photographers, and videographers work together to create ads and landing pages that feel cohesive and compelling from first impression to final conversion.'],
                 ['title' => 'We optimize continuously.', 'body' => 'The strongest campaigns improve over time. We monitor performance, test ads and landing pages, refine targeting, and make data-driven adjustments to improve efficiency and results.'],
-                ['title' => 'We make every click count.', 'body' => 'Driving traffic is only part of the equation. We help ensure the pages behind your ads deliver the information, experience, and calls to action needed to convert visitors into customers.'],
                 ['title' => 'We provide clear reporting.', 'body' => 'You shouldn’t have to interpret confusing dashboards. We provide transparent reporting and practical recommendations that help you understand what’s working and where to improve.'],
             ],
     ],
@@ -737,8 +740,8 @@ $services['paid-advertising'] = [
         ['title' => 'Social media advertising', 'description' => 'Paid campaigns for Meta, LinkedIn, TikTok, Pinterest, and other social platforms designed to build awareness, generate leads, and drive conversions.'],
         ['title' => 'Display advertising', 'description' => 'Visual banner ads that expand brand awareness, support remarketing efforts, and reach audiences across the web.'],
         ['title' => 'Retargeting campaigns', 'description' => 'Targeted advertising that reconnects with previous website visitors and encourages them to return and take action.'],
-        ['title' => 'Landing pages', 'description' => 'Dedicated campaign landing pages optimized to support your advertising goals and improve conversion rates.'],
         ['title' => 'Ad copy & design', 'description' => 'Compelling ad copy, graphics, photography, video, and other campaign assets developed specifically for paid advertising.'],
+        ['title' => 'Landing pages', 'description' => 'Dedicated campaign landing pages optimized to support your advertising goals and improve conversion rates.'],
         ['title' => 'Performance reporting & insights', 'description' => 'Campaign monitoring, performance analysis, budget tracking, and ongoing optimization recommendations.'],
     ],
 
@@ -860,17 +863,16 @@ $services['visual-content-and-design'] = [
             ],
         'points' =>             [
                 ['title' => 'We design with purpose.', 'body' => 'Every graphic, photo, and video should solve a problem. Whether it’s simplifying complex information, highlighting product features, or reinforcing your brand identity, every visual asset is created with a clear objective in mind.'],
-                ['title' => 'We keep your brand consistent.', 'body' => 'Strong brands are recognizable across every touchpoint. We create visual content that meets your brand standards and feels cohesive across websites, social media, advertising, presentations, and print materials.'],
                 ['title' => 'We handle everything in-house.', 'body' => 'From creative direction, copywriting, and design to photography, videography, editing, and post-production, our in-house team manages the entire process collaboratively. We streamline the process, and you pay less for more.'],
-                ['title' => 'We create assets that work everywhere.', 'body' => 'One photoshoot or design project shouldn’t produce just one deliverable. We develop visual content that can be adapted across multiple channels so you get more value from every project.'],
+                ['title' => 'We create assets that work everywhere.', 'body' => 'We develop strongly branded visual content that can be adapted across multiple channels—from your website and social media to presentations and print materials— so your brand is recognizable at every touchpoint.'],
                 ['title' => 'We collaborate from concept to completion.', 'body' => 'The best creative work happens through strong partnerships. We collaborate with you throughout the process to ensure every asset reflects your goals, your audience, and your brand.'],
             ],
     ],
 
     // -------- Pull quote (giant ghost mark, Cyan highlight span) --------
     'pull_quote' => [
-        'text'      => 'We streamline the process, and you pay less for more.',
-        'highlight' => 'pay less for more',
+        'text'      => 'We create branded visual content that compels viewers to take the next steps.',
+        'highlight' => 'compels viewers to take the next steps',
     ],
 
     // -------- Capabilities (Offerings) --------
@@ -880,26 +882,6 @@ $services['visual-content-and-design'] = [
     'offerings_overline'   => 'Capabilities',
     'offerings_heading'    => 'Creative Services',
     'offerings_intro'      => 'Our in-house creative teams collaborate across assets to keep your visuals consistent and on-brand.',
-    'offerings' =>     [
-        ['title' => 'Graphic Design', 'description' => 'Branded graphics, marketing collateral, brochures, sales sheets, presentations, digital ads, and other custom design assets.'],
-        ['title' => 'Infographics', 'description' => 'Clear, engaging visual explanations that simplify complex ideas and make information easier to understand and share.'],
-        ['title' => 'Social Media Creative', 'description' => 'Platform-ready graphics, videos, stories, reels, and campaign assets designed to support your social media strategy.'],
-        ['title' => 'Email & Digital Marketing Assets', 'description' => 'Graphics, banners, headers, and supporting visuals that strengthen email campaigns and digital marketing initiatives.'],
-        ['title' => 'Presentation & Sales Materials', 'description' => 'Pitch decks, trade show materials, sales presentations, one-pagers, and visual assets that help communicate your message clearly.'],
-        ['title' => 'Brand Support', 'description' => 'Creative direction, visual storytelling, iconography, illustration, and other design services that strengthen your brand identity.'],
-        ['title' => 'Brand Stories', 'description' => 'Cinematic videos that capture your brand’s personality, values, and purpose through thoughtful storytelling and polished production.'],
-        ['title' => 'Corporate Video Services', 'description' => 'Professional videos for training, recruiting, investor relations, internal communications, product demonstrations, and marketing initiatives.'],
-        ['title' => 'Commercial Production', 'description' => 'Broadcast-quality television commercials produced entirely in-house, from concept development and scriptwriting through filming and post-production.'],
-        ['title' => 'Social Media Content', 'description' => 'Short-form videos and paid social creative designed to capture attention, reinforce your brand, and engage audiences across social platforms.'],
-        ['title' => 'Documentaries', 'description' => 'Authentic, story-driven films that inform, inspire, and highlight the people, organizations, or missions behind your brand.'],
-        ['title' => 'Motion Graphics & Animation', 'description' => 'Custom animations and motion graphics that simplify complex ideas, enhance video productions, and create engaging visual content for digital channels.'],
-        ['title' => 'Interviews', 'description' => 'Professionally produced interviews featuring employees, executives, customers, or industry experts, suitable for websites, social media, presentations, and marketing campaigns.'],
-        ['title' => 'Pre-Production', 'description' => 'Creative planning and logistics, including concept development, scriptwriting, storyboarding, location scouting, talent coordination, and production planning.'],
-        ['title' => 'Production', 'description' => 'Professional video production services, including directing, cinematography, lighting, audio recording, and on-set production management.'],
-        ['title' => 'Post-Production', 'description' => 'Editing, color correction, audio enhancement, motion graphics, subtitles, visual effects, and final formatting for distribution across multiple channels.'],
-        ['title' => 'Video Interviewing', 'description' => 'Remote or on-location interview recording, professionally edited into long-form videos, short clips, social content, or written marketing assets.'],
-        ['title' => 'Product & Lifestyle Photography', 'description' => 'Product photography, lifestyle imagery, team photography, headshots, environmental photography, and branded visual storytelling.'],
-    ],
     'offerings_groups' =>     [
         [
             'anchor'  => 'graphic-design',
@@ -920,21 +902,18 @@ $services['visual-content-and-design'] = [
                     ['title' => 'Brand Stories', 'description' => 'Cinematic videos that capture your brand’s personality, values, and purpose through thoughtful storytelling and polished production.'],
                     ['title' => 'Corporate Video Services', 'description' => 'Professional videos for training, recruiting, investor relations, internal communications, product demonstrations, and marketing initiatives.'],
                     ['title' => 'Commercial Production', 'description' => 'Broadcast-quality television commercials produced entirely in-house, from concept development and scriptwriting through filming and post-production.'],
-                    ['title' => 'Social Media Content', 'description' => 'Short-form videos and paid social creative designed to capture attention, reinforce your brand, and engage audiences across social platforms.'],
                     ['title' => 'Documentaries', 'description' => 'Authentic, story-driven films that inform, inspire, and highlight the people, organizations, or missions behind your brand.'],
-                    ['title' => 'Motion Graphics & Animation', 'description' => 'Custom animations and motion graphics that simplify complex ideas, enhance video productions, and create engaging visual content for digital channels.'],
+                    ['title' => 'Social Media Content', 'description' => 'Short-form videos and paid social creative designed to capture attention, reinforce your brand, and engage audiences across social platforms.'],
+                    ['title' => 'Video Interviewing', 'description' => 'Remote or on-site interviews with employees, executives, customers, or experts, professionally edited into long-form videos, short clips, or social content.'],
                     ['title' => 'Interviews', 'description' => 'Professionally produced interviews featuring employees, executives, customers, or industry experts, suitable for websites, social media, presentations, and marketing campaigns.'],
                     ['title' => 'Pre-Production', 'description' => 'Creative planning and logistics, including concept development, scriptwriting, storyboarding, location scouting, talent coordination, and production planning.'],
-                    ['title' => 'Production', 'description' => 'Professional video production services, including directing, cinematography, lighting, audio recording, and on-set production management.'],
+                    ['title' => 'Production', 'description' => 'Professional video production services, including pre-production, directing, cinematography, audio recording, and production management.'],
                     ['title' => 'Post-Production', 'description' => 'Editing, color correction, audio enhancement, motion graphics, subtitles, visual effects, and final formatting for distribution across multiple channels.'],
-                    ['title' => 'Video Interviewing', 'description' => 'Remote or on-location interview recording, professionally edited into long-form videos, short clips, social content, or written marketing assets.'],
+                    ['title' => 'Motion Graphics & Animation', 'description' => 'Custom animations and motion graphics that simplify complex ideas, enhance video productions, and create engaging visual content for digital channels.'],
                     ['title' => 'Product & Lifestyle Photography', 'description' => 'Product photography, lifestyle imagery, team photography, headshots, environmental photography, and branded visual storytelling.'],
                 ],
         ],
     ],
-
-    // -------- Add-On Services --------
-    'addons_heading' => 'Add-On Services',
     'addons' =>     [
         ['title' => 'Creative Ideation', 'description' => 'Campaign concepts, creative direction, mood boards, shot lists, storyboards, and visual planning sessions.'],
         ['title' => 'Budget Management', 'description' => 'Coordinated production oversight, vendor management, scheduling, and budget tracking for larger creative initiatives.'],
